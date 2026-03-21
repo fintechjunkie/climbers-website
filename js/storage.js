@@ -1,273 +1,312 @@
-/* ===== DATA STORAGE LAYER =====
-   Uses IndexedDB for images (unlimited size) and localStorage for text/metadata.
-   Data in localStorage (climbers_site):
-     { subtitle, chapters: [{id, title, parts: [{id, title, text}]}], gallery: [{id, label}] }
-   Images in IndexedDB (climbers_db / images store):
-     key = id string, value = base64 data URL
+/* ===== DATA STORAGE LAYER (GitHub-backed) =====
+   Content is stored in the GitHub repository so ALL visitors see it:
+   - data/site.json  : metadata (chapters, parts, gallery, subtitle)
+   - uploads/        : images  (banner.jpg, ch_{id}.jpg, gal_{id}.jpg)
+
+   Admin writes via GitHub API (requires a Personal Access Token).
+   The public site reads files directly from GitHub Pages (no token needed).
 */
 
-const STORAGE_KEY = 'climbers_site';
-const PASS_KEY = 'climbers_admin_pass';
+const REPO_OWNER = 'fintechjunkie';
+const REPO_NAME = 'climbers-website';
+const DATA_PATH = 'data/site.json';
+const GH_API = 'https://api.github.com/repos/' + REPO_OWNER + '/' + REPO_NAME + '/contents/';
+
+const GH_TOKEN_KEY = 'climbers_gh_token';
+const ADMIN_PASS_KEY = 'climbers_admin_pass';
 const SESSION_KEY = 'climbers_admin_session';
-const DB_NAME = 'climbers_db';
-const DB_VERSION = 1;
-const IMG_STORE = 'images';
-
-const DEFAULT_PASS_HASH = 'climbers2026';
-
-// ===== IndexedDB helpers =====
-function openDB() {
-  return new Promise((resolve, reject) => {
-    const req = indexedDB.open(DB_NAME, DB_VERSION);
-    req.onupgradeneeded = () => {
-      const db = req.result;
-      if (!db.objectStoreNames.contains(IMG_STORE)) {
-        db.createObjectStore(IMG_STORE);
-      }
-    };
-    req.onsuccess = () => resolve(req.result);
-    req.onerror = () => reject(req.error);
-  });
-}
-
-async function saveImage(key, dataURL) {
-  const db = await openDB();
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction(IMG_STORE, 'readwrite');
-    tx.objectStore(IMG_STORE).put(dataURL, key);
-    tx.oncomplete = () => resolve();
-    tx.onerror = () => reject(tx.error);
-  });
-}
-
-async function getImage(key) {
-  const db = await openDB();
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction(IMG_STORE, 'readonly');
-    const req = tx.objectStore(IMG_STORE).get(key);
-    req.onsuccess = () => resolve(req.result || '');
-    req.onerror = () => reject(req.error);
-  });
-}
-
-async function deleteImage(key) {
-  const db = await openDB();
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction(IMG_STORE, 'readwrite');
-    tx.objectStore(IMG_STORE).delete(key);
-    tx.oncomplete = () => resolve();
-    tx.onerror = () => reject(tx.error);
-  });
-}
-
-async function clearAllImages() {
-  const db = await openDB();
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction(IMG_STORE, 'readwrite');
-    tx.objectStore(IMG_STORE).clear();
-    tx.oncomplete = () => resolve();
-    tx.onerror = () => reject(tx.error);
-  });
-}
+const DEFAULT_PASS = 'climbers2026';
 
 function genId() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 }
 
-// ===== Storage API =====
 const Storage = {
-  getData() {
+
+  // ===== GitHub Token Management =====
+  getToken() { return localStorage.getItem(GH_TOKEN_KEY) || ''; },
+  setToken(token) { localStorage.setItem(GH_TOKEN_KEY, token.trim()); },
+  hasToken() { return !!this.getToken(); },
+
+  async validateToken(token) {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        const data = JSON.parse(raw);
-        // Migrate old chapters that have `text` instead of `parts`
-        if (data.chapters) {
-          data.chapters.forEach(ch => {
-            if (!ch.parts) {
-              ch.parts = [];
-              if (ch.text) {
-                ch.parts.push({ id: genId(), title: 'Part I', text: ch.text });
-                delete ch.text;
-              }
-            }
-          });
+      const resp = await fetch('https://api.github.com/repos/' + REPO_OWNER + '/' + REPO_NAME, {
+        headers: {
+          'Accept': 'application/vnd.github.v3+json',
+          'Authorization': 'token ' + token.trim()
         }
-        return data;
+      });
+      return resp.ok;
+    } catch (e) { return false; }
+  },
+
+  // ===== GitHub API Helpers =====
+  async _ghGet(path) {
+    const token = this.getToken();
+    const headers = { 'Accept': 'application/vnd.github.v3+json' };
+    if (token) headers['Authorization'] = 'token ' + token;
+    return fetch(GH_API + path, { headers, cache: 'no-store' });
+  },
+
+  async _ghPut(path, base64Content, message) {
+    const token = this.getToken();
+    if (!token) throw new Error('GitHub token not configured. Go to Settings to add it.');
+
+    // Get existing SHA if file already exists
+    let sha = '';
+    try {
+      const getResp = await this._ghGet(path);
+      if (getResp.ok) {
+        const existing = await getResp.json();
+        sha = existing.sha;
       }
-    } catch (e) {
-      console.error('Storage read error', e);
+    } catch (e) { /* file doesn't exist yet, that's fine */ }
+
+    const body = { message, content: base64Content };
+    if (sha) body.sha = sha;
+
+    const resp = await fetch(GH_API + path, {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/vnd.github.v3+json',
+        'Authorization': 'token ' + token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    });
+
+    if (!resp.ok) {
+      const err = await resp.json().catch(() => ({}));
+      throw new Error(err.message || 'GitHub API error: ' + resp.status);
     }
+    return resp;
+  },
+
+  async _ghDelete(path) {
+    const token = this.getToken();
+    if (!token) return;
+
+    try {
+      const getResp = await this._ghGet(path);
+      if (!getResp.ok) return;
+      const existing = await getResp.json();
+
+      await fetch(GH_API + path, {
+        method: 'DELETE',
+        headers: {
+          'Accept': 'application/vnd.github.v3+json',
+          'Authorization': 'token ' + token,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message: 'Delete ' + path,
+          sha: existing.sha
+        })
+      });
+    } catch (e) {
+      console.warn('Delete failed:', e);
+    }
+  },
+
+  // ===== Data Read / Write =====
+  async getData() {
+    const token = this.getToken();
+
+    // If admin has a token, use GitHub API for always-fresh data
+    if (token) {
+      try {
+        const resp = await this._ghGet(DATA_PATH);
+        if (resp.ok) {
+          const file = await resp.json();
+          const raw = file.content.replace(/\n/g, '');
+          return JSON.parse(decodeURIComponent(escape(atob(raw))));
+        }
+      } catch (e) {
+        console.warn('GitHub API read failed, falling back to Pages:', e);
+      }
+    }
+
+    // Public site (no token): fetch from GitHub Pages directly
+    try {
+      const resp = await fetch('data/site.json?t=' + Date.now());
+      if (resp.ok) return await resp.json();
+    } catch (e) {
+      console.warn('Pages fetch failed:', e);
+    }
+
     return this.getDefaults();
   },
 
-  save(data) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  async save(data) {
+    const json = JSON.stringify(data, null, 2);
+    const base64 = btoa(unescape(encodeURIComponent(json)));
+    await this._ghPut(DATA_PATH, base64, 'Update site content');
+  },
+
+  async _uploadImage(filename, dataURL) {
+    const base64 = dataURL.split(',')[1];
+    await this._ghPut('uploads/' + filename, base64, 'Upload ' + filename);
+  },
+
+  async _deleteImage(filename) {
+    await this._ghDelete('uploads/' + filename);
   },
 
   getDefaults() {
-    return {
-      subtitle: 'A story waiting to be told...',
-      chapters: [],
-      gallery: []
-    };
+    return { subtitle: 'A story waiting to be told...', chapters: [], gallery: [] };
   },
 
-  // --- Chapters ---
-  getChapters() {
-    return this.getData().chapters || [];
+  // ===== Chapters =====
+  async getChapters() {
+    const data = await this.getData();
+    return data.chapters || [];
   },
 
-  getChapter(id) {
-    return this.getChapters().find(c => c.id === id) || null;
+  async getChapter(id) {
+    const chapters = await this.getChapters();
+    return chapters.find(c => c.id === id) || null;
   },
 
   async addChapter(chapter) {
-    const data = this.getData();
+    const data = await this.getData();
     chapter.id = genId();
     if (chapter.image) {
-      await saveImage('ch_' + chapter.id, chapter.image);
+      await this._uploadImage('ch_' + chapter.id + '.jpg', chapter.image);
       delete chapter.image;
     }
     if (!chapter.parts) chapter.parts = [];
     data.chapters.push(chapter);
-    this.save(data);
+    await this.save(data);
     return chapter;
   },
 
   async updateChapter(id, updates) {
-    const data = this.getData();
+    const data = await this.getData();
     const idx = data.chapters.findIndex(c => c.id === id);
     if (idx !== -1) {
       if (updates.image) {
-        await saveImage('ch_' + id, updates.image);
+        await this._uploadImage('ch_' + id + '.jpg', updates.image);
         delete updates.image;
       }
-      // Preserve parts when updating chapter metadata
       const existing = data.chapters[idx];
       data.chapters[idx] = { ...existing, ...updates, parts: updates.parts || existing.parts };
-      this.save(data);
+      await this.save(data);
     }
   },
 
   async removeChapter(id) {
-    const data = this.getData();
+    const data = await this.getData();
     data.chapters = data.chapters.filter(c => c.id !== id);
-    this.save(data);
-    await deleteImage('ch_' + id);
+    await this.save(data);
+    try { await this._deleteImage('ch_' + id + '.jpg'); } catch (e) {}
   },
 
-  reorderChapters(orderedIds) {
-    const data = this.getData();
+  async reorderChapters(orderedIds) {
+    const data = await this.getData();
     const map = {};
     data.chapters.forEach(c => map[c.id] = c);
     data.chapters = orderedIds.map(id => map[id]).filter(Boolean);
-    this.save(data);
+    await this.save(data);
   },
 
-  async getChapterImage(id) {
-    return await getImage('ch_' + id);
+  getChapterImageUrl(id) {
+    return 'uploads/ch_' + id + '.jpg';
   },
 
-  // --- Parts ---
-  addPart(chapterId, part) {
-    const data = this.getData();
+  // ===== Parts =====
+  async addPart(chapterId, part) {
+    const data = await this.getData();
     const ch = data.chapters.find(c => c.id === chapterId);
     if (!ch) return null;
     part.id = genId();
     ch.parts.push(part);
-    this.save(data);
+    await this.save(data);
     return part;
   },
 
-  updatePart(chapterId, partId, updates) {
-    const data = this.getData();
+  async updatePart(chapterId, partId, updates) {
+    const data = await this.getData();
     const ch = data.chapters.find(c => c.id === chapterId);
     if (!ch) return;
     const idx = ch.parts.findIndex(p => p.id === partId);
     if (idx !== -1) {
       ch.parts[idx] = { ...ch.parts[idx], ...updates };
-      this.save(data);
+      await this.save(data);
     }
   },
 
-  removePart(chapterId, partId) {
-    const data = this.getData();
+  async removePart(chapterId, partId) {
+    const data = await this.getData();
     const ch = data.chapters.find(c => c.id === chapterId);
     if (!ch) return;
     ch.parts = ch.parts.filter(p => p.id !== partId);
-    this.save(data);
+    await this.save(data);
   },
 
-  reorderParts(chapterId, orderedIds) {
-    const data = this.getData();
+  async reorderParts(chapterId, orderedIds) {
+    const data = await this.getData();
     const ch = data.chapters.find(c => c.id === chapterId);
     if (!ch) return;
     const map = {};
     ch.parts.forEach(p => map[p.id] = p);
     ch.parts = orderedIds.map(id => map[id]).filter(Boolean);
-    this.save(data);
+    await this.save(data);
   },
 
-  // --- Gallery ---
-  getGallery() {
-    return this.getData().gallery || [];
+  // ===== Gallery =====
+  async getGallery() {
+    const data = await this.getData();
+    return data.gallery || [];
   },
 
   async addGalleryItem(item) {
-    const data = this.getData();
+    const data = await this.getData();
     item.id = genId();
     if (item.image) {
-      await saveImage('gal_' + item.id, item.image);
+      await this._uploadImage('gal_' + item.id + '.jpg', item.image);
       delete item.image;
     }
     data.gallery.push(item);
-    this.save(data);
+    await this.save(data);
     return item;
   },
 
   async removeGalleryItem(id) {
-    const data = this.getData();
+    const data = await this.getData();
     data.gallery = data.gallery.filter(g => g.id !== id);
-    this.save(data);
-    await deleteImage('gal_' + id);
+    await this.save(data);
+    try { await this._deleteImage('gal_' + id + '.jpg'); } catch (e) {}
   },
 
-  reorderGallery(orderedIds) {
-    const data = this.getData();
+  async reorderGallery(orderedIds) {
+    const data = await this.getData();
     const map = {};
     data.gallery.forEach(g => map[g.id] = g);
     data.gallery = orderedIds.map(id => map[id]).filter(Boolean);
-    this.save(data);
+    await this.save(data);
   },
 
-  async getGalleryImage(id) {
-    return await getImage('gal_' + id);
+  getGalleryImageUrl(id) {
+    return 'uploads/gal_' + id + '.jpg';
   },
 
-  // --- Banner / Site Settings ---
+  // ===== Banner / Site Settings =====
   async updateSiteSettings(settings) {
-    const data = this.getData();
+    const data = await this.getData();
     if (settings.subtitle !== undefined) data.subtitle = settings.subtitle;
     if (settings.bannerImage) {
-      await saveImage('banner', settings.bannerImage);
+      await this._uploadImage('banner.jpg', settings.bannerImage);
     }
-    this.save(data);
+    await this.save(data);
   },
 
-  async getBannerImage() {
-    return await getImage('banner');
+  getBannerImageUrl() {
+    return 'uploads/banner.jpg';
   },
 
-  // --- Admin Auth ---
-  getPassword() {
-    return localStorage.getItem(PASS_KEY) || DEFAULT_PASS_HASH;
-  },
-
-  setPassword(pass) {
-    localStorage.setItem(PASS_KEY, pass);
-  },
-
+  // ===== Admin Auth (browser-local only) =====
+  getPassword() { return localStorage.getItem(ADMIN_PASS_KEY) || DEFAULT_PASS; },
+  setPassword(pass) { localStorage.setItem(ADMIN_PASS_KEY, pass); },
   login(pass) {
     if (pass === this.getPassword()) {
       sessionStorage.setItem(SESSION_KEY, 'true');
@@ -275,23 +314,16 @@ const Storage = {
     }
     return false;
   },
+  isLoggedIn() { return sessionStorage.getItem(SESSION_KEY) === 'true'; },
+  logout() { sessionStorage.removeItem(SESSION_KEY); },
 
-  isLoggedIn() {
-    return sessionStorage.getItem(SESSION_KEY) === 'true';
-  },
-
-  logout() {
-    sessionStorage.removeItem(SESSION_KEY);
-  },
-
-  // --- Reset ---
+  // ===== Reset =====
   async resetAll() {
-    localStorage.removeItem(STORAGE_KEY);
-    localStorage.removeItem(PASS_KEY);
-    await clearAllImages();
+    await this.save(this.getDefaults());
+    localStorage.removeItem(ADMIN_PASS_KEY);
   },
 
-  // --- Utility: file to compressed base64 data URL ---
+  // ===== Utility: file to compressed base64 =====
   fileToDataURL(file, maxWidth = 1200) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -300,12 +332,8 @@ const Storage = {
         const img = new Image();
         img.onload = () => {
           const canvas = document.createElement('canvas');
-          let w = img.width;
-          let h = img.height;
-          if (w > maxWidth) {
-            h = Math.round(h * maxWidth / w);
-            w = maxWidth;
-          }
+          let w = img.width, h = img.height;
+          if (w > maxWidth) { h = Math.round(h * maxWidth / w); w = maxWidth; }
           canvas.width = w;
           canvas.height = h;
           canvas.getContext('2d').drawImage(img, 0, 0, w, h);

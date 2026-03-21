@@ -3,6 +3,18 @@
 document.addEventListener('DOMContentLoaded', () => {
   const loginScreen = document.getElementById('loginScreen');
   const dashboard = document.getElementById('adminDashboard');
+  const loadingOverlay = document.getElementById('loadingOverlay');
+  const loadingText = document.getElementById('loadingText');
+  const tokenBanner = document.getElementById('tokenBanner');
+
+  // --- Loading helpers ---
+  function showLoading(msg) {
+    loadingText.textContent = msg || 'Saving to GitHub...';
+    loadingOverlay.style.display = 'flex';
+  }
+  function hideLoading() {
+    loadingOverlay.style.display = 'none';
+  }
 
   if (Storage.isLoggedIn()) {
     showDashboard();
@@ -23,12 +35,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function showDashboard() {
+  async function showDashboard() {
     loginScreen.style.display = 'none';
     dashboard.style.display = 'block';
-    loadBannerSettings();
-    loadChaptersList();
-    loadGalleryList();
+
+    // Show token warning if not configured
+    if (!Storage.hasToken()) {
+      tokenBanner.style.display = 'block';
+    } else {
+      tokenBanner.style.display = 'none';
+    }
+
+    // Load GitHub token field
+    document.getElementById('ghTokenInput').value = Storage.getToken() ? '********' : '';
+
+    await loadBannerSettings();
+    await loadChaptersList();
+    await loadGalleryList();
   }
 
   // --- Logout ---
@@ -48,37 +71,86 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ===========================
+  // GITHUB TOKEN SETUP
+  // ===========================
+  document.getElementById('saveTokenBtn').addEventListener('click', async () => {
+    const input = document.getElementById('ghTokenInput');
+    const token = input.value.trim();
+
+    if (!token || token === '********') {
+      showMessage('settingsMsg', 'Please enter a valid token.', 'error');
+      return;
+    }
+
+    showLoading('Validating token...');
+    const valid = await Storage.validateToken(token);
+    hideLoading();
+
+    if (valid) {
+      Storage.setToken(token);
+      input.value = '********';
+      tokenBanner.style.display = 'none';
+      showMessage('settingsMsg', 'GitHub token saved! You can now manage content.', 'success');
+    } else {
+      showMessage('settingsMsg', 'Invalid token. Make sure it has "repo" permissions for ' + 'fintechjunkie/climbers-website.', 'error');
+    }
+  });
+
+  document.getElementById('setupTokenBtn').addEventListener('click', () => {
+    // Switch to settings tab
+    document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
+    document.querySelector('[data-tab="settings-panel"]').classList.add('active');
+    document.getElementById('settings-panel').classList.add('active');
+    document.getElementById('ghTokenInput').focus();
+  });
+
+  // ===========================
   // BANNER & SITE INFO
   // ===========================
   async function loadBannerSettings() {
-    const data = Storage.getData();
+    const data = await Storage.getData();
     document.getElementById('bannerSubtitle').value = data.subtitle || '';
-    const bannerImg = await Storage.getBannerImage();
-    if (bannerImg) {
-      showImagePreview('bannerImagePreview', bannerImg);
-    }
+
+    // Show banner image preview
+    const previewContainer = document.getElementById('bannerImagePreview');
+    previewContainer.innerHTML = '';
+    const previewImg = document.createElement('img');
+    previewImg.src = Storage.getBannerImageUrl();
+    previewImg.style.cssText = 'max-height:150px;border-radius:8px;margin-top:.5rem';
+    previewImg.onload = () => { previewContainer.appendChild(previewImg); };
   }
 
   document.getElementById('saveBannerBtn').addEventListener('click', async () => {
+    if (!Storage.hasToken()) {
+      showMessage('bannerMsg', 'Set up your GitHub token in Settings first.', 'error');
+      return;
+    }
+
     const subtitle = document.getElementById('bannerSubtitle').value.trim();
     const fileInput = document.getElementById('bannerImageFile');
 
     try {
+      showLoading('Saving banner settings...');
       const settings = {};
       if (subtitle) settings.subtitle = subtitle;
       if (fileInput.files.length > 0) {
+        showLoading('Uploading banner image...');
         settings.bannerImage = await Storage.fileToDataURL(fileInput.files[0]);
       }
       await Storage.updateSiteSettings(settings);
+      hideLoading();
       showMessage('bannerMsg', 'Banner settings saved!', 'success');
-      loadBannerSettings();
+      fileInput.value = '';
+      await loadBannerSettings();
     } catch (err) {
+      hideLoading();
       showMessage('bannerMsg', 'Failed to save: ' + err.message, 'error');
     }
   });
 
   // ===========================
-  // CHAPTERS — form + list
+  // CHAPTERS
   // ===========================
   const chapterFormBox = document.getElementById('chapterFormBox');
   const chapterFormTitle = document.getElementById('chapterFormTitle');
@@ -91,6 +163,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Save (add or update)
   saveChapterBtn.addEventListener('click', async () => {
+    if (!Storage.hasToken()) {
+      showMessage('chaptersMsg', 'Set up your GitHub token in Settings first.', 'error');
+      return;
+    }
+
     const title = chapterTitleInput.value.trim();
     const editingId = editingIdInput.value;
 
@@ -106,25 +183,27 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (editingId) {
-        // Update existing chapter
+        showLoading('Updating chapter...');
         const updates = { title };
         if (image) updates.image = image;
         await Storage.updateChapter(editingId, updates);
+        hideLoading();
         showMessage('chaptersMsg', 'Chapter updated!', 'success');
       } else {
-        // Add new chapter
+        showLoading('Adding chapter...');
         await Storage.addChapter({ title, image });
+        hideLoading();
         showMessage('chaptersMsg', '"' + title + '" added!', 'success');
       }
 
       resetChapterForm();
-      loadChaptersList();
+      await loadChaptersList();
     } catch (err) {
+      hideLoading();
       showMessage('chaptersMsg', 'Failed: ' + err.message, 'error');
     }
   });
 
-  // Cancel edit
   cancelEditBtn.addEventListener('click', () => {
     resetChapterForm();
   });
@@ -140,7 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
     chapterFormBox.classList.remove('editing');
   }
 
-  async function startEditChapter(ch) {
+  function startEditChapter(ch) {
     chapterTitleInput.value = ch.title;
     editingIdInput.value = ch.id;
     chapterFormTitle.textContent = 'Editing: ' + ch.title;
@@ -149,19 +228,19 @@ document.addEventListener('DOMContentLoaded', () => {
     chapterFormBox.classList.add('editing');
 
     // Show current image preview
-    const img = await Storage.getChapterImage(ch.id);
-    if (img) {
-      showImagePreview('chapterImagePreview', img);
-    } else {
-      chapterImagePreview.innerHTML = '';
-    }
+    chapterImagePreview.innerHTML = '';
+    const img = document.createElement('img');
+    img.src = Storage.getChapterImageUrl(ch.id);
+    img.style.cssText = 'max-height:150px;border-radius:8px;margin-top:.5rem';
+    img.onload = () => { chapterImagePreview.appendChild(img); };
 
     chapterFormBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   // Chapter list
   async function loadChaptersList() {
-    const chapters = Storage.getChapters();
+    const data = await Storage.getData();
+    const chapters = data.chapters || [];
     const list = document.getElementById('chaptersList');
 
     if (chapters.length === 0) {
@@ -183,20 +262,21 @@ document.addEventListener('DOMContentLoaded', () => {
       // Order controls
       const orderDiv = document.createElement('div');
       orderDiv.className = 'order-controls';
-
       const upBtn = createOrderBtn('\u25B2', 'Move up', idx === 0);
       upBtn.addEventListener('click', () => { moveChapter(idx, -1); });
       const downBtn = createOrderBtn('\u25BC', 'Move down', idx === chapters.length - 1);
       downBtn.addEventListener('click', () => { moveChapter(idx, 1); });
-
       orderDiv.appendChild(upBtn);
       orderDiv.appendChild(downBtn);
 
       // Thumbnail
       const img = document.createElement('img');
-      const chImg = await Storage.getChapterImage(ch.id);
-      img.src = chImg || 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80"><rect width="80" height="80" fill="#222"/></svg>');
+      img.src = Storage.getChapterImageUrl(ch.id);
       img.alt = ch.title;
+      img.onerror = () => {
+        img.src = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80"><rect width="80" height="80" fill="#222"/></svg>');
+        img.onerror = null;
+      };
 
       // Info
       const info = document.createElement('div');
@@ -218,10 +298,17 @@ document.addEventListener('DOMContentLoaded', () => {
       delBtn.textContent = 'Remove';
       delBtn.addEventListener('click', async () => {
         if (confirm('Remove "' + ch.title + '" and all its parts? This cannot be undone.')) {
-          await Storage.removeChapter(ch.id);
-          resetChapterForm();
-          loadChaptersList();
-          showMessage('chaptersMsg', 'Chapter removed.', 'success');
+          try {
+            showLoading('Removing chapter...');
+            await Storage.removeChapter(ch.id);
+            hideLoading();
+            resetChapterForm();
+            await loadChaptersList();
+            showMessage('chaptersMsg', 'Chapter removed.', 'success');
+          } catch (err) {
+            hideLoading();
+            showMessage('chaptersMsg', 'Failed: ' + err.message, 'error');
+          }
         }
       });
 
@@ -234,12 +321,11 @@ document.addEventListener('DOMContentLoaded', () => {
       item.appendChild(actions);
       wrapper.appendChild(item);
 
-      // --- Parts section (always visible) ---
+      // --- Parts section ---
       const partsSection = document.createElement('div');
       partsSection.className = 'chapter-parts-section';
       partsSection.innerHTML = '<h4>Parts</h4>';
 
-      // Render existing parts
       const partsContainer = document.createElement('div');
       (ch.parts || []).forEach((part, pIdx) => {
         const partItem = createPartItem(ch.id, part, pIdx, ch.parts.length);
@@ -262,15 +348,18 @@ document.addEventListener('DOMContentLoaded', () => {
         '<div class="form-group"><label>Part Title</label>' +
         '<input type="text" class="part-title-input" placeholder="Part ' + toRoman((ch.parts || []).length + 1) + '"></div>' +
         '<div class="form-group"><label>Part Text</label>' +
-        '<textarea class="part-text-input" placeholder="Paste or type the part text here..."></textarea></div>' +
+        '<textarea class="part-text-input" placeholder="Paste or type the part text here..." style="min-height:200px;resize:vertical"></textarea></div>' +
         '<div style="display:flex;gap:.5rem">' +
         '<button class="btn btn-primary save-part-btn" style="font-size:.85rem">Save Part</button>' +
         '<button class="btn btn-secondary cancel-part-btn" style="font-size:.85rem">Cancel</button></div>';
 
-      addPartBtn.addEventListener('click', () => {
+      addPartBtn.addEventListener('click', async () => {
         addPartForm.style.display = '';
         addPartBtn.style.display = 'none';
-        addPartForm.querySelector('.part-title-input').value = 'Part ' + toRoman((Storage.getChapter(ch.id).parts || []).length + 1);
+        // Refresh chapter data to get accurate part count
+        const freshCh = await Storage.getChapter(ch.id);
+        const nextNum = (freshCh ? freshCh.parts.length : 0) + 1;
+        addPartForm.querySelector('.part-title-input').value = 'Part ' + toRoman(nextNum);
         addPartForm.querySelector('.part-text-input').value = '';
         addPartForm.querySelector('.part-title-input').focus();
       });
@@ -280,13 +369,21 @@ document.addEventListener('DOMContentLoaded', () => {
         addPartBtn.style.display = '';
       });
 
-      addPartForm.querySelector('.save-part-btn').addEventListener('click', () => {
+      addPartForm.querySelector('.save-part-btn').addEventListener('click', async () => {
         const partTitle = addPartForm.querySelector('.part-title-input').value.trim();
         const partText = addPartForm.querySelector('.part-text-input').value;
         if (!partTitle) { alert('Please enter a part title.'); return; }
-        Storage.addPart(ch.id, { title: partTitle, text: partText });
-        loadChaptersList();
-        showMessage('chaptersMsg', 'Part added!', 'success');
+
+        try {
+          showLoading('Adding part...');
+          await Storage.addPart(ch.id, { title: partTitle, text: partText });
+          hideLoading();
+          await loadChaptersList();
+          showMessage('chaptersMsg', 'Part added!', 'success');
+        } catch (err) {
+          hideLoading();
+          showMessage('chaptersMsg', 'Failed: ' + err.message, 'error');
+        }
       });
 
       partsSection.appendChild(addPartBtn);
@@ -301,7 +398,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const partItem = document.createElement('div');
     partItem.className = 'part-item';
 
-    // Part order controls
     const pOrder = document.createElement('div');
     pOrder.className = 'order-controls';
     const pUp = createOrderBtn('\u25B2', 'Move up', pIdx === 0);
@@ -313,7 +409,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const pInfo = document.createElement('div');
     pInfo.className = 'part-info';
-    pInfo.innerHTML = '<strong>' + escapeHtml(part.title) + '</strong><p>' + escapeHtml((part.text || '').substring(0, 80)) + '...</p>';
+    const preview = (part.text || '').substring(0, 80);
+    pInfo.innerHTML = '<strong>' + escapeHtml(part.title) + '</strong><p>' + escapeHtml(preview) + (preview.length >= 80 ? '...' : '') + '</p>';
 
     const pActions = document.createElement('div');
     pActions.className = 'part-actions';
@@ -326,11 +423,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const pDelBtn = document.createElement('button');
     pDelBtn.className = 'btn btn-danger';
     pDelBtn.textContent = 'Remove';
-    pDelBtn.addEventListener('click', () => {
+    pDelBtn.addEventListener('click', async () => {
       if (confirm('Remove "' + part.title + '"?')) {
-        Storage.removePart(chapterId, part.id);
-        loadChaptersList();
-        showMessage('chaptersMsg', 'Part removed.', 'success');
+        try {
+          showLoading('Removing part...');
+          await Storage.removePart(chapterId, part.id);
+          hideLoading();
+          await loadChaptersList();
+          showMessage('chaptersMsg', 'Part removed.', 'success');
+        } catch (err) {
+          hideLoading();
+          showMessage('chaptersMsg', 'Failed: ' + err.message, 'error');
+        }
       }
     });
 
@@ -344,7 +448,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function startEditPart(chapterId, part) {
-    // Create a modal-style overlay for editing
     const overlay = document.createElement('div');
     overlay.style.cssText = 'position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;padding:2rem';
 
@@ -366,14 +469,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('editPartTitle').focus();
 
-    document.getElementById('saveEditPartBtn').addEventListener('click', () => {
+    document.getElementById('saveEditPartBtn').addEventListener('click', async () => {
       const newTitle = document.getElementById('editPartTitle').value.trim();
       const newText = document.getElementById('editPartText').value;
       if (!newTitle) { alert('Part title is required.'); return; }
-      Storage.updatePart(chapterId, part.id, { title: newTitle, text: newText });
-      document.body.removeChild(overlay);
-      loadChaptersList();
-      showMessage('chaptersMsg', 'Part updated!', 'success');
+
+      try {
+        showLoading('Saving part...');
+        await Storage.updatePart(chapterId, part.id, { title: newTitle, text: newText });
+        hideLoading();
+        document.body.removeChild(overlay);
+        await loadChaptersList();
+        showMessage('chaptersMsg', 'Part updated!', 'success');
+      } catch (err) {
+        hideLoading();
+        showMessage('chaptersMsg', 'Failed: ' + err.message, 'error');
+      }
     });
 
     document.getElementById('cancelEditPartBtn').addEventListener('click', () => {
@@ -385,32 +496,47 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  function moveChapter(fromIdx, direction) {
-    const chapters = Storage.getChapters();
-    const toIdx = fromIdx + direction;
-    if (toIdx < 0 || toIdx >= chapters.length) return;
-    const ids = chapters.map(c => c.id);
-    [ids[fromIdx], ids[toIdx]] = [ids[toIdx], ids[fromIdx]];
-    Storage.reorderChapters(ids);
-    loadChaptersList();
+  async function moveChapter(fromIdx, direction) {
+    try {
+      const chapters = await Storage.getChapters();
+      const toIdx = fromIdx + direction;
+      if (toIdx < 0 || toIdx >= chapters.length) return;
+      const ids = chapters.map(c => c.id);
+      [ids[fromIdx], ids[toIdx]] = [ids[toIdx], ids[fromIdx]];
+      showLoading('Reordering...');
+      await Storage.reorderChapters(ids);
+      hideLoading();
+      await loadChaptersList();
+    } catch (err) {
+      hideLoading();
+      showMessage('chaptersMsg', 'Failed: ' + err.message, 'error');
+    }
   }
 
-  function movePart(chapterId, fromIdx, direction) {
-    const ch = Storage.getChapter(chapterId);
-    if (!ch) return;
-    const toIdx = fromIdx + direction;
-    if (toIdx < 0 || toIdx >= ch.parts.length) return;
-    const ids = ch.parts.map(p => p.id);
-    [ids[fromIdx], ids[toIdx]] = [ids[toIdx], ids[fromIdx]];
-    Storage.reorderParts(chapterId, ids);
-    loadChaptersList();
+  async function movePart(chapterId, fromIdx, direction) {
+    try {
+      const ch = await Storage.getChapter(chapterId);
+      if (!ch) return;
+      const toIdx = fromIdx + direction;
+      if (toIdx < 0 || toIdx >= ch.parts.length) return;
+      const ids = ch.parts.map(p => p.id);
+      [ids[fromIdx], ids[toIdx]] = [ids[toIdx], ids[fromIdx]];
+      showLoading('Reordering...');
+      await Storage.reorderParts(chapterId, ids);
+      hideLoading();
+      await loadChaptersList();
+    } catch (err) {
+      hideLoading();
+      showMessage('chaptersMsg', 'Failed: ' + err.message, 'error');
+    }
   }
 
   // ===========================
   // GALLERY
   // ===========================
   async function loadGalleryList() {
-    const gallery = Storage.getGallery();
+    const data = await Storage.getData();
+    const gallery = data.gallery || [];
     const list = document.getElementById('galleryList');
 
     if (gallery.length === 0) {
@@ -434,9 +560,9 @@ document.addEventListener('DOMContentLoaded', () => {
       orderDiv.appendChild(downBtn);
 
       const img = document.createElement('img');
-      const galImg = await Storage.getGalleryImage(item.id);
-      img.src = galImg || '';
+      img.src = Storage.getGalleryImageUrl(item.id);
       img.alt = item.label || '';
+      img.onerror = () => { img.src = ''; img.onerror = null; };
 
       const info = document.createElement('div');
       info.className = 'item-info';
@@ -450,9 +576,16 @@ document.addEventListener('DOMContentLoaded', () => {
       delBtn.textContent = 'Remove';
       delBtn.addEventListener('click', async () => {
         if (confirm('Remove this gallery item?')) {
-          await Storage.removeGalleryItem(item.id);
-          loadGalleryList();
-          showMessage('galleryMsg', 'Gallery item removed.', 'success');
+          try {
+            showLoading('Removing gallery item...');
+            await Storage.removeGalleryItem(item.id);
+            hideLoading();
+            await loadGalleryList();
+            showMessage('galleryMsg', 'Gallery item removed.', 'success');
+          } catch (err) {
+            hideLoading();
+            showMessage('galleryMsg', 'Failed: ' + err.message, 'error');
+          }
         }
       });
 
@@ -465,17 +598,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function moveGallery(fromIdx, direction) {
-    const gallery = Storage.getGallery();
-    const toIdx = fromIdx + direction;
-    if (toIdx < 0 || toIdx >= gallery.length) return;
-    const ids = gallery.map(g => g.id);
-    [ids[fromIdx], ids[toIdx]] = [ids[toIdx], ids[fromIdx]];
-    Storage.reorderGallery(ids);
-    loadGalleryList();
+  async function moveGallery(fromIdx, direction) {
+    try {
+      const gallery = await Storage.getGallery();
+      const toIdx = fromIdx + direction;
+      if (toIdx < 0 || toIdx >= gallery.length) return;
+      const ids = gallery.map(g => g.id);
+      [ids[fromIdx], ids[toIdx]] = [ids[toIdx], ids[fromIdx]];
+      showLoading('Reordering...');
+      await Storage.reorderGallery(ids);
+      hideLoading();
+      await loadGalleryList();
+    } catch (err) {
+      hideLoading();
+      showMessage('galleryMsg', 'Failed: ' + err.message, 'error');
+    }
   }
 
   document.getElementById('addGalleryBtn').addEventListener('click', async () => {
+    if (!Storage.hasToken()) {
+      showMessage('galleryMsg', 'Set up your GitHub token in Settings first.', 'error');
+      return;
+    }
+
     const label = document.getElementById('galleryLabel').value.trim();
     const fileInput = document.getElementById('galleryImage');
 
@@ -485,13 +630,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     try {
+      showLoading('Uploading gallery image...');
       const image = await Storage.fileToDataURL(fileInput.files[0]);
       await Storage.addGalleryItem({ label, image });
+      hideLoading();
       document.getElementById('galleryLabel').value = '';
       fileInput.value = '';
-      loadGalleryList();
+      await loadGalleryList();
       showMessage('galleryMsg', 'Image added to gallery!', 'success');
     } catch (err) {
+      hideLoading();
       showMessage('galleryMsg', 'Failed to add image: ' + err.message, 'error');
     }
   });
@@ -525,14 +673,25 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.getElementById('resetDataBtn').addEventListener('click', async () => {
+    if (!Storage.hasToken()) {
+      showMessage('settingsMsg', 'Set up your GitHub token first.', 'error');
+      return;
+    }
     if (confirm('Are you SURE you want to delete all content? This cannot be undone.')) {
-      if (confirm('Last chance — this will remove all chapters, gallery items, and settings.')) {
-        await Storage.resetAll();
-        showMessage('settingsMsg', 'All data has been reset.', 'success');
-        resetChapterForm();
-        loadBannerSettings();
-        loadChaptersList();
-        loadGalleryList();
+      if (confirm('Last chance \u2014 this will remove all chapters, gallery items, and settings.')) {
+        try {
+          showLoading('Resetting all data...');
+          await Storage.resetAll();
+          hideLoading();
+          showMessage('settingsMsg', 'All data has been reset.', 'success');
+          resetChapterForm();
+          await loadBannerSettings();
+          await loadChaptersList();
+          await loadGalleryList();
+        } catch (err) {
+          hideLoading();
+          showMessage('settingsMsg', 'Failed: ' + err.message, 'error');
+        }
       }
     }
   });
@@ -545,16 +704,7 @@ document.addEventListener('DOMContentLoaded', () => {
     el.className = 'admin-message ' + type;
     el.textContent = text;
     el.style.display = 'block';
-    setTimeout(() => { el.style.display = 'none'; }, 4000);
-  }
-
-  function showImagePreview(containerId, src) {
-    const container = document.getElementById(containerId);
-    container.innerHTML = '';
-    const img = document.createElement('img');
-    img.src = src;
-    img.style.cssText = 'max-height:150px;border-radius:8px;margin-top:.5rem';
-    container.appendChild(img);
+    setTimeout(() => { el.style.display = 'none'; }, 5000);
   }
 
   function escapeHtml(str) {

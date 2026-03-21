@@ -1,7 +1,7 @@
 /* ===== PUBLIC SITE LOGIC ===== */
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const data = Storage.getData();
+  const data = await Storage.getData();
 
   // --- Hero banner ---
   const heroSubtitle = document.getElementById('heroSubtitle');
@@ -9,17 +9,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   if (data.subtitle) heroSubtitle.textContent = data.subtitle;
 
-  const bannerSrc = await Storage.getBannerImage();
-  if (bannerSrc) {
-    heroBannerImg.src = bannerSrc;
-    heroBannerImg.style.display = 'block';
-  }
+  // Load banner image from repo (uploads/banner.jpg)
+  heroBannerImg.src = Storage.getBannerImageUrl();
+  heroBannerImg.onload = () => { heroBannerImg.style.display = 'block'; };
+  heroBannerImg.onerror = () => { heroBannerImg.style.display = 'none'; };
 
   // --- Render chapters ---
-  await renderChapters(data.chapters);
+  renderChapters(data.chapters);
 
   // --- Render gallery ---
-  await renderGallery(data.gallery);
+  renderGallery(data.gallery);
 
   // --- Footer year ---
   document.getElementById('footerYear').textContent = new Date().getFullYear();
@@ -34,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 // ===========================
 // CHAPTERS
 // ===========================
-async function renderChapters(chapters) {
+function renderChapters(chapters) {
   const grid = document.getElementById('chaptersGrid');
   if (!chapters || chapters.length === 0) {
     grid.innerHTML = '<p class="empty-state">No chapters released yet. Stay tuned!</p>';
@@ -42,26 +41,22 @@ async function renderChapters(chapters) {
   }
 
   grid.innerHTML = '';
-  for (let index = 0; index < chapters.length; index++) {
-    const ch = chapters[index];
-
+  chapters.forEach((ch, index) => {
     const card = document.createElement('div');
     card.className = 'chapter-card';
     card.setAttribute('role', 'button');
     card.setAttribute('tabindex', '0');
 
     const img = document.createElement('img');
-    const chImg = await Storage.getChapterImage(ch.id);
-    if (chImg) {
-      img.src = chImg;
-    } else {
-      // SVG placeholder
-      img.src = 'data:image/svg+xml,' + encodeURIComponent(
-        '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500"><rect width="400" height="500" fill="#1a1a1a"/><text x="50%" y="50%" fill="#555" text-anchor="middle" font-size="22" font-family="Georgia,serif">' + (ch.title || 'Chapter ' + (index + 1)) + '</text></svg>'
-      );
-    }
+    img.src = Storage.getChapterImageUrl(ch.id);
     img.alt = ch.title || 'Chapter ' + (index + 1);
     img.loading = 'lazy';
+    img.onerror = () => {
+      img.src = 'data:image/svg+xml,' + encodeURIComponent(
+        '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><rect width="400" height="400" fill="#1a1a1a"/><text x="50%" y="50%" fill="#555" text-anchor="middle" font-size="20" font-family="Georgia,serif">' + (ch.title || 'Chapter') + '</text></svg>'
+      );
+      img.onerror = null; // prevent infinite loop
+    };
 
     const label = document.createElement('div');
     label.className = 'card-label';
@@ -71,21 +66,18 @@ async function renderChapters(chapters) {
     card.appendChild(label);
     grid.appendChild(card);
 
-    // Click opens full-screen reader modal
     card.addEventListener('click', () => openReader(ch));
     card.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openReader(ch); }
     });
-  }
+  });
 }
 
 // ===========================
 // READER MODAL
 // ===========================
 function setupReaderModal() {
-  const modal = document.getElementById('readerModal');
   const closeBtn = document.getElementById('readerClose');
-
   closeBtn.addEventListener('click', closeReader);
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') closeReader();
@@ -182,7 +174,7 @@ function closeReader() {
 // ===========================
 // GALLERY
 // ===========================
-async function renderGallery(gallery) {
+function renderGallery(gallery) {
   const grid = document.getElementById('galleryGrid');
   if (!gallery || gallery.length === 0) {
     grid.innerHTML = '<p class="empty-state">Gallery coming soon!</p>';
@@ -190,15 +182,20 @@ async function renderGallery(gallery) {
   }
 
   grid.innerHTML = '';
-  for (const item of gallery) {
+  gallery.forEach(item => {
     const div = document.createElement('div');
     div.className = 'gallery-item';
 
     const img = document.createElement('img');
-    const galImg = await Storage.getGalleryImage(item.id);
-    img.src = galImg || '';
+    img.src = Storage.getGalleryImageUrl(item.id);
     img.alt = item.label || '';
     img.loading = 'lazy';
+    img.onerror = () => {
+      img.src = 'data:image/svg+xml,' + encodeURIComponent(
+        '<svg xmlns="http://www.w3.org/2000/svg" width="280" height="400"><rect width="280" height="400" fill="#1a1a1a"/><text x="50%" y="50%" fill="#555" text-anchor="middle" font-size="16" font-family="Georgia,serif">No image</text></svg>'
+      );
+      img.onerror = null;
+    };
 
     div.appendChild(img);
 
@@ -209,13 +206,13 @@ async function renderGallery(gallery) {
       div.appendChild(lbl);
     }
 
-    const capturedSrc = galImg;
+    const imgUrl = Storage.getGalleryImageUrl(item.id);
     div.addEventListener('click', () => {
-      openLightbox(capturedSrc, item.label || '');
+      openLightbox(imgUrl, item.label || '');
     });
 
     grid.appendChild(div);
-  }
+  });
 }
 
 // ===========================
