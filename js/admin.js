@@ -53,7 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // ===========================
   function loadBannerSettings() {
     const data = Storage.getData();
-    document.getElementById('bannerTitle').value = data.banner || '';
     document.getElementById('bannerSubtitle').value = data.subtitle || '';
     if (data.bannerImage) {
       showImagePreview('bannerImagePreview', data.bannerImage);
@@ -61,12 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   document.getElementById('saveBannerBtn').addEventListener('click', async () => {
-    const title = document.getElementById('bannerTitle').value.trim();
     const subtitle = document.getElementById('bannerSubtitle').value.trim();
     const fileInput = document.getElementById('bannerImageFile');
 
     const settings = {};
-    if (title) settings.banner = title;
     if (subtitle) settings.subtitle = subtitle;
 
     if (fileInput.files.length > 0) {

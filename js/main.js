@@ -4,11 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const data = Storage.getData();
 
   // --- Hero banner ---
-  const heroLogo = document.getElementById('heroLogo');
   const heroSubtitle = document.getElementById('heroSubtitle');
   const heroBannerImg = document.getElementById('heroBannerImg');
 
-  if (data.banner) heroLogo.textContent = data.banner;
   if (data.subtitle) heroSubtitle.textContent = data.subtitle;
   if (data.bannerImage) {
     heroBannerImg.src = data.bannerImage;
