@@ -24,7 +24,12 @@ const Storage = {
   },
 
   save(data) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    } catch (e) {
+      alert('Storage limit reached! Try using smaller images (under 1MB each). Error: ' + e.message);
+      throw e;
+    }
   },
 
   getDefaults() {
@@ -134,12 +139,29 @@ const Storage = {
     sessionStorage.removeItem(SESSION_KEY);
   },
 
-  // --- Utility: file to base64 data URL ---
-  fileToDataURL(file) {
+  // --- Utility: file to compressed base64 data URL ---
+  fileToDataURL(file, maxWidth = 1200) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
       reader.onerror = reject;
+      reader.onload = () => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let w = img.width;
+          let h = img.height;
+          if (w > maxWidth) {
+            h = Math.round(h * maxWidth / w);
+            w = maxWidth;
+          }
+          canvas.width = w;
+          canvas.height = h;
+          canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+          resolve(canvas.toDataURL('image/jpeg', 0.8));
+        };
+        img.onerror = reject;
+        img.src = reader.result;
+      };
       reader.readAsDataURL(file);
     });
   }

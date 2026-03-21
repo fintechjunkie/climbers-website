@@ -174,20 +174,24 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    let image = '';
-    if (fileInput.files.length > 0) {
-      image = await Storage.fileToDataURL(fileInput.files[0]);
+    try {
+      let image = '';
+      if (fileInput.files.length > 0) {
+        image = await Storage.fileToDataURL(fileInput.files[0]);
+      }
+
+      Storage.addChapter({ title, text, image });
+
+      // Clear form
+      document.getElementById('chapterTitle').value = '';
+      document.getElementById('chapterText').value = '';
+      fileInput.value = '';
+
+      loadChaptersList();
+      showMessage('chaptersMsg', '"' + title + '" added!', 'success');
+    } catch (err) {
+      showMessage('chaptersMsg', 'Failed to add chapter: ' + err.message, 'error');
     }
-
-    Storage.addChapter({ title, text, image });
-
-    // Clear form
-    document.getElementById('chapterTitle').value = '';
-    document.getElementById('chapterText').value = '';
-    fileInput.value = '';
-
-    loadChaptersList();
-    showMessage('chaptersMsg', '"' + title + '" added!', 'success');
   });
 
   function editChapter(ch) {
