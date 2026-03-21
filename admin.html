@@ -59,7 +59,9 @@
       <h2 style="color:#c9a84c;margin-bottom:1.5rem">Manage Chapters</h2>
       <div id="chaptersMsg"></div>
 
-      <div style="background:#1a1a1a;border:1px solid #262626;border-radius:12px;padding:1.25rem;margin-bottom:1.5rem">
+      <!-- Chapter add/edit form -->
+      <div class="chapter-form-box" id="chapterFormBox">
+        <h3 style="color:#c9a84c;margin-bottom:1rem;font-size:1rem" id="chapterFormTitle">Add New Chapter</h3>
         <div class="form-group">
           <label>Chapter Title</label>
           <input type="text" id="chapterTitle" placeholder="Chapter 1: The Ascent">
@@ -67,13 +69,14 @@
         <div class="form-group">
           <label>Chapter Cover Image</label>
           <input type="file" id="chapterImage" accept="image/*">
-          <p class="help-text">This image is what readers click to expand the chapter.</p>
+          <p class="help-text">This image is what readers click to open the chapter.</p>
+          <div id="chapterImagePreview" style="margin-top:.5rem"></div>
         </div>
-        <div class="form-group">
-          <label>Chapter Text</label>
-          <textarea id="chapterText" placeholder="Paste or type the full chapter text here..." style="min-height:250px"></textarea>
+        <div class="form-actions">
+          <button class="btn btn-primary" id="saveChapterBtn">Add Chapter</button>
+          <button class="btn btn-secondary" id="cancelEditBtn" style="display:none">Cancel Edit</button>
         </div>
-        <button class="btn btn-primary" id="addChapterBtn">Add Chapter</button>
+        <input type="hidden" id="editingChapterId" value="">
       </div>
 
       <h3 style="color:#999;margin-bottom:1rem;font-size:.9rem">Published Chapters</h3>

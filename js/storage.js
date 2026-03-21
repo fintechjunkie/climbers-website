@@ -1,7 +1,7 @@
 /* ===== DATA STORAGE LAYER =====
    Uses IndexedDB for images (unlimited size) and localStorage for text/metadata.
    Data in localStorage (climbers_site):
-     { subtitle, chapters: [{id, title, text}], gallery: [{id, label}] }
+     { subtitle, chapters: [{id, title, parts: [{id, title, text}]}], gallery: [{id, label}] }
    Images in IndexedDB (climbers_db / images store):
      key = id string, value = base64 data URL
 */
@@ -70,12 +70,31 @@ async function clearAllImages() {
   });
 }
 
+function genId() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+}
+
 // ===== Storage API =====
 const Storage = {
   getData() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) return JSON.parse(raw);
+      if (raw) {
+        const data = JSON.parse(raw);
+        // Migrate old chapters that have `text` instead of `parts`
+        if (data.chapters) {
+          data.chapters.forEach(ch => {
+            if (!ch.parts) {
+              ch.parts = [];
+              if (ch.text) {
+                ch.parts.push({ id: genId(), title: 'Part I', text: ch.text });
+                delete ch.text;
+              }
+            }
+          });
+        }
+        return data;
+      }
     } catch (e) {
       console.error('Storage read error', e);
     }
@@ -99,13 +118,18 @@ const Storage = {
     return this.getData().chapters || [];
   },
 
+  getChapter(id) {
+    return this.getChapters().find(c => c.id === id) || null;
+  },
+
   async addChapter(chapter) {
     const data = this.getData();
-    chapter.id = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+    chapter.id = genId();
     if (chapter.image) {
       await saveImage('ch_' + chapter.id, chapter.image);
       delete chapter.image;
     }
+    if (!chapter.parts) chapter.parts = [];
     data.chapters.push(chapter);
     this.save(data);
     return chapter;
@@ -119,7 +143,9 @@ const Storage = {
         await saveImage('ch_' + id, updates.image);
         delete updates.image;
       }
-      data.chapters[idx] = { ...data.chapters[idx], ...updates };
+      // Preserve parts when updating chapter metadata
+      const existing = data.chapters[idx];
+      data.chapters[idx] = { ...existing, ...updates, parts: updates.parts || existing.parts };
       this.save(data);
     }
   },
@@ -143,6 +169,46 @@ const Storage = {
     return await getImage('ch_' + id);
   },
 
+  // --- Parts ---
+  addPart(chapterId, part) {
+    const data = this.getData();
+    const ch = data.chapters.find(c => c.id === chapterId);
+    if (!ch) return null;
+    part.id = genId();
+    ch.parts.push(part);
+    this.save(data);
+    return part;
+  },
+
+  updatePart(chapterId, partId, updates) {
+    const data = this.getData();
+    const ch = data.chapters.find(c => c.id === chapterId);
+    if (!ch) return;
+    const idx = ch.parts.findIndex(p => p.id === partId);
+    if (idx !== -1) {
+      ch.parts[idx] = { ...ch.parts[idx], ...updates };
+      this.save(data);
+    }
+  },
+
+  removePart(chapterId, partId) {
+    const data = this.getData();
+    const ch = data.chapters.find(c => c.id === chapterId);
+    if (!ch) return;
+    ch.parts = ch.parts.filter(p => p.id !== partId);
+    this.save(data);
+  },
+
+  reorderParts(chapterId, orderedIds) {
+    const data = this.getData();
+    const ch = data.chapters.find(c => c.id === chapterId);
+    if (!ch) return;
+    const map = {};
+    ch.parts.forEach(p => map[p.id] = p);
+    ch.parts = orderedIds.map(id => map[id]).filter(Boolean);
+    this.save(data);
+  },
+
   // --- Gallery ---
   getGallery() {
     return this.getData().gallery || [];
@@ -150,7 +216,7 @@ const Storage = {
 
   async addGalleryItem(item) {
     const data = this.getData();
-    item.id = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+    item.id = genId();
     if (item.image) {
       await saveImage('gal_' + item.id, item.image);
       delete item.image;

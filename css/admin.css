@@ -66,3 +66,29 @@ body.admin-body{background:#0d0d0d;color:#e0e0e0;font-family:'Segoe UI',Tahoma,G
 /* Password change section */
 .settings-section{background:#1a1a1a;border:1px solid #262626;border-radius:12px;padding:1.5rem;margin-bottom:1.5rem}
 .settings-section h3{color:#c9a84c;margin-bottom:1rem;font-size:1rem}
+
+/* Chapter form box */
+.chapter-form-box{background:#1a1a1a;border:1px solid #262626;border-radius:12px;padding:1.25rem;margin-bottom:1.5rem}
+.chapter-form-box.editing{border-color:#c9a84c}
+.form-actions{display:flex;gap:.75rem;flex-wrap:wrap}
+
+/* Parts management inside chapter list */
+.chapter-parts-section{background:#111;border:1px solid #262626;border-radius:8px;margin-top:.75rem;padding:1rem}
+.chapter-parts-section h4{color:#c9a84c;font-size:.85rem;margin-bottom:.75rem}
+.part-item{background:#1a1a1a;border:1px solid #262626;border-radius:8px;padding:.75rem;margin-bottom:.5rem;display:flex;align-items:center;gap:.75rem}
+.part-item .part-info{flex:1;min-width:0}
+.part-item .part-info strong{color:#c9a84c;font-size:.85rem}
+.part-item .part-info p{color:#666;font-size:.8rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.part-item .part-actions{display:flex;gap:.4rem;flex-shrink:0}
+.part-item .part-actions .btn{padding:.35rem .75rem;font-size:.8rem}
+
+/* Add part form */
+.add-part-form{background:#1a1a1a;border:1px solid #333;border-radius:8px;padding:1rem;margin-top:.75rem}
+.add-part-form .form-group{margin-bottom:1rem}
+.add-part-form .form-group label{font-size:.85rem}
+.add-part-form textarea{min-height:200px}
+
+/* Chapter expanded details in list */
+.chapter-detail{border:1px solid #262626;border-radius:0 0 10px 10px;margin-top:-1px;overflow:hidden}
+.chapter-detail-toggle{display:flex;align-items:center;gap:.5rem;color:#c9a84c;font-size:.8rem;cursor:pointer;background:none;border:none;padding:.5rem .75rem;font-weight:600}
+.chapter-detail-toggle:hover{color:#fff}

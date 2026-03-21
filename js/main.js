@@ -26,8 +26,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // --- Lightbox ---
   setupLightbox();
+
+  // --- Reader modal close ---
+  setupReaderModal();
 });
 
+// ===========================
+// CHAPTERS
+// ===========================
 async function renderChapters(chapters) {
   const grid = document.getElementById('chaptersGrid');
   if (!chapters || chapters.length === 0) {
@@ -39,20 +45,21 @@ async function renderChapters(chapters) {
   for (let index = 0; index < chapters.length; index++) {
     const ch = chapters[index];
 
-    // Card wrapper
-    const wrapper = document.createElement('div');
-    wrapper.className = 'chapter-wrapper';
-
-    // Clickable card
     const card = document.createElement('div');
     card.className = 'chapter-card';
     card.setAttribute('role', 'button');
     card.setAttribute('tabindex', '0');
-    card.setAttribute('aria-expanded', 'false');
 
     const img = document.createElement('img');
     const chImg = await Storage.getChapterImage(ch.id);
-    img.src = chImg || 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500" fill="%23222"><rect width="400" height="500"/><text x="50%" y="50%" fill="%23555" text-anchor="middle" font-size="24">Chapter ' + (index + 1) + '</text></svg>';
+    if (chImg) {
+      img.src = chImg;
+    } else {
+      // SVG placeholder
+      img.src = 'data:image/svg+xml,' + encodeURIComponent(
+        '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500"><rect width="400" height="500" fill="#1a1a1a"/><text x="50%" y="50%" fill="#555" text-anchor="middle" font-size="22" font-family="Georgia,serif">' + (ch.title || 'Chapter ' + (index + 1)) + '</text></svg>'
+      );
+    }
     img.alt = ch.title || 'Chapter ' + (index + 1);
     img.loading = 'lazy';
 
@@ -62,50 +69,119 @@ async function renderChapters(chapters) {
 
     card.appendChild(img);
     card.appendChild(label);
+    grid.appendChild(card);
 
-    // Expandable content
-    const content = document.createElement('div');
-    content.className = 'chapter-content';
-    content.id = 'chapter-content-' + index;
-
-    const text = document.createElement('div');
-    text.className = 'text';
-    text.textContent = ch.text || '';
-
-    const collapseBtn = document.createElement('button');
-    collapseBtn.className = 'collapse-btn';
-    collapseBtn.textContent = 'Collapse Chapter';
-
-    content.appendChild(text);
-    content.appendChild(collapseBtn);
-
-    wrapper.appendChild(card);
-    wrapper.appendChild(content);
-    grid.appendChild(wrapper);
-
-    // Toggle logic
-    function toggle() {
-      const isOpen = content.classList.contains('open');
-      if (isOpen) {
-        content.classList.remove('open');
-        card.setAttribute('aria-expanded', 'false');
-      } else {
-        content.classList.add('open');
-        card.setAttribute('aria-expanded', 'true');
-        content.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }
-    }
-
-    card.addEventListener('click', toggle);
-    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
-    collapseBtn.addEventListener('click', () => {
-      content.classList.remove('open');
-      card.setAttribute('aria-expanded', 'false');
-      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // Click opens full-screen reader modal
+    card.addEventListener('click', () => openReader(ch));
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openReader(ch); }
     });
   }
 }
 
+// ===========================
+// READER MODAL
+// ===========================
+function setupReaderModal() {
+  const modal = document.getElementById('readerModal');
+  const closeBtn = document.getElementById('readerClose');
+
+  closeBtn.addEventListener('click', closeReader);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeReader();
+  });
+}
+
+function openReader(chapter) {
+  const modal = document.getElementById('readerModal');
+  const title = document.getElementById('readerTitle');
+  const body = document.getElementById('readerBody');
+
+  title.textContent = chapter.title || 'Untitled Chapter';
+  body.innerHTML = '';
+
+  const parts = chapter.parts || [];
+  if (parts.length === 0) {
+    body.innerHTML = '<p style="color:#666;text-align:center;padding:3rem">No parts have been added to this chapter yet.</p>';
+  } else {
+    parts.forEach((part, idx) => {
+      const accordion = document.createElement('div');
+      accordion.className = 'part-accordion';
+
+      // Header
+      const header = document.createElement('div');
+      header.className = 'part-header';
+      header.setAttribute('role', 'button');
+      header.setAttribute('tabindex', '0');
+
+      const arrow = document.createElement('span');
+      arrow.className = 'part-header-arrow';
+      arrow.textContent = '\u25B6';
+
+      const partTitle = document.createElement('span');
+      partTitle.className = 'part-header-title';
+      partTitle.textContent = part.title || 'Part ' + toRoman(idx + 1);
+
+      header.appendChild(arrow);
+      header.appendChild(partTitle);
+
+      // Body
+      const partBody = document.createElement('div');
+      partBody.className = 'part-body';
+
+      const text = document.createElement('div');
+      text.className = 'text';
+      text.textContent = part.text || '';
+
+      const collapseBtn = document.createElement('button');
+      collapseBtn.className = 'collapse-btn';
+      collapseBtn.textContent = 'Collapse';
+
+      partBody.appendChild(text);
+      partBody.appendChild(collapseBtn);
+
+      accordion.appendChild(header);
+      accordion.appendChild(partBody);
+      body.appendChild(accordion);
+
+      // Toggle
+      function togglePart() {
+        const isOpen = partBody.classList.contains('open');
+        if (isOpen) {
+          partBody.classList.remove('open');
+          header.classList.remove('expanded');
+        } else {
+          partBody.classList.add('open');
+          header.classList.add('expanded');
+          partBody.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      }
+
+      header.addEventListener('click', togglePart);
+      header.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); togglePart(); }
+      });
+      collapseBtn.addEventListener('click', () => {
+        partBody.classList.remove('open');
+        header.classList.remove('expanded');
+        header.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    });
+  }
+
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeReader() {
+  const modal = document.getElementById('readerModal');
+  modal.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// ===========================
+// GALLERY
+// ===========================
 async function renderGallery(gallery) {
   const grid = document.getElementById('galleryGrid');
   if (!gallery || gallery.length === 0) {
@@ -133,14 +209,18 @@ async function renderGallery(gallery) {
       div.appendChild(lbl);
     }
 
+    const capturedSrc = galImg;
     div.addEventListener('click', () => {
-      openLightbox(galImg, item.label || '');
+      openLightbox(capturedSrc, item.label || '');
     });
 
     grid.appendChild(div);
   }
 }
 
+// ===========================
+// LIGHTBOX
+// ===========================
 function setupLightbox() {
   const lb = document.getElementById('lightbox');
   const lbClose = document.getElementById('lightboxClose');
@@ -155,4 +235,17 @@ function openLightbox(src, caption) {
   document.getElementById('lightboxImg').src = src;
   document.getElementById('lightboxCaption').textContent = caption;
   lb.classList.add('active');
+}
+
+// ===========================
+// UTILITY
+// ===========================
+function toRoman(num) {
+  const vals = [1000,900,500,400,100,90,50,40,10,9,5,4,1];
+  const syms = ['M','CM','D','CD','C','XC','L','XL','X','IX','V','IV','I'];
+  let result = '';
+  for (let i = 0; i < vals.length; i++) {
+    while (num >= vals[i]) { result += syms[i]; num -= vals[i]; }
+  }
+  return result;
 }
