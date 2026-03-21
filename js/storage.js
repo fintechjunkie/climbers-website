@@ -175,6 +175,7 @@ const Storage = {
       delete chapter.image;
     }
     if (!chapter.parts) chapter.parts = [];
+    if (!chapter.fanArt) chapter.fanArt = [];
     data.chapters.push(chapter);
     await this.save(data);
     return chapter;
@@ -288,6 +289,35 @@ const Storage = {
 
   getGalleryImageUrl(id) {
     return 'uploads/gal_' + id + '.jpg';
+  },
+
+  // ===== Fan Art =====
+  async addFanArt(chapterId, item) {
+    const data = await this.getData();
+    const ch = data.chapters.find(c => c.id === chapterId);
+    if (!ch) return null;
+    if (!ch.fanArt) ch.fanArt = [];
+    item.id = genId();
+    if (item.image) {
+      await this._uploadImage('fa_' + chapterId + '_' + item.id + '.jpg', item.image);
+      delete item.image;
+    }
+    ch.fanArt.push(item);
+    await this.save(data);
+    return item;
+  },
+
+  async removeFanArt(chapterId, artId) {
+    const data = await this.getData();
+    const ch = data.chapters.find(c => c.id === chapterId);
+    if (!ch) return;
+    ch.fanArt = (ch.fanArt || []).filter(a => a.id !== artId);
+    await this.save(data);
+    try { await this._deleteImage('fa_' + chapterId + '_' + artId + '.jpg'); } catch (e) {}
+  },
+
+  getFanArtImageUrl(chapterId, artId) {
+    return 'uploads/fa_' + chapterId + '_' + artId + '.jpg';
   },
 
   // ===== Banner / Site Settings =====

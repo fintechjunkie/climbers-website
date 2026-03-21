@@ -390,6 +390,117 @@ document.addEventListener('DOMContentLoaded', () => {
       partsSection.appendChild(addPartForm);
       wrapper.appendChild(partsSection);
 
+      // --- Fan Art section ---
+      const fanArtSection = document.createElement('div');
+      fanArtSection.className = 'chapter-parts-section';
+      fanArtSection.style.marginTop = '.5rem';
+      fanArtSection.innerHTML = '<h4>Fan Art</h4>';
+
+      // Existing fan art list
+      const fanArtList = document.createElement('div');
+      (ch.fanArt || []).forEach(art => {
+        const faItem = document.createElement('div');
+        faItem.className = 'part-item';
+        faItem.style.alignItems = 'center';
+
+        const thumb = document.createElement('img');
+        thumb.src = Storage.getFanArtImageUrl(ch.id, art.id);
+        thumb.alt = art.name || 'Fan Art';
+        thumb.style.cssText = 'width:50px;height:50px;object-fit:cover;border-radius:6px;flex-shrink:0';
+        thumb.onerror = () => { thumb.style.display = 'none'; };
+
+        const faInfo = document.createElement('div');
+        faInfo.className = 'part-info';
+        faInfo.innerHTML = '<strong>' + escapeHtml(art.name || 'Untitled') + '</strong>' +
+          (art.artist ? '<p>by ' + escapeHtml(art.artist) + '</p>' : '');
+
+        const faActions = document.createElement('div');
+        faActions.className = 'part-actions';
+        const faDelBtn = document.createElement('button');
+        faDelBtn.className = 'btn btn-danger';
+        faDelBtn.textContent = 'Delete';
+        faDelBtn.addEventListener('click', async () => {
+          if (confirm('Remove "' + (art.name || 'this fan art') + '"?')) {
+            try {
+              showLoading('Removing fan art...');
+              await Storage.removeFanArt(ch.id, art.id);
+              hideLoading();
+              await loadChaptersList();
+              showMessage('chaptersMsg', 'Fan art removed.', 'success');
+            } catch (err) {
+              hideLoading();
+              showMessage('chaptersMsg', 'Failed: ' + err.message, 'error');
+            }
+          }
+        });
+        faActions.appendChild(faDelBtn);
+
+        faItem.appendChild(thumb);
+        faItem.appendChild(faInfo);
+        faItem.appendChild(faActions);
+        fanArtList.appendChild(faItem);
+      });
+      fanArtSection.appendChild(fanArtList);
+
+      // Add fan art button + form
+      const addFanArtBtn = document.createElement('button');
+      addFanArtBtn.className = 'btn btn-secondary';
+      addFanArtBtn.textContent = '+ Add Fan Art';
+      addFanArtBtn.style.marginTop = '.5rem';
+      addFanArtBtn.style.fontSize = '.8rem';
+
+      const addFanArtForm = document.createElement('div');
+      addFanArtForm.className = 'add-part-form';
+      addFanArtForm.style.display = 'none';
+      addFanArtForm.innerHTML =
+        '<div class="form-group"><label>Image Name</label>' +
+        '<input type="text" class="fa-name-input" placeholder="e.g., Tower at Sunset"></div>' +
+        '<div class="form-group"><label>Artist</label>' +
+        '<input type="text" class="fa-artist-input" placeholder="e.g., Jane Doe"></div>' +
+        '<div class="form-group"><label>Image</label>' +
+        '<input type="file" class="fa-image-input" accept="image/*"></div>' +
+        '<div style="display:flex;gap:.5rem">' +
+        '<button class="btn btn-primary save-fa-btn" style="font-size:.85rem">Upload Fan Art</button>' +
+        '<button class="btn btn-secondary cancel-fa-btn" style="font-size:.85rem">Cancel</button></div>';
+
+      addFanArtBtn.addEventListener('click', () => {
+        addFanArtForm.style.display = '';
+        addFanArtBtn.style.display = 'none';
+        addFanArtForm.querySelector('.fa-name-input').value = '';
+        addFanArtForm.querySelector('.fa-artist-input').value = '';
+        addFanArtForm.querySelector('.fa-image-input').value = '';
+        addFanArtForm.querySelector('.fa-name-input').focus();
+      });
+
+      addFanArtForm.querySelector('.cancel-fa-btn').addEventListener('click', () => {
+        addFanArtForm.style.display = 'none';
+        addFanArtBtn.style.display = '';
+      });
+
+      addFanArtForm.querySelector('.save-fa-btn').addEventListener('click', async () => {
+        const name = addFanArtForm.querySelector('.fa-name-input').value.trim();
+        const artist = addFanArtForm.querySelector('.fa-artist-input').value.trim();
+        const fileInput = addFanArtForm.querySelector('.fa-image-input');
+
+        if (!fileInput.files.length) { alert('Please select an image.'); return; }
+
+        try {
+          showLoading('Uploading fan art...');
+          const image = await Storage.fileToDataURL(fileInput.files[0]);
+          await Storage.addFanArt(ch.id, { name, artist, image });
+          hideLoading();
+          await loadChaptersList();
+          showMessage('chaptersMsg', 'Fan art added!', 'success');
+        } catch (err) {
+          hideLoading();
+          showMessage('chaptersMsg', 'Failed: ' + err.message, 'error');
+        }
+      });
+
+      fanArtSection.appendChild(addFanArtBtn);
+      fanArtSection.appendChild(addFanArtForm);
+      wrapper.appendChild(fanArtSection);
+
       list.appendChild(wrapper);
     }
   }

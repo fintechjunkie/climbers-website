@@ -161,6 +161,65 @@ function openReader(chapter) {
     });
   }
 
+  // --- Fan Art Section ---
+  const fanArt = chapter.fanArt || [];
+  const fanSection = document.createElement('div');
+  fanSection.className = 'fan-art-section';
+
+  const fanHeading = document.createElement('h3');
+  fanHeading.className = 'fan-art-heading';
+  fanHeading.textContent = 'Fan Art';
+  fanSection.appendChild(fanHeading);
+
+  if (fanArt.length === 0) {
+    const empty = document.createElement('p');
+    empty.className = 'fan-art-empty';
+    empty.textContent = 'No fan art yet for this chapter.';
+    fanSection.appendChild(empty);
+  } else {
+    const grid = document.createElement('div');
+    grid.className = 'fan-art-grid';
+
+    fanArt.forEach(art => {
+      const card = document.createElement('div');
+      card.className = 'fan-art-card';
+
+      const img = document.createElement('img');
+      img.src = Storage.getFanArtImageUrl(chapter.id, art.id);
+      img.alt = art.name || 'Fan Art';
+      img.loading = 'lazy';
+      img.onerror = () => { card.style.display = 'none'; };
+
+      const overlay = document.createElement('div');
+      overlay.className = 'fan-art-overlay';
+
+      if (art.name) {
+        const nameEl = document.createElement('span');
+        nameEl.className = 'fan-art-name';
+        nameEl.textContent = art.name;
+        overlay.appendChild(nameEl);
+      }
+      if (art.artist) {
+        const artistEl = document.createElement('span');
+        artistEl.className = 'fan-art-artist';
+        artistEl.textContent = 'by ' + art.artist;
+        overlay.appendChild(artistEl);
+      }
+
+      card.appendChild(img);
+      card.appendChild(overlay);
+      grid.appendChild(card);
+
+      card.addEventListener('click', () => {
+        openLightbox(Storage.getFanArtImageUrl(chapter.id, art.id), art.name || '');
+      });
+    });
+
+    fanSection.appendChild(grid);
+  }
+
+  body.appendChild(fanSection);
+
   modal.classList.add('active');
   document.body.style.overflow = 'hidden';
 }
