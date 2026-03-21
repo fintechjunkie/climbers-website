@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const heroSubtitle = document.getElementById('heroSubtitle');
   const heroBannerImg = document.getElementById('heroBannerImg');
 
-  if (data.subtitle) heroSubtitle.textContent = data.subtitle;
+  if (data.subtitle) setupRotatingSubtitle(heroSubtitle, data.subtitle);
 
   // Load banner image from repo (uploads/banner.jpg)
   heroBannerImg.src = Storage.getBannerImageUrl();
@@ -245,4 +245,34 @@ function toRoman(num) {
     while (num >= vals[i]) { result += syms[i]; num -= vals[i]; }
   }
   return result;
+}
+
+// ===========================
+// ROTATING SUBTITLE
+// ===========================
+function setupRotatingSubtitle(el, text) {
+  // Split on double-newlines (paragraph breaks) or single newlines
+  const blocks = text.split(/\n\s*\n|\n/).map(s => s.trim()).filter(Boolean);
+
+  if (blocks.length <= 1) {
+    // Only one block, no rotation needed
+    el.textContent = text;
+    return;
+  }
+
+  let current = 0;
+  el.textContent = blocks[current];
+  el.style.transition = 'opacity 0.8s ease';
+
+  setInterval(() => {
+    // Fade out
+    el.style.opacity = '0';
+
+    setTimeout(() => {
+      // Switch text and fade in
+      current = (current + 1) % blocks.length;
+      el.textContent = blocks[current];
+      el.style.opacity = '1';
+    }, 800);
+  }, 10000);
 }
