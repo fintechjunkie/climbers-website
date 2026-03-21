@@ -1,17 +1,76 @@
 /* ===== DATA STORAGE LAYER =====
-   Uses localStorage to persist all site content.
-   Data structure:
-   - climbers_site: { banner, subtitle, bannerImage, chapters[], gallery[] }
-   - climbers_admin_pass: hashed admin password
+   Uses IndexedDB for images (unlimited size) and localStorage for text/metadata.
+   Data in localStorage (climbers_site):
+     { subtitle, chapters: [{id, title, text}], gallery: [{id, label}] }
+   Images in IndexedDB (climbers_db / images store):
+     key = id string, value = base64 data URL
 */
 
 const STORAGE_KEY = 'climbers_site';
 const PASS_KEY = 'climbers_admin_pass';
 const SESSION_KEY = 'climbers_admin_session';
+const DB_NAME = 'climbers_db';
+const DB_VERSION = 1;
+const IMG_STORE = 'images';
 
-// Default password is "climbers2026" — admin should change it on first login
 const DEFAULT_PASS_HASH = 'climbers2026';
 
+// ===== IndexedDB helpers =====
+function openDB() {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(DB_NAME, DB_VERSION);
+    req.onupgradeneeded = () => {
+      const db = req.result;
+      if (!db.objectStoreNames.contains(IMG_STORE)) {
+        db.createObjectStore(IMG_STORE);
+      }
+    };
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  });
+}
+
+async function saveImage(key, dataURL) {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(IMG_STORE, 'readwrite');
+    tx.objectStore(IMG_STORE).put(dataURL, key);
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+async function getImage(key) {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(IMG_STORE, 'readonly');
+    const req = tx.objectStore(IMG_STORE).get(key);
+    req.onsuccess = () => resolve(req.result || '');
+    req.onerror = () => reject(req.error);
+  });
+}
+
+async function deleteImage(key) {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(IMG_STORE, 'readwrite');
+    tx.objectStore(IMG_STORE).delete(key);
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+async function clearAllImages() {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(IMG_STORE, 'readwrite');
+    tx.objectStore(IMG_STORE).clear();
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+// ===== Storage API =====
 const Storage = {
   getData() {
     try {
@@ -24,19 +83,12 @@ const Storage = {
   },
 
   save(data) {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    } catch (e) {
-      alert('Storage limit reached! Try using smaller images (under 1MB each). Error: ' + e.message);
-      throw e;
-    }
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
   },
 
   getDefaults() {
     return {
-      banner: 'Climbers',
       subtitle: 'A story waiting to be told...',
-      bannerImage: '',
       chapters: [],
       gallery: []
     };
@@ -47,27 +99,36 @@ const Storage = {
     return this.getData().chapters || [];
   },
 
-  addChapter(chapter) {
+  async addChapter(chapter) {
     const data = this.getData();
     chapter.id = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+    if (chapter.image) {
+      await saveImage('ch_' + chapter.id, chapter.image);
+      delete chapter.image;
+    }
     data.chapters.push(chapter);
     this.save(data);
     return chapter;
   },
 
-  updateChapter(id, updates) {
+  async updateChapter(id, updates) {
     const data = this.getData();
     const idx = data.chapters.findIndex(c => c.id === id);
     if (idx !== -1) {
+      if (updates.image) {
+        await saveImage('ch_' + id, updates.image);
+        delete updates.image;
+      }
       data.chapters[idx] = { ...data.chapters[idx], ...updates };
       this.save(data);
     }
   },
 
-  removeChapter(id) {
+  async removeChapter(id) {
     const data = this.getData();
     data.chapters = data.chapters.filter(c => c.id !== id);
     this.save(data);
+    await deleteImage('ch_' + id);
   },
 
   reorderChapters(orderedIds) {
@@ -78,23 +139,32 @@ const Storage = {
     this.save(data);
   },
 
+  async getChapterImage(id) {
+    return await getImage('ch_' + id);
+  },
+
   // --- Gallery ---
   getGallery() {
     return this.getData().gallery || [];
   },
 
-  addGalleryItem(item) {
+  async addGalleryItem(item) {
     const data = this.getData();
     item.id = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+    if (item.image) {
+      await saveImage('gal_' + item.id, item.image);
+      delete item.image;
+    }
     data.gallery.push(item);
     this.save(data);
     return item;
   },
 
-  removeGalleryItem(id) {
+  async removeGalleryItem(id) {
     const data = this.getData();
     data.gallery = data.gallery.filter(g => g.id !== id);
     this.save(data);
+    await deleteImage('gal_' + id);
   },
 
   reorderGallery(orderedIds) {
@@ -105,13 +175,22 @@ const Storage = {
     this.save(data);
   },
 
+  async getGalleryImage(id) {
+    return await getImage('gal_' + id);
+  },
+
   // --- Banner / Site Settings ---
-  updateSiteSettings(settings) {
+  async updateSiteSettings(settings) {
     const data = this.getData();
-    if (settings.banner !== undefined) data.banner = settings.banner;
     if (settings.subtitle !== undefined) data.subtitle = settings.subtitle;
-    if (settings.bannerImage !== undefined) data.bannerImage = settings.bannerImage;
+    if (settings.bannerImage) {
+      await saveImage('banner', settings.bannerImage);
+    }
     this.save(data);
+  },
+
+  async getBannerImage() {
+    return await getImage('banner');
   },
 
   // --- Admin Auth ---
@@ -137,6 +216,13 @@ const Storage = {
 
   logout() {
     sessionStorage.removeItem(SESSION_KEY);
+  },
+
+  // --- Reset ---
+  async resetAll() {
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(PASS_KEY);
+    await clearAllImages();
   },
 
   // --- Utility: file to compressed base64 data URL ---

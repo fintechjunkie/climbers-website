@@ -1,6 +1,6 @@
 /* ===== PUBLIC SITE LOGIC ===== */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   const data = Storage.getData();
 
   // --- Hero banner ---
@@ -8,16 +8,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const heroBannerImg = document.getElementById('heroBannerImg');
 
   if (data.subtitle) heroSubtitle.textContent = data.subtitle;
-  if (data.bannerImage) {
-    heroBannerImg.src = data.bannerImage;
+
+  const bannerSrc = await Storage.getBannerImage();
+  if (bannerSrc) {
+    heroBannerImg.src = bannerSrc;
     heroBannerImg.style.display = 'block';
   }
 
   // --- Render chapters ---
-  renderChapters(data.chapters);
+  await renderChapters(data.chapters);
 
   // --- Render gallery ---
-  renderGallery(data.gallery);
+  await renderGallery(data.gallery);
 
   // --- Footer year ---
   document.getElementById('footerYear').textContent = new Date().getFullYear();
@@ -26,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupLightbox();
 });
 
-function renderChapters(chapters) {
+async function renderChapters(chapters) {
   const grid = document.getElementById('chaptersGrid');
   if (!chapters || chapters.length === 0) {
     grid.innerHTML = '<p class="empty-state">No chapters released yet. Stay tuned!</p>';
@@ -34,7 +36,9 @@ function renderChapters(chapters) {
   }
 
   grid.innerHTML = '';
-  chapters.forEach((ch, index) => {
+  for (let index = 0; index < chapters.length; index++) {
+    const ch = chapters[index];
+
     // Card wrapper
     const wrapper = document.createElement('div');
     wrapper.className = 'chapter-wrapper';
@@ -47,7 +51,8 @@ function renderChapters(chapters) {
     card.setAttribute('aria-expanded', 'false');
 
     const img = document.createElement('img');
-    img.src = ch.image || 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500" fill="%23222"><rect width="400" height="500"/><text x="50%" y="50%" fill="%23555" text-anchor="middle" font-size="24">Chapter ' + (index + 1) + '</text></svg>';
+    const chImg = await Storage.getChapterImage(ch.id);
+    img.src = chImg || 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="500" fill="%23222"><rect width="400" height="500"/><text x="50%" y="50%" fill="%23555" text-anchor="middle" font-size="24">Chapter ' + (index + 1) + '</text></svg>';
     img.alt = ch.title || 'Chapter ' + (index + 1);
     img.loading = 'lazy';
 
@@ -98,10 +103,10 @@ function renderChapters(chapters) {
       card.setAttribute('aria-expanded', 'false');
       card.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
-  });
+  }
 }
 
-function renderGallery(gallery) {
+async function renderGallery(gallery) {
   const grid = document.getElementById('galleryGrid');
   if (!gallery || gallery.length === 0) {
     grid.innerHTML = '<p class="empty-state">Gallery coming soon!</p>';
@@ -109,12 +114,13 @@ function renderGallery(gallery) {
   }
 
   grid.innerHTML = '';
-  gallery.forEach(item => {
+  for (const item of gallery) {
     const div = document.createElement('div');
     div.className = 'gallery-item';
 
     const img = document.createElement('img');
-    img.src = item.image;
+    const galImg = await Storage.getGalleryImage(item.id);
+    img.src = galImg || '';
     img.alt = item.label || '';
     img.loading = 'lazy';
 
@@ -128,17 +134,15 @@ function renderGallery(gallery) {
     }
 
     div.addEventListener('click', () => {
-      openLightbox(item.image, item.label || '');
+      openLightbox(galImg, item.label || '');
     });
 
     grid.appendChild(div);
-  });
+  }
 }
 
 function setupLightbox() {
   const lb = document.getElementById('lightbox');
-  const lbImg = document.getElementById('lightboxImg');
-  const lbCaption = document.getElementById('lightboxCaption');
   const lbClose = document.getElementById('lightboxClose');
 
   lbClose.addEventListener('click', () => lb.classList.remove('active'));

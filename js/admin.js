@@ -51,11 +51,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // ===========================
   // BANNER & SITE INFO
   // ===========================
-  function loadBannerSettings() {
+  async function loadBannerSettings() {
     const data = Storage.getData();
     document.getElementById('bannerSubtitle').value = data.subtitle || '';
-    if (data.bannerImage) {
-      showImagePreview('bannerImagePreview', data.bannerImage);
+    const bannerImg = await Storage.getBannerImage();
+    if (bannerImg) {
+      showImagePreview('bannerImagePreview', bannerImg);
     }
   }
 
@@ -63,22 +64,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const subtitle = document.getElementById('bannerSubtitle').value.trim();
     const fileInput = document.getElementById('bannerImageFile');
 
-    const settings = {};
-    if (subtitle) settings.subtitle = subtitle;
+    try {
+      const settings = {};
+      if (subtitle) settings.subtitle = subtitle;
 
-    if (fileInput.files.length > 0) {
-      settings.bannerImage = await Storage.fileToDataURL(fileInput.files[0]);
+      if (fileInput.files.length > 0) {
+        settings.bannerImage = await Storage.fileToDataURL(fileInput.files[0]);
+      }
+
+      await Storage.updateSiteSettings(settings);
+      showMessage('bannerMsg', 'Banner settings saved!', 'success');
+      loadBannerSettings();
+    } catch (err) {
+      showMessage('bannerMsg', 'Failed to save: ' + err.message, 'error');
     }
-
-    Storage.updateSiteSettings(settings);
-    showMessage('bannerMsg', 'Banner settings saved!', 'success');
-    loadBannerSettings();
   });
 
   // ===========================
   // CHAPTERS
   // ===========================
-  function loadChaptersList() {
+  async function loadChaptersList() {
     const chapters = Storage.getChapters();
     const list = document.getElementById('chaptersList');
 
@@ -88,7 +93,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     list.innerHTML = '';
-    chapters.forEach((ch, idx) => {
+    for (let idx = 0; idx < chapters.length; idx++) {
+      const ch = chapters[idx];
       const item = document.createElement('div');
       item.className = 'content-item';
 
@@ -115,7 +121,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Thumbnail
       const img = document.createElement('img');
-      img.src = ch.image || 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="%23222"><rect width="80" height="80"/></svg>';
+      const chImg = await Storage.getChapterImage(ch.id);
+      img.src = chImg || 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="%23222"><rect width="80" height="80"/></svg>';
       img.alt = ch.title;
 
       // Info
@@ -135,9 +142,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const delBtn = document.createElement('button');
       delBtn.className = 'btn btn-danger';
       delBtn.textContent = 'Remove';
-      delBtn.addEventListener('click', () => {
+      delBtn.addEventListener('click', async () => {
         if (confirm('Remove "' + ch.title + '"? This cannot be undone.')) {
-          Storage.removeChapter(ch.id);
+          await Storage.removeChapter(ch.id);
           loadChaptersList();
           showMessage('chaptersMsg', 'Chapter removed.', 'success');
         }
@@ -151,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
       item.appendChild(info);
       item.appendChild(actions);
       list.appendChild(item);
-    });
+    }
   }
 
   function moveChapter(fromIdx, direction) {
@@ -180,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
         image = await Storage.fileToDataURL(fileInput.files[0]);
       }
 
-      Storage.addChapter({ title, text, image });
+      await Storage.addChapter({ title, text, image });
 
       // Clear form
       document.getElementById('chapterTitle').value = '';
@@ -208,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ===========================
   // GALLERY
   // ===========================
-  function loadGalleryList() {
+  async function loadGalleryList() {
     const gallery = Storage.getGallery();
     const list = document.getElementById('galleryList');
 
@@ -218,7 +225,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     list.innerHTML = '';
-    gallery.forEach((item, idx) => {
+    for (let idx = 0; idx < gallery.length; idx++) {
+      const item = gallery[idx];
       const div = document.createElement('div');
       div.className = 'content-item';
 
@@ -244,7 +252,8 @@ document.addEventListener('DOMContentLoaded', () => {
       orderDiv.appendChild(downBtn);
 
       const img = document.createElement('img');
-      img.src = item.image;
+      const galImg = await Storage.getGalleryImage(item.id);
+      img.src = galImg || '';
       img.alt = item.label || '';
 
       const info = document.createElement('div');
@@ -257,9 +266,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const delBtn = document.createElement('button');
       delBtn.className = 'btn btn-danger';
       delBtn.textContent = 'Remove';
-      delBtn.addEventListener('click', () => {
+      delBtn.addEventListener('click', async () => {
         if (confirm('Remove this gallery item?')) {
-          Storage.removeGalleryItem(item.id);
+          await Storage.removeGalleryItem(item.id);
           loadGalleryList();
           showMessage('galleryMsg', 'Gallery item removed.', 'success');
         }
@@ -272,7 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
       div.appendChild(info);
       div.appendChild(actions);
       list.appendChild(div);
-    });
+    }
   }
 
   function moveGallery(fromIdx, direction) {
@@ -294,14 +303,18 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const image = await Storage.fileToDataURL(fileInput.files[0]);
-    Storage.addGalleryItem({ label, image });
+    try {
+      const image = await Storage.fileToDataURL(fileInput.files[0]);
+      await Storage.addGalleryItem({ label, image });
 
-    document.getElementById('galleryLabel').value = '';
-    fileInput.value = '';
+      document.getElementById('galleryLabel').value = '';
+      fileInput.value = '';
 
-    loadGalleryList();
-    showMessage('galleryMsg', 'Image added to gallery!', 'success');
+      loadGalleryList();
+      showMessage('galleryMsg', 'Image added to gallery!', 'success');
+    } catch (err) {
+      showMessage('galleryMsg', 'Failed to add image: ' + err.message, 'error');
+    }
   });
 
   // ===========================
@@ -332,11 +345,10 @@ document.addEventListener('DOMContentLoaded', () => {
     showMessage('settingsMsg', 'Password changed successfully!', 'success');
   });
 
-  document.getElementById('resetDataBtn').addEventListener('click', () => {
+  document.getElementById('resetDataBtn').addEventListener('click', async () => {
     if (confirm('Are you SURE you want to delete all content? This cannot be undone.')) {
       if (confirm('Last chance — this will remove all chapters, gallery items, and settings.')) {
-        localStorage.removeItem('climbers_site');
-        localStorage.removeItem('climbers_admin_pass');
+        await Storage.resetAll();
         showMessage('settingsMsg', 'All data has been reset.', 'success');
         loadBannerSettings();
         loadChaptersList();
