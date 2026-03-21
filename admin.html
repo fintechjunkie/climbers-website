@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Climbers — Admin</title>
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-body">
+
+  <!-- ===== LOGIN SCREEN ===== -->
+  <div class="login-wrapper" id="loginScreen">
+    <div class="login-box">
+      <h1>Climbers Admin</h1>
+      <input type="password" id="loginPass" placeholder="Enter admin password" autocomplete="current-password">
+      <button id="loginBtn">Sign In</button>
+      <p class="login-error" id="loginError">Incorrect password. Try again.</p>
+      <p style="color:#555;font-size:.75rem;margin-top:1rem">Default password: climbers2026</p>
+    </div>
+  </div>
+
+  <!-- ===== ADMIN DASHBOARD ===== -->
+  <div id="adminDashboard" style="display:none">
+
+    <header class="admin-header">
+      <h1>Climbers Admin</h1>
+      <div style="display:flex;gap:.75rem;align-items:center">
+        <a href="index.html" style="color:#777;font-size:.85rem">View Site &rarr;</a>
+        <button class="logout-btn" id="logoutBtn">Logout</button>
+      </div>
+    </header>
+
+    <div class="admin-tabs">
+      <button class="admin-tab active" data-tab="banner-panel">Banner &amp; Info</button>
+      <button class="admin-tab" data-tab="chapters-panel">Chapters</button>
+      <button class="admin-tab" data-tab="gallery-panel">Gallery</button>
+      <button class="admin-tab" data-tab="settings-panel">Settings</button>
+    </div>
+
+    <!-- ===== BANNER & INFO PANEL ===== -->
+    <div class="admin-panel active" id="banner-panel">
+      <h2 style="color:#c9a84c;margin-bottom:1.5rem">Banner &amp; Site Info</h2>
+      <div id="bannerMsg"></div>
+      <div class="form-group">
+        <label>Site Title / Logo Text</label>
+        <input type="text" id="bannerTitle" placeholder="Climbers">
+      </div>
+      <div class="form-group">
+        <label>Description / Subtitle</label>
+        <textarea id="bannerSubtitle" placeholder="Write a compelling description of your story and world..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Banner Image (optional)</label>
+        <input type="file" id="bannerImageFile" accept="image/*">
+        <p class="help-text">Displayed above the title on the homepage. Recommended: wide landscape image.</p>
+        <div id="bannerImagePreview" style="margin-top:.75rem"></div>
+      </div>
+      <button class="btn btn-primary" id="saveBannerBtn">Save Banner Settings</button>
+    </div>
+
+    <!-- ===== CHAPTERS PANEL ===== -->
+    <div class="admin-panel" id="chapters-panel">
+      <h2 style="color:#c9a84c;margin-bottom:1.5rem">Manage Chapters</h2>
+      <div id="chaptersMsg"></div>
+
+      <details style="background:#1a1a1a;border:1px solid #262626;border-radius:12px;padding:1.25rem;margin-bottom:1.5rem">
+        <summary style="color:#c9a84c;cursor:pointer;font-weight:600">+ Add New Chapter</summary>
+        <div style="margin-top:1rem">
+          <div class="form-group">
+            <label>Chapter Title</label>
+            <input type="text" id="chapterTitle" placeholder="Chapter 1: The Ascent">
+          </div>
+          <div class="form-group">
+            <label>Chapter Cover Image</label>
+            <input type="file" id="chapterImage" accept="image/*">
+            <p class="help-text">This image is what readers click to expand the chapter.</p>
+          </div>
+          <div class="form-group">
+            <label>Chapter Text</label>
+            <textarea id="chapterText" placeholder="Paste or type the full chapter text here..." style="min-height:250px"></textarea>
+          </div>
+          <button class="btn btn-primary" id="addChapterBtn">Add Chapter</button>
+        </div>
+      </details>
+
+      <h3 style="color:#999;margin-bottom:1rem;font-size:.9rem">Published Chapters</h3>
+      <div class="content-list" id="chaptersList"></div>
+    </div>
+
+    <!-- ===== GALLERY PANEL ===== -->
+    <div class="admin-panel" id="gallery-panel">
+      <h2 style="color:#c9a84c;margin-bottom:1.5rem">Manage Gallery</h2>
+      <div id="galleryMsg"></div>
+
+      <details style="background:#1a1a1a;border:1px solid #262626;border-radius:12px;padding:1.25rem;margin-bottom:1.5rem">
+        <summary style="color:#c9a84c;cursor:pointer;font-weight:600">+ Add Gallery Image</summary>
+        <div style="margin-top:1rem">
+          <div class="form-group">
+            <label>Label / Name</label>
+            <input type="text" id="galleryLabel" placeholder="e.g., Captain Vex — Character Portrait">
+          </div>
+          <div class="form-group">
+            <label>Image</label>
+            <input type="file" id="galleryImage" accept="image/*">
+          </div>
+          <button class="btn btn-primary" id="addGalleryBtn">Add to Gallery</button>
+        </div>
+      </details>
+
+      <h3 style="color:#999;margin-bottom:1rem;font-size:.9rem">Gallery Items</h3>
+      <div class="content-list" id="galleryList"></div>
+    </div>
+
+    <!-- ===== SETTINGS PANEL ===== -->
+    <div class="admin-panel" id="settings-panel">
+      <h2 style="color:#c9a84c;margin-bottom:1.5rem">Settings</h2>
+      <div id="settingsMsg"></div>
+
+      <div class="settings-section">
+        <h3>Change Admin Password</h3>
+        <div class="form-group">
+          <label>Current Password</label>
+          <input type="password" id="currentPass" autocomplete="current-password">
+        </div>
+        <div class="form-group">
+          <label>New Password</label>
+          <input type="password" id="newPass" autocomplete="new-password">
+        </div>
+        <div class="form-group">
+          <label>Confirm New Password</label>
+          <input type="password" id="confirmPass" autocomplete="new-password">
+        </div>
+        <button class="btn btn-primary" id="changePassBtn">Change Password</button>
+      </div>
+
+      <div class="settings-section">
+        <h3>Reset All Data</h3>
+        <p style="color:#777;font-size:.85rem;margin-bottom:1rem">This will delete all chapters, gallery items, and settings. This cannot be undone.</p>
+        <button class="btn btn-danger" id="resetDataBtn">Reset Everything</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

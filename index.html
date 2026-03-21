@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Climbers</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ===== HERO BANNER ===== -->
+  <section class="hero" id="hero">
+    <img class="hero-banner-img" id="heroBannerImg" src="" alt="Climbers Banner" style="display:none">
+    <h1 class="hero-logo" id="heroLogo">Climbers</h1>
+    <p class="hero-subtitle" id="heroSubtitle">A story waiting to be told...</p>
+    <div class="scroll-hint">
+      <svg viewBox="0 0 24 24"><path d="M12 16l-6-6h12z"/></svg>
+    </div>
+  </section>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="nav" id="mainNav">
+    <a href="#chapters-section">Chapters</a>
+    <a href="#gallery-section">Gallery</a>
+  </nav>
+
+  <!-- ===== CHAPTERS ===== -->
+  <section class="section" id="chapters-section">
+    <h2 class="section-title">Chapters</h2>
+    <div class="chapters-grid" id="chaptersGrid">
+      <p class="empty-state">No chapters released yet. Stay tuned!</p>
+    </div>
+  </section>
+
+  <!-- ===== GALLERY ===== -->
+  <section class="section" id="gallery-section">
+    <h2 class="section-title">Characters &amp; World</h2>
+    <div class="gallery-grid" id="galleryGrid">
+      <p class="empty-state">Gallery coming soon!</p>
+    </div>
+  </section>
+
+  <!-- ===== LIGHTBOX ===== -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose">&times;</button>
+    <img src="" alt="" id="lightboxImg">
+    <p class="lightbox-caption" id="lightboxCaption"></p>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <p>&copy; <span id="footerYear"></span> Climbers. All rights reserved.</p>
+  </footer>
+
+  <script src="js/storage.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

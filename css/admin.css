@@ -1,0 +1,68 @@
+/* ===== ADMIN PANEL STYLES ===== */
+body.admin-body{background:#0d0d0d;color:#e0e0e0;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;padding:0;margin:0}
+
+/* Login */
+.login-wrapper{min-height:100vh;display:flex;align-items:center;justify-content:center}
+.login-box{background:#1a1a1a;padding:2.5rem;border-radius:16px;border:1px solid #333;width:100%;max-width:380px;text-align:center}
+.login-box h1{color:#c9a84c;font-family:'Georgia',serif;margin-bottom:1.5rem;font-size:1.5rem}
+.login-box input{width:100%;padding:.75rem 1rem;background:#111;border:1px solid #333;border-radius:8px;color:#e0e0e0;font-size:1rem;margin-bottom:1rem}
+.login-box input:focus{outline:none;border-color:#c9a84c}
+.login-box button{width:100%;padding:.75rem;background:#c9a84c;color:#0d0d0d;border:none;border-radius:8px;font-weight:700;font-size:1rem;cursor:pointer}
+.login-box button:hover{background:#dbb95c}
+.login-error{color:#e74c3c;font-size:.85rem;margin-top:.5rem;display:none}
+
+/* Admin layout */
+.admin-header{background:#111;border-bottom:1px solid #262626;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center}
+.admin-header h1{font-family:'Georgia',serif;color:#c9a84c;font-size:1.3rem;letter-spacing:.08em}
+.admin-header .logout-btn{background:none;border:1px solid #555;color:#999;padding:.4rem 1rem;border-radius:6px;cursor:pointer;font-size:.85rem}
+.admin-header .logout-btn:hover{border-color:#c9a84c;color:#c9a84c}
+
+.admin-tabs{display:flex;background:#111;border-bottom:1px solid #262626;padding:0 2rem;gap:0}
+.admin-tab{padding:.75rem 1.5rem;background:none;border:none;color:#777;cursor:pointer;font-size:.9rem;font-weight:600;border-bottom:2px solid transparent;transition:all .2s}
+.admin-tab:hover{color:#ccc}
+.admin-tab.active{color:#c9a84c;border-bottom-color:#c9a84c}
+
+.admin-panel{display:none;max-width:900px;margin:2rem auto;padding:0 1.5rem}
+.admin-panel.active{display:block}
+
+/* Form elements */
+.form-group{margin-bottom:1.5rem}
+.form-group label{display:block;color:#c9a84c;font-weight:600;margin-bottom:.5rem;font-size:.9rem}
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group textarea{width:100%;padding:.75rem 1rem;background:#111;border:1px solid #333;border-radius:8px;color:#e0e0e0;font-size:1rem;font-family:inherit}
+.form-group textarea{min-height:150px;resize:vertical}
+.form-group input[type="file"]{color:#999}
+.form-group input:focus,.form-group textarea:focus{outline:none;border-color:#c9a84c}
+
+.btn{padding:.65rem 1.5rem;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-size:.9rem;transition:background .2s}
+.btn-primary{background:#c9a84c;color:#0d0d0d}
+.btn-primary:hover{background:#dbb95c}
+.btn-danger{background:#c0392b;color:#fff}
+.btn-danger:hover{background:#e74c3c}
+.btn-secondary{background:#333;color:#ccc}
+.btn-secondary:hover{background:#444}
+
+/* Content list */
+.content-list{margin-top:1.5rem}
+.content-item{background:#1a1a1a;border:1px solid #262626;border-radius:10px;padding:1rem;margin-bottom:1rem;display:flex;align-items:center;gap:1rem}
+.content-item img{width:80px;height:80px;object-fit:cover;border-radius:8px;flex-shrink:0}
+.content-item .item-info{flex:1;min-width:0}
+.content-item .item-info h3{color:#c9a84c;font-size:1rem;margin-bottom:.25rem}
+.content-item .item-info p{color:#777;font-size:.85rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.content-item .item-actions{display:flex;gap:.5rem;flex-shrink:0}
+
+.admin-message{padding:.75rem 1rem;border-radius:8px;margin-bottom:1rem;font-size:.9rem;display:none}
+.admin-message.success{display:block;background:rgba(39,174,96,.15);color:#27ae60;border:1px solid rgba(39,174,96,.3)}
+.admin-message.error{display:block;background:rgba(231,76,60,.15);color:#e74c3c;border:1px solid rgba(231,76,60,.3)}
+
+.help-text{color:#666;font-size:.8rem;margin-top:.25rem}
+
+/* order controls */
+.order-controls{display:flex;flex-direction:column;gap:2px;margin-right:.5rem}
+.order-btn{background:#262626;border:1px solid #333;color:#999;width:28px;height:28px;border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.75rem;padding:0}
+.order-btn:hover{background:#333;color:#c9a84c;border-color:#c9a84c}
+
+/* Password change section */
+.settings-section{background:#1a1a1a;border:1px solid #262626;border-radius:12px;padding:1.5rem;margin-bottom:1.5rem}
+.settings-section h3{color:#c9a84c;margin-bottom:1rem;font-size:1rem}
