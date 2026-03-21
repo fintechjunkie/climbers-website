@@ -27,7 +27,7 @@ img{max-width:100%;display:block}
 .chapters-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2rem}
 .chapter-card{background:#1a1a1a;border-radius:12px;overflow:hidden;cursor:pointer;transition:transform .25s,box-shadow .25s;border:1px solid #262626}
 .chapter-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(201,168,76,.15)}
-.chapter-card img{width:100%;aspect-ratio:3/4;object-fit:cover;transition:filter .3s}
+.chapter-card img{width:100%;aspect-ratio:1/1;object-fit:contain;background:#111;transition:filter .3s}
 .chapter-card:hover img{filter:brightness(1.1)}
 .chapter-card .card-label{padding:.75rem 1rem;font-weight:600;color:#c9a84c;text-align:center;font-size:1.05rem}
 
@@ -59,7 +59,7 @@ img{max-width:100%;display:block}
 .gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.5rem}
 .gallery-item{position:relative;border-radius:12px;overflow:hidden;cursor:pointer;border:1px solid #262626;transition:transform .25s}
 .gallery-item:hover{transform:scale(1.03)}
-.gallery-item img{width:100%;aspect-ratio:1;object-fit:cover}
+.gallery-item img{width:100%;aspect-ratio:7/10;object-fit:contain;background:#111}
 .gallery-item .gallery-label{position:absolute;bottom:0;left:0;right:0;padding:.6rem;background:linear-gradient(transparent,rgba(0,0,0,.85));color:#fff;font-size:.85rem;text-align:center;font-weight:500}
 
 /* ===== LIGHTBOX ===== */
