@@ -32,6 +32,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   // --- Reader modal close ---
   setupReaderModal();
 
+  // --- Video overlay ---
+  setupVideoOverlay();
+
   // --- Ambient audio ---
   setupAmbientAudio();
 });
@@ -347,19 +350,19 @@ function openGalleryExpand(item) {
     fields[i].id = 'galleryExpandField' + (i + 1);
   }
 
-  // Video
-  let videoContainer = clone.querySelector('.gallery-expand-video');
-  if (!videoContainer) {
-    videoContainer = document.createElement('div');
-    videoContainer.className = 'gallery-expand-video';
-    clone.querySelector('.gallery-expand-info').appendChild(videoContainer);
+  // Video badge
+  let videoBadge = clone.querySelector('.video-badge');
+  if (!videoBadge) {
+    videoBadge = document.createElement('div');
+    videoBadge.className = 'video-badge';
+    videoBadge.innerHTML = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> Watch Video';
+    clone.querySelector('.gallery-expand-info').appendChild(videoBadge);
   }
   if (item.hasVideo) {
-    videoContainer.innerHTML = '<video controls playsinline style="width:100%;max-width:400px;border-radius:8px;margin-top:1rem;border:1px solid #333"><source src="' + Storage.getGalleryVideoUrl(item.id) + '" type="video/mp4">Your browser does not support video.</video>';
-    videoContainer.style.display = '';
+    videoBadge.style.display = '';
+    videoBadge.onclick = () => { openVideoOverlay(Storage.getGalleryVideoUrl(item.id)); };
   } else {
-    videoContainer.innerHTML = '';
-    videoContainer.style.display = 'none';
+    videoBadge.style.display = 'none';
   }
 
   modal.classList.add('active');
@@ -383,6 +386,47 @@ function toRoman(num) {
     while (num >= vals[i]) { result += syms[i]; num -= vals[i]; }
   }
   return result;
+}
+
+// ===========================
+// VIDEO OVERLAY
+// ===========================
+function setupVideoOverlay() {
+  const overlay = document.getElementById('videoOverlay');
+  const player = document.getElementById('videoOverlayPlayer');
+  const closeBtn = document.getElementById('videoOverlayClose');
+  const replayBtn = document.getElementById('videoOverlayReplay');
+
+  closeBtn.addEventListener('click', closeVideoOverlay);
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) closeVideoOverlay();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && overlay.classList.contains('active')) closeVideoOverlay();
+  });
+
+  replayBtn.addEventListener('click', () => {
+    player.currentTime = 0;
+    player.play();
+  });
+}
+
+function openVideoOverlay(src) {
+  const overlay = document.getElementById('videoOverlay');
+  const player = document.getElementById('videoOverlayPlayer');
+  player.src = src;
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  player.play().catch(() => {});
+}
+
+function closeVideoOverlay() {
+  const overlay = document.getElementById('videoOverlay');
+  const player = document.getElementById('videoOverlayPlayer');
+  player.pause();
+  player.src = '';
+  overlay.classList.remove('active');
+  document.body.style.overflow = '';
 }
 
 // ===========================

@@ -118,6 +118,20 @@ img{max-width:100%;display:block}
 .gallery-expand-name{font-family:'Orbitron',sans-serif;font-size:1.2rem;color:#c9a84c;margin-bottom:1rem;letter-spacing:.04em}
 .gallery-expand-field{color:#bbb;font-size:.95rem;padding:.5rem 0 .5rem .75rem;border-left:2px solid #c9a84c;margin-bottom:.75rem;line-height:1.5}
 
+/* Video play badge on expanded card */
+.video-badge{display:inline-flex;align-items:center;gap:.4rem;margin-top:1rem;padding:.5rem 1rem;background:rgba(0,255,255,.1);border:1px solid rgba(0,255,255,.35);border-radius:8px;color:#0ff;font-family:'Orbitron',sans-serif;font-size:.7rem;letter-spacing:.06em;cursor:pointer;transition:all .3s;text-transform:uppercase}
+.video-badge:hover{background:rgba(0,255,255,.2);border-color:rgba(0,255,255,.6);box-shadow:0 0 12px rgba(0,255,255,.25)}
+.video-badge svg{width:14px;height:14px;fill:#0ff}
+
+/* Fullscreen video overlay */
+.video-overlay{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.97);display:none;flex-direction:column;align-items:center;justify-content:center;padding:1rem}
+.video-overlay.active{display:flex}
+.video-overlay video{max-width:90vw;max-height:80vh;border-radius:12px;box-shadow:0 0 40px rgba(0,255,255,.15)}
+.video-overlay-close{position:fixed;top:1.25rem;right:1.5rem;font-size:2.2rem;color:#fff;cursor:pointer;background:none;border:none;z-index:2001;font-family:'Orbitron',sans-serif;transition:color .2s}
+.video-overlay-close:hover{color:#c9a84c}
+.video-overlay-replay{margin-top:1rem;padding:.5rem 1.5rem;background:transparent;border:1px solid #c9a84c;color:#c9a84c;border-radius:8px;font-family:'Orbitron',sans-serif;font-size:.8rem;cursor:pointer;transition:all .2s;text-transform:uppercase;letter-spacing:.06em}
+.video-overlay-replay:hover{background:rgba(201,168,76,.15);box-shadow:0 0 12px rgba(201,168,76,.2)}
+
 /* Mobile: stack vertically */
 @media(max-width:700px){
   .gallery-expand{padding:1rem;align-items:flex-start;padding-top:4rem}
