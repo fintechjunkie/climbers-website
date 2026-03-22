@@ -141,15 +141,15 @@
       "id": "mn0n1yvmxua4"
     },
     {
-      "label": "CARDINAL THORNE",
-      "id": "mn0n2pgxj9vl"
-    },
-    {
       "label": "Zebra",
       "field1": "Synthetic",
       "field2": "First Appearance - Chapter 10",
       "field3": "Zebra climbed with a team and is now solo. The locations of its companions are unknown but considered lost.",
       "id": "mn1ryaghznwe"
+    },
+    {
+      "label": "CARDINAL THORNE",
+      "id": "mn0n2pgxj9vl"
     }
   ]
 }
