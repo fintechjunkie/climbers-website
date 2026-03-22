@@ -272,6 +272,19 @@ const Storage = {
     return item;
   },
 
+  async updateGalleryItem(id, updates) {
+    const data = await this.getData();
+    const idx = data.gallery.findIndex(g => g.id === id);
+    if (idx !== -1) {
+      if (updates.image) {
+        await this._uploadImage('gal_' + id + '.jpg', updates.image);
+        delete updates.image;
+      }
+      data.gallery[idx] = { ...data.gallery[idx], ...updates };
+      await this.save(data);
+    }
+  },
+
   async removeGalleryItem(id) {
     const data = await this.getData();
     data.gallery = data.gallery.filter(g => g.id !== id);

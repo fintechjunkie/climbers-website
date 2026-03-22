@@ -687,6 +687,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const actions = document.createElement('div');
       actions.className = 'item-actions';
 
+      const editBtn = document.createElement('button');
+      editBtn.className = 'btn btn-secondary';
+      editBtn.textContent = 'Edit';
+      editBtn.addEventListener('click', () => startEditGalleryItem(item));
+
       const delBtn = document.createElement('button');
       delBtn.className = 'btn btn-danger';
       delBtn.textContent = 'Remove';
@@ -705,6 +710,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
 
+      actions.appendChild(editBtn);
       actions.appendChild(delBtn);
       div.appendChild(orderDiv);
       div.appendChild(img);
@@ -729,6 +735,68 @@ document.addEventListener('DOMContentLoaded', () => {
       hideLoading();
       showMessage('galleryMsg', 'Failed: ' + err.message, 'error');
     }
+  }
+
+  function startEditGalleryItem(item) {
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;padding:2rem';
+
+    const box = document.createElement('div');
+    box.style.cssText = 'background:#1a1a1a;border:1px solid #c9a84c;border-radius:12px;padding:1.5rem;width:100%;max-width:500px;max-height:90vh;overflow-y:auto';
+
+    box.innerHTML =
+      '<h3 style="color:#c9a84c;margin-bottom:1rem">Edit Gallery Item</h3>' +
+      '<div class="form-group"><label style="color:#c9a84c;font-weight:600;font-size:.9rem">Label / Name</label>' +
+      '<input type="text" id="editGalLabel" style="width:100%;padding:.75rem 1rem;background:#111;border:1px solid #333;border-radius:8px;color:#e0e0e0;font-size:1rem" value="' + escapeAttr(item.label || '') + '"></div>' +
+      '<div class="form-group"><label style="color:#c9a84c;font-weight:600;font-size:.9rem">Detail 1</label>' +
+      '<input type="text" id="editGalField1" style="width:100%;padding:.75rem 1rem;background:#111;border:1px solid #333;border-radius:8px;color:#e0e0e0;font-size:1rem" value="' + escapeAttr(item.field1 || '') + '"></div>' +
+      '<div class="form-group"><label style="color:#c9a84c;font-weight:600;font-size:.9rem">Detail 2</label>' +
+      '<input type="text" id="editGalField2" style="width:100%;padding:.75rem 1rem;background:#111;border:1px solid #333;border-radius:8px;color:#e0e0e0;font-size:1rem" value="' + escapeAttr(item.field2 || '') + '"></div>' +
+      '<div class="form-group"><label style="color:#c9a84c;font-weight:600;font-size:.9rem">Detail 3</label>' +
+      '<input type="text" id="editGalField3" style="width:100%;padding:.75rem 1rem;background:#111;border:1px solid #333;border-radius:8px;color:#e0e0e0;font-size:1rem" value="' + escapeAttr(item.field3 || '') + '"></div>' +
+      '<div class="form-group"><label style="color:#c9a84c;font-weight:600;font-size:.9rem">Replace Image <span style="color:#666;font-weight:400">(optional)</span></label>' +
+      '<input type="file" id="editGalImage" accept="image/*" style="color:#e0e0e0"></div>' +
+      '<div style="display:flex;gap:.75rem;margin-top:1rem">' +
+      '<button class="btn btn-primary" id="saveEditGalBtn">Save Changes</button>' +
+      '<button class="btn btn-secondary" id="cancelEditGalBtn">Cancel</button></div>';
+
+    overlay.appendChild(box);
+    document.body.appendChild(overlay);
+
+    document.getElementById('editGalLabel').focus();
+
+    document.getElementById('saveEditGalBtn').addEventListener('click', async () => {
+      const updates = {
+        label: document.getElementById('editGalLabel').value.trim(),
+        field1: document.getElementById('editGalField1').value.trim(),
+        field2: document.getElementById('editGalField2').value.trim(),
+        field3: document.getElementById('editGalField3').value.trim()
+      };
+
+      const fileInput = document.getElementById('editGalImage');
+      try {
+        showLoading('Saving gallery item...');
+        if (fileInput.files.length > 0) {
+          updates.image = await Storage.fileToDataURL(fileInput.files[0]);
+        }
+        await Storage.updateGalleryItem(item.id, updates);
+        hideLoading();
+        document.body.removeChild(overlay);
+        await loadGalleryList();
+        showMessage('galleryMsg', 'Gallery item updated!', 'success');
+      } catch (err) {
+        hideLoading();
+        showMessage('galleryMsg', 'Failed: ' + err.message, 'error');
+      }
+    });
+
+    document.getElementById('cancelEditGalBtn').addEventListener('click', () => {
+      document.body.removeChild(overlay);
+    });
+
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) document.body.removeChild(overlay);
+    });
   }
 
   document.getElementById('addGalleryBtn').addEventListener('click', async () => {
