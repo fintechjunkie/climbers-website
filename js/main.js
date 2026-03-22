@@ -37,6 +37,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // --- Ambient audio ---
   setupAmbientAudio();
+
+  // --- Questron ---
+  if (data.questron && data.questron.enabled) {
+    setupQuestron(data.questron);
+  }
 });
 
 // ===========================
@@ -512,4 +517,134 @@ function setupRotatingSubtitle(el, text) {
   }
 
   typeNext();
+}
+
+// ===========================
+// QUESTRON AI TERMINAL
+// ===========================
+let questronKbCache = null;
+let questronHistory = [];
+
+function setupQuestron(config) {
+  // Show nav link and section
+  const navLink = document.getElementById('questronNavLink');
+  if (navLink) navLink.style.display = '';
+  const section = document.getElementById('questron-section');
+  if (section) section.style.display = '';
+
+  // Load header image
+  const headerImg = document.getElementById('questronHeaderImg');
+  headerImg.src = Storage.getQuestronHeaderUrl() + '?t=' + Date.now();
+  headerImg.onload = () => { headerImg.style.display = ''; };
+  headerImg.onerror = () => { headerImg.style.display = 'none'; };
+
+  // Wire enter button
+  document.getElementById('questronEnterBtn').addEventListener('click', () => {
+    openQuestronTerminal();
+  });
+
+  // Wire close button
+  document.getElementById('questronClose').addEventListener('click', closeQuestronTerminal);
+
+  // ESC to close
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && document.getElementById('questronTerminal').classList.contains('active')) {
+      closeQuestronTerminal();
+    }
+  });
+
+  // Wire input form
+  document.getElementById('qtInputForm').addEventListener('submit', e => {
+    e.preventDefault();
+    sendQuestronMessage(config.workerUrl);
+  });
+}
+
+function openQuestronTerminal() {
+  const terminal = document.getElementById('questronTerminal');
+  terminal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('qtInput').focus();
+}
+
+function closeQuestronTerminal() {
+  const terminal = document.getElementById('questronTerminal');
+  terminal.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+async function sendQuestronMessage(workerUrl) {
+  const input = document.getElementById('qtInput');
+  const messages = document.getElementById('qtMessages');
+  const question = input.value.trim();
+  if (!question) return;
+
+  input.value = '';
+
+  // Show user's question
+  const userLine = document.createElement('div');
+  userLine.className = 'qt-line qt-user';
+  userLine.textContent = question;
+  messages.appendChild(userLine);
+
+  // Show processing indicator
+  const processing = document.createElement('div');
+  processing.className = 'qt-processing';
+  processing.textContent = 'PROCESSING';
+  messages.appendChild(processing);
+  messages.scrollTop = messages.scrollHeight;
+
+  try {
+    // Fetch knowledge base (cache after first load)
+    if (questronKbCache === null) {
+      try {
+        const kbResponse = await fetch(Storage.getQuestronKbUrl() + '?t=' + Date.now());
+        if (kbResponse.ok) {
+          questronKbCache = await kbResponse.text();
+        } else {
+          questronKbCache = '';
+        }
+      } catch (e) {
+        questronKbCache = '';
+      }
+    }
+
+    // Call the worker
+    const response = await fetch(workerUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        question: question,
+        knowledgeBase: questronKbCache,
+        history: questronHistory
+      })
+    });
+
+    const data = await response.json();
+
+    // Remove processing indicator
+    if (processing.parentNode) processing.remove();
+
+    // Show answer
+    const botLine = document.createElement('div');
+    botLine.className = 'qt-line qt-bot';
+    botLine.textContent = data.answer;
+    messages.appendChild(botLine);
+
+    // Save to history for context
+    questronHistory.push({ question: question, answer: data.answer });
+    if (questronHistory.length > 10) questronHistory.shift();
+
+  } catch (err) {
+    // Remove processing indicator
+    if (processing.parentNode) processing.remove();
+
+    const errorLine = document.createElement('div');
+    errorLine.className = 'qt-line qt-error';
+    errorLine.textContent = 'TRANSMISSION ERROR: CONNECTION TO WORKER FAILED. CHECK TERMINAL CONFIGURATION.';
+    messages.appendChild(errorLine);
+  }
+
+  messages.scrollTop = messages.scrollHeight;
+  input.focus();
 }

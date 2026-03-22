@@ -54,6 +54,7 @@
       <button class="admin-tab active" data-tab="banner-panel">Banner &amp; Info</button>
       <button class="admin-tab" data-tab="chapters-panel">Chapters</button>
       <button class="admin-tab" data-tab="gallery-panel">Gallery</button>
+      <button class="admin-tab" data-tab="questron-panel">Questron</button>
       <button class="admin-tab" data-tab="settings-panel">Settings</button>
     </div>
 
@@ -146,6 +147,41 @@
 
       <h3 style="color:#999;margin-bottom:1rem;font-size:.9rem">Gallery Items</h3>
       <div class="content-list" id="galleryList"></div>
+    </div>
+
+    <!-- ===== QUESTRON PANEL ===== -->
+    <div class="admin-panel" id="questron-panel">
+      <h2 style="color:#c9a84c;margin-bottom:1.5rem">Questron AI Terminal</h2>
+      <div id="questronMsg"></div>
+
+      <div class="form-group" style="margin-bottom:1.5rem">
+        <label style="display:flex;align-items:center;gap:.75rem;cursor:pointer">
+          <input type="checkbox" id="questronEnabled">
+          <span>Enable Questron on public site</span>
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label>Cloudflare Worker URL</label>
+        <input type="text" id="questronWorkerUrl" placeholder="https://questron-worker.your-name.workers.dev">
+        <p style="color:#666;font-size:.8rem;margin-top:.25rem">The URL of your deployed Cloudflare Worker that proxies Claude API requests. See <code>worker/questron-worker.js</code> in the repo for setup instructions.</p>
+      </div>
+
+      <div class="form-group">
+        <label>Header Image</label>
+        <input type="file" id="questronHeaderImage" accept="image/*">
+        <p style="color:#666;font-size:.8rem;margin-top:.25rem">Displayed at the top of the Questron section on the public site.</p>
+        <div id="questronHeaderPreview" style="margin-top:.75rem"></div>
+      </div>
+
+      <div class="form-group">
+        <label>Knowledge Base (.txt file)</label>
+        <input type="file" id="questronKbFile" accept=".txt,text/plain">
+        <p style="color:#666;font-size:.8rem;margin-top:.25rem">Upload a text file with world lore, character info, and facts. Questron will reference this when answering questions.</p>
+        <div id="questronKbStatus" style="margin-top:.5rem;color:#888;font-size:.85rem"></div>
+      </div>
+
+      <button class="btn btn-primary" id="saveQuestronBtn">Save Questron Settings</button>
     </div>
 
     <!-- ===== SETTINGS PANEL ===== -->

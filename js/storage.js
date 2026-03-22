@@ -153,7 +153,7 @@ const Storage = {
   },
 
   getDefaults() {
-    return { subtitle: 'A story waiting to be told...', chapters: [], gallery: [] };
+    return { subtitle: 'A story waiting to be told...', chapters: [], gallery: [], questron: { enabled: false, workerUrl: '' } };
   },
 
   // ===== Chapters =====
@@ -335,6 +335,29 @@ const Storage = {
 
   getFanArtImageUrl(chapterId, artId) {
     return 'uploads/fa_' + chapterId + '_' + artId + '.jpg';
+  },
+
+  // ===== Questron =====
+  async updateQuestronSettings(settings) {
+    const data = await this.getData();
+    if (!data.questron) data.questron = { enabled: false, workerUrl: '' };
+    if (settings.enabled !== undefined) data.questron.enabled = settings.enabled;
+    if (settings.workerUrl !== undefined) data.questron.workerUrl = settings.workerUrl;
+    if (settings.headerImage) {
+      await this._uploadImage('questron_header.jpg', settings.headerImage);
+    }
+    if (settings.kbFile) {
+      await this._uploadImage('questron_kb.txt', settings.kbFile);
+    }
+    await this.save(data);
+  },
+
+  getQuestronHeaderUrl() {
+    return 'uploads/questron_header.jpg';
+  },
+
+  getQuestronKbUrl() {
+    return 'uploads/questron_kb.txt';
   },
 
   // ===== Banner / Site Settings =====

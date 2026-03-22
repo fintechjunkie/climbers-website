@@ -161,6 +161,61 @@ img{max-width:100%;display:block}
 .fan-art-card .fan-art-overlay .fan-art-artist{color:#c9a84c;font-size:.7rem}
 .fan-art-empty{color:#555;font-style:italic;font-size:.9rem}
 
+/* ===== QUESTRON SECTION ===== */
+.questron-intro{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.5rem}
+.questron-header-img{max-width:100%;max-height:300px;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.6),0 0 20px rgba(0,255,255,.08)}
+.questron-desc{max-width:600px;color:#888;font-size:.95rem;line-height:1.7}
+.questron-enter-btn{font-family:'Orbitron',sans-serif;font-size:.85rem;letter-spacing:.1em;padding:.75rem 2rem;background:transparent;border:1px solid rgba(0,255,255,.5);color:#0ff;border-radius:8px;cursor:pointer;transition:all .3s;text-transform:uppercase}
+.questron-enter-btn:hover{background:rgba(0,255,255,.1);box-shadow:0 0 20px rgba(0,255,255,.3),0 0 40px rgba(0,255,255,.1);border-color:#0ff}
+
+/* ===== QUESTRON TERMINAL ===== */
+.questron-terminal{position:fixed;inset:0;z-index:1200;background:#050808;display:none;flex-direction:column;overflow:hidden}
+.questron-terminal.active{display:flex}
+
+/* Terminal header */
+.qt-header{display:flex;justify-content:space-between;align-items:center;padding:.75rem 1.5rem;background:#0a0e0e;border-bottom:1px solid rgba(0,255,255,.25);flex-shrink:0}
+.qt-title{font-family:'Orbitron',sans-serif;font-size:.85rem;color:#0ff;letter-spacing:.1em}
+.qt-version{color:rgba(0,255,255,.4);font-size:.65rem}
+.qt-close{background:none;border:1px solid rgba(0,255,255,.3);color:#0ff;width:36px;height:36px;border-radius:6px;font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.qt-close:hover{border-color:#0ff;background:rgba(0,255,255,.1);box-shadow:0 0 10px rgba(0,255,255,.3)}
+
+/* Message area */
+.qt-messages{flex:1;overflow-y:auto;padding:1.5rem;position:relative}
+.qt-messages::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,255,255,.02) 2px,rgba(0,255,255,.02) 4px);pointer-events:none;z-index:1}
+
+/* Message lines */
+.qt-line{margin-bottom:1.25rem;font-family:'Courier New',Courier,monospace;font-size:.9rem;line-height:1.7;position:relative;z-index:2;padding-left:.5rem}
+.qt-line.qt-user{color:#0ff}
+.qt-line.qt-user::before{content:'> ';color:rgba(0,255,255,.5)}
+.qt-line.qt-bot{color:#00e676;padding-left:0}
+.qt-line.qt-bot::before{content:'QUESTRON: ';color:rgba(0,230,118,.6);font-weight:bold;font-size:.8rem}
+.qt-line.qt-system{color:#c9a84c;font-style:italic;font-size:.8rem;opacity:.8}
+.qt-line.qt-error{color:#ff5252;font-size:.8rem}
+
+/* Processing animation */
+.qt-processing{color:rgba(0,255,255,.6);font-family:'Courier New',monospace;font-size:.85rem}
+.qt-processing::after{content:'...';animation:processDots 1.5s step-end infinite}
+@keyframes processDots{0%{content:'.'}33%{content:'..'}66%{content:'...'}100%{content:'.'}}
+
+/* Input bar */
+.qt-input-bar{display:flex;align-items:center;gap:.5rem;padding:.75rem 1rem;background:#0a0e0e;border-top:1px solid rgba(0,255,255,.25);flex-shrink:0}
+.qt-prompt-char{color:#0ff;font-family:'Courier New',monospace;font-size:1.1rem;flex-shrink:0;opacity:.6}
+#qtInput{flex:1;background:transparent;border:none;outline:none;color:#0ff;font-family:'Courier New',monospace;font-size:.9rem;caret-color:#0ff;padding:.25rem 0}
+#qtInput::placeholder{color:rgba(0,255,255,.25)}
+.qt-send-btn{font-family:'Orbitron',sans-serif;font-size:.65rem;letter-spacing:.08em;padding:.4rem .75rem;background:transparent;border:1px solid rgba(0,255,255,.4);color:#0ff;border-radius:5px;cursor:pointer;transition:all .2s;text-transform:uppercase;flex-shrink:0}
+.qt-send-btn:hover{background:rgba(0,255,255,.1);box-shadow:0 0 8px rgba(0,255,255,.25)}
+
+/* Mobile terminal */
+@media(max-width:600px){
+  .qt-header{padding:.5rem 1rem}
+  .qt-title{font-size:.7rem}
+  .qt-messages{padding:1rem}
+  .qt-line{font-size:.8rem}
+  .qt-input-bar{padding:.5rem .75rem}
+  #qtInput{font-size:.8rem}
+  .qt-send-btn{font-size:.55rem;padding:.35rem .5rem}
+}
+
 /* ===== LIGHTBOX ===== */
 .lightbox{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;padding:2rem}
 .lightbox.active{display:flex}

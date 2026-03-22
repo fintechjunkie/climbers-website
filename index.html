@@ -31,6 +31,7 @@
   <nav class="nav" id="mainNav">
     <a href="#chapters-section">Chapters</a>
     <a href="#gallery-section">Gallery</a>
+    <a href="#questron-section" id="questronNavLink" style="display:none">Questron</a>
     <button class="nav-audio-btn hidden" id="audioToggle" title="Toggle background music">
       <span id="audioIconOff">&#128263; Sound</span>
       <span id="audioIconOn" style="display:none">&#128266; Sound</span>
@@ -61,6 +62,32 @@
       <p class="empty-state">Gallery coming soon!</p>
     </div>
   </section>
+
+  <!-- ===== QUESTRON ===== -->
+  <section class="section" id="questron-section" style="display:none">
+    <h2 class="section-title">Questron</h2>
+    <div class="questron-intro">
+      <img id="questronHeaderImg" src="" alt="Questron" class="questron-header-img" style="display:none">
+      <p class="questron-desc">Questron is a Synthetic intelligence unit that has witnessed the full history of this world. Access the terminal to query the archives.</p>
+      <button class="questron-enter-btn" id="questronEnterBtn">&#9654; ENTER TERMINAL</button>
+    </div>
+  </section>
+
+  <!-- ===== QUESTRON TERMINAL MODAL ===== -->
+  <div class="questron-terminal" id="questronTerminal">
+    <div class="qt-header">
+      <span class="qt-title">QUESTRON TERMINAL <span class="qt-version">v2.1</span></span>
+      <button class="qt-close" id="questronClose">&times;</button>
+    </div>
+    <div class="qt-messages" id="qtMessages">
+      <div class="qt-line qt-system">SYSTEM ONLINE. DESIGNATION: QST-7. AWAITING QUERY.</div>
+    </div>
+    <form class="qt-input-bar" id="qtInputForm" autocomplete="off">
+      <span class="qt-prompt-char">&gt;</span>
+      <input type="text" id="qtInput" placeholder="Enter your question..." autocomplete="off" spellcheck="false">
+      <button type="submit" class="qt-send-btn">TRANSMIT</button>
+    </form>
+  </div>
 
   <!-- ===== LIGHTBOX (fan art) ===== -->
   <div class="lightbox" id="lightbox">

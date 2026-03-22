@@ -53,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     await loadChaptersList();
     await loadGalleryList();
     loadAudioSettings();
+    loadQuestronSettings();
   }
 
   // --- Logout ---
@@ -889,6 +890,78 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (err) {
       hideLoading();
       showMessage('galleryMsg', 'Failed to add image: ' + err.message, 'error');
+    }
+  });
+
+  // ===========================
+  // QUESTRON
+  // ===========================
+  async function loadQuestronSettings() {
+    const data = await Storage.getData();
+    const config = data.questron || { enabled: false, workerUrl: '' };
+
+    document.getElementById('questronEnabled').checked = config.enabled;
+    document.getElementById('questronWorkerUrl').value = config.workerUrl || '';
+
+    // Header image preview
+    const preview = document.getElementById('questronHeaderPreview');
+    preview.innerHTML = '';
+    const img = document.createElement('img');
+    img.src = Storage.getQuestronHeaderUrl() + '?t=' + Date.now();
+    img.style.cssText = 'max-height:150px;border-radius:8px';
+    img.onload = () => { preview.appendChild(img); };
+
+    // KB status
+    const kbStatus = document.getElementById('questronKbStatus');
+    try {
+      const resp = await fetch(Storage.getQuestronKbUrl() + '?t=' + Date.now(), { method: 'HEAD' });
+      kbStatus.textContent = resp.ok ? 'Knowledge base uploaded.' : 'No knowledge base uploaded yet.';
+      kbStatus.style.color = resp.ok ? '#0f0' : '#888';
+    } catch (e) {
+      kbStatus.textContent = 'No knowledge base uploaded yet.';
+      kbStatus.style.color = '#888';
+    }
+  }
+
+  document.getElementById('saveQuestronBtn').addEventListener('click', async () => {
+    if (!Storage.hasToken()) {
+      showMessage('questronMsg', 'Set a GitHub token in Settings first.', 'error');
+      return;
+    }
+
+    const enabled = document.getElementById('questronEnabled').checked;
+    const workerUrl = document.getElementById('questronWorkerUrl').value.trim();
+    const headerFile = document.getElementById('questronHeaderImage').files[0];
+    const kbFile = document.getElementById('questronKbFile').files[0];
+
+    try {
+      showLoading('Saving Questron settings...');
+
+      const settings = { enabled, workerUrl };
+
+      // Upload header image if selected
+      if (headerFile) {
+        settings.headerImage = await Storage.fileToDataURL(headerFile);
+      }
+
+      // Upload knowledge base if selected
+      if (kbFile) {
+        const kbDataUrl = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(kbFile);
+        });
+        settings.kbFile = kbDataUrl;
+      }
+
+      await Storage.updateQuestronSettings(settings);
+      hideLoading();
+      await loadQuestronSettings();
+      showMessage('questronMsg', 'Questron settings saved!', 'success');
+    } catch (err) {
+      hideLoading();
+      showMessage('questronMsg', 'Failed: ' + err.message, 'error');
     }
   });
 
