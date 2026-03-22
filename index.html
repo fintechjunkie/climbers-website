@@ -4,7 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Climbers</title>
-  <link rel="stylesheet" href="css/style.css?v=6">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=7">
 </head>
 <body>
 
@@ -48,11 +51,25 @@
     </div>
   </section>
 
-  <!-- ===== LIGHTBOX ===== -->
+  <!-- ===== LIGHTBOX (fan art) ===== -->
   <div class="lightbox" id="lightbox">
     <button class="lightbox-close" id="lightboxClose">&times;</button>
     <img src="" alt="" id="lightboxImg">
     <p class="lightbox-caption" id="lightboxCaption"></p>
+  </div>
+
+  <!-- ===== GALLERY EXPAND MODAL ===== -->
+  <div class="gallery-expand" id="galleryExpand">
+    <button class="gallery-expand-close" id="galleryExpandClose">&times;</button>
+    <div class="gallery-expand-inner" id="galleryExpandInner">
+      <img id="galleryExpandImg" src="" alt="">
+      <div class="gallery-expand-info">
+        <h3 class="gallery-expand-name" id="galleryExpandName"></h3>
+        <p class="gallery-expand-field" id="galleryExpandField1"></p>
+        <p class="gallery-expand-field" id="galleryExpandField2"></p>
+        <p class="gallery-expand-field" id="galleryExpandField3"></p>
+      </div>
+    </div>
   </div>
 
   <!-- ===== FOOTER ===== -->

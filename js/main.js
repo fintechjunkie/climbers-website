@@ -26,6 +26,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   // --- Lightbox ---
   setupLightbox();
 
+  // --- Gallery expand modal ---
+  setupGalleryExpand();
+
   // --- Reader modal close ---
   setupReaderModal();
 });
@@ -265,9 +268,8 @@ function renderGallery(gallery) {
       div.appendChild(lbl);
     }
 
-    const imgUrl = Storage.getGalleryImageUrl(item.id);
     div.addEventListener('click', () => {
-      openLightbox(imgUrl, item.label || '');
+      openGalleryExpand(item);
     });
 
     grid.appendChild(div);
@@ -291,6 +293,69 @@ function openLightbox(src, caption) {
   document.getElementById('lightboxImg').src = src;
   document.getElementById('lightboxCaption').textContent = caption;
   lb.classList.add('active');
+}
+
+// ===========================
+// GALLERY EXPAND MODAL
+// ===========================
+function setupGalleryExpand() {
+  const modal = document.getElementById('galleryExpand');
+  const closeBtn = document.getElementById('galleryExpandClose');
+
+  closeBtn.addEventListener('click', closeGalleryExpand);
+  modal.addEventListener('click', e => {
+    if (e.target === modal) closeGalleryExpand();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) {
+      closeGalleryExpand();
+    }
+  });
+}
+
+function openGalleryExpand(item) {
+  const modal = document.getElementById('galleryExpand');
+  const inner = document.getElementById('galleryExpandInner');
+  const img = document.getElementById('galleryExpandImg');
+  const name = document.getElementById('galleryExpandName');
+  const f1 = document.getElementById('galleryExpandField1');
+  const f2 = document.getElementById('galleryExpandField2');
+  const f3 = document.getElementById('galleryExpandField3');
+
+  img.src = Storage.getGalleryImageUrl(item.id);
+  img.alt = item.label || '';
+  name.textContent = item.label || '';
+
+  // Show fields only if they have content
+  f1.textContent = item.field1 || '';
+  f1.style.display = item.field1 ? '' : 'none';
+  f2.textContent = item.field2 || '';
+  f2.style.display = item.field2 ? '' : 'none';
+  f3.textContent = item.field3 || '';
+  f3.style.display = item.field3 ? '' : 'none';
+
+  // Re-trigger animation by cloning
+  const parent = inner.parentNode;
+  const clone = inner.cloneNode(true);
+  parent.replaceChild(clone, inner);
+
+  // Re-assign IDs to the clone's children
+  clone.id = 'galleryExpandInner';
+  clone.querySelector('img').id = 'galleryExpandImg';
+  clone.querySelector('.gallery-expand-name').id = 'galleryExpandName';
+  const fields = clone.querySelectorAll('.gallery-expand-field');
+  fields[0].id = 'galleryExpandField1';
+  fields[1].id = 'galleryExpandField2';
+  fields[2].id = 'galleryExpandField3';
+
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeGalleryExpand() {
+  const modal = document.getElementById('galleryExpand');
+  modal.classList.remove('active');
+  document.body.style.overflow = '';
 }
 
 // ===========================

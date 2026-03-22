@@ -677,7 +677,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const info = document.createElement('div');
       info.className = 'item-info';
-      info.innerHTML = '<h3>' + escapeHtml(item.label || 'Untitled') + '</h3>';
+      let infoHtml = '<h3>' + escapeHtml(item.label || 'Untitled') + '</h3>';
+      const fields = [item.field1, item.field2, item.field3].filter(Boolean);
+      if (fields.length > 0) {
+        infoHtml += '<p style="color:#777;font-size:.8rem">' + fields.map(f => escapeHtml(f)).join(' &middot; ') + '</p>';
+      }
+      info.innerHTML = infoHtml;
 
       const actions = document.createElement('div');
       actions.className = 'item-actions';
@@ -733,6 +738,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const label = document.getElementById('galleryLabel').value.trim();
+    const field1 = document.getElementById('galleryField1').value.trim();
+    const field2 = document.getElementById('galleryField2').value.trim();
+    const field3 = document.getElementById('galleryField3').value.trim();
     const fileInput = document.getElementById('galleryImage');
 
     if (fileInput.files.length === 0) {
@@ -743,9 +751,12 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       showLoading('Uploading gallery image...');
       const image = await Storage.fileToDataURL(fileInput.files[0]);
-      await Storage.addGalleryItem({ label, image });
+      await Storage.addGalleryItem({ label, field1, field2, field3, image });
       hideLoading();
       document.getElementById('galleryLabel').value = '';
+      document.getElementById('galleryField1').value = '';
+      document.getElementById('galleryField2').value = '';
+      document.getElementById('galleryField3').value = '';
       fileInput.value = '';
       await loadGalleryList();
       showMessage('galleryMsg', 'Image added to gallery!', 'success');
