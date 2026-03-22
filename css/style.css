@@ -161,7 +161,7 @@ img{max-width:100%;display:block}
 .lightbox-close{position:fixed;top:1.5rem;right:2rem;font-size:2rem;color:#fff;cursor:pointer;background:none;border:none;z-index:1001}
 
 /* ===== AUDIO TOGGLE ===== */
-.audio-toggle{position:fixed;bottom:2rem;right:2rem;z-index:500;width:52px;height:52px;border-radius:50%;background:rgba(26,26,26,.9);border:2px solid #c9a84c;color:#c9a84c;font-size:1.5rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s;box-shadow:0 0 15px rgba(201,168,76,.2),0 0 30px rgba(0,0,0,.5);backdrop-filter:blur(8px)}
+.audio-toggle{position:fixed;bottom:calc(1.5rem + env(safe-area-inset-bottom,0px));right:1.25rem;z-index:900;width:56px;height:56px;border-radius:50%;background:rgba(20,20,20,.95);border:2px solid #c9a84c;color:#c9a84c;font-size:1.6rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s;box-shadow:0 0 15px rgba(201,168,76,.3),0 0 30px rgba(0,0,0,.6);backdrop-filter:blur(8px);-webkit-tap-highlight-color:transparent}
 .audio-toggle:hover{background:rgba(201,168,76,.15);box-shadow:0 0 20px rgba(201,168,76,.4),0 0 40px rgba(0,255,255,.1);transform:scale(1.1)}
 .audio-toggle.playing{border-color:rgba(0,255,255,.6);box-shadow:0 0 15px rgba(0,255,255,.3),0 0 30px rgba(0,255,255,.1);animation:audioPulse 2s ease infinite}
 @keyframes audioPulse{0%,100%{box-shadow:0 0 15px rgba(0,255,255,.3),0 0 30px rgba(0,255,255,.1)}50%{box-shadow:0 0 20px rgba(0,255,255,.5),0 0 40px rgba(0,255,255,.2)}}
@@ -183,4 +183,5 @@ img{max-width:100%;display:block}
   .part-body{padding:1.5rem 1.25rem}
   .part-body .text{font-size:1rem;line-height:1.8}
   .gallery-expand-inner{max-width:95vw}
+  .audio-toggle{bottom:calc(1rem + env(safe-area-inset-bottom,0px));right:1rem;width:50px;height:50px;font-size:1.4rem}
 }
