@@ -487,7 +487,7 @@ function setupRotatingSubtitle(el, text) {
   let charIdx = 0;
 
   const TYPE_SPEED = 40;
-  const PAUSE_AFTER_TYPE = 6000;
+  const PAUSE_AFTER_TYPE = 3000;
 
   function typeNext() {
     const current = sentences[sentenceIdx];
