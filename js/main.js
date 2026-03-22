@@ -438,19 +438,18 @@ function setupAmbientAudio() {
   const iconOff = document.getElementById('audioIconOff');
   const iconOn = document.getElementById('audioIconOn');
 
-  // Check if ambient audio exists
+  // Check if ambient audio file exists via HEAD request (works on mobile)
   const audioUrl = Storage.getAmbientAudioUrl();
-  const testAudio = new Audio();
-  testAudio.addEventListener('canplaythrough', () => {
-    // Audio file exists, show the toggle
-    audio.src = audioUrl;
-    toggle.style.display = 'flex';
-  });
-  testAudio.addEventListener('error', () => {
-    // No audio file uploaded, hide toggle
+  fetch(audioUrl, { method: 'HEAD' }).then(res => {
+    if (res.ok) {
+      audio.src = audioUrl;
+      toggle.style.display = 'flex';
+    } else {
+      toggle.style.display = 'none';
+    }
+  }).catch(() => {
     toggle.style.display = 'none';
   });
-  testAudio.src = audioUrl;
 
   toggle.addEventListener('click', () => {
     if (audio.paused) {
