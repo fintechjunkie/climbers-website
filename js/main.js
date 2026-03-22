@@ -471,24 +471,39 @@ function setupRotatingSubtitle(el, text) {
   const blocks = text.split(/\n\s*\n|\n/).map(s => s.trim()).filter(Boolean);
 
   if (blocks.length <= 1) {
-    // Only one block, no rotation needed
     el.textContent = text;
     return;
   }
 
+  // Create two alternating layers for crossfade
+  el.textContent = '';
+  const layerA = document.createElement('span');
+  const layerB = document.createElement('span');
+  layerA.className = 'subtitle-text fade-in';
+  layerB.className = 'subtitle-text fade-out';
+  layerA.textContent = blocks[0];
+  layerB.textContent = blocks[1] || '';
+  el.appendChild(layerA);
+  el.appendChild(layerB);
+
   let current = 0;
-  el.textContent = blocks[current];
-  el.style.transition = 'opacity 0.8s ease';
+  let activeLayer = layerA;
+  let nextLayer = layerB;
 
   setInterval(() => {
-    // Fade out
-    el.style.opacity = '0';
+    current = (current + 1) % blocks.length;
+    const upcoming = (current + 1) % blocks.length;
 
-    setTimeout(() => {
-      // Switch text and fade in
-      current = (current + 1) % blocks.length;
-      el.textContent = blocks[current];
-      el.style.opacity = '1';
-    }, 800);
+    // Crossfade: active fades out, next fades in
+    nextLayer.textContent = blocks[current];
+    activeLayer.classList.remove('fade-in');
+    activeLayer.classList.add('fade-out');
+    nextLayer.classList.remove('fade-out');
+    nextLayer.classList.add('fade-in');
+
+    // Swap references
+    const temp = activeLayer;
+    activeLayer = nextLayer;
+    nextLayer = temp;
   }, 10000);
 }

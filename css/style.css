@@ -7,8 +7,15 @@ a:hover{text-decoration:underline}
 img{max-width:100%;display:block}
 
 /* ===== HERO BANNER ===== */
-.hero{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6rem 2rem 4rem;background:linear-gradient(180deg,rgba(0,0,0,.7) 0%,rgba(13,13,13,1) 100%);background-color:#111}
-.hero-subtitle{max-width:700px;font-size:clamp(1rem,2.5vw,1.25rem);color:#bbb;margin-bottom:2rem;line-height:1.8;min-height:3.6em}
+.hero{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6rem 2rem 4rem;background:linear-gradient(180deg,rgba(0,0,0,.7) 0%,rgba(13,13,13,1) 100%);background-color:#111;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(0,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,255,.03) 1px,transparent 1px);background-size:60px 60px;animation:heroGridDrift 20s linear infinite;pointer-events:none;z-index:0}
+.hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(0,255,255,.04) 0%,transparent 60%),radial-gradient(ellipse at 30% 70%,rgba(201,168,76,.03) 0%,transparent 50%);pointer-events:none;z-index:0}
+@keyframes heroGridDrift{0%{background-position:0 0}100%{background-position:60px 60px}}
+.hero>*{position:relative;z-index:1}
+.hero-subtitle{max-width:700px;font-size:clamp(1rem,2.5vw,1.25rem);color:#bbb;margin-bottom:2rem;line-height:1.8;height:3.6em;position:relative;overflow:hidden}
+.hero-subtitle .subtitle-text{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transition:opacity 0.8s ease,transform 0.8s ease}
+.hero-subtitle .subtitle-text.fade-out{opacity:0;transform:translateY(-8px)}
+.hero-subtitle .subtitle-text.fade-in{opacity:1;transform:translateY(0)}
 .hero-banner-img{max-height:50vh;border-radius:12px;margin-bottom:2rem;box-shadow:0 8px 32px rgba(0,0,0,.6)}
 .scroll-hint{margin-top:2rem;animation:bounce 2s infinite}
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(10px)}}
