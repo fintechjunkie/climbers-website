@@ -443,13 +443,9 @@ function setupAmbientAudio() {
   fetch(audioUrl, { method: 'HEAD' }).then(res => {
     if (res.ok) {
       audio.src = audioUrl;
-      toggle.style.display = 'flex';
-    } else {
-      toggle.style.display = 'none';
+      toggle.classList.remove('hidden');
     }
-  }).catch(() => {
-    toggle.style.display = 'none';
-  });
+  }).catch(() => {});
 
   toggle.addEventListener('click', () => {
     if (audio.paused) {

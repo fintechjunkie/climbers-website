@@ -31,6 +31,10 @@
   <nav class="nav" id="mainNav">
     <a href="#chapters-section">Chapters</a>
     <a href="#gallery-section">Gallery</a>
+    <button class="nav-audio-btn hidden" id="audioToggle" title="Toggle background music">
+      <span id="audioIconOff">&#128263; Sound</span>
+      <span id="audioIconOn" style="display:none">&#128266; Sound</span>
+    </button>
   </nav>
 
   <!-- ===== CHAPTERS ===== -->
@@ -92,10 +96,6 @@
 
   <!-- ===== AMBIENT AUDIO ===== -->
   <audio id="ambientAudio" loop preload="none"></audio>
-  <button class="audio-toggle" id="audioToggle" title="Toggle background music" style="display:none">
-    <span class="audio-icon-off" id="audioIconOff">&#128263;</span>
-    <span class="audio-icon-on" id="audioIconOn" style="display:none">&#128266;</span>
-  </button>
 
   <!-- ===== FOOTER ===== -->
   <footer class="footer">
