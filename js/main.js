@@ -464,46 +464,64 @@ function setupAmbientAudio() {
 }
 
 // ===========================
-// ROTATING SUBTITLE
+// TYPEWRITER SUBTITLE
 // ===========================
 function setupRotatingSubtitle(el, text) {
-  // Split on double-newlines (paragraph breaks) or single newlines
-  const blocks = text.split(/\n\s*\n|\n/).map(s => s.trim()).filter(Boolean);
+  // Split into sentences for the typewriter
+  const sentences = text.split(/\n\s*\n|\n/).map(s => s.trim()).filter(Boolean);
 
-  if (blocks.length <= 1) {
-    el.textContent = text;
-    return;
+  if (sentences.length === 0) { el.textContent = text; return; }
+
+  // Build DOM
+  el.textContent = '';
+  const wrap = document.createElement('span');
+  wrap.className = 'typewriter-wrap';
+  const textNode = document.createElement('span');
+  const cursor = document.createElement('span');
+  cursor.className = 'typewriter-cursor';
+  wrap.appendChild(textNode);
+  wrap.appendChild(cursor);
+  el.appendChild(wrap);
+
+  let sentenceIdx = 0;
+  let charIdx = 0;
+  let isDeleting = false;
+  let pauseTimer = null;
+
+  const TYPE_SPEED = 35;       // ms per character typing
+  const DELETE_SPEED = 20;     // ms per character deleting
+  const PAUSE_AFTER_TYPE = 5000; // ms to hold full sentence
+  const PAUSE_AFTER_DELETE = 600; // ms before next sentence
+
+  function tick() {
+    const current = sentences[sentenceIdx];
+
+    if (!isDeleting) {
+      // Typing
+      charIdx++;
+      textNode.textContent = current.substring(0, charIdx);
+
+      if (charIdx >= current.length) {
+        // Done typing — pause then delete
+        pauseTimer = setTimeout(() => { isDeleting = true; tick(); }, PAUSE_AFTER_TYPE);
+        return;
+      }
+      pauseTimer = setTimeout(tick, TYPE_SPEED);
+    } else {
+      // Deleting
+      charIdx--;
+      textNode.textContent = current.substring(0, charIdx);
+
+      if (charIdx <= 0) {
+        // Done deleting — move to next sentence
+        isDeleting = false;
+        sentenceIdx = (sentenceIdx + 1) % sentences.length;
+        pauseTimer = setTimeout(tick, PAUSE_AFTER_DELETE);
+        return;
+      }
+      pauseTimer = setTimeout(tick, DELETE_SPEED);
+    }
   }
 
-  // Create two alternating layers for crossfade
-  el.textContent = '';
-  const layerA = document.createElement('span');
-  const layerB = document.createElement('span');
-  layerA.className = 'subtitle-text fade-in';
-  layerB.className = 'subtitle-text fade-out';
-  layerA.textContent = blocks[0];
-  layerB.textContent = blocks[1] || '';
-  el.appendChild(layerA);
-  el.appendChild(layerB);
-
-  let current = 0;
-  let activeLayer = layerA;
-  let nextLayer = layerB;
-
-  setInterval(() => {
-    current = (current + 1) % blocks.length;
-    const upcoming = (current + 1) % blocks.length;
-
-    // Crossfade: active fades out, next fades in
-    nextLayer.textContent = blocks[current];
-    activeLayer.classList.remove('fade-in');
-    activeLayer.classList.add('fade-out');
-    nextLayer.classList.remove('fade-out');
-    nextLayer.classList.add('fade-in');
-
-    // Swap references
-    const temp = activeLayer;
-    activeLayer = nextLayer;
-    nextLayer = temp;
-  }, 10000);
+  tick();
 }
