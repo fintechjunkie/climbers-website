@@ -52,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     await loadBannerSettings();
     await loadChaptersList();
     await loadGalleryList();
+    loadAudioSettings();
   }
 
   // --- Logout ---
@@ -678,7 +679,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const info = document.createElement('div');
       info.className = 'item-info';
       let infoHtml = '<h3>' + escapeHtml(item.label || 'Untitled') + '</h3>';
-      const fields = [item.field1, item.field2, item.field3].filter(Boolean);
+      const fields = [item.field1, item.field2, item.field3, item.field4, item.field5].filter(Boolean);
       if (fields.length > 0) {
         infoHtml += '<p style="color:#777;font-size:.8rem">' + fields.map(f => escapeHtml(f)).join(' &middot; ') + '</p>';
       }
@@ -754,8 +755,14 @@ document.addEventListener('DOMContentLoaded', () => {
       '<input type="text" id="editGalField2" style="width:100%;padding:.75rem 1rem;background:#111;border:1px solid #333;border-radius:8px;color:#e0e0e0;font-size:1rem" value="' + escapeAttr(item.field2 || '') + '"></div>' +
       '<div class="form-group"><label style="color:#c9a84c;font-weight:600;font-size:.9rem">Detail 3</label>' +
       '<input type="text" id="editGalField3" style="width:100%;padding:.75rem 1rem;background:#111;border:1px solid #333;border-radius:8px;color:#e0e0e0;font-size:1rem" value="' + escapeAttr(item.field3 || '') + '"></div>' +
+      '<div class="form-group"><label style="color:#c9a84c;font-weight:600;font-size:.9rem">Detail 4</label>' +
+      '<input type="text" id="editGalField4" style="width:100%;padding:.75rem 1rem;background:#111;border:1px solid #333;border-radius:8px;color:#e0e0e0;font-size:1rem" value="' + escapeAttr(item.field4 || '') + '"></div>' +
+      '<div class="form-group"><label style="color:#c9a84c;font-weight:600;font-size:.9rem">Detail 5</label>' +
+      '<input type="text" id="editGalField5" style="width:100%;padding:.75rem 1rem;background:#111;border:1px solid #333;border-radius:8px;color:#e0e0e0;font-size:1rem" value="' + escapeAttr(item.field5 || '') + '"></div>' +
       '<div class="form-group"><label style="color:#c9a84c;font-weight:600;font-size:.9rem">Replace Image <span style="color:#666;font-weight:400">(optional)</span></label>' +
       '<input type="file" id="editGalImage" accept="image/*" style="color:#e0e0e0"></div>' +
+      '<div class="form-group"><label style="color:#c9a84c;font-weight:600;font-size:.9rem">Replace Video <span style="color:#666;font-weight:400">(optional, MP4)</span></label>' +
+      '<input type="file" id="editGalVideo" accept="video/mp4,video/*" style="color:#e0e0e0"></div>' +
       '<div style="display:flex;gap:.75rem;margin-top:1rem">' +
       '<button class="btn btn-primary" id="saveEditGalBtn">Save Changes</button>' +
       '<button class="btn btn-secondary" id="cancelEditGalBtn">Cancel</button></div>';
@@ -770,16 +777,38 @@ document.addEventListener('DOMContentLoaded', () => {
         label: document.getElementById('editGalLabel').value.trim(),
         field1: document.getElementById('editGalField1').value.trim(),
         field2: document.getElementById('editGalField2').value.trim(),
-        field3: document.getElementById('editGalField3').value.trim()
+        field3: document.getElementById('editGalField3').value.trim(),
+        field4: document.getElementById('editGalField4').value.trim(),
+        field5: document.getElementById('editGalField5').value.trim()
       };
 
       const fileInput = document.getElementById('editGalImage');
+      const videoInput = document.getElementById('editGalVideo');
       try {
         showLoading('Saving gallery item...');
         if (fileInput.files.length > 0) {
           updates.image = await Storage.fileToDataURL(fileInput.files[0]);
         }
         await Storage.updateGalleryItem(item.id, updates);
+
+        // Handle video upload if present
+        if (videoInput && videoInput.files.length > 0) {
+          showLoading('Uploading video...');
+          const vReader = new FileReader();
+          const vFile = videoInput.files[0];
+          await new Promise((res, rej) => {
+            vReader.onload = async () => {
+              try {
+                await Storage._uploadImage('vid_' + item.id + '.mp4', vReader.result);
+                await Storage.updateGalleryItem(item.id, { hasVideo: true });
+                res();
+              } catch(e) { rej(e); }
+            };
+            vReader.onerror = rej;
+            vReader.readAsDataURL(vFile);
+          });
+        }
+
         hideLoading();
         document.body.removeChild(overlay);
         await loadGalleryList();
@@ -809,7 +838,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const field1 = document.getElementById('galleryField1').value.trim();
     const field2 = document.getElementById('galleryField2').value.trim();
     const field3 = document.getElementById('galleryField3').value.trim();
+    const field4 = document.getElementById('galleryField4').value.trim();
+    const field5 = document.getElementById('galleryField5').value.trim();
     const fileInput = document.getElementById('galleryImage');
+    const videoInput = document.getElementById('galleryVideo');
 
     if (fileInput.files.length === 0) {
       showMessage('galleryMsg', 'Please select an image.', 'error');
@@ -819,13 +851,39 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       showLoading('Uploading gallery image...');
       const image = await Storage.fileToDataURL(fileInput.files[0]);
-      await Storage.addGalleryItem({ label, field1, field2, field3, image });
+      await Storage.addGalleryItem({ label, field1, field2, field3, field4, field5, image });
+
+      // Handle video upload if present
+      if (videoInput && videoInput.files.length > 0) {
+        showLoading('Uploading video...');
+        const galData = await Storage.getGallery();
+        const lastItem = galData[galData.length - 1];
+        if (lastItem) {
+          const vReader = new FileReader();
+          const vFile = videoInput.files[0];
+          await new Promise((res, rej) => {
+            vReader.onload = async () => {
+              try {
+                await Storage._uploadImage('vid_' + lastItem.id + '.mp4', vReader.result);
+                await Storage.updateGalleryItem(lastItem.id, { hasVideo: true });
+                res();
+              } catch(e) { rej(e); }
+            };
+            vReader.onerror = rej;
+            vReader.readAsDataURL(vFile);
+          });
+        }
+      }
+
       hideLoading();
       document.getElementById('galleryLabel').value = '';
       document.getElementById('galleryField1').value = '';
       document.getElementById('galleryField2').value = '';
       document.getElementById('galleryField3').value = '';
+      document.getElementById('galleryField4').value = '';
+      document.getElementById('galleryField5').value = '';
       fileInput.value = '';
+      if (videoInput) videoInput.value = '';
       await loadGalleryList();
       showMessage('galleryMsg', 'Image added to gallery!', 'success');
     } catch (err) {
@@ -882,6 +940,83 @@ document.addEventListener('DOMContentLoaded', () => {
           hideLoading();
           showMessage('settingsMsg', 'Failed: ' + err.message, 'error');
         }
+      }
+    }
+  });
+
+  // ===========================
+  // AMBIENT AUDIO
+  // ===========================
+  async function loadAudioSettings() {
+    const preview = document.getElementById('audioPreview');
+    const removeBtn = document.getElementById('removeAudioBtn');
+
+    // Check if audio file exists by trying to fetch it
+    try {
+      const response = await fetch(Storage.getAmbientAudioUrl(), { method: 'HEAD' });
+      if (response.ok) {
+        preview.innerHTML = '<audio controls style="width:100%;max-width:300px"><source src="' + Storage.getAmbientAudioUrl() + '">Your browser does not support audio.</audio>';
+        removeBtn.style.display = '';
+      } else {
+        preview.innerHTML = '<p style="color:#555;font-size:.85rem">No audio file uploaded yet.</p>';
+        removeBtn.style.display = 'none';
+      }
+    } catch {
+      preview.innerHTML = '<p style="color:#555;font-size:.85rem">No audio file uploaded yet.</p>';
+      removeBtn.style.display = 'none';
+    }
+  }
+
+  document.getElementById('saveAudioBtn').addEventListener('click', async () => {
+    if (!Storage.hasToken()) {
+      showMessage('settingsMsg', 'Set up your GitHub token first.', 'error');
+      return;
+    }
+    const fileInput = document.getElementById('ambientAudioFile');
+    if (!fileInput.files.length) {
+      showMessage('settingsMsg', 'Please select an audio file.', 'error');
+      return;
+    }
+
+    try {
+      showLoading('Uploading audio file...');
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+      await new Promise((resolve, reject) => {
+        reader.onload = async () => {
+          try {
+            await Storage._uploadImage('ambient_audio.mp3', reader.result);
+            resolve();
+          } catch(e) { reject(e); }
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+      hideLoading();
+      fileInput.value = '';
+      await loadAudioSettings();
+      showMessage('settingsMsg', 'Audio file uploaded!', 'success');
+    } catch (err) {
+      hideLoading();
+      showMessage('settingsMsg', 'Failed: ' + err.message, 'error');
+    }
+  });
+
+  document.getElementById('removeAudioBtn').addEventListener('click', async () => {
+    if (!Storage.hasToken()) {
+      showMessage('settingsMsg', 'Set up your GitHub token first.', 'error');
+      return;
+    }
+    if (confirm('Remove the ambient audio file?')) {
+      try {
+        showLoading('Removing audio...');
+        await Storage._deleteImage('ambient_audio.mp3');
+        hideLoading();
+        await loadAudioSettings();
+        showMessage('settingsMsg', 'Audio removed.', 'success');
+      } catch (err) {
+        hideLoading();
+        showMessage('settingsMsg', 'Failed: ' + err.message, 'error');
       }
     }
   });

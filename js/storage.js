@@ -304,6 +304,10 @@ const Storage = {
     return 'uploads/gal_' + id + '.jpg';
   },
 
+  getGalleryVideoUrl(id) {
+    return 'uploads/vid_' + id + '.mp4';
+  },
+
   // ===== Fan Art =====
   async addFanArt(chapterId, item) {
     const data = await this.getData();
@@ -345,6 +349,10 @@ const Storage = {
 
   getBannerImageUrl() {
     return 'uploads/banner.jpg';
+  },
+
+  getAmbientAudioUrl() {
+    return 'uploads/ambient_audio.mp3';
   },
 
   // ===== Admin Auth (browser-local only) =====

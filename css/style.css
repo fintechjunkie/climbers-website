@@ -124,6 +124,7 @@ img{max-width:100%;display:block}
   .gallery-expand-inner{flex-direction:column;gap:1rem;max-width:360px;margin:0 auto}
   .gallery-expand-inner .gallery-expand-img-wrap{flex:none;width:100%}
   .gallery-expand-info{padding:.5rem 0}
+  .gallery-expand-close{position:fixed;top:.75rem;right:1rem;font-size:2rem;opacity:1;animation:none}
 }
 
 /* ===== FAN ART (inside reader modal) ===== */
@@ -144,6 +145,12 @@ img{max-width:100%;display:block}
 .lightbox img{max-width:90vw;max-height:85vh;border-radius:12px;box-shadow:0 0 60px rgba(0,0,0,.5)}
 .lightbox-caption{display:none}
 .lightbox-close{position:fixed;top:1.5rem;right:2rem;font-size:2rem;color:#fff;cursor:pointer;background:none;border:none;z-index:1001}
+
+/* ===== AUDIO TOGGLE ===== */
+.audio-toggle{position:fixed;bottom:2rem;right:2rem;z-index:500;width:52px;height:52px;border-radius:50%;background:rgba(26,26,26,.9);border:2px solid #c9a84c;color:#c9a84c;font-size:1.5rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s;box-shadow:0 0 15px rgba(201,168,76,.2),0 0 30px rgba(0,0,0,.5);backdrop-filter:blur(8px)}
+.audio-toggle:hover{background:rgba(201,168,76,.15);box-shadow:0 0 20px rgba(201,168,76,.4),0 0 40px rgba(0,255,255,.1);transform:scale(1.1)}
+.audio-toggle.playing{border-color:rgba(0,255,255,.6);box-shadow:0 0 15px rgba(0,255,255,.3),0 0 30px rgba(0,255,255,.1);animation:audioPulse 2s ease infinite}
+@keyframes audioPulse{0%,100%{box-shadow:0 0 15px rgba(0,255,255,.3),0 0 30px rgba(0,255,255,.1)}50%{box-shadow:0 0 20px rgba(0,255,255,.5),0 0 40px rgba(0,255,255,.2)}}
 
 /* ===== FOOTER ===== */
 .footer{text-align:center;padding:2rem;color:#555;font-size:.85rem;border-top:1px solid #1a1a1a}

@@ -125,8 +125,21 @@
           <input type="text" id="galleryField3" placeholder="e.g., Weapon: Plasma Blade">
         </div>
         <div class="form-group">
+          <label>Detail 4 <span style="color:#666;font-weight:400">(optional)</span></label>
+          <input type="text" id="galleryField4" placeholder="e.g., Faction: Underground">
+        </div>
+        <div class="form-group">
+          <label>Detail 5 <span style="color:#666;font-weight:400">(optional)</span></label>
+          <input type="text" id="galleryField5" placeholder="e.g., Status: Active">
+        </div>
+        <div class="form-group">
           <label>Image</label>
           <input type="file" id="galleryImage" accept="image/*">
+        </div>
+        <div class="form-group">
+          <label>Video <span style="color:#666;font-weight:400">(optional, MP4)</span></label>
+          <input type="file" id="galleryVideo" accept="video/mp4,video/*">
+          <p class="help-text">Short character video that plays in the expanded view.</p>
         </div>
         <button class="btn btn-primary" id="addGalleryBtn">Add to Gallery</button>
       </div>
@@ -152,6 +165,19 @@
           <input type="password" id="ghTokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
         </div>
         <button class="btn btn-primary" id="saveTokenBtn">Save Token</button>
+      </div>
+
+      <!-- Ambient Audio -->
+      <div class="settings-section">
+        <h3>Ambient Audio</h3>
+        <p style="color:#bbb;font-size:.85rem;margin-bottom:1rem">Upload a background audio file that visitors can toggle on/off while browsing.</p>
+        <div class="form-group">
+          <label>Audio File (MP3/OGG)</label>
+          <input type="file" id="ambientAudioFile" accept="audio/*">
+        </div>
+        <div id="audioPreview" style="margin-bottom:.75rem"></div>
+        <button class="btn btn-primary" id="saveAudioBtn">Upload Audio</button>
+        <button class="btn btn-danger" id="removeAudioBtn" style="margin-left:.5rem;display:none">Remove Audio</button>
       </div>
 
       <!-- Change Password -->

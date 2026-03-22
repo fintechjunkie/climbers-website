@@ -31,6 +31,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // --- Reader modal close ---
   setupReaderModal();
+
+  // --- Ambient audio ---
+  setupAmbientAudio();
 });
 
 // ===========================
@@ -318,21 +321,17 @@ function openGalleryExpand(item) {
   const inner = document.getElementById('galleryExpandInner');
   const img = document.getElementById('galleryExpandImg');
   const name = document.getElementById('galleryExpandName');
-  const f1 = document.getElementById('galleryExpandField1');
-  const f2 = document.getElementById('galleryExpandField2');
-  const f3 = document.getElementById('galleryExpandField3');
-
   img.src = Storage.getGalleryImageUrl(item.id);
   img.alt = item.label || '';
   name.textContent = item.label || '';
 
   // Show fields only if they have content
-  f1.textContent = item.field1 || '';
-  f1.style.display = item.field1 ? '' : 'none';
-  f2.textContent = item.field2 || '';
-  f2.style.display = item.field2 ? '' : 'none';
-  f3.textContent = item.field3 || '';
-  f3.style.display = item.field3 ? '' : 'none';
+  for (let i = 1; i <= 5; i++) {
+    const fEl = document.getElementById('galleryExpandField' + i);
+    const val = item['field' + i] || '';
+    fEl.textContent = val;
+    fEl.style.display = val ? '' : 'none';
+  }
 
   // Re-trigger animation by cloning
   const parent = inner.parentNode;
@@ -344,9 +343,24 @@ function openGalleryExpand(item) {
   clone.querySelector('img').id = 'galleryExpandImg';
   clone.querySelector('.gallery-expand-name').id = 'galleryExpandName';
   const fields = clone.querySelectorAll('.gallery-expand-field');
-  fields[0].id = 'galleryExpandField1';
-  fields[1].id = 'galleryExpandField2';
-  fields[2].id = 'galleryExpandField3';
+  for (let i = 0; i < fields.length; i++) {
+    fields[i].id = 'galleryExpandField' + (i + 1);
+  }
+
+  // Video
+  let videoContainer = clone.querySelector('.gallery-expand-video');
+  if (!videoContainer) {
+    videoContainer = document.createElement('div');
+    videoContainer.className = 'gallery-expand-video';
+    clone.querySelector('.gallery-expand-info').appendChild(videoContainer);
+  }
+  if (item.hasVideo) {
+    videoContainer.innerHTML = '<video controls playsinline style="width:100%;max-width:400px;border-radius:8px;margin-top:1rem;border:1px solid #333"><source src="' + Storage.getGalleryVideoUrl(item.id) + '" type="video/mp4">Your browser does not support video.</video>';
+    videoContainer.style.display = '';
+  } else {
+    videoContainer.innerHTML = '';
+    videoContainer.style.display = 'none';
+  }
 
   modal.classList.add('active');
   document.body.style.overflow = 'hidden';
@@ -369,6 +383,45 @@ function toRoman(num) {
     while (num >= vals[i]) { result += syms[i]; num -= vals[i]; }
   }
   return result;
+}
+
+// ===========================
+// AMBIENT AUDIO
+// ===========================
+function setupAmbientAudio() {
+  const audio = document.getElementById('ambientAudio');
+  const toggle = document.getElementById('audioToggle');
+  const iconOff = document.getElementById('audioIconOff');
+  const iconOn = document.getElementById('audioIconOn');
+
+  // Check if ambient audio exists
+  const audioUrl = Storage.getAmbientAudioUrl();
+  const testAudio = new Audio();
+  testAudio.addEventListener('canplaythrough', () => {
+    // Audio file exists, show the toggle
+    audio.src = audioUrl;
+    toggle.style.display = 'flex';
+  });
+  testAudio.addEventListener('error', () => {
+    // No audio file uploaded, hide toggle
+    toggle.style.display = 'none';
+  });
+  testAudio.src = audioUrl;
+
+  toggle.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play().then(() => {
+        toggle.classList.add('playing');
+        iconOff.style.display = 'none';
+        iconOn.style.display = '';
+      }).catch(() => {});
+    } else {
+      audio.pause();
+      toggle.classList.remove('playing');
+      iconOff.style.display = '';
+      iconOn.style.display = 'none';
+    }
+  });
 }
 
 // ===========================
