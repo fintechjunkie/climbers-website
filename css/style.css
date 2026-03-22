@@ -12,8 +12,9 @@ img{max-width:100%;display:block}
 .hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(0,255,255,.04) 0%,transparent 60%),radial-gradient(ellipse at 30% 70%,rgba(201,168,76,.03) 0%,transparent 50%);pointer-events:none;z-index:0}
 @keyframes heroGridDrift{0%{background-position:0 0}100%{background-position:60px 60px}}
 .hero>*{position:relative;z-index:1}
-.hero-subtitle{max-width:750px;width:100%;font-size:clamp(.95rem,2.2vw,1.15rem);color:#bbb;margin-bottom:2rem;line-height:1.7;height:3em;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.hero-subtitle .typewriter-wrap{font-family:'Courier New',monospace;text-align:center;letter-spacing:.02em}
+.hero-subtitle{max-width:750px;width:100%;font-size:clamp(.95rem,2.2vw,1.15rem);color:#bbb;margin-bottom:2rem;line-height:1.6;height:2em;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero-subtitle .typewriter-wrap{font-family:'Courier New',monospace;text-align:center;letter-spacing:.02em;transition:opacity .5s ease}
+.hero-subtitle .typewriter-wrap.fade-out{opacity:0}
 .hero-subtitle .typewriter-cursor{display:inline-block;width:2px;height:1.1em;background:#c9a84c;vertical-align:text-bottom;margin-left:2px;animation:cursorBlink 1s step-end infinite}
 @keyframes cursorBlink{0%,100%{opacity:1}50%{opacity:0}}
 .hero-banner-img{max-height:50vh;border-radius:12px;margin-bottom:2rem;box-shadow:0 8px 32px rgba(0,0,0,.6)}
@@ -184,7 +185,7 @@ img{max-width:100%;display:block}
 @media(max-width:600px){
   .chapters-grid{grid-template-columns:1fr}
   .gallery-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}
-  .hero-subtitle{height:4.5em;font-size:clamp(.85rem,3.5vw,1rem)}
+  .hero-subtitle{height:2.5em;font-size:clamp(.8rem,3.5vw,.95rem)}
   .nav{gap:1rem;font-size:.8rem}
   .section{padding:2.5rem 1rem}
   .reader-modal-header{padding:1rem}

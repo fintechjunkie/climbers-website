@@ -467,8 +467,8 @@ function setupAmbientAudio() {
 // TYPEWRITER SUBTITLE
 // ===========================
 function setupRotatingSubtitle(el, text) {
-  // Split into sentences for the typewriter
-  const sentences = text.split(/\n\s*\n|\n/).map(s => s.trim()).filter(Boolean);
+  // Split on periods — each sentence becomes one typewriter rotation
+  const sentences = text.split(/\./).map(s => s.trim()).filter(Boolean).map(s => s + '.');
 
   if (sentences.length === 0) { el.textContent = text; return; }
 
@@ -485,43 +485,31 @@ function setupRotatingSubtitle(el, text) {
 
   let sentenceIdx = 0;
   let charIdx = 0;
-  let isDeleting = false;
-  let pauseTimer = null;
 
-  const TYPE_SPEED = 35;       // ms per character typing
-  const DELETE_SPEED = 20;     // ms per character deleting
-  const PAUSE_AFTER_TYPE = 5000; // ms to hold full sentence
-  const PAUSE_AFTER_DELETE = 600; // ms before next sentence
+  const TYPE_SPEED = 40;
+  const PAUSE_AFTER_TYPE = 6000;
 
-  function tick() {
+  function typeNext() {
     const current = sentences[sentenceIdx];
+    charIdx++;
+    textNode.textContent = current.substring(0, charIdx);
 
-    if (!isDeleting) {
-      // Typing
-      charIdx++;
-      textNode.textContent = current.substring(0, charIdx);
-
-      if (charIdx >= current.length) {
-        // Done typing — pause then delete
-        pauseTimer = setTimeout(() => { isDeleting = true; tick(); }, PAUSE_AFTER_TYPE);
-        return;
-      }
-      pauseTimer = setTimeout(tick, TYPE_SPEED);
-    } else {
-      // Deleting
-      charIdx--;
-      textNode.textContent = current.substring(0, charIdx);
-
-      if (charIdx <= 0) {
-        // Done deleting — move to next sentence
-        isDeleting = false;
-        sentenceIdx = (sentenceIdx + 1) % sentences.length;
-        pauseTimer = setTimeout(tick, PAUSE_AFTER_DELETE);
-        return;
-      }
-      pauseTimer = setTimeout(tick, DELETE_SPEED);
+    if (charIdx >= current.length) {
+      // Done typing — pause, then fade out and start next
+      setTimeout(() => {
+        wrap.classList.add('fade-out');
+        setTimeout(() => {
+          charIdx = 0;
+          sentenceIdx = (sentenceIdx + 1) % sentences.length;
+          textNode.textContent = '';
+          wrap.classList.remove('fade-out');
+          setTimeout(typeNext, 300);
+        }, 500);
+      }, PAUSE_AFTER_TYPE);
+      return;
     }
+    setTimeout(typeNext, TYPE_SPEED);
   }
 
-  tick();
+  typeNext();
 }
