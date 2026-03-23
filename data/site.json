@@ -162,7 +162,7 @@
     }
   ],
   "questron": {
-    "enabled": false,
+    "enabled": true,
     "workerUrl": "https://questron-worker.frank-707.workers.dev"
   }
 }
