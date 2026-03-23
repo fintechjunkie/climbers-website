@@ -160,5 +160,9 @@
       "label": "CARDINAL THORNE",
       "id": "mn0n2pgxj9vl"
     }
-  ]
+  ],
+  "questron": {
+    "enabled": false,
+    "workerUrl": "https://questron-worker.frank-707.workers.dev"
+  }
 }
