@@ -911,6 +911,14 @@ document.addEventListener('DOMContentLoaded', () => {
     img.style.cssText = 'max-height:150px;border-radius:8px';
     img.onload = () => { preview.appendChild(img); };
 
+    // Avatar preview
+    const avatarPreview = document.getElementById('questronAvatarPreview');
+    avatarPreview.innerHTML = '';
+    const avatarImg = document.createElement('img');
+    avatarImg.src = Storage.getQuestronAvatarUrl() + '?t=' + Date.now();
+    avatarImg.style.cssText = 'width:80px;height:80px;object-fit:cover;border-radius:50%;border:2px solid #0ff';
+    avatarImg.onload = () => { avatarPreview.appendChild(avatarImg); };
+
     // KB status
     const kbStatus = document.getElementById('questronKbStatus');
     try {
@@ -932,6 +940,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const enabled = document.getElementById('questronEnabled').checked;
     const workerUrl = document.getElementById('questronWorkerUrl').value.trim();
     const headerFile = document.getElementById('questronHeaderImage').files[0];
+    const avatarFile = document.getElementById('questronAvatarImage').files[0];
     const kbFile = document.getElementById('questronKbFile').files[0];
 
     try {
@@ -942,6 +951,11 @@ document.addEventListener('DOMContentLoaded', () => {
       // Upload header image if selected
       if (headerFile) {
         settings.headerImage = await Storage.fileToDataURL(headerFile);
+      }
+
+      // Upload avatar if selected
+      if (avatarFile) {
+        settings.avatarImage = await Storage.fileToDataURL(avatarFile);
       }
 
       // Upload knowledge base if selected

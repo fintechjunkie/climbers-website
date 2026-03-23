@@ -524,8 +524,13 @@ function setupRotatingSubtitle(el, text) {
 // ===========================
 let questronKbCache = null;
 let questronHistory = [];
+let questronQuestionCount = 0;
+let questronWorkerUrl = '';
+const QUESTRON_MAX_QUESTIONS = 5;
 
 function setupQuestron(config) {
+  questronWorkerUrl = config.workerUrl;
+
   // Show nav link and section
   const navLink = document.getElementById('questronNavLink');
   if (navLink) navLink.style.display = '';
@@ -538,6 +543,12 @@ function setupQuestron(config) {
   headerImg.onload = () => { headerImg.style.display = ''; };
   headerImg.onerror = () => { headerImg.style.display = 'none'; };
 
+  // Load avatar in terminal header
+  const avatar = document.getElementById('qtAvatar');
+  avatar.src = Storage.getQuestronAvatarUrl() + '?t=' + Date.now();
+  avatar.onload = () => { avatar.style.display = ''; };
+  avatar.onerror = () => { avatar.style.display = 'none'; };
+
   // Wire enter button
   document.getElementById('questronEnterBtn').addEventListener('click', () => {
     openQuestronTerminal();
@@ -545,6 +556,11 @@ function setupQuestron(config) {
 
   // Wire close button
   document.getElementById('questronClose').addEventListener('click', closeQuestronTerminal);
+
+  // Click backdrop to close
+  document.getElementById('questronTerminal').addEventListener('click', e => {
+    if (e.target.id === 'questronTerminal') closeQuestronTerminal();
+  });
 
   // ESC to close
   document.addEventListener('keydown', e => {
@@ -556,15 +572,71 @@ function setupQuestron(config) {
   // Wire input form
   document.getElementById('qtInputForm').addEventListener('submit', e => {
     e.preventDefault();
-    sendQuestronMessage(config.workerUrl);
+    sendQuestronMessage(questronWorkerUrl);
   });
 }
 
-function openQuestronTerminal() {
+async function openQuestronTerminal() {
   const terminal = document.getElementById('questronTerminal');
+  const messages = document.getElementById('qtMessages');
+  const input = document.getElementById('qtInput');
+  const sendBtn = document.querySelector('.qt-send-btn');
+
+  // Reset session
+  questronQuestionCount = 0;
+  questronHistory = [];
+  messages.innerHTML = '<div class="qt-line qt-system">BOOTING TERMINAL... ESTABLISHING LINK...</div>';
+  input.disabled = false;
+  sendBtn.disabled = false;
+  updateQuestionCounter();
+
   terminal.classList.add('active');
   document.body.style.overflow = 'hidden';
-  document.getElementById('qtInput').focus();
+
+  // Auto-introduction from Questron
+  try {
+    // Fetch knowledge base if not cached
+    if (questronKbCache === null) {
+      try {
+        const kbResponse = await fetch(Storage.getQuestronKbUrl() + '?t=' + Date.now());
+        questronKbCache = kbResponse.ok ? await kbResponse.text() : '';
+      } catch (e) { questronKbCache = ''; }
+    }
+
+    const processing = document.createElement('div');
+    processing.className = 'qt-processing';
+    processing.textContent = 'INITIALIZING';
+    messages.appendChild(processing);
+
+    const response = await fetch(questronWorkerUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        question: 'Introduce yourself briefly. State your designation, your purpose, and that the user has 5 queries available in this session.',
+        knowledgeBase: questronKbCache,
+        history: []
+      })
+    });
+    const data = await response.json();
+    if (processing.parentNode) processing.remove();
+
+    // Clear boot message and show intro
+    messages.innerHTML = '';
+    const sysLine = document.createElement('div');
+    sysLine.className = 'qt-line qt-system';
+    sysLine.textContent = 'SYSTEM ONLINE. LINK ESTABLISHED.';
+    messages.appendChild(sysLine);
+
+    const introLine = document.createElement('div');
+    introLine.className = 'qt-line qt-bot';
+    introLine.textContent = data.answer;
+    messages.appendChild(introLine);
+  } catch (err) {
+    messages.innerHTML = '<div class="qt-line qt-system">SYSTEM ONLINE. LINK ESTABLISHED.</div><div class="qt-line qt-bot">I am Questron. Designation QST-7. Synthetic intelligence unit. You have 5 queries available. Proceed.</div>';
+  }
+
+  messages.scrollTop = messages.scrollHeight;
+  input.focus();
 }
 
 function closeQuestronTerminal() {
@@ -573,11 +645,22 @@ function closeQuestronTerminal() {
   document.body.style.overflow = '';
 }
 
+function updateQuestionCounter() {
+  const counter = document.getElementById('qtQuestionCount');
+  if (counter) counter.textContent = 'QUERIES: ' + questronQuestionCount + '/' + QUESTRON_MAX_QUESTIONS;
+}
+
 async function sendQuestronMessage(workerUrl) {
   const input = document.getElementById('qtInput');
   const messages = document.getElementById('qtMessages');
+  const sendBtn = document.querySelector('.qt-send-btn');
   const question = input.value.trim();
   if (!question) return;
+
+  // Check question limit
+  if (questronQuestionCount >= QUESTRON_MAX_QUESTIONS) {
+    return;
+  }
 
   input.value = '';
 
@@ -599,14 +682,8 @@ async function sendQuestronMessage(workerUrl) {
     if (questronKbCache === null) {
       try {
         const kbResponse = await fetch(Storage.getQuestronKbUrl() + '?t=' + Date.now());
-        if (kbResponse.ok) {
-          questronKbCache = await kbResponse.text();
-        } else {
-          questronKbCache = '';
-        }
-      } catch (e) {
-        questronKbCache = '';
-      }
+        questronKbCache = kbResponse.ok ? await kbResponse.text() : '';
+      } catch (e) { questronKbCache = ''; }
     }
 
     // Call the worker
@@ -635,8 +712,21 @@ async function sendQuestronMessage(workerUrl) {
     questronHistory.push({ question: question, answer: data.answer });
     if (questronHistory.length > 10) questronHistory.shift();
 
+    // Increment question count
+    questronQuestionCount++;
+    updateQuestionCounter();
+
+    // Check if limit reached
+    if (questronQuestionCount >= QUESTRON_MAX_QUESTIONS) {
+      const limitLine = document.createElement('div');
+      limitLine.className = 'qt-line qt-system';
+      limitLine.textContent = 'SESSION LIMIT REACHED. TERMINAL ACCESS EXHAUSTED. CLOSE AND RE-ENTER TO START A NEW SESSION.';
+      messages.appendChild(limitLine);
+      input.disabled = true;
+      sendBtn.disabled = true;
+    }
+
   } catch (err) {
-    // Remove processing indicator
     if (processing.parentNode) processing.remove();
 
     const errorLine = document.createElement('div');

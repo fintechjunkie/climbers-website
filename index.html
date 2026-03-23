@@ -75,18 +75,34 @@
 
   <!-- ===== QUESTRON TERMINAL MODAL ===== -->
   <div class="questron-terminal" id="questronTerminal">
-    <div class="qt-header">
-      <span class="qt-title">QUESTRON TERMINAL <span class="qt-version">v2.1</span></span>
-      <button class="qt-close" id="questronClose">&times;</button>
+    <div class="qt-frame">
+      <div class="qt-frame-corner qt-corner-tl"></div>
+      <div class="qt-frame-corner qt-corner-tr"></div>
+      <div class="qt-frame-corner qt-corner-bl"></div>
+      <div class="qt-frame-corner qt-corner-br"></div>
+      <div class="qt-header">
+        <div class="qt-header-left">
+          <img class="qt-avatar" id="qtAvatar" src="" alt="QST-7" style="display:none">
+          <div class="qt-header-text">
+            <span class="qt-title">QUESTRON TERMINAL</span>
+            <span class="qt-version">v2.1 // QST-7 SYNTHETIC UNIT</span>
+          </div>
+        </div>
+        <button class="qt-close" id="questronClose">&times;</button>
+      </div>
+      <div class="qt-messages" id="qtMessages">
+        <div class="qt-line qt-system">INITIALIZING TERMINAL...</div>
+      </div>
+      <form class="qt-input-bar" id="qtInputForm" autocomplete="off">
+        <span class="qt-prompt-char">&gt;</span>
+        <input type="text" id="qtInput" placeholder="Enter your question..." autocomplete="off" spellcheck="false">
+        <button type="submit" class="qt-send-btn">TRANSMIT</button>
+      </form>
+      <div class="qt-status-bar">
+        <span class="qt-status-left">LINK: ACTIVE</span>
+        <span class="qt-status-right" id="qtQuestionCount">QUERIES: 0/5</span>
+      </div>
     </div>
-    <div class="qt-messages" id="qtMessages">
-      <div class="qt-line qt-system">SYSTEM ONLINE. DESIGNATION: QST-7. AWAITING QUERY.</div>
-    </div>
-    <form class="qt-input-bar" id="qtInputForm" autocomplete="off">
-      <span class="qt-prompt-char">&gt;</span>
-      <input type="text" id="qtInput" placeholder="Enter your question..." autocomplete="off" spellcheck="false">
-      <button type="submit" class="qt-send-btn">TRANSMIT</button>
-    </form>
   </div>
 
   <!-- ===== LIGHTBOX (fan art) ===== -->

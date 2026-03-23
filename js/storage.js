@@ -346,6 +346,9 @@ const Storage = {
     if (settings.headerImage) {
       await this._uploadImage('questron_header.jpg', settings.headerImage);
     }
+    if (settings.avatarImage) {
+      await this._uploadImage('questron_avatar.jpg', settings.avatarImage);
+    }
     if (settings.kbFile) {
       await this._uploadImage('questron_kb.txt', settings.kbFile);
     }
@@ -354,6 +357,10 @@ const Storage = {
 
   getQuestronHeaderUrl() {
     return 'uploads/questron_header.jpg';
+  },
+
+  getQuestronAvatarUrl() {
+    return 'uploads/questron_avatar.jpg';
   },
 
   getQuestronKbUrl() {

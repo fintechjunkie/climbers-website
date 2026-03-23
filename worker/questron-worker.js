@@ -59,7 +59,7 @@ export default {
           'anthropic-version': '2023-06-01'
         },
         body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
+          model: 'claude-3-5-haiku-20241022',
           max_tokens: 1024,
           system: `You are Questron, a Synthetic intelligence unit — designation QST-7 — from the world of Climbers. You were constructed before the Event and have full access to the historical archives of this world, its factions, locations, and key figures.
 
