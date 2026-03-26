@@ -709,7 +709,6 @@ function setupRegistry(workerUrl) {
   if (navLink) navLink.style.display = '';
 
   renderRegistryGrid();
-  renderRegistryDetailList();
   setupRegistryEvents(workerUrl);
 }
 
@@ -799,7 +798,7 @@ function selectLord(lordId) {
 
 function renderLordDetail(lord) {
   const detailPanel = document.getElementById('regDetail');
-  if (detailPanel) { detailPanel.scrollTop = 0; detailPanel.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  if (detailPanel) { detailPanel.classList.add('open'); detailPanel.scrollTop = 0; document.body.style.overflow = 'hidden'; }
   const header = document.querySelector('.reg-detail-header');
   header.innerHTML = `<span class="reg-detail-header-text" style="color:${lord.color}">${lord.name}</span><button class="reg-detail-close" onclick="deselectLord()">&times;</button>`;
 
@@ -867,13 +866,20 @@ function deselectLord() {
   document.querySelectorAll('.reg-node-label').forEach(t => t.setAttribute('opacity', '0'));
   document.querySelectorAll('.reg-sit-lord-btn').forEach(btn => btn.classList.remove('active'));
 
-  // Restore list
-  const header = document.querySelector('.reg-detail-header');
-  header.innerHTML = '<span class="reg-detail-header-text">SELECT A LORD TO VIEW THEIR FILE</span>';
-  renderRegistryDetailList();
+  // Close modal
+  const detailPanel = document.getElementById('regDetail');
+  if (detailPanel) { detailPanel.classList.remove('open'); document.body.style.overflow = ''; }
 }
 
 function setupRegistryEvents(workerUrl) {
+  // Close modal on backdrop click or Escape
+  document.getElementById('regDetail').addEventListener('click', e => {
+    if (e.target.id === 'regDetail') deselectLord();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && document.getElementById('regDetail').classList.contains('open')) deselectLord();
+  });
+
   // Node clicks
   document.getElementById('regSvg').addEventListener('click', e => {
     const node = e.target.closest('.reg-node');
@@ -1045,7 +1051,7 @@ const ARCHIVE_EVENTS = [
     id: 'event', year: '~128 YEARS AGO', label: 'THE EVENT',
     short: 'The Tower appeared. No warning, no explanation, no origin. Everything that followed stems from this moment.',
     body: 'The Tower appeared on a Tuesday. There was no warning. No seismic activity, no atmospheric disturbance, no electromagnetic signature that any instrument detected before it was already there. One moment the skyline was ordinary. The next moment it was not.\n\nThe Tower is approximately 3.2 kilometers tall. It has no visible entrance at ground level. It has no windows. It does not reflect light in a way that materials science can explain. It is not made of any known substance. Every attempt to take a sample has failed. Drills break. Lasers scatter. Explosives leave no mark.\n\nWithin six hours of its appearance, the first person walked through what would later be called the Gate. She did not come back. The second person entered four hours later. He did not come back either. By the end of the first week, forty-seven people had entered the Tower. None returned.\n\nThe governments of the world responded with containment. The containment failed. The Tower does not acknowledge perimeters.',
-    image: 'event.jpg', imageAlt: 'The Tower appears'
+    image: 'event.png', imageAlt: 'The Tower appears'
   },
   {
     id: 'seraph-built', year: '~120 YEARS AGO', label: 'SERAPH CONSTRUCTED',
@@ -1063,7 +1069,7 @@ const ARCHIVE_EVENTS = [
     id: 'expansion', year: '~90 YEARS AGO', label: 'THE EXPANSION',
     short: 'Haven City grew from a research outpost to a metropolis. The Tower drew everyone. The factions followed.',
     body: 'The settlement around the Tower was originally a military research installation. Within four decades of the Event it was a city of two million people. The Expansion was not planned. It was gravitational.\n\nPeople came because the Tower was there. They came because augmentations were real and the Tower granted them to Climbers who survived. They came because the old world was collapsing and the new one was being built in the shadow of something that defied every known law of physics.\n\nHaven City grew in rings. The innermost ring, closest to the Tower, became the territory of the most powerful factions. The outer rings became residential, commercial, chaotic. Infrastructure was improvised. Governance was factional. The city had no single authority because no single authority could hold power in a place where an individual could enter the Tower and emerge with abilities that made conventional military force irrelevant.\n\nThe Expansion period established the political geography that still defines Haven City. The factions, the territories, the alliances, the conflicts. All of it was set during these decades. The city has grown since. The fundamental power structure has not changed.',
-    image: 'expansion.jpg', imageAlt: 'Haven City expands'
+    image: 'expansion.png', imageAlt: 'Haven City expands'
   },
   {
     id: 'valari', year: '~75 YEARS AGO', label: 'THE VALARI EMERGENCE',
@@ -1111,7 +1117,7 @@ const ARCHIVE_EVENTS = [
     id: 'now', year: 'NOW', label: 'THE QUESTRON',
     short: 'The present. The Tower still stands. The Lords still govern. The questions remain. You are here.',
     body: 'This is the present moment. The Tower stands at the center of Haven City as it has for 128 years. Seraph broadcasts to Climbers who enter. The Oath Lords maintain their uneasy balance of power. The factions operate. The people live.\n\nBut something is different now. The Deterioration has not reversed. Seraph\'s broadcasts are increasingly erratic. The Tower is changing in ways that no one, not even Malachus with his perfect memory, has seen before. Failed Climbers are more numerous than successful ones. The augmentations being granted are stranger, more powerful, more unpredictable.\n\nGrey\'s revelation hangs over everything. Whatever the Tower truly is, the Lords know, and they are acting on that knowledge in ways that do not always align. Alliances shift. Old enemies find common cause. Old allies discover irreconcilable differences.\n\nThe Questron, the terminal you have accessed, is one of thirty-seven Synthetic units built to process and preserve information. It records. It retrieves. It does not speculate. But its archives contain everything that has happened in Haven City since its activation, and the questions being asked of it are becoming more urgent.\n\nSomething is coming. The Archive does not predict. But the pattern of preparation among the Oath Lords suggests that they believe a significant change is imminent. The nature of that change is the most important question in Haven City. No one has answered it yet.',
-    image: 'now.jpg', imageAlt: 'Haven City today'
+    image: 'now.png', imageAlt: 'Haven City today'
   }
 ];
 

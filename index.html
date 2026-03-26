@@ -108,10 +108,14 @@
         <div class="reg-legend" id="regLegend" style="display:none"></div>
       </div>
 
-      <!-- Detail panel -->
-      <div class="reg-detail" id="regDetail">
+    </div>
+
+    <!-- Detail panel (modal overlay) -->
+    <div class="reg-detail" id="regDetail">
+      <div class="reg-detail-inner">
         <div class="reg-detail-header">
           <span class="reg-detail-header-text">SELECT A LORD TO VIEW THEIR FILE</span>
+          <button class="reg-detail-close" onclick="deselectLord()">&times;</button>
         </div>
         <div class="reg-detail-body" id="regDetailBody"></div>
       </div>

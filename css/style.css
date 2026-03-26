@@ -271,13 +271,15 @@ img{max-width:100%;display:block}
 .reg-legend-item{display:flex;align-items:center;gap:6px;font-family:'Orbitron',sans-serif;font-size:.6rem;color:#7a8a92;letter-spacing:.04em}
 .reg-legend-swatch{display:inline-block;width:18px;height:2px}
 
-/* Detail panel */
-.reg-detail{width:380px;flex-shrink:0;background:#0b0e10;border:1px solid #181d21;max-height:80vh;overflow-y:auto}
-.reg-detail-header{padding:.75rem 1rem;border-bottom:1px solid #181d21;display:flex;justify-content:space-between;align-items:center}
-.reg-detail-header-text{font-family:'Orbitron',sans-serif;font-size:.65rem;color:#6a7a82;letter-spacing:.08em;text-transform:uppercase}
-.reg-detail-close{background:none;border:none;color:#6a7a82;font-size:16px;cursor:pointer;padding:0 4px;font-family:'Orbitron',sans-serif}
+/* Detail panel — modal overlay */
+.reg-detail{display:none;position:fixed;inset:0;z-index:9000;overflow-y:auto;background:rgba(0,0,0,.85);backdrop-filter:blur(6px);padding:2rem}
+.reg-detail.open{display:flex;justify-content:center;align-items:flex-start}
+.reg-detail-inner{background:#0b0e10;border:1px solid #1a1d21;max-width:520px;width:100%;margin:2rem auto;position:relative;box-shadow:0 0 40px rgba(0,0,0,.6)}
+.reg-detail-header{padding:.75rem 1rem;border-bottom:1px solid #181d21;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#0b0e10;z-index:2}
+.reg-detail-header-text{font-family:'Orbitron',sans-serif;font-size:.75rem;color:#6a7a82;letter-spacing:.08em;text-transform:uppercase}
+.reg-detail-close{background:none;border:none;color:#6a7a82;font-size:22px;cursor:pointer;padding:0 4px;font-family:'Orbitron',sans-serif;line-height:1}
 .reg-detail-close:hover{color:#c9a84c}
-.reg-detail-body{padding:.75rem 1rem}
+.reg-detail-body{padding:1rem 1.25rem}
 
 /* Lord list rows */
 .reg-lord-row{display:flex;align-items:center;gap:10px;padding:10px 8px;border-left:2px solid transparent;cursor:pointer;transition:all .15s}
@@ -290,8 +292,8 @@ img{max-width:100%;display:block}
 .reg-lord-row-meta{font-family:'Orbitron',sans-serif;font-size:.6rem;color:#7a8a92;letter-spacing:.06em;text-transform:uppercase}
 
 /* Detail view */
-.reg-portrait{width:100%;max-height:50vh;object-fit:cover;object-position:top;display:none;position:relative}
-.reg-portrait-fade{position:relative}.reg-portrait-fade::after{content:'';position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(transparent,#0b0e10);pointer-events:none}
+.reg-portrait{width:100%;display:none}
+.reg-portrait-fade{position:relative}
 .reg-portrait-bar{height:2px;margin-bottom:12px}
 .reg-name-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
 .reg-lord-name{font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:700;letter-spacing:.06em}
@@ -366,7 +368,7 @@ img{max-width:100%;display:block}
 /* Responsive: tablet and mobile */
 @media(max-width:899px){
   .reg-layout{flex-direction:column}
-  .reg-detail{width:100%;max-height:none}
+  .reg-detail-inner{max-width:95vw;margin:1rem auto}
 }
 @media(max-width:600px){
   .registry-page{padding:1rem .75rem}
