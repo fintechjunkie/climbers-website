@@ -799,15 +799,17 @@ function selectLord(lordId) {
 
 function renderLordDetail(lord) {
   const detailPanel = document.getElementById('regDetail');
-  if (detailPanel) detailPanel.scrollTop = 0;
+  if (detailPanel) { detailPanel.scrollTop = 0; detailPanel.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
   const header = document.querySelector('.reg-detail-header');
   header.innerHTML = `<span class="reg-detail-header-text" style="color:${lord.color}">${lord.name}</span><button class="reg-detail-close" onclick="deselectLord()">&times;</button>`;
 
   const body = document.getElementById('regDetailBody');
   let html = '';
 
-  // Portrait image (graceful loading)
-  html += `<img class="reg-portrait" src="public/assets/oath-lords/${lord.id}-portrait.png" alt="${lord.name}" onerror="this.style.display='none'" onload="this.style.display='block'">`;
+  // Portrait image (graceful loading, capped height with fade hint)
+  html += `<div class="reg-portrait-fade">`;
+  html += `<img class="reg-portrait" src="public/assets/oath-lords/${lord.id}-portrait.png" alt="${lord.name}" onerror="this.parentElement.style.display='none'" onload="this.style.display='block'">`;
+  html += `</div>`;
   html += `<div class="reg-portrait-bar" style="background:${lord.color}"></div>`;
 
   // Name + faction icon
