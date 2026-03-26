@@ -242,6 +242,9 @@ img{max-width:100%;display:block}
 /* ===== OATH LORD REGISTRY ===== */
 .registry-page{max-width:1200px;padding:1.5rem}
 .reg-intro-desc{max-width:700px;margin:0 auto 2.5rem;text-align:center;color:#888;font-size:.95rem;line-height:1.7}
+.reg-illustrations{display:flex;justify-content:center;gap:1.5rem;margin-bottom:2rem;opacity:.5}
+.reg-illust{height:120px;object-fit:cover;border-radius:4px;border:1px solid #1a1d21;flex:1;max-width:280px;transition:opacity .3s}
+.reg-illust:hover{opacity:1}
 
 /* Header bar */
 .reg-header{display:flex;justify-content:space-between;align-items:center;padding:.75rem 1rem;background:#0b0e10;border:1px solid #181d21;margin-bottom:1rem}
@@ -272,14 +275,20 @@ img{max-width:100%;display:block}
 .reg-legend-swatch{display:inline-block;width:18px;height:2px}
 
 /* Detail panel — modal overlay */
-.reg-detail{display:none;position:fixed;inset:0;z-index:9000;overflow-y:auto;background:rgba(0,0,0,.85);backdrop-filter:blur(6px);padding:2rem}
-.reg-detail.open{display:flex;justify-content:center;align-items:flex-start}
-.reg-detail-inner{background:#0b0e10;border:1px solid #1a1d21;max-width:520px;width:100%;margin:2rem auto;position:relative;box-shadow:0 0 40px rgba(0,0,0,.6)}
-.reg-detail-header{padding:.75rem 1rem;border-bottom:1px solid #181d21;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#0b0e10;z-index:2}
+.reg-detail{display:none;position:fixed;inset:0;z-index:9000;overflow-y:auto;background:rgba(0,0,0,0);backdrop-filter:blur(0px);padding:2rem;transition:background .4s,backdrop-filter .4s}
+.reg-detail.open{display:flex;justify-content:center;align-items:flex-start;background:rgba(0,0,0,.85);backdrop-filter:blur(6px)}
+.reg-detail-inner{background:#0b0e10;border:1px solid #1a1d21;max-width:520px;width:100%;margin:2rem auto;position:relative;box-shadow:0 0 60px rgba(201,168,76,.08),0 0 40px rgba(0,0,0,.6);animation:regModalOpen .4s cubic-bezier(.16,1,.3,1) both}
+@keyframes regModalOpen{0%{opacity:0;transform:scale(.92) translateY(20px);filter:blur(4px)}100%{opacity:1;transform:scale(1) translateY(0);filter:blur(0)}}
+.reg-detail-header{padding:.75rem 1rem;border-bottom:1px solid #181d21;display:flex;justify-content:space-between;align-items:center}
 .reg-detail-header-text{font-family:'Orbitron',sans-serif;font-size:.75rem;color:#6a7a82;letter-spacing:.08em;text-transform:uppercase}
 .reg-detail-close{background:none;border:none;color:#6a7a82;font-size:22px;cursor:pointer;padding:0 4px;font-family:'Orbitron',sans-serif;line-height:1}
 .reg-detail-close:hover{color:#c9a84c}
 .reg-detail-body{padding:1rem 1.25rem}
+
+/* Lord list panel (right sidebar) */
+.reg-list-panel{width:280px;flex-shrink:0;background:#0b0e10;border:1px solid #181d21;max-height:80vh;overflow-y:auto}
+.reg-list-header{padding:.75rem 1rem;border-bottom:1px solid #181d21}
+.reg-list-header-text{font-family:'Orbitron',sans-serif;font-size:.65rem;color:#6a7a82;letter-spacing:.08em;text-transform:uppercase}
 
 /* Lord list rows */
 .reg-lord-row{display:flex;align-items:center;gap:10px;padding:10px 8px;border-left:2px solid transparent;cursor:pointer;transition:all .15s}
@@ -368,6 +377,7 @@ img{max-width:100%;display:block}
 /* Responsive: tablet and mobile */
 @media(max-width:899px){
   .reg-layout{flex-direction:column}
+  .reg-list-panel{width:100%;max-height:none}
   .reg-detail-inner{max-width:95vw;margin:1rem auto}
 }
 @media(max-width:600px){

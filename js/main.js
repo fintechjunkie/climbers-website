@@ -709,6 +709,7 @@ function setupRegistry(workerUrl) {
   if (navLink) navLink.style.display = '';
 
   renderRegistryGrid();
+  renderRegistryListPanel();
   setupRegistryEvents(workerUrl);
 }
 
@@ -743,8 +744,9 @@ function renderRegistryGrid() {
   svg.innerHTML = gridLines + relLines + nodes;
 }
 
-function renderRegistryDetailList() {
-  const body = document.getElementById('regDetailBody');
+function renderRegistryListPanel() {
+  const body = document.getElementById('regListBody');
+  if (!body) return;
   body.innerHTML = '';
   OATH_LORDS.forEach(lord => {
     const row = document.createElement('div');
