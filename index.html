@@ -108,6 +108,9 @@
 
   <!-- ===== OATH LORD REGISTRY ===== -->
   <section class="section registry-page" id="registry-section" style="display:none">
+    <h2 class="section-title">The Ten Oath Lords</h2>
+    <p class="reg-intro-desc">The Oath Lords govern Haven City. Ten individuals, each augmented by the Tower, each bound by a question they asked and an answer they received. Their alliances shift. Their conflicts endure. Study the registry. Choose who speaks.</p>
+
     <!-- Header bar -->
     <div class="reg-header">
       <div class="reg-header-left">
@@ -157,18 +160,33 @@
 
     <!-- Situation generator -->
     <div class="reg-situation" id="regSituation">
-      <div class="reg-sit-header">SITUATION GENERATOR</div>
-      <p class="reg-sit-desc">Generate a situation from Haven City. Select an Oath Lord to see how they respond.</p>
-      <button class="reg-sit-btn" id="regSitGenerate">GENERATE SITUATION</button>
-      <div class="reg-sit-card" id="regSitCard" style="display:none">
-        <span class="reg-sit-card-label">THE SITUATION</span>
-        <p class="reg-sit-card-text" id="regSitText"></p>
+      <div class="reg-sit-frame">
+        <div class="reg-sit-frame-corner reg-sit-corner-tl"></div>
+        <div class="reg-sit-frame-corner reg-sit-corner-tr"></div>
+        <div class="reg-sit-frame-corner reg-sit-corner-bl"></div>
+        <div class="reg-sit-frame-corner reg-sit-corner-br"></div>
+        <div class="reg-sit-frame-header">
+          <span class="reg-sit-frame-title">SITUATION GENERATOR</span>
+          <span class="reg-sit-frame-version">HAVEN CITY // INTELLIGENCE FEED</span>
+        </div>
+        <div class="reg-sit-frame-body">
+          <p class="reg-sit-desc">Generate a situation from Haven City. Select an Oath Lord to see how they respond.</p>
+          <button class="reg-sit-btn" id="regSitGenerate">GENERATE SITUATION</button>
+          <div class="reg-sit-card" id="regSitCard" style="display:none">
+            <span class="reg-sit-card-label">// INCOMING TRANSMISSION</span>
+            <p class="reg-sit-card-text" id="regSitText"></p>
+          </div>
+          <div class="reg-sit-lords" id="regSitLords" style="display:none">
+            <span class="reg-sit-lords-label">SELECT AN OATH LORD TO RESPOND</span>
+            <div class="reg-sit-lords-row" id="regSitLordsRow"></div>
+          </div>
+          <div class="reg-sit-response" id="regSitResponse" style="display:none"></div>
+        </div>
+        <div class="reg-sit-frame-status">
+          <span>LINK: ACTIVE</span>
+          <span>FEED: HAVEN CITY CENTRAL</span>
+        </div>
       </div>
-      <div class="reg-sit-lords" id="regSitLords" style="display:none">
-        <span class="reg-sit-lords-label">SELECT AN OATH LORD TO RESPOND</span>
-        <div class="reg-sit-lords-row" id="regSitLordsRow"></div>
-      </div>
-      <div class="reg-sit-response" id="regSitResponse" style="display:none"></div>
     </div>
   </section>
 

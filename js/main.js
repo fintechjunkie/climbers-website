@@ -683,8 +683,12 @@ const REGISTRY_RELATIONSHIPS = [
   { from: 'grey', to: 'thorne', style: 'solid', color: '#884444', label: 'Existential threat' },
   { from: 'silence', to: 'vex', style: 'dashed', color: '#6a9a7a', label: 'Operational alignment' },
   { from: 'vesper', to: 'absalom', style: 'dotted', color: '#b8943a', label: 'Uneasy arrangement' },
-  { from: 'malachus', to: 'cipher', style: 'dashed', color: '#444444', label: 'The Archive has no record' },
-  { from: 'fawn', to: 'grey', style: 'dashed', color: '#7a6a8a', label: 'Unknown to each other' }
+  { from: 'malachus', to: 'cipher', style: 'dashed', color: '#7a7a9a', label: 'Mutual observation' },
+  { from: 'fawn', to: 'yuki', style: 'dashed', color: '#9a7a8a', label: 'Protected bond' },
+  { from: 'thorne', to: 'absalom', style: 'dotted', color: '#b8943a', label: 'Uneasy arrangement' },
+  { from: 'vesper', to: 'malachus', style: 'dashed', color: '#6a9a7a', label: 'Operational alignment' },
+  { from: 'fawn', to: 'silence', style: 'solid', color: '#c84444', label: 'Active conflict' },
+  { from: 'grey', to: 'vex', style: 'dashed', color: '#7a7a9a', label: 'Mutual observation' }
 ];
 
 let regSelectedLord = null;
