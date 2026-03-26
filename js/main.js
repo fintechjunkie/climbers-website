@@ -752,6 +752,7 @@ function renderRegistryDetailList() {
     row.className = 'reg-lord-row';
     row.dataset.lord = lord.id;
     row.innerHTML = `
+      <img class="reg-lord-row-icon" src="public/assets/oath-lords/${lord.id}-faction.png" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display=''" onload="this.style.display='';this.nextElementSibling.style.display='none'">
       <span class="reg-lord-dot" style="background:${lord.color}"></span>
       <div class="reg-lord-row-info">
         <span class="reg-lord-row-name">${lord.name}</span>

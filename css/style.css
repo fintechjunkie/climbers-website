@@ -282,6 +282,8 @@ img{max-width:100%;display:block}
 /* Lord list rows */
 .reg-lord-row{display:flex;align-items:center;gap:10px;padding:10px 8px;border-left:2px solid transparent;cursor:pointer;transition:all .15s}
 .reg-lord-row:hover{border-left-color:var(--lord-color,#c9a84c);background:rgba(255,255,255,.02)}
+.reg-lord-row-icon{width:28px;height:28px;object-fit:contain;flex-shrink:0;opacity:.7;transition:opacity .2s}
+.reg-lord-row:hover .reg-lord-row-icon{opacity:1}
 .reg-lord-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
 .reg-lord-row-info{display:flex;flex-direction:column;gap:2px}
 .reg-lord-row-name{font-family:'Orbitron',sans-serif;font-size:.8rem;color:#d0c8a0;font-weight:600}
