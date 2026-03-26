@@ -275,17 +275,17 @@ img{max-width:100%;display:block}
 /* Detail panel — modal overlay */
 .reg-detail{display:none;position:fixed;inset:0;z-index:9000;overflow-y:auto;background:rgba(0,0,0,0);backdrop-filter:blur(0px);padding:2rem;transition:background .4s,backdrop-filter .4s}
 .reg-detail.open{display:flex;justify-content:center;align-items:flex-start;background:rgba(0,0,0,.85);backdrop-filter:blur(6px)}
-.reg-detail-inner{background:#0b0e10;border:1px solid #1a1d21;max-width:520px;width:100%;margin:2rem auto;position:relative;box-shadow:0 0 60px rgba(201,168,76,.08),0 0 40px rgba(0,0,0,.6);overflow:hidden;animation:regBeamReveal 1.8s ease-out forwards;clip-path:inset(0 0 100% 0)}
-.reg-detail-inner::before{content:'';position:absolute;left:0;right:0;height:3px;top:0;z-index:10;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(0,255,255,.4) 20%,rgba(0,255,255,.9) 50%,rgba(0,255,255,.4) 80%,transparent);box-shadow:0 0 15px 4px rgba(0,255,255,.5),0 0 40px 8px rgba(0,255,255,.2);animation:regBeamSweep 1.8s ease-out forwards;opacity:0}
-.reg-detail-inner::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,255,255,.025) 3px,rgba(0,255,255,.025) 6px);pointer-events:none;z-index:4;animation:regScanFade 1.2s ease 1.8s forwards;opacity:0}
+.reg-detail-inner{background:#0b0e10;border:1px solid #1a1d21;max-width:520px;width:100%;margin:2rem auto;position:relative;box-shadow:0 0 60px rgba(201,168,76,.08),0 0 40px rgba(0,0,0,.6);overflow:hidden;animation:regBeamReveal 3.5s ease-in-out forwards;clip-path:inset(0 0 100% 0)}
+.reg-detail-inner::before{content:'';position:absolute;left:0;right:0;height:3px;top:0;z-index:10;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(0,255,255,.4) 20%,rgba(0,255,255,.9) 50%,rgba(0,255,255,.4) 80%,transparent);box-shadow:0 0 15px 4px rgba(0,255,255,.5),0 0 40px 8px rgba(0,255,255,.2);animation:regBeamSweep 3.5s ease-in-out forwards;opacity:0}
+.reg-detail-inner::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,255,255,.025) 3px,rgba(0,255,255,.025) 6px);pointer-events:none;z-index:4;animation:regScanFade 1.5s ease 3.5s forwards;opacity:0}
 @keyframes regBeamReveal{
 0%{clip-path:inset(0 0 100% 0);opacity:1}
-5%{clip-path:inset(0 0 98% 0)}
+3%{clip-path:inset(0 0 98% 0)}
 100%{clip-path:inset(0 0 0% 0)}
 }
 @keyframes regBeamSweep{
 0%{top:0;opacity:0}
-3%{opacity:1}
+2%{opacity:1}
 95%{opacity:1}
 100%{top:100%;opacity:0}
 }
