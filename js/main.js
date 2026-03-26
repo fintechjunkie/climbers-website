@@ -797,6 +797,8 @@ function selectLord(lordId) {
 }
 
 function renderLordDetail(lord) {
+  const detailPanel = document.getElementById('regDetail');
+  if (detailPanel) detailPanel.scrollTop = 0;
   const header = document.querySelector('.reg-detail-header');
   header.innerHTML = `<span class="reg-detail-header-text" style="color:${lord.color}">${lord.name}</span><button class="reg-detail-close" onclick="deselectLord()">&times;</button>`;
 
