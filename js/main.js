@@ -1077,7 +1077,7 @@ const ARCHIVE_EVENTS = [
     id: 'valari', year: '~75 YEARS AGO', label: 'THE VALARI EMERGENCE',
     short: 'A new species of human appeared. Born with residue sensitivity, they could read the Tower\'s emotional echoes.',
     body: 'The first Valari child was born fifty-three years after the Event. She could feel the emotions of everyone in the room. Not as empathy. As data. She described it later as seeing colors around people that corresponded to what they were feeling. She was three years old when she first explained this to her parents.\n\nWithin a decade, hundreds of Valari children had been identified. They were not Climbers. They had not entered the Tower. They were born with abilities that resembled augmentations but operated on different principles. The leading theory is that the Tower\'s presence had altered human biology at the genetic level. The Valari were the first generation to express those changes.\n\nThe Valari read what scientists call "emotional residue," the traces of intense feeling that linger in physical spaces. A room where someone grieved carries that grief for years. A building where violence occurred radiates that violence to any Valari who enters it. The city itself is a map of accumulated human experience, visible only to them.\n\nThe Valari did not ask for this ability. Many of them describe it as overwhelming. Haven City is not a gentle place to feel everything.',
-    image: 'the-valari-emergence.png', imageAlt: 'The Valari emerge'
+    image: 'the-valari-experience.png', imageAlt: 'The Valari emerge'
   },
   {
     id: 'hive', year: '~60 YEARS AGO', label: 'THE HIVE MIND CRISIS',
