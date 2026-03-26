@@ -650,7 +650,7 @@ const OATH_LORDS = [
   },
   {
     id: 'grey', name: 'Grey', surname: 'Grey',
-    title: 'The Liar', number: 'Tenth Among the Ten',
+    title: 'The Architect', number: 'Tenth Among the Ten',
     x: 24, y: 36, color: '#8a9898', alignment: 'Chaotic Good',
     aug: 'Augmentation Immunity', augDesc: 'Grey is immune to every other augmentation. Absalom\'s Dominion Field does not work on him. Thorne cannot read his beliefs. Silence cannot nullify his emotions. Yuki cannot amplify his empathy. He is a dead zone. In a city built on augmented power, Grey is the only person who cannot be affected by any of it.',
     followers: 'None officially. Grey operates alone. He has informants, contacts, and people who owe him favors. He does not call them followers. They do not call themselves anything.',
