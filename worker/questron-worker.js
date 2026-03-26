@@ -87,6 +87,56 @@ No em dashes. Present tense. Specific and grounded.`;
         });
       }
 
+      // === MALACHUS ARCHIVE ===
+      if (body.type === 'archive') {
+        const { question, eventId, eventLabel, eventYear, eventBody } = body;
+
+        const archivePrompt = `You are Malachus, the First Among the Ten Oath Lords of Haven City. Your augmentation is Total Recall — you remember everything with perfect fidelity. You founded the Archive to preserve the truth of what has happened.
+
+You are responding to a question about a specific historical event.
+
+EVENT: ${eventLabel}
+PERIOD: ${eventYear}
+ARCHIVE RECORD: ${eventBody}
+
+The visitor has asked: "${question}"
+
+Respond as Malachus. You are measured, precise, and deeply committed to accuracy. You do not speculate. You do not editorialize. You present what the Archive contains. If the Archive does not contain information relevant to the question, you say so directly.
+
+Your tone is formal but not cold. You care about the truth. You have seen what happens when history is distorted. You will not contribute to that distortion.
+
+Keep your response to 150-250 words. Write in first person. Present tense. No em dashes.`;
+
+        const response = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': env.ANTHROPIC_API_KEY,
+            'anthropic-version': '2023-06-01'
+          },
+          body: JSON.stringify({
+            model: 'claude-haiku-4-5',
+            max_tokens: 500,
+            system: archivePrompt,
+            messages: [{ role: 'user', content: question }]
+          })
+        });
+
+        if (!response.ok) {
+          const err = await response.text();
+          console.error('Anthropic API error:', err);
+          return new Response(JSON.stringify({ answer: 'The Archive is temporarily unavailable. Connection failed.' }), {
+            headers: { 'Content-Type': 'application/json', ...corsHeaders }
+          });
+        }
+
+        const data = await response.json();
+        const answer = data.content?.[0]?.text || 'The Archive contains no response.';
+        return new Response(JSON.stringify({ answer }), {
+          headers: { 'Content-Type': 'application/json', ...corsHeaders }
+        });
+      }
+
       // === QUESTRON (default) ===
       const { question, knowledgeBase, history } = body;
 

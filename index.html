@@ -33,6 +33,7 @@
     <a href="#gallery-section">Gallery</a>
     <a href="#questron-section" id="questronNavLink" style="display:none">Questron</a>
     <a href="#registry-section" id="registryNavLink" style="display:none">Oath Lords</a>
+    <a href="#archive-section" id="archiveNavLink" style="display:none">Archive</a>
     <button class="nav-audio-btn hidden" id="audioToggle" title="Toggle background music">
       <span id="audioIconOff">&#128263; Sound</span>
       <span id="audioIconOn" style="display:none">&#128266; Sound</span>
@@ -189,6 +190,65 @@
       </div>
     </div>
   </section>
+
+  <!-- ===== THE MALACHUS ARCHIVE (Timeline) ===== -->
+  <section class="section archive-page" id="archive-section" style="display:none">
+    <h2 class="section-title">The Malachus Archive</h2>
+    <p class="archive-intro-desc">A record of what was, what changed, and what remains. The Archive does not interpret. It preserves. Query the timeline. The events speak for themselves.</p>
+
+    <!-- Timeline spine -->
+    <div class="archive-spine" id="archiveSpine"></div>
+  </section>
+
+  <!-- ===== ARCHIVE MODAL ===== -->
+  <div class="archive-modal" id="archiveModal">
+    <div class="archive-modal-overlay" id="archiveModalOverlay"></div>
+    <div class="archive-modal-frame">
+      <div class="archive-modal-frame-corner archive-corner-tl"></div>
+      <div class="archive-modal-frame-corner archive-corner-tr"></div>
+      <div class="archive-modal-frame-corner archive-corner-bl"></div>
+      <div class="archive-modal-frame-corner archive-corner-br"></div>
+
+      <div class="archive-modal-header">
+        <div class="archive-modal-nav">
+          <button class="archive-modal-nav-btn" id="archivePrev">&#9664; PREV</button>
+          <span class="archive-modal-year" id="archiveModalYear"></span>
+          <button class="archive-modal-nav-btn" id="archiveNext">NEXT &#9654;</button>
+        </div>
+        <button class="archive-modal-close" id="archiveModalClose">&times;</button>
+      </div>
+
+      <div class="archive-modal-body" id="archiveModalBody">
+        <!-- Image area -->
+        <div class="archive-modal-img-wrap" id="archiveModalImgWrap">
+          <img class="archive-modal-img" id="archiveModalImg" src="" alt="">
+          <div class="archive-modal-img-placeholder" id="archiveModalPlaceholder"></div>
+        </div>
+
+        <!-- Event title -->
+        <h3 class="archive-modal-title" id="archiveModalTitle"></h3>
+
+        <!-- Body text -->
+        <div class="archive-modal-text" id="archiveModalText"></div>
+
+        <!-- Ask the Archive -->
+        <div class="archive-ask">
+          <div class="archive-ask-label">ASK THE ARCHIVE</div>
+          <form class="archive-ask-form" id="archiveAskForm" autocomplete="off">
+            <span class="archive-ask-prompt">&gt;</span>
+            <input type="text" id="archiveAskInput" placeholder="Query Malachus about this event..." autocomplete="off" spellcheck="false">
+            <button type="submit" class="archive-ask-btn">TRANSMIT</button>
+          </form>
+          <div class="archive-ask-response" id="archiveAskResponse" style="display:none"></div>
+        </div>
+      </div>
+
+      <div class="archive-modal-status">
+        <span>LINK: MALACHUS ARCHIVE</span>
+        <span>RECORDS: ACTIVE</span>
+      </div>
+    </div>
+  </div>
 
   <!-- ===== LIGHTBOX (fan art) ===== -->
   <div class="lightbox" id="lightbox">
