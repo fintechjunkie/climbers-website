@@ -955,7 +955,13 @@ function setupRegistryEvents(workerUrl) {
       const btn = document.createElement('button');
       btn.className = 'reg-sit-lord-btn';
       btn.dataset.lord = lord.id;
-      btn.textContent = lord.surname;
+      const icon = document.createElement('img');
+      icon.className = 'reg-sit-lord-icon';
+      icon.src = 'public/assets/oath-lords/' + lord.id + '-faction.png';
+      icon.alt = '';
+      icon.onerror = function() { this.style.display = 'none'; };
+      btn.appendChild(icon);
+      btn.appendChild(document.createTextNode(lord.surname));
       btn.style.setProperty('--lord-color', lord.color);
       if (regSelectedLord && regSelectedLord.id === lord.id) btn.classList.add('active');
       btn.addEventListener('click', () => {

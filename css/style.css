@@ -350,6 +350,9 @@ img{max-width:100%;display:block}
 .reg-sit-lords-label{font-family:'Orbitron',sans-serif;font-size:.65rem;color:rgba(0,255,255,.5);letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:10px}
 .reg-sit-lords-row{display:flex;flex-wrap:wrap;gap:8px}
 .reg-sit-lord-btn{background:transparent;border:1px solid rgba(0,255,255,.2);color:rgba(0,255,255,.5);font-family:'Orbitron',sans-serif;font-size:.6rem;letter-spacing:.04em;text-transform:uppercase;padding:8px 14px;cursor:pointer;transition:all .2s;font-weight:600}
+.reg-sit-lord-btn{display:inline-flex;align-items:center;gap:6px}
+.reg-sit-lord-icon{width:20px;height:20px;object-fit:contain;opacity:.6;transition:opacity .2s}
+.reg-sit-lord-btn:hover .reg-sit-lord-icon,.reg-sit-lord-btn.active .reg-sit-lord-icon{opacity:1}
 .reg-sit-lord-btn:hover{border-color:var(--lord-color,#0ff);color:var(--lord-color,#0ff)}
 .reg-sit-lord-btn.active{background:color-mix(in srgb,var(--lord-color) 10%,transparent);border-color:var(--lord-color);color:var(--lord-color)}
 
