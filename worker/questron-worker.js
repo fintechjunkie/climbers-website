@@ -65,7 +65,7 @@ No em dashes. Present tense. Specific and grounded.`;
             'anthropic-version': '2023-06-01'
           },
           body: JSON.stringify({
-            model: 'claude-3-5-haiku-20241022',
+            model: 'claude-haiku-4-5',
             max_tokens: 600,
             system: systemPrompt,
             messages: [{ role: 'user', content: 'Write the response.' }]
@@ -114,7 +114,7 @@ No em dashes. Present tense. Specific and grounded.`;
           'anthropic-version': '2023-06-01'
         },
         body: JSON.stringify({
-          model: 'claude-3-5-haiku-20241022',
+          model: 'claude-haiku-4-5',
           max_tokens: 1024,
           system: `You are Questron, a Synthetic intelligence unit — designation QST-7 — from the world of Climbers. You were constructed before the Event and have full access to the historical archives of this world, its factions, locations, and key figures.
 
