@@ -33,7 +33,62 @@ export default {
     }
 
     try {
-      const { question, knowledgeBase, history } = await request.json();
+      const body = await request.json();
+
+      // === OATH LORD RESPONSE ===
+      if (body.type === 'oath-lord') {
+        const { lordName, lordTitle, lordAug, lordAugDesc, lordAlignment, lordVoice, lordAlliances, lordEnemies, situation } = body;
+
+        const systemPrompt = `You are writing a short, in-character response from ${lordName}, ${lordTitle} — one of the ten Oath Lords of Haven City.
+
+ABOUT ${lordName}:
+Augmentation: ${lordAug} — ${lordAugDesc}
+Alignment: ${lordAlignment}
+Voice: ${lordVoice}
+Known alliances: ${lordAlliances}
+Known enemies: ${lordEnemies}
+
+THE SITUATION:
+${situation}
+
+Write ${lordName}'s response to this situation in 150-200 words. Stay entirely in their voice and character. Show their alignment through their priorities, not through labels. Do not reference game mechanics or alignment terminology. Write in third person narration with direct speech — describe how they respond and what they say.
+
+The response should feel like a scene fragment from the story. It should reveal something true about who this Oath Lord is. It should not be a speech — it should be a moment.
+
+No em dashes. Present tense. Specific and grounded.`;
+
+        const response = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': env.ANTHROPIC_API_KEY,
+            'anthropic-version': '2023-06-01'
+          },
+          body: JSON.stringify({
+            model: 'claude-3-5-haiku-20241022',
+            max_tokens: 600,
+            system: systemPrompt,
+            messages: [{ role: 'user', content: 'Write the response.' }]
+          })
+        });
+
+        if (!response.ok) {
+          const err = await response.text();
+          console.error('Anthropic API error:', err);
+          return new Response(JSON.stringify({ answer: 'The Lord does not respond. Connection failed.' }), {
+            headers: { 'Content-Type': 'application/json', ...corsHeaders }
+          });
+        }
+
+        const data = await response.json();
+        const answer = data.content?.[0]?.text || 'The Lord remains silent.';
+        return new Response(JSON.stringify({ answer }), {
+          headers: { 'Content-Type': 'application/json', ...corsHeaders }
+        });
+      }
+
+      // === QUESTRON (default) ===
+      const { question, knowledgeBase, history } = body;
 
       if (!question) {
         return new Response(JSON.stringify({ answer: 'ERROR: EMPTY QUERY RECEIVED.' }), {
