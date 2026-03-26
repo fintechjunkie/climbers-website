@@ -729,7 +729,7 @@ function renderRegistryGrid() {
   let nodes = '';
   OATH_LORDS.forEach(lord => {
     nodes += `<circle class="reg-node" data-lord="${lord.id}" cx="${lord.x}" cy="${lord.y}" r="1.2" fill="${lord.color}" style="cursor:pointer"/>`;
-    nodes += `<text class="reg-node-label" data-lord-label="${lord.id}" x="${lord.x}" y="${lord.y + 3.5}" text-anchor="middle" fill="${lord.color}" font-size="2" font-family="'Courier New',monospace" letter-spacing="0.3" opacity="0">${lord.surname}</text>`;
+    nodes += `<text class="reg-node-label" data-lord-label="${lord.id}" x="${lord.x}" y="${lord.y + 4.5}" text-anchor="middle" fill="${lord.color}" font-size="3" font-family="Orbitron,sans-serif" font-weight="600" letter-spacing="0.2" opacity="0">${lord.surname}</text>`;
   });
 
   svg.innerHTML = gridLines + relLines + nodes;
