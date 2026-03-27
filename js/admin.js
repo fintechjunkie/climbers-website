@@ -52,6 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
     await loadBannerSettings();
     await loadChaptersList();
     await loadGalleryList();
+    await loadOathLordsList();
+    await loadArchiveList();
     loadAudioSettings();
     loadQuestronSettings();
   }
@@ -1136,6 +1138,294 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.title = title;
     btn.disabled = disabled;
     return btn;
+  }
+
+  // ===========================
+  // OATH LORDS
+  // ===========================
+  const OATH_LORD_FIELDS = [
+    { key: 'name', label: 'Full Name', type: 'text', placeholder: 'e.g., Archon Malachus' },
+    { key: 'surname', label: 'Short Name', type: 'text', placeholder: 'e.g., Malachus' },
+    { key: 'title', label: 'Title', type: 'text', placeholder: 'e.g., The Witness' },
+    { key: 'number', label: 'Ranking', type: 'text', placeholder: 'e.g., First Among the Ten' },
+    { key: 'alignment', label: 'Alignment', type: 'text', placeholder: 'e.g., Lawful Neutral' },
+    { key: 'color', label: 'Color (hex)', type: 'text', placeholder: '#8a8a8a' },
+    { key: 'x', label: 'Grid X (0-100)', type: 'number' },
+    { key: 'y', label: 'Grid Y (0-100)', type: 'number' },
+    { key: 'aug', label: 'Augmentation Name', type: 'text', placeholder: 'e.g., Perfect Recall' },
+    { key: 'augDesc', label: 'Augmentation Description', type: 'textarea' },
+    { key: 'followers', label: 'Followers', type: 'textarea' },
+    { key: 'question', label: 'Question', type: 'text' },
+    { key: 'answer', label: 'Answer', type: 'text' },
+    { key: 'detail', label: 'Full Detail / Bio', type: 'textarea' },
+    { key: 'alliances', label: 'Alliances', type: 'textarea' },
+    { key: 'enemies', label: 'Enemies', type: 'textarea' },
+    { key: 'voice', label: 'Voice (AI prompt style)', type: 'textarea' }
+  ];
+
+  async function loadOathLordsList() {
+    const data = await Storage.getData();
+    const lords = data.oathLords || null;
+    const list = document.getElementById('oathlordsList');
+    const initBtn = document.getElementById('initOathLordsBtn');
+
+    if (!lords) {
+      list.innerHTML = '<p class="empty-state">Oath Lords are using hardcoded defaults. Click "Initialize" to copy them into site.json so you can edit them.</p>';
+      initBtn.style.display = '';
+      return;
+    }
+
+    initBtn.style.display = 'none';
+    list.innerHTML = '';
+
+    lords.forEach(lord => {
+      const item = document.createElement('div');
+      item.className = 'content-item';
+      item.style.cursor = 'pointer';
+
+      const colorDot = document.createElement('div');
+      colorDot.style.cssText = 'width:20px;height:20px;border-radius:50%;background:' + (lord.color || '#888') + ';flex-shrink:0';
+
+      const info = document.createElement('div');
+      info.className = 'item-info';
+      info.innerHTML = '<h3>' + escapeHtml(lord.name || lord.surname) + '</h3><p>' + escapeHtml(lord.title || '') + ' &mdash; ' + escapeHtml(lord.alignment || '') + '</p>';
+
+      const actions = document.createElement('div');
+      actions.className = 'item-actions';
+      const editBtn = document.createElement('button');
+      editBtn.className = 'btn btn-secondary';
+      editBtn.textContent = 'Edit';
+      editBtn.addEventListener('click', (e) => { e.stopPropagation(); startEditOathLord(lord); });
+      actions.appendChild(editBtn);
+
+      item.appendChild(colorDot);
+      item.appendChild(info);
+      item.appendChild(actions);
+      item.addEventListener('click', () => startEditOathLord(lord));
+      list.appendChild(item);
+    });
+  }
+
+  document.getElementById('initOathLordsBtn').addEventListener('click', async () => {
+    if (!Storage.hasToken()) {
+      showMessage('oathlordsMsg', 'Set up your GitHub token in Settings first.', 'error');
+      return;
+    }
+    try {
+      showLoading('Copying Oath Lords to site.json...');
+      const resp = await fetch('data/content-backup.json?t=' + Date.now());
+      if (!resp.ok) throw new Error('Backup file not found');
+      const backup = await resp.json();
+      await Storage.saveOathLords(backup.oathLords);
+      hideLoading();
+      showMessage('oathlordsMsg', 'Oath Lords initialized! You can now edit them.', 'success');
+      await loadOathLordsList();
+    } catch (err) {
+      hideLoading();
+      showMessage('oathlordsMsg', 'Failed: ' + err.message, 'error');
+    }
+  });
+
+  function startEditOathLord(lord) {
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;padding:2rem';
+
+    const box = document.createElement('div');
+    box.style.cssText = 'background:#1a1a1a;border:1px solid #c9a84c;border-radius:12px;padding:1.5rem;width:100%;max-width:700px;max-height:90vh;overflow-y:auto';
+
+    let html = '<h3 style="color:#c9a84c;margin-bottom:1rem">Edit: ' + escapeHtml(lord.name || lord.surname) + '</h3>';
+
+    OATH_LORD_FIELDS.forEach(f => {
+      const val = lord[f.key] !== undefined ? lord[f.key] : '';
+      html += '<div class="form-group"><label style="color:#c9a84c;font-weight:600;font-size:.85rem">' + f.label + '</label>';
+      if (f.type === 'textarea') {
+        html += '<textarea data-field="' + f.key + '" style="width:100%;padding:.5rem .75rem;background:#111;border:1px solid #333;border-radius:8px;color:#e0e0e0;font-size:.9rem;font-family:inherit;min-height:100px;resize:vertical">' + escapeHtml(String(val)) + '</textarea>';
+      } else {
+        html += '<input type="' + (f.type || 'text') + '" data-field="' + f.key + '" style="width:100%;padding:.5rem .75rem;background:#111;border:1px solid #333;border-radius:8px;color:#e0e0e0;font-size:.9rem" value="' + escapeAttr(String(val)) + '"' + (f.placeholder ? ' placeholder="' + escapeAttr(f.placeholder) + '"' : '') + '>';
+      }
+      html += '</div>';
+    });
+
+    html += '<div class="form-group"><label style="color:#c9a84c;font-weight:600;font-size:.85rem">Replace Portrait Image <span style="color:#666;font-weight:400">(optional)</span></label>';
+    html += '<input type="file" data-field="portraitImage" accept="image/*" style="color:#e0e0e0"></div>';
+    html += '<div class="form-group"><label style="color:#c9a84c;font-weight:600;font-size:.85rem">Replace Faction Icon <span style="color:#666;font-weight:400">(optional)</span></label>';
+    html += '<input type="file" data-field="factionImage" accept="image/*" style="color:#e0e0e0"></div>';
+
+    html += '<div style="display:flex;gap:.75rem;margin-top:1rem">' +
+      '<button class="btn btn-primary" id="saveEditLordBtn">Save Changes</button>' +
+      '<button class="btn btn-secondary" id="cancelEditLordBtn">Cancel</button></div>';
+
+    box.innerHTML = html;
+    overlay.appendChild(box);
+    document.body.appendChild(overlay);
+
+    document.getElementById('saveEditLordBtn').addEventListener('click', async () => {
+      const updates = {};
+      box.querySelectorAll('[data-field]').forEach(el => {
+        const key = el.dataset.field;
+        if (el.type === 'file') return;
+        let val = el.value;
+        if (el.type === 'number') val = parseFloat(val) || 0;
+        updates[key] = val;
+      });
+
+      const portraitInput = box.querySelector('[data-field="portraitImage"]');
+      const factionInput = box.querySelector('[data-field="factionImage"]');
+
+      try {
+        showLoading('Saving Oath Lord...');
+        if (portraitInput.files.length > 0) {
+          updates.portraitImage = await Storage.fileToDataURL(portraitInput.files[0]);
+        }
+        if (factionInput.files.length > 0) {
+          updates.factionImage = await Storage.fileToDataURL(factionInput.files[0]);
+        }
+        await Storage.updateOathLord(lord.id, updates);
+        hideLoading();
+        document.body.removeChild(overlay);
+        await loadOathLordsList();
+        showMessage('oathlordsMsg', lord.surname + ' updated!', 'success');
+      } catch (err) {
+        hideLoading();
+        showMessage('oathlordsMsg', 'Failed: ' + err.message, 'error');
+      }
+    });
+
+    document.getElementById('cancelEditLordBtn').addEventListener('click', () => {
+      document.body.removeChild(overlay);
+    });
+
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) document.body.removeChild(overlay);
+    });
+  }
+
+  // ===========================
+  // ARCHIVE EVENTS
+  // ===========================
+  const ARCHIVE_FIELDS = [
+    { key: 'year', label: 'Year Label', type: 'text', placeholder: '~130 YEARS AGO' },
+    { key: 'label', label: 'Event Title', type: 'text', placeholder: 'BEFORE THE EVENT' },
+    { key: 'short', label: 'Short Summary', type: 'textarea' },
+    { key: 'body', label: 'Full Text', type: 'textarea' },
+    { key: 'image', label: 'Image Filename', type: 'text', placeholder: 'before-the-event.png' },
+    { key: 'imageAlt', label: 'Image Alt Text', type: 'text' }
+  ];
+
+  async function loadArchiveList() {
+    const data = await Storage.getData();
+    const events = data.archiveEvents || null;
+    const list = document.getElementById('archiveList');
+    const initBtn = document.getElementById('initArchiveBtn');
+
+    if (!events) {
+      list.innerHTML = '<p class="empty-state">Archive events are using hardcoded defaults. Click "Initialize" to copy them into site.json so you can edit them.</p>';
+      initBtn.style.display = '';
+      return;
+    }
+
+    initBtn.style.display = 'none';
+    list.innerHTML = '';
+
+    events.forEach(evt => {
+      const item = document.createElement('div');
+      item.className = 'content-item';
+      item.style.cursor = 'pointer';
+
+      const info = document.createElement('div');
+      info.className = 'item-info';
+      info.innerHTML = '<h3>' + escapeHtml(evt.label || '') + '</h3><p>' + escapeHtml(evt.year || '') + ' &mdash; ' + escapeHtml((evt.short || '').substring(0, 80)) + '...</p>';
+
+      const actions = document.createElement('div');
+      actions.className = 'item-actions';
+      const editBtn = document.createElement('button');
+      editBtn.className = 'btn btn-secondary';
+      editBtn.textContent = 'Edit';
+      editBtn.addEventListener('click', (e) => { e.stopPropagation(); startEditArchiveEvent(evt); });
+      actions.appendChild(editBtn);
+
+      item.appendChild(info);
+      item.appendChild(actions);
+      item.addEventListener('click', () => startEditArchiveEvent(evt));
+      list.appendChild(item);
+    });
+  }
+
+  document.getElementById('initArchiveBtn').addEventListener('click', async () => {
+    if (!Storage.hasToken()) {
+      showMessage('archiveMsg', 'Set up your GitHub token in Settings first.', 'error');
+      return;
+    }
+    try {
+      showLoading('Copying Archive to site.json...');
+      const resp = await fetch('data/content-backup.json?t=' + Date.now());
+      if (!resp.ok) throw new Error('Backup file not found');
+      const backup = await resp.json();
+      await Storage.saveArchiveEvents(backup.archiveEvents);
+      hideLoading();
+      showMessage('archiveMsg', 'Archive initialized! You can now edit events.', 'success');
+      await loadArchiveList();
+    } catch (err) {
+      hideLoading();
+      showMessage('archiveMsg', 'Failed: ' + err.message, 'error');
+    }
+  });
+
+  function startEditArchiveEvent(evt) {
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;padding:2rem';
+
+    const box = document.createElement('div');
+    box.style.cssText = 'background:#1a1a1a;border:1px solid #c9a84c;border-radius:12px;padding:1.5rem;width:100%;max-width:700px;max-height:90vh;overflow-y:auto';
+
+    let html = '<h3 style="color:#c9a84c;margin-bottom:1rem">Edit: ' + escapeHtml(evt.label || 'Event') + '</h3>';
+
+    ARCHIVE_FIELDS.forEach(f => {
+      const val = evt[f.key] !== undefined ? evt[f.key] : '';
+      html += '<div class="form-group"><label style="color:#c9a84c;font-weight:600;font-size:.85rem">' + f.label + '</label>';
+      if (f.type === 'textarea') {
+        const minH = f.key === 'body' ? '250px' : '80px';
+        html += '<textarea data-field="' + f.key + '" style="width:100%;padding:.5rem .75rem;background:#111;border:1px solid #333;border-radius:8px;color:#e0e0e0;font-size:.9rem;font-family:inherit;min-height:' + minH + ';resize:vertical">' + escapeHtml(String(val)) + '</textarea>';
+      } else {
+        html += '<input type="text" data-field="' + f.key + '" style="width:100%;padding:.5rem .75rem;background:#111;border:1px solid #333;border-radius:8px;color:#e0e0e0;font-size:.9rem" value="' + escapeAttr(String(val)) + '"' + (f.placeholder ? ' placeholder="' + escapeAttr(f.placeholder) + '"' : '') + '>';
+      }
+      html += '</div>';
+    });
+
+    html += '<div style="display:flex;gap:.75rem;margin-top:1rem">' +
+      '<button class="btn btn-primary" id="saveEditArchiveBtn">Save Changes</button>' +
+      '<button class="btn btn-secondary" id="cancelEditArchiveBtn">Cancel</button></div>';
+
+    box.innerHTML = html;
+    overlay.appendChild(box);
+    document.body.appendChild(overlay);
+
+    document.getElementById('saveEditArchiveBtn').addEventListener('click', async () => {
+      const updates = {};
+      box.querySelectorAll('[data-field]').forEach(el => {
+        updates[el.dataset.field] = el.value;
+      });
+
+      try {
+        showLoading('Saving event...');
+        await Storage.updateArchiveEvent(evt.id, updates);
+        hideLoading();
+        document.body.removeChild(overlay);
+        await loadArchiveList();
+        showMessage('archiveMsg', evt.label + ' updated!', 'success');
+      } catch (err) {
+        hideLoading();
+        showMessage('archiveMsg', 'Failed: ' + err.message, 'error');
+      }
+    });
+
+    document.getElementById('cancelEditArchiveBtn').addEventListener('click', () => {
+      document.body.removeChild(overlay);
+    });
+
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) document.body.removeChild(overlay);
+    });
   }
 
   function toRoman(num) {

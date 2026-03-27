@@ -43,6 +43,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupQuestron(data.questron);
   }
 
+  // --- Override Oath Lords / Archive from site.json if admin has edited them ---
+  if (data.oathLords && data.oathLords.length) OATH_LORDS = data.oathLords;
+  if (data.archiveEvents && data.archiveEvents.length) ARCHIVE_EVENTS = data.archiveEvents;
+
   // --- Oath Lord Registry ---
   if (data.questron && data.questron.workerUrl) {
     setupRegistry(data.questron.workerUrl);
@@ -535,7 +539,7 @@ function setupRotatingSubtitle(el, text) {
 // ===========================
 // OATH LORD ALIGNMENT REGISTRY
 // ===========================
-const OATH_LORDS = [
+let OATH_LORDS = [
   {
     id: 'malachus', name: 'Archon Malachus', surname: 'Malachus',
     title: 'Keeper of the Archive', number: 'First Among the Ten',
@@ -1042,7 +1046,7 @@ function shuffleArray(arr) {
 // ===========================
 // THE MALACHUS ARCHIVE (Timeline)
 // ===========================
-const ARCHIVE_EVENTS = [
+let ARCHIVE_EVENTS = [
   {
     id: 'before', year: '~130 YEARS AGO', label: 'BEFORE THE EVENT',
     short: 'The world before the Tower. Cities, nations, ordinary problems. No one remembers it clearly anymore.',

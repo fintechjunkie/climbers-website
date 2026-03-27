@@ -367,6 +367,74 @@ const Storage = {
     return 'uploads/questron_kb.txt';
   },
 
+  // ===== Oath Lords =====
+  async getOathLords() {
+    const data = await this.getData();
+    return data.oathLords || null; // null means use hardcoded defaults
+  },
+
+  async saveOathLords(lords) {
+    const data = await this.getData();
+    data.oathLords = lords;
+    await this.save(data);
+  },
+
+  async updateOathLord(id, updates) {
+    const data = await this.getData();
+    if (!data.oathLords) return;
+    const idx = data.oathLords.findIndex(l => l.id === id);
+    if (idx !== -1) {
+      if (updates.portraitImage) {
+        await this._uploadImage('lord_' + id + '_portrait.jpg', updates.portraitImage);
+        delete updates.portraitImage;
+      }
+      if (updates.factionImage) {
+        await this._uploadImage('lord_' + id + '_faction.png', updates.factionImage);
+        delete updates.factionImage;
+      }
+      data.oathLords[idx] = { ...data.oathLords[idx], ...updates };
+      await this.save(data);
+    }
+  },
+
+  getLordPortraitUrl(id) {
+    return 'uploads/lord_' + id + '_portrait.jpg';
+  },
+
+  getLordFactionUrl(id) {
+    return 'uploads/lord_' + id + '_faction.png';
+  },
+
+  // ===== Archive Events =====
+  async getArchiveEvents() {
+    const data = await this.getData();
+    return data.archiveEvents || null; // null means use hardcoded defaults
+  },
+
+  async saveArchiveEvents(events) {
+    const data = await this.getData();
+    data.archiveEvents = events;
+    await this.save(data);
+  },
+
+  async updateArchiveEvent(id, updates) {
+    const data = await this.getData();
+    if (!data.archiveEvents) return;
+    const idx = data.archiveEvents.findIndex(e => e.id === id);
+    if (idx !== -1) {
+      if (updates.eventImage) {
+        await this._uploadImage('archive_' + id + '.jpg', updates.eventImage);
+        delete updates.eventImage;
+      }
+      data.archiveEvents[idx] = { ...data.archiveEvents[idx], ...updates };
+      await this.save(data);
+    }
+  },
+
+  getArchiveEventImageUrl(id) {
+    return 'uploads/archive_' + id + '.jpg';
+  },
+
   // ===== Banner / Site Settings =====
   async updateSiteSettings(settings) {
     const data = await this.getData();
