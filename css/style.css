@@ -271,7 +271,7 @@ img{max-width:100%;display:block}
 .reg-layout{display:flex;gap:1rem;align-items:flex-start}
 
 /* Grid wrapper */
-.reg-grid-wrap{flex:1;min-width:0;max-width:80%;margin:0 auto}
+.reg-grid-wrap{flex:1;min-width:0;max-width:60%;margin:0 auto}
 .reg-grid{position:relative;width:100%;aspect-ratio:1/1;background:#0b0e10;border:1px solid #181d21;display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr 1fr 1fr;overflow:hidden}
 .reg-zone{position:relative}
 .reg-svg{position:absolute;inset:0;width:100%;height:100%;z-index:2}
@@ -314,7 +314,7 @@ img{max-width:100%;display:block}
 .reg-detail-body{padding:1rem 1.25rem}
 
 /* Lord list panel (right sidebar) */
-.reg-list-panel{width:280px;flex-shrink:0;background:#0b0e10;border:1px solid #181d21;max-height:80vh;overflow-y:auto}
+.reg-list-panel{width:280px;flex-shrink:0;background:#0b0e10;border:1px solid #181d21;max-height:none;overflow-y:visible}
 .reg-list-header{padding:.75rem 1rem;border-bottom:1px solid #181d21}
 .reg-list-header-text{font-family:'Orbitron',sans-serif;font-size:.65rem;color:#6a7a82;letter-spacing:.08em;text-transform:uppercase}
 

@@ -873,6 +873,16 @@ function selectLord(lordId) {
 function renderLordDetail(lord) {
   const detailPanel = document.getElementById('regDetail');
   if (detailPanel) { detailPanel.classList.add('open'); detailPanel.scrollTop = 0; document.body.style.overflow = 'hidden'; }
+
+  // Restart beam animation by removing and re-adding the inner element
+  const inner = detailPanel.querySelector('.reg-detail-inner');
+  if (inner) {
+    inner.style.animation = 'none';
+    inner.offsetHeight; // force reflow
+    inner.style.animation = '';
+    const before = inner.querySelector('::before');
+  }
+
   const header = document.querySelector('.reg-detail-header');
   header.innerHTML = `<span class="reg-detail-header-text" style="color:${lord.color}">${lord.name}</span><button class="reg-detail-close" onclick="deselectLord()">&times;</button>`;
 
