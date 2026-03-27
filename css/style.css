@@ -17,7 +17,7 @@ img{max-width:100%;display:block}
 .hero-subtitle .typewriter-wrap.fade-out{opacity:0}
 .hero-subtitle .typewriter-cursor{display:inline-block;width:2px;height:1.1em;background:#c9a84c;vertical-align:text-bottom;margin-left:2px;animation:cursorBlink 1s step-end infinite}
 @keyframes cursorBlink{0%,100%{opacity:1}50%{opacity:0}}
-.typewriter-dots{display:flex;justify-content:center;gap:8px;margin-top:12px}
+.typewriter-dots{display:flex;justify-content:center;gap:8px;margin-top:24px}
 .typewriter-dot{width:6px;height:6px;border-radius:50%;background:rgba(201,168,76,.25)}
 .typewriter-dot.active{background:#c9a84c}
 .hero-banner-img{max-height:50vh;border-radius:12px;margin-bottom:2rem;box-shadow:0 8px 32px rgba(0,0,0,.6)}
