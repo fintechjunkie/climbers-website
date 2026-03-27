@@ -82,12 +82,7 @@
       "fanArt": []
     }
   ],
-  "gallery": [
-    {
-      "label": "KARNAK-6044",
-      "id": "mn0mz8k7fn24"
-    }
-  ],
+  "gallery": [],
   "questron": {
     "enabled": true,
     "workerUrl": "https://questron-worker.frank-707.workers.dev"
