@@ -68,7 +68,7 @@ img{max-width:100%;display:block}
 .collapse-btn:hover{background:#dbb95c}
 
 /* ===== GALLERY ===== */
-.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1.25rem}
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:1rem}
 .gallery-item{position:relative;border-radius:10px;overflow:hidden;cursor:pointer;border:1px solid #262626;transition:transform .25s,box-shadow .25s}
 .gallery-item:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(201,168,76,.2)}
 .gallery-item img{width:100%;aspect-ratio:7/10;object-fit:cover}
