@@ -750,17 +750,21 @@ function setupSeraph(data) {
   towerTextEl.textContent = seraphData.towerText || DEFAULT_TOWER_TEXT;
 
   // Load images from uploads or fallback to local assets
-  seraphImg.src = Storage.getSeraphImageUrl() + '?t=' + Date.now();
+  seraphImg.onload = function() { this.style.display = ''; };
   seraphImg.onerror = function() {
+    this.onload = function() { this.style.display = ''; };
+    this.onerror = function() { this.style.display = 'none'; };
     this.src = 'public/assets/oath-lords/seraph-constructed.png';
-    this.onerror = function() { this.style.display = 'none'; };
   };
+  seraphImg.src = Storage.getSeraphImageUrl() + '?t=' + Date.now();
 
-  towerImg.src = Storage.getTowerImageUrl() + '?t=' + Date.now();
+  towerImg.onload = function() { this.style.display = ''; };
   towerImg.onerror = function() {
-    this.src = 'public/assets/timeline/the-event.png';
+    this.onload = function() { this.style.display = ''; };
     this.onerror = function() { this.style.display = 'none'; };
+    this.src = 'public/assets/timeline/the-event.png';
   };
+  towerImg.src = Storage.getTowerImageUrl() + '?t=' + Date.now();
 }
 
 // ===========================
