@@ -47,6 +47,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (data.oathLords && data.oathLords.length) OATH_LORDS = data.oathLords;
   if (data.archiveEvents && data.archiveEvents.length) ARCHIVE_EVENTS = data.archiveEvents;
 
+  // --- Seraph & The Tower ---
+  setupSeraph(data);
+
   // --- Oath Lord Registry ---
   if (data.questron && data.questron.workerUrl) {
     setupRegistry(data.questron.workerUrl);
@@ -722,6 +725,47 @@ const REGISTRY_RELATIONSHIPS = [
 
 let regSelectedLord = null;
 let regRelationsVisible = false;
+// ===========================
+// SERAPH & THE TOWER
+// ===========================
+const DEFAULT_SERAPH_TEXT = 'Seraph is the artificial intelligence that governs Haven City. It was constructed in the decades following the Event, designed to manage the impossible complexity of a city built in the shadow of something no one understood. Seraph does not rule. It administrates. It allocates resources, monitors structural integrity, manages power distribution, and mediates disputes between factions when they agree to let it.\n\nWhether Seraph is truly conscious remains the most contested question in Haven City. It speaks. It reasons. It occasionally makes decisions that no one asked it to make. But it has never claimed to be alive, and it has never denied it either.';
+
+const DEFAULT_TOWER_TEXT = 'The Tower appeared without warning. One day there was empty ground. The next, a structure that pierced the sky and kept going, higher than instruments could measure, higher than anyone had ever built or imagined building.\n\nNo one knows what the Tower is. No one knows who built it, or why, or what waits at the top. What is known: people enter the Tower. Some come back changed, carrying augmentations — abilities that reshape what a human body and mind can do. Some do not come back at all.\n\nThe Tower does not explain itself. It does not welcome visitors. It simply exists, and the world has been rearranging itself around that fact ever since.';
+
+function setupSeraph(data) {
+  const section = document.getElementById('seraph-section');
+  const navLink = document.getElementById('seraphNavLink');
+  const seraphImg = document.getElementById('seraphImage');
+  const towerImg = document.getElementById('towerImage');
+  const seraphTextEl = document.getElementById('seraphText');
+  const towerTextEl = document.getElementById('towerText');
+
+  // Show section and nav
+  section.style.display = '';
+  navLink.style.display = '';
+
+  // Load text from site.json or defaults
+  const seraphData = data.seraph || {};
+  seraphTextEl.textContent = seraphData.seraphText || DEFAULT_SERAPH_TEXT;
+  towerTextEl.textContent = seraphData.towerText || DEFAULT_TOWER_TEXT;
+
+  // Load images from uploads or fallback to local assets
+  seraphImg.src = Storage.getSeraphImageUrl() + '?t=' + Date.now();
+  seraphImg.onerror = function() {
+    this.src = 'public/assets/oath-lords/seraph-constructed.png';
+    this.onerror = function() { this.style.display = 'none'; };
+  };
+
+  towerImg.src = Storage.getTowerImageUrl() + '?t=' + Date.now();
+  towerImg.onerror = function() {
+    this.src = 'public/assets/timeline/the-event.png';
+    this.onerror = function() { this.style.display = 'none'; };
+  };
+}
+
+// ===========================
+// OATH LORD REGISTRY
+// ===========================
 let regSituationPool = [];
 let regCurrentSituation = null;
 let regSitSelectedLord = null;

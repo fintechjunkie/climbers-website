@@ -367,6 +367,31 @@ const Storage = {
     return 'uploads/questron_kb.txt';
   },
 
+  // ===== Seraph & The Tower =====
+  async getSeraphData() {
+    const data = await this.getData();
+    return data.seraph || null;
+  },
+
+  async updateSeraphData(updates) {
+    const data = await this.getData();
+    if (!data.seraph) data.seraph = {};
+    if (updates.seraphText !== undefined) data.seraph.seraphText = updates.seraphText;
+    if (updates.towerText !== undefined) data.seraph.towerText = updates.towerText;
+    if (updates.seraphImage) {
+      await this._uploadImage('seraph_main.jpg', updates.seraphImage);
+      delete updates.seraphImage;
+    }
+    if (updates.towerImage) {
+      await this._uploadImage('tower_main.jpg', updates.towerImage);
+      delete updates.towerImage;
+    }
+    await this.save(data);
+  },
+
+  getSeraphImageUrl() { return 'uploads/seraph_main.jpg'; },
+  getTowerImageUrl() { return 'uploads/tower_main.jpg'; },
+
   // ===== Oath Lords =====
   async getOathLords() {
     const data = await this.getData();

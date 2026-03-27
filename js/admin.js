@@ -52,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     await loadBannerSettings();
     await loadChaptersList();
     await loadGalleryList();
+    await loadSeraphSettings();
     await loadOathLordsList();
     await loadArchiveList();
     loadAudioSettings();
@@ -1139,6 +1140,67 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.disabled = disabled;
     return btn;
   }
+
+  // ===========================
+  // SERAPH & THE TOWER
+  // ===========================
+  async function loadSeraphSettings() {
+    const data = await Storage.getData();
+    const seraph = data.seraph || {};
+    document.getElementById('seraphTextField').value = seraph.seraphText || '';
+    document.getElementById('towerTextField').value = seraph.towerText || '';
+
+    // Seraph image preview
+    const seraphPreview = document.getElementById('seraphImagePreview');
+    seraphPreview.innerHTML = '';
+    const sImg = document.createElement('img');
+    sImg.src = Storage.getSeraphImageUrl() + '?t=' + Date.now();
+    sImg.style.cssText = 'max-height:150px;border-radius:8px';
+    sImg.onload = () => { seraphPreview.appendChild(sImg); };
+
+    // Tower image preview
+    const towerPreview = document.getElementById('towerImagePreview');
+    towerPreview.innerHTML = '';
+    const tImg = document.createElement('img');
+    tImg.src = Storage.getTowerImageUrl() + '?t=' + Date.now();
+    tImg.style.cssText = 'max-height:150px;border-radius:8px';
+    tImg.onload = () => { towerPreview.appendChild(tImg); };
+  }
+
+  document.getElementById('saveSeraphBtn').addEventListener('click', async () => {
+    if (!Storage.hasToken()) {
+      showMessage('seraphMsg', 'Set up your GitHub token in Settings first.', 'error');
+      return;
+    }
+
+    try {
+      showLoading('Saving Seraph & Tower...');
+      const updates = {
+        seraphText: document.getElementById('seraphTextField').value,
+        towerText: document.getElementById('towerTextField').value
+      };
+
+      const seraphFile = document.getElementById('seraphImageFile');
+      const towerFile = document.getElementById('towerImageFile');
+
+      if (seraphFile.files.length > 0) {
+        updates.seraphImage = await Storage.fileToDataURL(seraphFile.files[0]);
+      }
+      if (towerFile.files.length > 0) {
+        updates.towerImage = await Storage.fileToDataURL(towerFile.files[0]);
+      }
+
+      await Storage.updateSeraphData(updates);
+      hideLoading();
+      seraphFile.value = '';
+      towerFile.value = '';
+      await loadSeraphSettings();
+      showMessage('seraphMsg', 'Seraph & Tower saved!', 'success');
+    } catch (err) {
+      hideLoading();
+      showMessage('seraphMsg', 'Failed: ' + err.message, 'error');
+    }
+  });
 
   // ===========================
   // OATH LORDS
