@@ -472,5 +472,9 @@
       "image": "two-teams-join-the-climb.png",
       "imageAlt": "Two teams join the climb"
     }
-  ]
+  ],
+  "seraph": {
+    "seraphText": "Seraph is the artificial intelligence that governs Haven City. It was constructed in the decades following the Event, designed to manage the impossible complexity of a city built in the shadow of something no one understood. Seraph does not rule. It administrates. It allocates resources, monitors structural integrity, manages power distribution, and mediates disputes between factions when they agree to let it.\n\nWhether Seraph is truly conscious remains the most contested question in Haven City. It speaks. It reasons. It occasionally makes decisions that no one asked it to make. But it has never claimed to be alive, and it has never denied it either.",
+    "towerText": "The Tower appeared without warning. One day there was empty ground. The next, a structure that pierced the sky and kept going, higher than instruments could measure, higher than anyone had ever built or imagined building.\n\nNo one knows what the Tower is. No one knows who built it, or why, or what waits at the top. What is known: people enter the Tower. Some come back changed, carrying augmentations — abilities that reshape what a human body and mind can do. Some do not come back at all.\n\nThe Tower does not explain itself. It does not welcome visitors. It simply exists, and the world has been rearranging itself around that fact ever since."
+  }
 }
