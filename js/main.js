@@ -502,11 +502,28 @@ function setupRotatingSubtitle(el, text) {
   wrap.appendChild(cursor);
   el.appendChild(wrap);
 
+  // Dot indicators
+  const dotsRow = document.createElement('div');
+  dotsRow.className = 'typewriter-dots';
+  const dots = [];
+  sentences.forEach((_, i) => {
+    const dot = document.createElement('span');
+    dot.className = 'typewriter-dot' + (i === 0 ? ' active' : '');
+    dotsRow.appendChild(dot);
+    dots.push(dot);
+  });
+  el.appendChild(dotsRow);
+
   let sentenceIdx = 0;
   let charIdx = 0;
 
   const TYPE_SPEED = 40;
-  const PAUSE_AFTER_TYPE = 3000;
+  const PAUSE_MID = 3000;
+  const PAUSE_END = 6000;
+
+  function updateDots() {
+    dots.forEach((d, i) => d.className = 'typewriter-dot' + (i === sentenceIdx ? ' active' : ''));
+  }
 
   function typeNext() {
     const current = sentences[sentenceIdx];
@@ -514,6 +531,8 @@ function setupRotatingSubtitle(el, text) {
     textNode.textContent = current.substring(0, charIdx);
 
     if (charIdx >= current.length) {
+      const isLast = sentenceIdx === sentences.length - 1;
+      const pause = isLast ? PAUSE_END : PAUSE_MID;
       // Done typing — pause, then fade out and start next
       setTimeout(() => {
         wrap.classList.add('fade-out');
@@ -522,9 +541,10 @@ function setupRotatingSubtitle(el, text) {
           sentenceIdx = (sentenceIdx + 1) % sentences.length;
           textNode.textContent = '';
           wrap.classList.remove('fade-out');
+          updateDots();
           setTimeout(typeNext, 300);
         }, 500);
-      }, PAUSE_AFTER_TYPE);
+      }, pause);
       return;
     }
     setTimeout(typeNext, TYPE_SPEED);
