@@ -874,65 +874,76 @@ function renderLordDetail(lord) {
   const detailPanel = document.getElementById('regDetail');
   if (detailPanel) { detailPanel.classList.add('open'); detailPanel.scrollTop = 0; document.body.style.overflow = 'hidden'; }
 
-  // Restart beam animation by removing and re-adding the inner element
   const inner = detailPanel.querySelector('.reg-detail-inner');
-  if (inner) {
-    inner.style.animation = 'none';
-    inner.offsetHeight; // force reflow
-    inner.style.animation = '';
-    const before = inner.querySelector('::before');
-  }
-
   const header = document.querySelector('.reg-detail-header');
+  const body = document.getElementById('regDetailBody');
+
+  // Hide inner while we build content, so beam doesn't reveal stale layout
+  if (inner) { inner.style.animation = 'none'; inner.style.clipPath = 'inset(0 0 100% 0)'; }
+
   header.innerHTML = `<span class="reg-detail-header-text" style="color:${lord.color}">${lord.name}</span><button class="reg-detail-close" onclick="deselectLord()">&times;</button>`;
 
-  const body = document.getElementById('regDetailBody');
-  let html = '';
+  function buildBody(portraitLoaded) {
+    let html = '';
 
-  // Portrait image (graceful loading, capped height with fade hint)
-  html += `<div class="reg-portrait-fade">`;
-  html += `<img class="reg-portrait" src="public/assets/oath-lords/${lord.id}-portrait.png" alt="${lord.name}" onerror="this.parentElement.style.display='none'" onload="this.style.display='block'">`;
-  html += `</div>`;
-  html += `<div class="reg-portrait-bar" style="background:${lord.color}"></div>`;
+    // Portrait image — show immediately if preloaded
+    if (portraitLoaded) {
+      html += `<div class="reg-portrait-fade">`;
+      html += `<img class="reg-portrait" src="public/assets/oath-lords/${lord.id}-portrait.png" alt="${lord.name}" style="display:block">`;
+      html += `</div>`;
+    }
+    html += `<div class="reg-portrait-bar" style="background:${lord.color}"></div>`;
 
-  // Name + faction icon
-  html += `<div class="reg-name-row">`;
-  html += `<span class="reg-lord-name" style="color:${lord.color}">${lord.name.toUpperCase()}</span>`;
-  html += `<img class="reg-faction-icon" src="public/assets/oath-lords/${lord.id}-faction.png" alt="" onerror="this.style.display='none'" onload="this.style.display='block'">`;
-  html += `</div>`;
-  html += `<div class="reg-lord-title">${lord.title.toUpperCase()}</div>`;
-  html += `<div class="reg-lord-number">${lord.number.toUpperCase()}</div>`;
+    // Name + faction icon
+    html += `<div class="reg-name-row">`;
+    html += `<span class="reg-lord-name" style="color:${lord.color}">${lord.name.toUpperCase()}</span>`;
+    html += `<img class="reg-faction-icon" src="public/assets/oath-lords/${lord.id}-faction.png" alt="" onerror="this.style.display='none'" onload="this.style.display='block'">`;
+    html += `</div>`;
+    html += `<div class="reg-lord-title">${lord.title.toUpperCase()}</div>`;
+    html += `<div class="reg-lord-number">${lord.number.toUpperCase()}</div>`;
 
-  html += regField('ALIGNMENT', lord.alignment, lord.color);
-  html += regField('AUGMENTATION', `<strong>${lord.aug}</strong><br><span class="reg-aug-desc">${lord.augDesc}</span>`, lord.color);
-  html += regField('FOLLOWERS', lord.followers, lord.color);
-  html += `<div class="reg-field"><div class="reg-field-label" style="color:${lord.color}">QUESTION REGISTERED</div><div class="reg-field-value reg-question">${lord.question}</div></div>`;
-  html += `<div class="reg-field"><div class="reg-field-label" style="color:#47525a">ANSWER RECEIVED</div><div class="reg-field-value reg-answer">${lord.answer}</div></div>`;
-  html += `<div class="reg-divider"></div>`;
-  html += `<div class="reg-field"><div class="reg-field-label" style="color:${lord.color}">INTELLIGENCE FILE</div><div class="reg-field-value reg-intel">${lord.detail}</div></div>`;
-  html += `<div class="reg-divider"></div>`;
-  html += `<div class="reg-field"><div class="reg-field-label" style="color:#5a8060">KNOWN ALLIANCES</div><div class="reg-field-value reg-alliances">${lord.alliances}</div></div>`;
-  html += `<div class="reg-field"><div class="reg-field-label" style="color:#804040">KNOWN ENEMIES</div><div class="reg-field-value reg-enemies">${lord.enemies}</div></div>`;
+    html += regField('ALIGNMENT', lord.alignment, lord.color);
+    html += regField('AUGMENTATION', `<strong>${lord.aug}</strong><br><span class="reg-aug-desc">${lord.augDesc}</span>`, lord.color);
+    html += regField('FOLLOWERS', lord.followers, lord.color);
+    html += `<div class="reg-field"><div class="reg-field-label" style="color:${lord.color}">QUESTION REGISTERED</div><div class="reg-field-value reg-question">${lord.question}</div></div>`;
+    html += `<div class="reg-field"><div class="reg-field-label" style="color:#47525a">ANSWER RECEIVED</div><div class="reg-field-value reg-answer">${lord.answer}</div></div>`;
+    html += `<div class="reg-divider"></div>`;
+    html += `<div class="reg-field"><div class="reg-field-label" style="color:${lord.color}">INTELLIGENCE FILE</div><div class="reg-field-value reg-intel">${lord.detail}</div></div>`;
+    html += `<div class="reg-divider"></div>`;
+    html += `<div class="reg-field"><div class="reg-field-label" style="color:#5a8060">KNOWN ALLIANCES</div><div class="reg-field-value reg-alliances">${lord.alliances}</div></div>`;
+    html += `<div class="reg-field"><div class="reg-field-label" style="color:#804040">KNOWN ENEMIES</div><div class="reg-field-value reg-enemies">${lord.enemies}</div></div>`;
 
-  // Response button (if situation is active)
-  if (regCurrentSituation) {
-    html += `<button class="reg-respond-btn" id="regRespondBtn" style="border-color:${lord.color};color:${lord.color}">HOW WOULD ${lord.surname.toUpperCase()} RESPOND?</button>`;
-  }
+    if (regCurrentSituation) {
+      html += `<button class="reg-respond-btn" id="regRespondBtn" style="border-color:${lord.color};color:${lord.color}">HOW WOULD ${lord.surname.toUpperCase()} RESPOND?</button>`;
+    }
 
-  body.innerHTML = html;
+    body.innerHTML = html;
 
-  // Wire respond button
-  const respondBtn = document.getElementById('regRespondBtn');
-  if (respondBtn) {
-    respondBtn.addEventListener('click', () => {
-      regSitSelectedLord = lord;
-      // Highlight the lord button in situation section too
-      document.querySelectorAll('.reg-sit-lord-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.lord === lord.id);
+    // Start beam animation after content is set
+    if (inner) {
+      inner.offsetHeight; // force reflow
+      inner.style.clipPath = '';
+      inner.style.animation = '';
+    }
+
+    // Wire respond button
+    const respondBtn = document.getElementById('regRespondBtn');
+    if (respondBtn) {
+      respondBtn.addEventListener('click', () => {
+        regSitSelectedLord = lord;
+        document.querySelectorAll('.reg-sit-lord-btn').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.lord === lord.id);
+        });
+        fetchLordResponse(lord);
       });
-      fetchLordResponse(lord);
-    });
+    }
   }
+
+  // Preload portrait, then build content and start animation
+  const preload = new Image();
+  preload.onload = () => buildBody(true);
+  preload.onerror = () => buildBody(false);
+  preload.src = 'public/assets/oath-lords/' + lord.id + '-portrait.png';
 }
 
 function regField(label, value, color) {
