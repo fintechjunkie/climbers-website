@@ -500,7 +500,7 @@ img{max-width:100%;display:block}
   .archive-spine{margin-left:10px}
   .archive-row-year{position:relative;left:auto;top:auto;transform:none;width:auto;text-align:left;padding:6px 0 0 16px;font-size:9px}
   .archive-row{flex-wrap:wrap}
-  .archive-row-thumb,.archive-row-thumb-placeholder{width:60px;height:40px;margin:6px 0 6px 12px}
+  .archive-row-thumb,.archive-row-thumb-placeholder{width:100px;height:66px;margin:8px 0 8px 12px}
   .archive-row-content{padding:8px 12px}
   .archive-row-label{font-size:12px}
   .archive-row-summary{font-size:11px}
