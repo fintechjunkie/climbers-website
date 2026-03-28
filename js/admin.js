@@ -51,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     await loadBannerSettings();
     await loadChaptersList();
+    await loadTalesList();
     await loadGalleryList();
     await loadSeraphSettings();
     await loadOathLordsList();
@@ -644,6 +645,189 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (err) {
       hideLoading();
       showMessage('chaptersMsg', 'Failed: ' + err.message, 'error');
+    }
+  }
+
+  // ===========================
+  // TALES FROM HAVEN CITY
+  // ===========================
+  const taleFormBox = document.getElementById('taleFormBox');
+  const taleFormTitle = document.getElementById('taleFormTitle');
+  const taleTitleInput = document.getElementById('taleTitle');
+  const taleImageInput = document.getElementById('taleImage');
+  const taleImagePreview = document.getElementById('taleImagePreview');
+  const taleTextInput = document.getElementById('taleText');
+  const saveTaleBtn = document.getElementById('saveTaleBtn');
+  const cancelEditTaleBtn = document.getElementById('cancelEditTaleBtn');
+  const editingTaleId = document.getElementById('editingTaleId');
+
+  saveTaleBtn.addEventListener('click', async () => {
+    if (!Storage.hasToken()) {
+      showMessage('talesMsg', 'Set up your GitHub token in Settings first.', 'error');
+      return;
+    }
+
+    const title = taleTitleInput.value.trim();
+    const text = taleTextInput.value;
+    const editId = editingTaleId.value;
+
+    if (!title) {
+      showMessage('talesMsg', 'Please enter a tale title.', 'error');
+      return;
+    }
+
+    try {
+      let image = '';
+      if (taleImageInput.files.length > 0) {
+        image = await Storage.fileToDataURL(taleImageInput.files[0]);
+      }
+
+      if (editId) {
+        showLoading('Updating tale...');
+        const updates = { title, text };
+        if (image) updates.image = image;
+        await Storage.updateTale(editId, updates);
+        hideLoading();
+        showMessage('talesMsg', 'Tale updated!', 'success');
+      } else {
+        showLoading('Adding tale...');
+        await Storage.addTale({ title, text, image });
+        hideLoading();
+        showMessage('talesMsg', '"' + title + '" added!', 'success');
+      }
+
+      resetTaleForm();
+      await loadTalesList();
+    } catch (err) {
+      hideLoading();
+      showMessage('talesMsg', 'Failed: ' + err.message, 'error');
+    }
+  });
+
+  cancelEditTaleBtn.addEventListener('click', () => {
+    resetTaleForm();
+  });
+
+  function resetTaleForm() {
+    taleTitleInput.value = '';
+    taleImageInput.value = '';
+    taleImagePreview.innerHTML = '';
+    taleTextInput.value = '';
+    editingTaleId.value = '';
+    taleFormTitle.textContent = 'Add New Tale';
+    saveTaleBtn.textContent = 'Add Tale';
+    cancelEditTaleBtn.style.display = 'none';
+    taleFormBox.classList.remove('editing');
+  }
+
+  function startEditTale(tale) {
+    taleTitleInput.value = tale.title;
+    taleTextInput.value = tale.text || '';
+    editingTaleId.value = tale.id;
+    taleFormTitle.textContent = 'Editing: ' + tale.title;
+    saveTaleBtn.textContent = 'Save Changes';
+    cancelEditTaleBtn.style.display = '';
+    taleFormBox.classList.add('editing');
+
+    taleImagePreview.innerHTML = '';
+    const img = document.createElement('img');
+    img.src = Storage.getTaleImageUrl(tale.id);
+    img.style.cssText = 'max-height:150px;border-radius:8px;margin-top:.5rem';
+    img.onload = () => { taleImagePreview.appendChild(img); };
+
+    taleFormBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  async function loadTalesList() {
+    const data = await Storage.getData();
+    const tales = data.tales || [];
+    const list = document.getElementById('talesList');
+
+    if (tales.length === 0) {
+      list.innerHTML = '<p class="empty-state">No tales yet. Add your first tale above.</p>';
+      return;
+    }
+
+    list.innerHTML = '';
+    for (let idx = 0; idx < tales.length; idx++) {
+      const tale = tales[idx];
+      const item = document.createElement('div');
+      item.className = 'content-item';
+
+      const orderDiv = document.createElement('div');
+      orderDiv.className = 'order-controls';
+      const upBtn = createOrderBtn('\u25B2', 'Move up', idx === 0);
+      upBtn.addEventListener('click', () => moveTale(idx, -1));
+      const downBtn = createOrderBtn('\u25BC', 'Move down', idx === tales.length - 1);
+      downBtn.addEventListener('click', () => moveTale(idx, 1));
+      orderDiv.appendChild(upBtn);
+      orderDiv.appendChild(downBtn);
+
+      const img = document.createElement('img');
+      img.src = Storage.getTaleImageUrl(tale.id);
+      img.alt = tale.title;
+      img.onerror = () => {
+        img.src = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80"><rect width="80" height="80" fill="#222"/></svg>');
+        img.onerror = null;
+      };
+
+      const info = document.createElement('div');
+      info.className = 'item-info';
+      const preview = (tale.text || '').substring(0, 80);
+      info.innerHTML = '<h3>' + escapeHtml(tale.title) + '</h3><p>' + escapeHtml(preview) + (preview.length >= 80 ? '...' : '') + '</p>';
+
+      const actions = document.createElement('div');
+      actions.className = 'item-actions';
+
+      const editBtn = document.createElement('button');
+      editBtn.className = 'btn btn-secondary';
+      editBtn.textContent = 'Edit';
+      editBtn.addEventListener('click', () => startEditTale(tale));
+
+      const delBtn = document.createElement('button');
+      delBtn.className = 'btn btn-danger';
+      delBtn.textContent = 'Remove';
+      delBtn.addEventListener('click', async () => {
+        if (confirm('Remove "' + tale.title + '"? This cannot be undone.')) {
+          try {
+            showLoading('Removing tale...');
+            await Storage.removeTale(tale.id);
+            hideLoading();
+            resetTaleForm();
+            await loadTalesList();
+            showMessage('talesMsg', 'Tale removed.', 'success');
+          } catch (err) {
+            hideLoading();
+            showMessage('talesMsg', 'Failed: ' + err.message, 'error');
+          }
+        }
+      });
+
+      actions.appendChild(editBtn);
+      actions.appendChild(delBtn);
+
+      item.appendChild(orderDiv);
+      item.appendChild(img);
+      item.appendChild(info);
+      item.appendChild(actions);
+      list.appendChild(item);
+    }
+  }
+
+  async function moveTale(fromIdx, direction) {
+    try {
+      const tales = await Storage.getTales();
+      const toIdx = fromIdx + direction;
+      if (toIdx < 0 || toIdx >= tales.length) return;
+      const ids = tales.map(t => t.id);
+      [ids[fromIdx], ids[toIdx]] = [ids[toIdx], ids[fromIdx]];
+      showLoading('Reordering...');
+      await Storage.reorderTales(ids);
+      hideLoading();
+      await loadTalesList();
+    } catch (err) {
+      hideLoading();
+      showMessage('talesMsg', 'Failed: ' + err.message, 'error');
     }
   }
 

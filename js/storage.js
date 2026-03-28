@@ -153,7 +153,7 @@ const Storage = {
   },
 
   getDefaults() {
-    return { subtitle: 'A story waiting to be told...', chapters: [], gallery: [], questron: { enabled: false, workerUrl: '' } };
+    return { subtitle: 'A story waiting to be told...', chapters: [], tales: [], gallery: [], questron: { enabled: false, workerUrl: '' } };
   },
 
   // ===== Chapters =====
@@ -365,6 +365,58 @@ const Storage = {
 
   getQuestronKbUrl() {
     return 'uploads/questron_kb.txt';
+  },
+
+  // ===== Tales =====
+  async getTales() {
+    const data = await this.getData();
+    return data.tales || [];
+  },
+
+  async addTale(tale) {
+    const data = await this.getData();
+    if (!data.tales) data.tales = [];
+    tale.id = genId();
+    if (tale.image) {
+      await this._uploadImage('tale_' + tale.id + '.jpg', tale.image);
+      delete tale.image;
+    }
+    data.tales.push(tale);
+    await this.save(data);
+    return tale;
+  },
+
+  async updateTale(id, updates) {
+    const data = await this.getData();
+    if (!data.tales) return;
+    const idx = data.tales.findIndex(t => t.id === id);
+    if (idx !== -1) {
+      if (updates.image) {
+        await this._uploadImage('tale_' + id + '.jpg', updates.image);
+        delete updates.image;
+      }
+      data.tales[idx] = { ...data.tales[idx], ...updates };
+      await this.save(data);
+    }
+  },
+
+  async removeTale(id) {
+    const data = await this.getData();
+    data.tales = (data.tales || []).filter(t => t.id !== id);
+    await this.save(data);
+    try { await this._deleteImage('tale_' + id + '.jpg'); } catch (e) {}
+  },
+
+  async reorderTales(orderedIds) {
+    const data = await this.getData();
+    const map = {};
+    (data.tales || []).forEach(t => map[t.id] = t);
+    data.tales = orderedIds.map(id => map[id]).filter(Boolean);
+    await this.save(data);
+  },
+
+  getTaleImageUrl(id) {
+    return 'uploads/tale_' + id + '.jpg';
   },
 
   // ===== Seraph & The Tower =====

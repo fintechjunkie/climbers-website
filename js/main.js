@@ -17,6 +17,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   // --- Render chapters ---
   renderChapters(data.chapters);
 
+  // --- Render tales ---
+  renderTales(data.tales);
+
   // --- Render gallery ---
   renderGallery(data.gallery);
 
@@ -106,6 +109,98 @@ function renderChapters(chapters) {
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openReader(ch); }
     });
   });
+}
+
+// ===========================
+// TALES FROM HAVEN CITY
+// ===========================
+function renderTales(tales) {
+  const grid = document.getElementById('talesGrid');
+  const section = document.getElementById('tales-section');
+  const navLink = document.getElementById('talesNavLink');
+
+  if (!tales || tales.length === 0) {
+    section.style.display = 'none';
+    if (navLink) navLink.style.display = 'none';
+    return;
+  }
+
+  section.style.display = '';
+  if (navLink) navLink.style.display = '';
+  grid.innerHTML = '';
+
+  tales.forEach((tale, index) => {
+    const card = document.createElement('div');
+    card.className = 'tale-card';
+    card.setAttribute('role', 'button');
+    card.setAttribute('tabindex', '0');
+
+    const img = document.createElement('img');
+    img.src = Storage.getTaleImageUrl(tale.id);
+    img.alt = tale.title || 'Tale ' + (index + 1);
+    img.loading = 'lazy';
+    img.onerror = () => {
+      img.src = 'data:image/svg+xml,' + encodeURIComponent(
+        '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><rect width="400" height="400" fill="#1a1a1a"/><text x="50%" y="50%" fill="#555" text-anchor="middle" font-size="20" font-family="Georgia,serif">' + (tale.title || 'Tale') + '</text></svg>'
+      );
+      img.onerror = null;
+    };
+
+    const label = document.createElement('div');
+    label.className = 'card-label';
+    label.textContent = tale.title || 'Tale ' + (index + 1);
+
+    card.appendChild(img);
+    card.appendChild(label);
+    grid.appendChild(card);
+
+    card.addEventListener('click', () => openTalesReader(tale));
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openTalesReader(tale); }
+    });
+  });
+
+  setupTalesReaderModal();
+}
+
+function setupTalesReaderModal() {
+  const closeBtn = document.getElementById('talesReaderClose');
+  if (closeBtn._bound) return;
+  closeBtn._bound = true;
+  closeBtn.addEventListener('click', closeTalesReader);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeTalesReader();
+  });
+}
+
+function openTalesReader(tale) {
+  const modal = document.getElementById('talesReaderModal');
+  const title = document.getElementById('talesReaderTitle');
+  const body = document.getElementById('talesReaderBody');
+
+  title.textContent = tale.title || 'Untitled Tale';
+  body.innerHTML = '';
+
+  if (!tale.text) {
+    body.innerHTML = '<p style="color:#666;text-align:center;padding:3rem">This tale has no content yet.</p>';
+  } else {
+    const content = document.createElement('div');
+    content.className = 'part-content active';
+    content.style.display = 'block';
+    const paragraphs = tale.text.split('\n').filter(p => p.trim());
+    content.innerHTML = paragraphs.map(p => '<p>' + p + '</p>').join('');
+    body.appendChild(content);
+  }
+
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  modal.scrollTop = 0;
+}
+
+function closeTalesReader() {
+  const modal = document.getElementById('talesReaderModal');
+  modal.classList.remove('active');
+  document.body.style.overflow = '';
 }
 
 // ===========================
@@ -608,7 +703,7 @@ function setupScrollSpy() {
 }
 
 function setupSectionFooterNav() {
-  const sectionIds = ['chapters-section', 'gallery-section', 'seraph-section', 'registry-section', 'archive-section', 'questron-section'];
+  const sectionIds = ['chapters-section', 'tales-section', 'gallery-section', 'seraph-section', 'registry-section', 'archive-section', 'questron-section'];
   const visibleSections = sectionIds.filter(id => {
     const el = document.getElementById(id);
     return el && el.offsetParent !== null;

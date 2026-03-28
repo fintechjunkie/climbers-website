@@ -53,6 +53,7 @@
     <div class="admin-tabs">
       <button class="admin-tab active" data-tab="banner-panel">Banner &amp; Info</button>
       <button class="admin-tab" data-tab="chapters-panel">Chapters</button>
+      <button class="admin-tab" data-tab="tales-panel">Tales</button>
       <button class="admin-tab" data-tab="gallery-panel">Gallery</button>
       <button class="admin-tab" data-tab="seraph-panel">Seraph &amp; Tower</button>
       <button class="admin-tab" data-tab="oathlords-panel">Oath Lords</button>
@@ -104,6 +105,37 @@
 
       <h3 style="color:#999;margin-bottom:1rem;font-size:.9rem">Published Chapters</h3>
       <div class="content-list" id="chaptersList"></div>
+    </div>
+
+    <!-- ===== TALES PANEL ===== -->
+    <div class="admin-panel" id="tales-panel">
+      <h2 style="color:#c9a84c;margin-bottom:1.5rem">Tales From Haven City</h2>
+      <div id="talesMsg"></div>
+
+      <div class="chapter-form-box" id="taleFormBox">
+        <h3 style="color:#c9a84c;margin-bottom:1rem;font-size:1rem" id="taleFormTitle">Add New Tale</h3>
+        <div class="form-group">
+          <label>Tale Title</label>
+          <input type="text" id="taleTitle" placeholder="e.g., The Last Light of Sector 12">
+        </div>
+        <div class="form-group">
+          <label>Cover Image</label>
+          <input type="file" id="taleImage" accept="image/*">
+          <div id="taleImagePreview" style="margin-top:.5rem"></div>
+        </div>
+        <div class="form-group">
+          <label>Story Text</label>
+          <textarea id="taleText" placeholder="Write or paste the full story here..." style="min-height:300px;resize:vertical"></textarea>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-primary" id="saveTaleBtn">Add Tale</button>
+          <button class="btn btn-secondary" id="cancelEditTaleBtn" style="display:none">Cancel Edit</button>
+        </div>
+        <input type="hidden" id="editingTaleId" value="">
+      </div>
+
+      <h3 style="color:#999;margin-bottom:1rem;font-size:.9rem">Published Tales</h3>
+      <div class="content-list" id="talesList"></div>
     </div>
 
     <!-- ===== GALLERY PANEL ===== -->

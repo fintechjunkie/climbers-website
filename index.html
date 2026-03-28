@@ -30,6 +30,7 @@
   <!-- ===== NAVIGATION ===== -->
   <nav class="nav" id="mainNav">
     <a href="#chapters-section">Chapters</a>
+    <a href="#tales-section" id="talesNavLink" style="display:none">Tales</a>
     <a href="#gallery-section">Gallery</a>
     <a href="#seraph-section" id="seraphNavLink" style="display:none">Seraph</a>
     <a href="#registry-section" id="registryNavLink" style="display:none">Oath Lords</a>
@@ -48,6 +49,23 @@
       <p class="empty-state">No chapters released yet. Stay tuned!</p>
     </div>
   </section>
+
+  <!-- ===== TALES FROM HAVEN CITY ===== -->
+  <section class="section" id="tales-section" style="display:none">
+    <h2 class="section-title">Tales From Haven City</h2>
+    <div class="tales-grid" id="talesGrid">
+      <p class="empty-state">No tales released yet. Stay tuned!</p>
+    </div>
+  </section>
+
+  <!-- ===== TALES READER MODAL ===== -->
+  <div class="reader-modal" id="talesReaderModal">
+    <div class="reader-modal-header">
+      <h2 class="reader-modal-title" id="talesReaderTitle"></h2>
+      <button class="reader-modal-close" id="talesReaderClose">&times;</button>
+    </div>
+    <div class="reader-modal-body" id="talesReaderBody"></div>
+  </div>
 
   <!-- ===== READER MODAL ===== -->
   <div class="reader-modal" id="readerModal">
