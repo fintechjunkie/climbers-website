@@ -534,15 +534,6 @@
       "id": "mn9oodchdkjh"
     },
     {
-      "label": "RAT",
-      "field1": "Human",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mn9oowhiokhm"
-    },
-    {
       "label": "S4NT1",
       "field1": "Cyber Skull",
       "field2": "First Appearance - ???",
@@ -550,6 +541,15 @@
       "field4": "",
       "field5": "",
       "id": "mn9r4vjf3gql"
+    },
+    {
+      "label": "RAT",
+      "field1": "Human",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mn9oowhiokhm"
     },
     {
       "label": "ZYR'VAEL",
