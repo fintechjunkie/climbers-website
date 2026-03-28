@@ -71,6 +71,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 // ===========================
 // CHAPTERS
 // ===========================
+function formatStoryText(raw) {
+  // Escape HTML, then convert **text** to cyan glow spans, preserve whitespace
+  const escaped = raw.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  return escaped.replace(/\*\*(.+?)\*\*/g, '<span class="highlight-glow">$1</span>');
+}
+
 function renderChapters(chapters) {
   const grid = document.getElementById('chaptersGrid');
   if (!chapters || chapters.length === 0) {
@@ -189,7 +195,7 @@ function openTalesReader(tale) {
     const textDiv = document.createElement('div');
     textDiv.className = 'text';
     textDiv.style.whiteSpace = 'pre-wrap';
-    textDiv.textContent = tale.text;
+    textDiv.innerHTML = formatStoryText(tale.text);
     partBody.appendChild(textDiv);
     body.appendChild(partBody);
   }
@@ -255,7 +261,7 @@ function openReader(chapter) {
 
       const text = document.createElement('div');
       text.className = 'text';
-      text.textContent = part.text || '';
+      text.innerHTML = formatStoryText(part.text || '');
 
       const collapseBtn = document.createElement('button');
       collapseBtn.className = 'collapse-btn';

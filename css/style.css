@@ -80,6 +80,7 @@ img{max-width:100%;display:block}
 .part-body .text{white-space:pre-wrap;font-size:1.05rem;line-height:2;color:#d0d0d0;max-width:100%;position:relative;z-index:2}
 .collapse-btn{display:block;margin:2rem auto 0;padding:.6rem 2rem;background:#c9a84c;color:#0d0d0d;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-size:.95rem;transition:background .2s}
 .collapse-btn:hover{background:#dbb95c}
+.highlight-glow{color:#7fefef;text-shadow:0 0 6px rgba(0,255,255,.4),0 0 12px rgba(0,255,255,.15)}
 
 /* ===== GALLERY ===== */
 .gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:1rem}
