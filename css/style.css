@@ -442,6 +442,8 @@ img{max-width:100%;display:block}
 .archive-row-label{font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:700;color:#b0a080;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
 .archive-row:hover .archive-row-label{color:#c0a85a}
 .archive-row-summary{font-family:'Courier New',Courier,monospace;font-size:15px;color:#8a8070;line-height:1.8}
+.archive-row-tap{display:none;font-family:'Orbitron',sans-serif;font-size:10px;color:#c0a85a;letter-spacing:2px;text-transform:uppercase;margin-top:6px;opacity:.7}
+@media(max-width:700px){.archive-row-tap{display:block}}
 
 /* Archive modal */
 .archive-modal{position:fixed;inset:0;z-index:1300;display:none;align-items:center;justify-content:center;padding:1.5rem}

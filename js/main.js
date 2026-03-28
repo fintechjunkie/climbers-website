@@ -1263,7 +1263,7 @@ function renderArchiveSpine() {
     // Content
     const content = document.createElement('div');
     content.className = 'archive-row-content';
-    content.innerHTML = '<div class="archive-row-label">' + evt.label + '</div><div class="archive-row-summary">' + evt.short + '</div>';
+    content.innerHTML = '<div class="archive-row-label">' + evt.label + '</div><div class="archive-row-summary">' + evt.short + '</div><div class="archive-row-tap">▸ TAP TO READ MORE</div>';
 
     row.appendChild(yearLabel);
     row.appendChild(dot);
