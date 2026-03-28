@@ -543,15 +543,6 @@
       "id": "mn9oowhiokhm"
     },
     {
-      "label": "GL17CH",
-      "field1": "Cyber Skull",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mn9os1w1yn43"
-    },
-    {
       "label": "ZYR'VAEL",
       "field1": "Valari",
       "field2": "First Appearance - ???",
@@ -559,6 +550,15 @@
       "field4": "",
       "field5": "",
       "id": "mn9qj6utclx9"
+    },
+    {
+      "label": "GL17CH",
+      "field1": "Cyber Skull",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mn9os1w1yn43"
     },
     {
       "label": "OWL",
