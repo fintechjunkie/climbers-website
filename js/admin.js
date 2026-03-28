@@ -747,22 +747,23 @@ document.addEventListener('DOMContentLoaded', () => {
     overlay.style.cssText = 'position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;padding:2rem';
 
     const box = document.createElement('div');
-    box.style.cssText = 'background:#1a1a1a;border:1px solid #c9a84c;border-radius:12px;padding:1.5rem;width:100%;max-width:500px;max-height:90vh;overflow-y:auto';
+    box.style.cssText = 'background:#1a1a1a;border:1px solid #c9a84c;border-radius:12px;padding:1.5rem;width:100%;max-width:500px;max-height:90vh;overflow-y:auto;box-sizing:border-box';
 
+    const inputStyle = 'width:100%;padding:.75rem 1rem;background:#111;border:1px solid #333;border-radius:8px;color:#e0e0e0;font-size:1rem;box-sizing:border-box';
     box.innerHTML =
       '<h3 style="color:#c9a84c;margin-bottom:1rem">Edit Gallery Item</h3>' +
       '<div class="form-group"><label style="color:#c9a84c;font-weight:600;font-size:.9rem">Label / Name</label>' +
-      '<input type="text" id="editGalLabel" style="width:100%;padding:.75rem 1rem;background:#111;border:1px solid #333;border-radius:8px;color:#e0e0e0;font-size:1rem" value="' + escapeAttr(item.label || '') + '"></div>' +
+      '<textarea id="editGalLabel" style="' + inputStyle + ';min-height:60px;resize:vertical;font-family:inherit">' + escapeHtml(item.label || '') + '</textarea></div>' +
       '<div class="form-group"><label style="color:#c9a84c;font-weight:600;font-size:.9rem">Detail 1</label>' +
-      '<input type="text" id="editGalField1" style="width:100%;padding:.75rem 1rem;background:#111;border:1px solid #333;border-radius:8px;color:#e0e0e0;font-size:1rem" value="' + escapeAttr(item.field1 || '') + '"></div>' +
+      '<textarea id="editGalField1" style="' + inputStyle + ';min-height:60px;resize:vertical;font-family:inherit">' + escapeHtml(item.field1 || '') + '</textarea></div>' +
       '<div class="form-group"><label style="color:#c9a84c;font-weight:600;font-size:.9rem">Detail 2</label>' +
-      '<input type="text" id="editGalField2" style="width:100%;padding:.75rem 1rem;background:#111;border:1px solid #333;border-radius:8px;color:#e0e0e0;font-size:1rem" value="' + escapeAttr(item.field2 || '') + '"></div>' +
+      '<textarea id="editGalField2" style="' + inputStyle + ';min-height:60px;resize:vertical;font-family:inherit">' + escapeHtml(item.field2 || '') + '</textarea></div>' +
       '<div class="form-group"><label style="color:#c9a84c;font-weight:600;font-size:.9rem">Detail 3</label>' +
-      '<input type="text" id="editGalField3" style="width:100%;padding:.75rem 1rem;background:#111;border:1px solid #333;border-radius:8px;color:#e0e0e0;font-size:1rem" value="' + escapeAttr(item.field3 || '') + '"></div>' +
+      '<textarea id="editGalField3" style="' + inputStyle + ';min-height:60px;resize:vertical;font-family:inherit">' + escapeHtml(item.field3 || '') + '</textarea></div>' +
       '<div class="form-group"><label style="color:#c9a84c;font-weight:600;font-size:.9rem">Detail 4</label>' +
-      '<input type="text" id="editGalField4" style="width:100%;padding:.75rem 1rem;background:#111;border:1px solid #333;border-radius:8px;color:#e0e0e0;font-size:1rem" value="' + escapeAttr(item.field4 || '') + '"></div>' +
+      '<textarea id="editGalField4" style="' + inputStyle + ';min-height:60px;resize:vertical;font-family:inherit">' + escapeHtml(item.field4 || '') + '</textarea></div>' +
       '<div class="form-group"><label style="color:#c9a84c;font-weight:600;font-size:.9rem">Detail 5</label>' +
-      '<input type="text" id="editGalField5" style="width:100%;padding:.75rem 1rem;background:#111;border:1px solid #333;border-radius:8px;color:#e0e0e0;font-size:1rem" value="' + escapeAttr(item.field5 || '') + '"></div>' +
+      '<textarea id="editGalField5" style="' + inputStyle + ';min-height:60px;resize:vertical;font-family:inherit">' + escapeHtml(item.field5 || '') + '</textarea></div>' +
       '<div class="form-group"><label style="color:#c9a84c;font-weight:600;font-size:.9rem">Replace Image <span style="color:#666;font-weight:400">(optional)</span></label>' +
       '<input type="file" id="editGalImage" accept="image/*" style="color:#e0e0e0"></div>' +
       '<div class="form-group"><label style="color:#c9a84c;font-weight:600;font-size:.9rem">Replace Video <span style="color:#666;font-weight:400">(optional, MP4)</span></label>' +
