@@ -747,7 +747,7 @@ document.addEventListener('DOMContentLoaded', () => {
     overlay.style.cssText = 'position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;padding:2rem';
 
     const box = document.createElement('div');
-    box.style.cssText = 'background:#1a1a1a;border:1px solid #c9a84c;border-radius:12px;padding:1.5rem;width:100%;max-width:500px;max-height:90vh;overflow-y:auto;box-sizing:border-box';
+    box.style.cssText = 'background:#1a1a1a;border:1px solid #c9a84c;border-radius:12px;padding:1.5rem;width:100%;max-width:800px;max-height:90vh;overflow-y:auto;box-sizing:border-box';
 
     const inputStyle = 'width:100%;padding:.75rem 1rem;background:#111;border:1px solid #333;border-radius:8px;color:#e0e0e0;font-size:1rem;box-sizing:border-box';
     box.innerHTML =
