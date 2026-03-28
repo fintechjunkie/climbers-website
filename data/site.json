@@ -552,15 +552,6 @@
       "id": "mn9qj6utclx9"
     },
     {
-      "label": "GL17CH",
-      "field1": "Cyber Skull",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mn9os1w1yn43"
-    },
-    {
       "label": "S4NT1",
       "field1": "Cyber Skull",
       "field2": "First Appearance - ???",
@@ -568,6 +559,15 @@
       "field4": "",
       "field5": "",
       "id": "mn9r4vjf3gql"
+    },
+    {
+      "label": "GL17CH",
+      "field1": "Cyber Skull",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mn9os1w1yn43"
     },
     {
       "label": "OWL",
