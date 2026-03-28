@@ -46,7 +46,7 @@ img{max-width:100%;display:block}
 .chapter-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(201,168,76,.15)}
 .chapter-card img{width:100%;aspect-ratio:1/1;object-fit:cover;transition:filter .3s}
 .chapter-card:hover img{filter:brightness(1.1)}
-.chapter-card .card-label{padding:.75rem 1rem;font-family:'Orbitron',sans-serif;font-weight:600;color:#c9a84c;text-align:center;font-size:.9rem}
+.chapter-card .card-label{display:none}
 
 /* ===== TALES GRID ===== */
 .tales-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.5rem}
@@ -54,7 +54,7 @@ img{max-width:100%;display:block}
 .tale-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(201,168,76,.15)}
 .tale-card img{width:100%;aspect-ratio:1/1;object-fit:cover;transition:filter .3s}
 .tale-card:hover img{filter:brightness(1.1)}
-.tale-card .card-label{padding:.75rem 1rem;font-family:'Orbitron',sans-serif;font-weight:600;color:#c9a84c;text-align:center;font-size:.9rem}
+.tale-card .card-label{display:none}
 
 /* ===== READER MODAL (full-screen overlay) ===== */
 .reader-modal{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.95);display:none;flex-direction:column;overflow:hidden}
