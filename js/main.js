@@ -59,6 +59,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (data.questron && data.questron.workerUrl) {
     setupArchive(data.questron.workerUrl);
   }
+
+  // --- Scroll spy + section footer nav ---
+  setupScrollSpy();
+  setupSectionFooterNav();
 });
 
 // ===========================
@@ -554,6 +558,72 @@ function setupRotatingSubtitle(el, text) {
   }
 
   typeNext();
+}
+
+// ===========================
+// SCROLL SPY + SECTION FOOTER NAV
+// ===========================
+function setupScrollSpy() {
+  const nav = document.getElementById('mainNav');
+  if (!nav) return;
+  const links = nav.querySelectorAll('a[href^="#"]');
+  if (!links.length) return;
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        links.forEach(link => {
+          if (link.getAttribute('href') === '#' + id) {
+            link.classList.add('nav-active');
+          } else {
+            link.classList.remove('nav-active');
+          }
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -60% 0px', threshold: 0 });
+
+  links.forEach(link => {
+    const target = document.querySelector(link.getAttribute('href'));
+    if (target && target.offsetParent !== null) observer.observe(target);
+  });
+}
+
+function setupSectionFooterNav() {
+  const sectionIds = ['chapters-section', 'gallery-section', 'seraph-section', 'registry-section', 'archive-section', 'questron-section'];
+  const visibleSections = sectionIds.filter(id => {
+    const el = document.getElementById(id);
+    return el && el.offsetParent !== null;
+  });
+
+  visibleSections.forEach((id, idx) => {
+    const section = document.getElementById(id);
+    if (!section) return;
+
+    // Don't add if already has one
+    if (section.querySelector('.section-footer-nav')) return;
+
+    const footer = document.createElement('div');
+    footer.className = 'section-footer-nav';
+
+    const topLink = document.createElement('a');
+    topLink.href = '#mainNav';
+    topLink.textContent = '\u25B2 Back to top';
+    footer.appendChild(topLink);
+
+    if (idx < visibleSections.length - 1) {
+      const nextId = visibleSections[idx + 1];
+      const nextEl = document.getElementById(nextId);
+      const nextName = nextId.replace('-section', '').replace('registry', 'oath lords').toUpperCase();
+      const nextLink = document.createElement('a');
+      nextLink.href = '#' + nextId;
+      nextLink.textContent = nextName + ' \u25BC';
+      footer.appendChild(nextLink);
+    }
+
+    section.appendChild(footer);
+  });
 }
 
 // ===========================
