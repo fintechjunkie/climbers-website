@@ -184,12 +184,14 @@ function openTalesReader(tale) {
   if (!tale.text) {
     body.innerHTML = '<p style="color:#666;text-align:center;padding:3rem">This tale has no content yet.</p>';
   } else {
-    const content = document.createElement('div');
-    content.className = 'part-content active';
-    content.style.display = 'block';
-    const paragraphs = tale.text.split('\n').filter(p => p.trim());
-    content.innerHTML = paragraphs.map(p => '<p>' + p + '</p>').join('');
-    body.appendChild(content);
+    const partBody = document.createElement('div');
+    partBody.className = 'part-body open';
+    const textDiv = document.createElement('div');
+    textDiv.className = 'text';
+    textDiv.style.whiteSpace = 'pre-wrap';
+    textDiv.textContent = tale.text;
+    partBody.appendChild(textDiv);
+    body.appendChild(partBody);
   }
 
   modal.classList.add('active');
