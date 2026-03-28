@@ -545,7 +545,7 @@ img{max-width:100%;display:block}
 @media(max-width:600px){
   .chapters-grid{grid-template-columns:1fr}
   .gallery-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}
-  .hero-subtitle{min-height:150px;font-size:clamp(.8rem,3.5vw,.95rem)}
+  .hero-subtitle{min-height:80px;font-size:clamp(.8rem,3.5vw,.95rem)}
   .nav{gap:.75rem;font-size:.7rem}
   .nav a{letter-spacing:.04em}
   .section{padding:2.5rem 1rem}

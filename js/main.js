@@ -566,28 +566,45 @@ function setupRotatingSubtitle(el, text) {
 function setupScrollSpy() {
   const nav = document.getElementById('mainNav');
   if (!nav) return;
-  const links = nav.querySelectorAll('a[href^="#"]');
+  const links = Array.from(nav.querySelectorAll('a[href^="#"]'));
   if (!links.length) return;
+
+  // Track which sections are visible
+  const visibleSet = new Set();
 
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        const id = entry.target.id;
-        links.forEach(link => {
-          if (link.getAttribute('href') === '#' + id) {
-            link.classList.add('nav-active');
-          } else {
-            link.classList.remove('nav-active');
-          }
-        });
+        visibleSet.add(entry.target.id);
+      } else {
+        visibleSet.delete(entry.target.id);
       }
     });
-  }, { rootMargin: '-20% 0px -60% 0px', threshold: 0 });
 
-  links.forEach(link => {
-    const target = document.querySelector(link.getAttribute('href'));
-    if (target && target.offsetParent !== null) observer.observe(target);
-  });
+    // Highlight the first visible section in DOM order
+    let activeId = '';
+    for (const link of links) {
+      const id = link.getAttribute('href').slice(1);
+      if (visibleSet.has(id)) { activeId = id; break; }
+    }
+    links.forEach(link => {
+      if (link.getAttribute('href') === '#' + activeId) {
+        link.classList.add('nav-active');
+      } else {
+        link.classList.remove('nav-active');
+      }
+    });
+  }, { rootMargin: '-10% 0px -40% 0px', threshold: 0 });
+
+  // Observe all sections, retrying after a delay for late-rendered ones
+  function observeSections() {
+    links.forEach(link => {
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target && target.getBoundingClientRect().height > 0) observer.observe(target);
+    });
+  }
+  observeSections();
+  setTimeout(observeSections, 2000);
 }
 
 function setupSectionFooterNav() {
