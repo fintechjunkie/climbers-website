@@ -289,7 +289,7 @@ function openReader(chapter) {
         } else {
           partBody.classList.add('open');
           header.classList.add('expanded');
-          partBody.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          header.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       }
 
