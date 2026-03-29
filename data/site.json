@@ -579,15 +579,6 @@
       "id": "mn9os1w1yn43"
     },
     {
-      "label": "SYN'TERA",
-      "field1": "Valari",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mnabf4qkxyzp"
-    },
-    {
       "label": "HADRIAN",
       "field1": "Human",
       "field2": "First Appearance - ???",
@@ -595,6 +586,15 @@
       "field4": "",
       "field5": "",
       "id": "mnc0gzx59i3x"
+    },
+    {
+      "label": "SYN'TERA",
+      "field1": "Valari",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mnabf4qkxyzp"
     },
     {
       "label": "OWL",
