@@ -750,15 +750,6 @@
       "id": "mnbr3phx818e"
     },
     {
-      "label": "ROMAN KANE",
-      "field1": "Human",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mnbr5mc91rze"
-    },
-    {
       "label": "HADRIAN",
       "field1": "Human",
       "field2": "First Appearance - ???",
@@ -766,6 +757,15 @@
       "field4": "",
       "field5": "",
       "id": "mnc0gzx59i3x"
+    },
+    {
+      "label": "ROMAN KANE",
+      "field1": "Human",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mnbr5mc91rze"
     },
     {
       "label": "KETH'VORA",
