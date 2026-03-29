@@ -360,6 +360,7 @@ function openReader(chapter) {
 
   modal.classList.add('active');
   document.body.style.overflow = 'hidden';
+  document.getElementById('readerBody').scrollTop = 0;
 }
 
 function closeReader() {
