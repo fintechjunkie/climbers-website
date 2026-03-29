@@ -696,15 +696,6 @@
       "id": "mnbbachqffo3"
     },
     {
-      "label": "ROOSTER",
-      "field1": "Synthetic",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mnbbatqj9pss"
-    },
-    {
       "label": "HADRIAN",
       "field1": "Human",
       "field2": "First Appearance - ???",
@@ -712,6 +703,15 @@
       "field4": "",
       "field5": "",
       "id": "mnc0gzx59i3x"
+    },
+    {
+      "label": "ROOSTER",
+      "field1": "Synthetic",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mnbbatqj9pss"
     },
     {
       "label": "ODIN'S EYE",
