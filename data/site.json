@@ -570,15 +570,6 @@
       "id": "mn9qj6utclx9"
     },
     {
-      "label": "GL17CH",
-      "field1": "Cyber Skull",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mn9os1w1yn43"
-    },
-    {
       "label": "HADRIAN",
       "field1": "Human",
       "field2": "First Appearance - ???",
@@ -586,6 +577,15 @@
       "field4": "",
       "field5": "",
       "id": "mnc0gzx59i3x"
+    },
+    {
+      "label": "GL17CH",
+      "field1": "Cyber Skull",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mn9os1w1yn43"
     },
     {
       "label": "SYN'TERA",
