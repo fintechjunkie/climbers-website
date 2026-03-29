@@ -633,15 +633,6 @@
       "id": "mn9tqarb0hgw"
     },
     {
-      "label": "SLASH",
-      "field1": "Valari",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mnabmbjtt7uo"
-    },
-    {
       "label": "HADRIAN",
       "field1": "Human",
       "field2": "First Appearance - ???",
@@ -649,6 +640,15 @@
       "field4": "",
       "field5": "",
       "id": "mnc0gzx59i3x"
+    },
+    {
+      "label": "SLASH",
+      "field1": "Valari",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mnabmbjtt7uo"
     },
     {
       "label": "SHIRLEY UNIT-5190",
