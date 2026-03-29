@@ -687,15 +687,6 @@
       "id": "mnb4giiyiiwk"
     },
     {
-      "label": "SANDMAN",
-      "field1": "Valari",
-      "field2": "First Appearance - Seven",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mnb57vjaw4nt"
-    },
-    {
       "label": "ODIN'S EYE",
       "field1": "Surveillance Drone",
       "field2": "First Appearance - ???",
@@ -703,6 +694,15 @@
       "field4": "",
       "field5": "",
       "id": "mnbbbmr7i640"
+    },
+    {
+      "label": "SANDMAN",
+      "field1": "Valari",
+      "field2": "First Appearance - Seven",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mnb57vjaw4nt"
     },
     {
       "label": "JONESEY AND JOJO",
