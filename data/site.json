@@ -741,15 +741,6 @@
       "id": "mnbzrruitm9o"
     },
     {
-      "label": "CHAINSAW JANE",
-      "field1": "Synthetic",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mnbr3phx818e"
-    },
-    {
       "label": "HADRIAN",
       "field1": "Human",
       "field2": "First Appearance - ???",
@@ -757,6 +748,15 @@
       "field4": "",
       "field5": "",
       "id": "mnc0gzx59i3x"
+    },
+    {
+      "label": "CHAINSAW JANE",
+      "field1": "Synthetic",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mnbr3phx818e"
     },
     {
       "label": "ROMAN KANE",
