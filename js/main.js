@@ -1262,7 +1262,6 @@ function setupRegistryEvents(workerUrl) {
         document.querySelectorAll('.reg-sit-lord-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         regSitSelectedLord = lord;
-        selectLord(lord.id);
         fetchLordResponse(lord);
       });
       row.appendChild(btn);
