@@ -866,14 +866,14 @@
       "color": "#6a6a6a",
       "alignment": "True Neutral",
       "aug": "Unknown",
-      "augDesc": "The Cipher's augmentation, if it has one, has never been identified, demonstrated, or confirmed. Multiple factions have attempted to classify it. All attempts have produced contradictory results. The Cipher does not clarify.",
-      "followers": "None confirmed. Individuals occasionally claim to act on the Cipher's behalf. The Cipher neither confirms nor denies these claims. Whether the Cipher has followers or simply has people who believe they are followers is an open question.",
+      "augDesc": "The Cipher's augmentation, if it has one, has never been identified, demonstrated, or confirmed. Multiple citizens have attempted to classify it and all attempts have produced contradictory results. The Cipher does not clarify. What is clear is that all the Oath Lords are terrified of The Cipher and stay out of his way.",
+      "followers": "None confirmed. Individuals occasionally claim to act on the Cipher's behalf and The Cipher neither confirms nor denies these claims. Whether the Cipher has followers or simply has people who believe they are followers is an open question.",
       "question": "What are you?",
       "answer": "Present.",
-      "detail": "No one knows when the Cipher arrived in Haven City. No one can agree on what the Cipher looks like. Descriptions vary by observer and by day. The Cipher attends council meetings, stands in the back, and occasionally makes a statement that reframes the entire discussion. Then it leaves. Malachus has attempted to create a definitive record of the Cipher's actions. The Archive contains 847 entries, no two of which are internally consistent. The Cipher is not hiding. It is simply not available for classification. Whether this is deliberate obfuscation or something more fundamental is the central question of Cipher scholarship, a field that has exactly zero confirmed conclusions.",
-      "alliances": "Unknown. The Cipher has been seen in proximity to every faction leader at various times. No pattern has been established.",
-      "enemies": "Unknown. No faction has moved against the Cipher. Whether this is because they do not consider it a threat or because they are afraid of what would happen is a matter of interpretation.",
-      "voice": "The Cipher's response, if it responds at all, arrives sideways — not addressing the situation directly but revealing something about it that reframes everything else. Whether this is wisdom or deflection is impossible to determine."
+      "detail": "No one knows when the Cipher arrived in Haven City. No one can clearly remember what the Cipher looks like after being in its presence. Descriptions vary by observer and by day. The Cipher attends council meetings, stands in the back, and occasionally makes a statement that reframes the entire discussion. Then it leaves. Malachus has attempted to create a definitive record of the Cipher's actions. The Archive contains 847 entries, no two of which are internally consistent. The Cipher is not hiding. It is simply not making itself available for classification.",
+      "alliances": "Unknown. The Cipher has been seen in proximity to every Oath Lord at various times but no pattern has been established.",
+      "enemies": "Unknown. No Oath Lord has moved against the Cipher. It's speculated that they are afraid of what would happen if they did.",
+      "voice": "The Cipher's response, if it responds at all, arrives sideways. Not addressing the situation directly but revealing something about it that reframes everything else. Whether this is wisdom or deflection is impossible to determine."
     },
     {
       "id": "vex",
