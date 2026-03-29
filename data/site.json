@@ -741,15 +741,6 @@
       "id": "mnbr3phx818e"
     },
     {
-      "label": "ROMAN KANE",
-      "field1": "Human",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mnbr5mc91rze"
-    },
-    {
       "label": "LYRA",
       "field1": "Human",
       "field2": "First Appearance - ???",
@@ -757,6 +748,15 @@
       "field4": "",
       "field5": "",
       "id": "mnbzrruitm9o"
+    },
+    {
+      "label": "ROMAN KANE",
+      "field1": "Human",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mnbr5mc91rze"
     },
     {
       "label": "KETH'VORA",
