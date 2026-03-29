@@ -588,15 +588,6 @@
       "id": "mnabf4qkxyzp"
     },
     {
-      "label": "OWL",
-      "field1": "Synthetic",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mn9pph026m1n"
-    },
-    {
       "label": "HADRIAN",
       "field1": "Human",
       "field2": "First Appearance - ???",
@@ -604,6 +595,15 @@
       "field4": "",
       "field5": "",
       "id": "mnc0gzx59i3x"
+    },
+    {
+      "label": "OWL",
+      "field1": "Synthetic",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mn9pph026m1n"
     },
     {
       "label": "GOGGLES",
