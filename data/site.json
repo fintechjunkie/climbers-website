@@ -435,15 +435,6 @@
       "id": "mn9fl6b7ym2n"
     },
     {
-      "label": "PIXELS",
-      "field1": "Synthetic",
-      "field2": "First Appearance - The Delivery",
-      "field3": "",
-      "field4": "",
-      "field5": "A Synthetic courier operating in Haven City's residential districts, Pixels built a quiet life on the principle that carrying messages and asking no questions kept him clear of the city's uglier machinery. His visor displays whatever he tells it to display, which is usually nothing. He learned the hard way that neutrality has a limit — and that the limit looks like a name on a Bone Patrol order for someone who once did him a small kindness. He is not a rebel or a hero. He is a courier who made one delivery he can't take back, and is now figuring out what kind of person comes after that.",
-      "id": "mn9fwk3il861"
-    },
-    {
       "label": "BONE PATROL GUARD",
       "field1": "Synthetic",
       "field2": "First Appearance - The Delivery",
@@ -451,6 +442,15 @@
       "field4": "",
       "field5": "",
       "id": "mnb4has8jvko"
+    },
+    {
+      "label": "PIXELS",
+      "field1": "Synthetic",
+      "field2": "First Appearance - The Delivery",
+      "field3": "",
+      "field4": "",
+      "field5": "A Synthetic courier operating in Haven City's residential districts, Pixels built a quiet life on the principle that carrying messages and asking no questions kept him clear of the city's uglier machinery. His visor displays whatever he tells it to display, which is usually nothing. He learned the hard way that neutrality has a limit — and that the limit looks like a name on a Bone Patrol order for someone who once did him a small kindness. He is not a rebel or a hero. He is a courier who made one delivery he can't take back, and is now figuring out what kind of person comes after that.",
+      "id": "mn9fwk3il861"
     },
     {
       "label": "FORGE",
