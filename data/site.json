@@ -219,15 +219,6 @@
       "id": "mn97hdvzc06o"
     },
     {
-      "label": "JOR'SECT",
-      "field1": "Valari",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mn97i09j94q3"
-    },
-    {
       "label": "JAXON FISK",
       "field1": "Human",
       "field2": "First Appearance - ???",
@@ -235,6 +226,15 @@
       "field4": "",
       "field5": "",
       "id": "mn97ncslsfiq"
+    },
+    {
+      "label": "JOR'SECT",
+      "field1": "Valari",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mn97i09j94q3"
     },
     {
       "label": "JACK'OL",
