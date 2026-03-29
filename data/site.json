@@ -561,15 +561,6 @@
       "id": "mn9qj6utclx9"
     },
     {
-      "label": "GL17CH",
-      "field1": "Cyber Skull",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mn9os1w1yn43"
-    },
-    {
       "label": "BONE PATROL GUARD",
       "field1": "Synthetic",
       "field2": "First Appearance - The Delivery",
@@ -577,6 +568,15 @@
       "field4": "",
       "field5": "",
       "id": "mnb4has8jvko"
+    },
+    {
+      "label": "GL17CH",
+      "field1": "Cyber Skull",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mn9os1w1yn43"
     },
     {
       "label": "SYN'TERA",
