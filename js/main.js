@@ -204,6 +204,10 @@ function openTalesReader(tale) {
   document.body.style.overflow = 'hidden';
   modal.scrollTop = 0;
   body.scrollTop = 0;
+  requestAnimationFrame(() => {
+    modal.scrollTop = 0;
+    body.scrollTop = 0;
+  });
 }
 
 function closeTalesReader() {
@@ -363,6 +367,10 @@ function openReader(chapter) {
   document.body.style.overflow = 'hidden';
   modal.scrollTop = 0;
   document.getElementById('readerBody').scrollTop = 0;
+  requestAnimationFrame(() => {
+    modal.scrollTop = 0;
+    document.getElementById('readerBody').scrollTop = 0;
+  });
 }
 
 function closeReader() {
