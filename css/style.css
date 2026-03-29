@@ -75,6 +75,8 @@ img{max-width:100%;display:block}
 .part-header-title{font-family:'Orbitron',sans-serif;font-size:1rem;color:#c9a84c;font-weight:600}
 .part-body{display:none;background:#0a0a0a;border:1px solid rgba(0,255,255,.35);border-top:none;border-radius:0 0 10px 10px;padding:2.5rem 2.5rem 1.5rem;position:relative;box-shadow:inset 0 0 40px rgba(0,0,0,.6),0 0 15px rgba(0,255,255,.12),0 0 30px rgba(0,255,255,.05)}
 .part-body::before{content:'';position:absolute;inset:0;border-radius:0 0 10px 10px;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,255,255,.045) 3px,rgba(0,255,255,.045) 6px);pointer-events:none;z-index:1}
+#talesReaderBody .part-body{border-top:1px solid rgba(0,255,255,.35);border-radius:10px}
+#talesReaderBody .part-body::before{border-radius:10px}
 .part-body.open{display:block;animation:textFadeIn .5s ease}
 @keyframes textFadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 .part-body .text{white-space:pre-wrap;font-size:1.05rem;line-height:2;color:#d0d0d0;max-width:100%;position:relative;z-index:2}
