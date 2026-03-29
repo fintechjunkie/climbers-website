@@ -660,15 +660,6 @@
       "id": "mnac8wfyzjfv"
     },
     {
-      "label": "THE WHISPERER",
-      "field1": "Human",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mnacaaqgdowh"
-    },
-    {
       "label": "ODIN'S EYE",
       "field1": "Surveillance Drone",
       "field2": "First Appearance - ???",
@@ -676,6 +667,15 @@
       "field4": "",
       "field5": "",
       "id": "mnbbbmr7i640"
+    },
+    {
+      "label": "THE WHISPERER",
+      "field1": "Human",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mnacaaqgdowh"
     },
     {
       "label": "SHADOW DANCER",
