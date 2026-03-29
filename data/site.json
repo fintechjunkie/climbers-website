@@ -846,14 +846,14 @@
       "color": "#9a9ab8",
       "alignment": "Neutral Evil",
       "aug": "Emotional Nullification",
-      "augDesc": "Silence can suppress any emotional state in any person within her range. Grief, rage, fear, joy. All of it, gone. What remains is a flat, functional calm. She calls it mercy. Her patients call it relief. Her critics call it something else entirely.",
-      "followers": "The Absolved. They come to Silence voluntarily, seeking relief from trauma, grief, or unbearable memory. After treatment, they are calm, functional, and productive. They are also notably incapable of describing what they lost. They do not miss it. That is the point.",
+      "augDesc": "Sister Silence can suppress any emotional state in any person within her range. Grief, rage, fear, joy. All of it, gone. What remains is a flat, functional calm. She calls it mercy. Her patients call it relief. Her critics call it something else entirely.",
+      "followers": "The Absolved. They come to Sister Silence voluntarily, seeking relief from trauma, grief, or unbearable memory. After treatment, they are calm, functional, and productive. They are also notably incapable of describing what they lost. They do not miss it. That is the point.",
       "question": "Is it cruel to remove suffering if the person cannot consent to the removal?",
       "answer": "Suffering does not ask consent before it arrives. Why should its removal?",
-      "detail": "Silence operates from a clinic in the lower city. There is always a line. She treats anyone who asks. She does not charge. She does not judge. She removes emotional pain with the clinical efficiency of a surgeon removing a tumor. The problem is that emotional pain is not a tumor. It is part of the person. The Absolved function well. They work, eat, sleep. But something is missing, and they cannot identify what. Silence insists this is acceptable. The alternative, she says, was a person who could not function at all. The ethics of her practice are debated constantly. She does not participate in the debate.",
+      "detail": "Sister Silence operates from a Wellness Center in the lower city. There is always a line. She treats anyone who asks and does not judge. She removes emotional pain with the clinical efficiency of a surgeon removing a tumor. The problem is that emotional pain is not a tumor. It is part of the person. The Absolved work, eat and sleep, but something is missing and they can't identify what. Sister Silence asserts that the alternative is a person who can't function at all. The ethics of her practice are debated constantly but she does not participate in the debate.",
       "alliances": "Operational understanding with Vex. They refer patients to each other. Their methods are different but their philosophy of pragmatic intervention overlaps.",
-      "enemies": "Absalom. He attempted to bring Silence into his territory as a resource. She declined. He insisted. She nullified his emotional state for eleven seconds. The Dominion Field stuttered. Neither has spoken of it since.",
-      "voice": "Sister Silence speaks softly and without judgment. She frames everything as relief. The violence of what she does is entirely invisible in her language — she discusses the removal of pain the way a doctor discusses removing a splinter."
+      "enemies": "Absalom. He attempted to bring Sister Silence into his territory as a resource. She declined. He insisted. She nullified his emotional state for eleven seconds and his Dominion Field stuttered. Neither has spoken of it since.",
+      "voice": "Sister Silence speaks softly and without judgment. She frames everything as relief. The violence of what she does is entirely invisible in her language. She discusses the removal of pain the way a doctor discusses removing a splinter."
     },
     {
       "id": "cipher",
