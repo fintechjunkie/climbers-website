@@ -669,15 +669,6 @@
       "id": "mnacaaqgdowh"
     },
     {
-      "label": "SHADOW DANCER",
-      "field1": "Valari",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mnatjcjh9c2n"
-    },
-    {
       "label": "ODIN'S EYE",
       "field1": "Surveillance Drone",
       "field2": "First Appearance - ???",
@@ -685,6 +676,15 @@
       "field4": "",
       "field5": "",
       "id": "mnbbbmr7i640"
+    },
+    {
+      "label": "SHADOW DANCER",
+      "field1": "Valari",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mnatjcjh9c2n"
     },
     {
       "label": "METRONIUS",
