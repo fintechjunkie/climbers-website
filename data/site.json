@@ -624,15 +624,6 @@
       "id": "mn9tjihhuxxs"
     },
     {
-      "label": "JUNKER",
-      "field1": "Human",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mn9tqarb0hgw"
-    },
-    {
       "label": "HADRIAN",
       "field1": "Human",
       "field2": "First Appearance - ???",
@@ -640,6 +631,15 @@
       "field4": "",
       "field5": "",
       "id": "mnc0gzx59i3x"
+    },
+    {
+      "label": "JUNKER",
+      "field1": "Human",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mn9tqarb0hgw"
     },
     {
       "label": "SLASH",
