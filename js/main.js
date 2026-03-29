@@ -204,10 +204,11 @@ function openTalesReader(tale) {
   document.body.style.overflow = 'hidden';
   modal.scrollTop = 0;
   body.scrollTop = 0;
-  requestAnimationFrame(() => {
+  setTimeout(() => {
     modal.scrollTop = 0;
     body.scrollTop = 0;
-  });
+    document.querySelector('#talesReaderModal .reader-modal-header').scrollIntoView(true);
+  }, 50);
 }
 
 function closeTalesReader() {
@@ -366,11 +367,12 @@ function openReader(chapter) {
   modal.classList.add('active');
   document.body.style.overflow = 'hidden';
   modal.scrollTop = 0;
-  document.getElementById('readerBody').scrollTop = 0;
-  requestAnimationFrame(() => {
+  body.scrollTop = 0;
+  setTimeout(() => {
     modal.scrollTop = 0;
-    document.getElementById('readerBody').scrollTop = 0;
-  });
+    body.scrollTop = 0;
+    document.querySelector('#readerModal .reader-modal-header').scrollIntoView(true);
+  }, 50);
 }
 
 function closeReader() {
