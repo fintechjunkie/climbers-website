@@ -624,15 +624,6 @@
       "id": "mn9tqarb0hgw"
     },
     {
-      "label": "SLASH",
-      "field1": "Valari",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mnabmbjtt7uo"
-    },
-    {
       "label": "BONE PATROL GUARD",
       "field1": "Synthetic",
       "field2": "First Appearance - The Delivery",
@@ -640,6 +631,15 @@
       "field4": "",
       "field5": "",
       "id": "mnb4has8jvko"
+    },
+    {
+      "label": "SLASH",
+      "field1": "Valari",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mnabmbjtt7uo"
     },
     {
       "label": "SHIRLEY UNIT-5190",
