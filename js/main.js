@@ -508,7 +508,9 @@ function openGalleryExpand(item) {
   }
 
   modal.classList.add('active');
+  modal.scrollTop = 0;
   document.body.style.overflow = 'hidden';
+  requestAnimationFrame(() => { modal.scrollTop = 0; });
 }
 
 function closeGalleryExpand() {

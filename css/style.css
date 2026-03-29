@@ -49,7 +49,7 @@ img{max-width:100%;display:block}
 .chapter-card .card-label{display:none}
 
 /* ===== TALES GRID ===== */
-.tales-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.5rem}
+.tales-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1rem}
 .tale-card{background:#1a1a1a;border-radius:12px;overflow:hidden;cursor:pointer;transition:transform .25s,box-shadow .25s;border:1px solid #262626}
 .tale-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(201,168,76,.15)}
 .tale-card img{width:100%;aspect-ratio:1/1;object-fit:cover;transition:filter .3s}
