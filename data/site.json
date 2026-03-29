@@ -552,15 +552,6 @@
       "id": "mn9oowhiokhm"
     },
     {
-      "label": "ZYR'VAEL",
-      "field1": "Valari",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mn9qj6utclx9"
-    },
-    {
       "label": "BONE PATROL GUARD",
       "field1": "Synthetic",
       "field2": "First Appearance - The Delivery",
@@ -568,6 +559,15 @@
       "field4": "",
       "field5": "",
       "id": "mnb4has8jvko"
+    },
+    {
+      "label": "ZYR'VAEL",
+      "field1": "Valari",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mn9qj6utclx9"
     },
     {
       "label": "GL17CH",
