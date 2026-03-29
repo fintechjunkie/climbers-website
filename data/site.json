@@ -462,15 +462,6 @@
       "id": "mn9nfn9bezbd"
     },
     {
-      "label": "S4NT1",
-      "field1": "Cyber Skull",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mn9r4vjf3gql"
-    },
-    {
       "label": "BONE PATROL GUARD",
       "field1": "Synthetic",
       "field2": "First Appearance - The Delivery",
@@ -478,6 +469,15 @@
       "field4": "",
       "field5": "",
       "id": "mnb4has8jvko"
+    },
+    {
+      "label": "S4NT1",
+      "field1": "Cyber Skull",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mn9r4vjf3gql"
     },
     {
       "label": "BUMBLEBEE",
