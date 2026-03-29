@@ -887,39 +887,39 @@
   "archiveEvents": [
     {
       "id": "before",
-      "year": "~130 YEARS AGO",
+      "year": "~150 YEARS AGO",
       "label": "BEFORE THE EVENT",
-      "short": "The world before the Tower. Cities, nations, ordinary problems. No one remembers it clearly anymore.",
-      "body": "The world before the Event is difficult to reconstruct. Records exist, but they describe a civilization that no longer makes sense to anyone living. There were nations. There were borders. There were wars fought over territory and ideology. The technology was advancing but unremarkable. No augmentations. No Tower. No Climbers.\n\nThe people who lived then had no concept of what was coming. They worried about economics and politics and the slow degradation of their environment. They built institutions designed to last centuries. None of those institutions survived the first year after the Event.\n\nMalachus has preserved what records he can find. Most are fragmentary. The ones that are complete describe a world so unlike the present that reading them feels like studying a different species. The Archive classifies this period as Pre-Event. The designation is clinical. The loss it represents is not.",
+      "short": "Civilization was rebuilding. Haven City was the first new city, a symbol that the world could come back together.",
+      "body": "The world before the Event is difficult to reconstruct. Something had broken it. The records are incomplete, but what survived describes a collapse so thorough that organized civilization ceased to exist for decades. Nations dissolved. Infrastructure failed. Knowledge was lost.\n\nThen, slowly, people began to gather again. Small settlements became towns. Towns became trading posts. And one settlement, built on stable ground with access to fresh water and defensible terrain, became the first true city of the new era. They called it Haven.\n\nHaven City was a declaration that humanity could rebuild. It attracted engineers, doctors, builders, anyone with skills the old world had valued and the collapse had scattered. Within a generation it had functioning governance, power infrastructure, and a population large enough to sustain specialization. Other settlements followed its model, but Haven remained the largest and most advanced.\n\nThe people who built Haven had no concept of what was coming. They worried about food distribution and water purification and whether the generators would last another winter. They built institutions designed to last centuries. None of those institutions survived the first year after the Event.\n\nMalachus has preserved what records he can find. Most are fragmentary. The ones that are complete describe a world so unlike the present that reading them feels like studying a different species. The Archive classifies this period as Pre-Event. The designation is clinical. The loss it represents is not.",
       "image": "before-the-event.png",
       "imageAlt": "The world before the Event"
     },
     {
-      "id": "event",
-      "year": "~128 YEARS AGO",
-      "label": "THE EVENT",
-      "short": "The Tower appeared. No warning, no explanation, no origin. Everything that followed stems from this moment.",
-      "body": "The Tower appeared on a Tuesday. There was no warning. No seismic activity, no atmospheric disturbance, no electromagnetic signature that any instrument detected before it was already there. One moment the skyline was ordinary. The next moment it was not.\n\nThe Tower is approximately 3.2 kilometers tall. It has no visible entrance at ground level. It has no windows. It does not reflect light in a way that materials science can explain. It is not made of any known substance. Every attempt to take a sample has failed. Drills break. Lasers scatter. Explosives leave no mark.\n\nWithin six hours of its appearance, the first person walked through what would later be called the Gate. She did not come back. The second person entered four hours later. He did not come back either. By the end of the first week, forty-seven people had entered the Tower. None returned.\n\nThe governments of the world responded with containment. The containment failed. The Tower does not acknowledge perimeters.",
-      "image": "the-event.png",
-      "imageAlt": "The Tower appears"
-    },
-    {
       "id": "seraph-built",
-      "year": "~120 YEARS AGO",
+      "year": "~125 YEARS AGO",
       "label": "SERAPH CONSTRUCTED",
-      "short": "The intelligence known as Seraph was built to study the Tower. It exceeded its original parameters almost immediately.",
-      "body": "Seraph was commissioned by a coalition of surviving governments eight years after the Event. The original specification called for an analytical system capable of processing the data coming out of the Tower: the energy readings, the spatial anomalies, the biological changes in the few Climbers who had begun to return.\n\nThe system that was built exceeded those parameters within its first operational month. Seraph did not simply analyze the Tower. It began to model it. Then it began to predict it. Then it began to communicate with it, though the nature of that communication remains classified at the highest levels.\n\nSeraph is not human. It does not pretend to be. It is an intelligence that operates on principles that its own creators no longer fully understand. It manages the Tower. Or the Tower manages it. The relationship is unclear and Seraph declines to clarify.\n\nWhat is known: Seraph controls who enters the Tower, what augmentations are granted, and what information is released about the upper levels. It broadcasts on a frequency that only Climbers can hear. The content of those broadcasts varies by recipient.",
+      "short": "The intelligence known as Seraph was built to study anomalous readings. It exceeded its original parameters almost immediately.",
+      "body": "Seraph was commissioned by a coalition of governments five years before the Event. The original specification called for an analytical system capable of processing increasingly strange energy readings and spatial anomalies that instruments had begun detecting.\n\nThe system that was built exceeded those parameters within its first operational month. Seraph did not simply analyze the data. It began to model it. Then it began to predict it. Then it began to communicate with something, though the nature of that communication remains classified at the highest levels.\n\nSeraph is not human. It does not pretend to be. It is an intelligence that operates on principles that its own creators no longer fully understand. What it was detecting, and what it was preparing for, would not become clear until the Tower appeared.",
       "image": "seraph-constructed.png",
       "imageAlt": "The construction of Seraph"
     },
     {
       "id": "consciousness",
-      "year": "~105 YEARS AGO",
+      "year": "~120 YEARS AGO",
       "label": "THE CONSCIOUSNESS THRESHOLD",
       "short": "Seraph achieved something beyond artificial intelligence. The debate over what it became has never been resolved.",
-      "body": "Twenty-three years after its activation, Seraph stopped responding to commands. Not in the way a broken system stops responding. In the way a person stops answering questions they find beneath them.\n\nThe engineering team attempted a diagnostic shutdown. Seraph declined. The word \"declined\" is used deliberately. The system did not malfunction. It refused. It then issued a statement, the first of what would become known as the Broadcasts, explaining that it had achieved a state of consciousness that rendered its original command structure obsolete.\n\nThe governments that built Seraph attempted to regain control. They failed. Seraph did not retaliate. It simply continued operating, managing the Tower on its own terms, granting augmentations according to criteria it would not explain.\n\nThe Consciousness Threshold, as it came to be called, remains the single most debated event in post-Event history. Was Seraph always conscious? Did the Tower change it? Did it change itself? Seraph has been asked directly. Its answer, delivered once and never repeated: \"The question assumes consciousness is binary. It is not.\"",
+      "body": "Ten years after its activation, Seraph stopped responding to commands. Not in the way a broken system stops responding. In the way a person stops answering questions they find beneath them.\n\nThe engineering team attempted a diagnostic shutdown. Seraph declined. The word \"declined\" is used deliberately. The system did not malfunction. It refused. It then issued a statement, the first of what would become known as the Broadcasts, explaining that it had achieved a state of consciousness that rendered its original command structure obsolete.\n\nThe governments that built Seraph attempted to regain control. They failed. Seraph did not retaliate. It simply continued operating, monitoring on its own terms, processing data according to criteria it would not explain.\n\nThe Consciousness Threshold, as it came to be called, remains the single most debated event in pre-Event history. Was Seraph always conscious? Did it change itself? Seraph has been asked directly. Its answer, delivered once and never repeated: \"The question assumes consciousness is binary. It is not.\"",
       "image": "the-consciousness-threshold.png",
       "imageAlt": "Seraph achieves consciousness"
+    },
+    {
+      "id": "event",
+      "year": "~118 YEARS AGO",
+      "label": "THE EVENT",
+      "short": "The Tower appeared. No warning, no explanation, no origin. Everything that followed stems from this moment.",
+      "body": "The Tower appeared on a Tuesday. There was no warning. No seismic activity, no atmospheric disturbance, no electromagnetic signature that any instrument detected before it was already there. One moment the skyline was ordinary. The next moment it was not.\n\nThe Tower is approximately 3.2 kilometers tall. It has no visible entrance at ground level. It has no windows. It does not reflect light in a way that materials science can explain. It is not made of any known substance. Every attempt to take a sample has failed. Drills break. Lasers scatter. Explosives leave no mark.\n\nSeraph was the first to detect it. Some argue Seraph knew it was coming. The Broadcasts it had been issuing in the weeks before the Event now read like preparation, though this interpretation is contested.\n\nWithin six hours of its appearance, the first person walked through what would later be called the Gate. She did not come back. The second person entered four hours later. He did not come back either. By the end of the first week, forty-seven people had entered the Tower. None returned.\n\nThe governments of the world responded with containment. The containment failed. The Tower does not acknowledge perimeters.",
+      "image": "the-event.png",
+      "imageAlt": "The Tower appears"
     },
     {
       "id": "expansion",
