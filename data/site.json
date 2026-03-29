@@ -678,15 +678,6 @@
       "id": "mnb4giiyiiwk"
     },
     {
-      "label": "SANDMAN",
-      "field1": "Valari",
-      "field2": "First Appearance - Seven",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mnb57vjaw4nt"
-    },
-    {
       "label": "HADRIAN",
       "field1": "Human",
       "field2": "First Appearance - ???",
@@ -694,6 +685,15 @@
       "field4": "",
       "field5": "",
       "id": "mnc0gzx59i3x"
+    },
+    {
+      "label": "SANDMAN",
+      "field1": "Valari",
+      "field2": "First Appearance - Seven",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mnb57vjaw4nt"
     },
     {
       "label": "JONESEY AND JOJO",
