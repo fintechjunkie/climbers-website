@@ -714,15 +714,6 @@
       "id": "mnbbbmr7i640"
     },
     {
-      "label": "THAL'MAREN",
-      "field1": "Valari",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mnbbdcv2lman"
-    },
-    {
       "label": "HADRIAN",
       "field1": "Human",
       "field2": "First Appearance - ???",
@@ -730,6 +721,15 @@
       "field4": "",
       "field5": "",
       "id": "mnc0gzx59i3x"
+    },
+    {
+      "label": "THAL'MAREN",
+      "field1": "Valari",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mnbbdcv2lman"
     },
     {
       "label": "JOSHUA UNIT-1212",
