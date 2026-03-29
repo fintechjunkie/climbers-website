@@ -615,15 +615,6 @@
       "id": "mn9qqubfe131"
     },
     {
-      "label": "PHOENIX UNIT-3317",
-      "field1": "Synthetic",
-      "field2": "First Appearance - Seven",
-      "field3": "",
-      "field4": "",
-      "field5": "Unit-3317 is the intake coordinator for Sister Silence's Wellness and Optimization Center, a position that makes him invisible to the Sandmen who staff the facility and dangerous to the operation they protect. He chose the name Phoenix himself, which nobody at the center knows and nobody there would understand. Seven times he has falsified a record, opened a maintenance corridor, and sent a child out into Haven City alone with a street name and instructions not to run until they were two blocks clear. He works inside the system with complete precision because precision is the only weapon available to furniture that has decided to fight back.",
-      "id": "mn9tjihhuxxs"
-    },
-    {
       "label": "HADRIAN",
       "field1": "Human",
       "field2": "First Appearance - ???",
@@ -631,6 +622,15 @@
       "field4": "",
       "field5": "",
       "id": "mnc0gzx59i3x"
+    },
+    {
+      "label": "PHOENIX UNIT-3317",
+      "field1": "Synthetic",
+      "field2": "First Appearance - Seven",
+      "field3": "",
+      "field4": "",
+      "field5": "Unit-3317 is the intake coordinator for Sister Silence's Wellness and Optimization Center, a position that makes him invisible to the Sandmen who staff the facility and dangerous to the operation they protect. He chose the name Phoenix himself, which nobody at the center knows and nobody there would understand. Seven times he has falsified a record, opened a maintenance corridor, and sent a child out into Haven City alone with a street name and instructions not to run until they were two blocks clear. He works inside the system with complete precision because precision is the only weapon available to furniture that has decided to fight back.",
+      "id": "mn9tjihhuxxs"
     },
     {
       "label": "JUNKER",
