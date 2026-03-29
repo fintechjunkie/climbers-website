@@ -579,15 +579,6 @@
       "id": "mnabf4qkxyzp"
     },
     {
-      "label": "OWL",
-      "field1": "Synthetic",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mn9pph026m1n"
-    },
-    {
       "label": "BONE PATROL GUARD",
       "field1": "Synthetic",
       "field2": "First Appearance - The Delivery",
@@ -595,6 +586,15 @@
       "field4": "",
       "field5": "",
       "id": "mnb4has8jvko"
+    },
+    {
+      "label": "OWL",
+      "field1": "Synthetic",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mn9pph026m1n"
     },
     {
       "label": "JAMIE \"GOGGLES\" JONES",
