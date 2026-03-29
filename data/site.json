@@ -669,15 +669,6 @@
       "id": "mnatjcjh9c2n"
     },
     {
-      "label": "METRONIUS",
-      "field1": "Synthetic",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mnb4giiyiiwk"
-    },
-    {
       "label": "HADRIAN",
       "field1": "Human",
       "field2": "First Appearance - ???",
@@ -685,6 +676,15 @@
       "field4": "",
       "field5": "",
       "id": "mnc0gzx59i3x"
+    },
+    {
+      "label": "METRONIUS",
+      "field1": "Synthetic",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mnb4giiyiiwk"
     },
     {
       "label": "SANDMAN",
