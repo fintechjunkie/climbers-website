@@ -57,9 +57,9 @@ img{max-width:100%;display:block}
 .tale-card .card-label{display:none}
 
 /* ===== READER MODAL (full-screen overlay) ===== */
-.reader-modal{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.95);display:none;flex-direction:column;overflow:hidden;border-top:3px solid #0ff}
+.reader-modal{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.95);display:none;flex-direction:column;overflow:hidden}
 .reader-modal.active{display:flex}
-.reader-modal-header{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 2rem;border-bottom:1px solid #262626;flex-shrink:0;background:#111}
+.reader-modal-header{display:flex;justify-content:space-between;align-items:center;padding:1.25rem 2rem;border-top:3px solid #0ff;border-bottom:1px solid #262626;flex-shrink:0;background:#111}
 .reader-modal-title{font-family:'Orbitron',sans-serif;font-size:1.5rem;color:#c9a84c;letter-spacing:.06em}
 .reader-modal-close{background:none;border:1px solid #444;color:#ccc;width:40px;height:40px;border-radius:8px;font-size:1.4rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
 .reader-modal-close:hover{border-color:#c9a84c;color:#c9a84c}
