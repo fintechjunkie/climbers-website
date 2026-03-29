@@ -440,7 +440,7 @@ img{max-width:100%;display:block}
 .archive-row:hover{background:rgba(192,168,90,.08);border-left-color:#c0a85a}
 .archive-row.active{background:rgba(192,168,90,.1)}
 .archive-row.active .archive-row-label{color:#c0a85a}
-.archive-row.now-entry .archive-row-label{color:#c0a85a;font-size:1.15rem}
+.archive-row.now-entry .archive-row-label{font-family:'Orbitron',sans-serif;color:#c0a85a;font-size:1.15rem;letter-spacing:2px;text-transform:uppercase;font-weight:700}
 .archive-row.now-entry .archive-row-summary{color:#c8c0a0}
 
 .archive-row-year{flex-shrink:0;width:130px;display:flex;align-items:center;justify-content:center;text-align:center;font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:2px;color:#6a5a3a;text-transform:uppercase;font-weight:700;padding:0 10px;line-height:1.3}
