@@ -570,15 +570,6 @@
       "id": "mn9os1w1yn43"
     },
     {
-      "label": "SYN'TERA",
-      "field1": "Valari",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mnabf4qkxyzp"
-    },
-    {
       "label": "BONE PATROL GUARD",
       "field1": "Synthetic",
       "field2": "First Appearance - The Delivery",
@@ -586,6 +577,15 @@
       "field4": "",
       "field5": "",
       "id": "mnb4has8jvko"
+    },
+    {
+      "label": "SYN'TERA",
+      "field1": "Valari",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mnabf4qkxyzp"
     },
     {
       "label": "OWL",
