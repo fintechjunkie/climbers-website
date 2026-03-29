@@ -597,15 +597,6 @@
       "id": "mn9q0mfx8lfd"
     },
     {
-      "label": "WIN'JORA",
-      "field1": "Valari",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mn9qqubfe131"
-    },
-    {
       "label": "BONE PATROL GUARD",
       "field1": "Synthetic",
       "field2": "First Appearance - The Delivery",
@@ -613,6 +604,15 @@
       "field4": "",
       "field5": "",
       "id": "mnb4has8jvko"
+    },
+    {
+      "label": "WIN'JORA",
+      "field1": "Valari",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mn9qqubfe131"
     },
     {
       "label": "PHOENIX UNIT-3317",
