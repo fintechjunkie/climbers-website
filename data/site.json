@@ -642,15 +642,6 @@
       "id": "mnabmbjtt7uo"
     },
     {
-      "label": "SHIRLEY UNIT-5190",
-      "field1": "Synthetic",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mnac8wfyzjfv"
-    },
-    {
       "label": "HADRIAN",
       "field1": "Human",
       "field2": "First Appearance - ???",
@@ -658,6 +649,15 @@
       "field4": "",
       "field5": "",
       "id": "mnc0gzx59i3x"
+    },
+    {
+      "label": "SHIRLEY UNIT-5190",
+      "field1": "Synthetic",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mnac8wfyzjfv"
     },
     {
       "label": "THE WHISPERER",
