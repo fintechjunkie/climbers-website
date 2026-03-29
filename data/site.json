@@ -705,15 +705,6 @@
       "id": "mnbbatqj9pss"
     },
     {
-      "label": "ODIN'S EYE",
-      "field1": "Surveillance Drone",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mnbbbmr7i640"
-    },
-    {
       "label": "HADRIAN",
       "field1": "Human",
       "field2": "First Appearance - ???",
@@ -721,6 +712,15 @@
       "field4": "",
       "field5": "",
       "id": "mnc0gzx59i3x"
+    },
+    {
+      "label": "ODIN'S EYE",
+      "field1": "Surveillance Drone",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mnbbbmr7i640"
     },
     {
       "label": "THAL'MAREN",
