@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (data.subtitle) setupRotatingSubtitle(heroSubtitle, data.subtitle);
 
   // Load banner image from repo (uploads/banner.jpg)
-  heroBannerImg.src = Storage.getBannerImageUrl();
+  heroBannerImg.src = Storage.getBannerImageUrl() + '?t=' + Date.now();
   heroBannerImg.onload = () => { heroBannerImg.style.display = 'block'; };
   heroBannerImg.onerror = () => { heroBannerImg.style.display = 'none'; };
 
