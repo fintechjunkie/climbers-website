@@ -606,15 +606,6 @@
       "id": "mn9q0mfx8lfd"
     },
     {
-      "label": "WES'VOTH",
-      "field1": "Valari",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mn9qqubfe131"
-    },
-    {
       "label": "HADRIAN",
       "field1": "Human",
       "field2": "First Appearance - ???",
@@ -622,6 +613,15 @@
       "field4": "",
       "field5": "",
       "id": "mnc0gzx59i3x"
+    },
+    {
+      "label": "WES'VOTH",
+      "field1": "Valari",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mn9qqubfe131"
     },
     {
       "label": "PHOENIX UNIT-3317",
