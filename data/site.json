@@ -642,15 +642,6 @@
       "id": "mnac8wfyzjfv"
     },
     {
-      "label": "THE WHISPERER",
-      "field1": "Human",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mnacaaqgdowh"
-    },
-    {
       "label": "BONE PATROL GUARD",
       "field1": "Synthetic",
       "field2": "First Appearance - The Delivery",
@@ -658,6 +649,15 @@
       "field4": "",
       "field5": "",
       "id": "mnb4has8jvko"
+    },
+    {
+      "label": "THE WHISPERER",
+      "field1": "Human",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mnacaaqgdowh"
     },
     {
       "label": "SHADOW DANCER",
