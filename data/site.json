@@ -651,15 +651,6 @@
       "id": "mnac8wfyzjfv"
     },
     {
-      "label": "THE WHISPERER",
-      "field1": "Human",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mnacaaqgdowh"
-    },
-    {
       "label": "HADRIAN",
       "field1": "Human",
       "field2": "First Appearance - ???",
@@ -667,6 +658,15 @@
       "field4": "",
       "field5": "",
       "id": "mnc0gzx59i3x"
+    },
+    {
+      "label": "THE WHISPERER",
+      "field1": "Human",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mnacaaqgdowh"
     },
     {
       "label": "SHADOW DANCER",
