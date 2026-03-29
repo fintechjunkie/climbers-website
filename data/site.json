@@ -660,15 +660,6 @@
       "id": "mnatjcjh9c2n"
     },
     {
-      "label": "METRONIUS",
-      "field1": "Synthetic",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mnb4giiyiiwk"
-    },
-    {
       "label": "BONE PATROL GUARD",
       "field1": "Synthetic",
       "field2": "First Appearance - The Delivery",
@@ -676,6 +667,15 @@
       "field4": "",
       "field5": "",
       "id": "mnb4has8jvko"
+    },
+    {
+      "label": "METRONIUS",
+      "field1": "Synthetic",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mnb4giiyiiwk"
     },
     {
       "label": "SANDMAN",
