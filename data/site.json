@@ -651,15 +651,6 @@
       "id": "mnacaaqgdowh"
     },
     {
-      "label": "SHADOW DANCER",
-      "field1": "Valari",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mnatjcjh9c2n"
-    },
-    {
       "label": "BONE PATROL GUARD",
       "field1": "Synthetic",
       "field2": "First Appearance - The Delivery",
@@ -667,6 +658,15 @@
       "field4": "",
       "field5": "",
       "id": "mnb4has8jvko"
+    },
+    {
+      "label": "SHADOW DANCER",
+      "field1": "Valari",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mnatjcjh9c2n"
     },
     {
       "label": "METRONIUS",
