@@ -210,15 +210,6 @@
       "id": "mn97dfhg6z2n"
     },
     {
-      "label": "TILLY",
-      "field1": "Synthetic",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mn97hdvzc06o"
-    },
-    {
       "label": "JAXON FISK",
       "field1": "Human",
       "field2": "First Appearance - ???",
@@ -226,6 +217,15 @@
       "field4": "",
       "field5": "",
       "id": "mn97ncslsfiq"
+    },
+    {
+      "label": "TILLY",
+      "field1": "Synthetic",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mn97hdvzc06o"
     },
     {
       "label": "JOR'SECT",
