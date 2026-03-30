@@ -651,15 +651,6 @@
       "id": "mnabmbjtt7uo"
     },
     {
-      "label": "SHIRLEY UNIT-5190",
-      "field1": "Synthetic",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mnac8wfyzjfv"
-    },
-    {
       "label": "THE WHISPERER",
       "field1": "Human",
       "field2": "First Appearance - ???",
@@ -667,6 +658,15 @@
       "field4": "",
       "field5": "",
       "id": "mnacaaqgdowh"
+    },
+    {
+      "label": "SHIRLEY UNIT-5190",
+      "field1": "Synthetic",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mnac8wfyzjfv"
     },
     {
       "label": "ODIN'S EYE",
