@@ -252,15 +252,6 @@
       "hasVideo": true
     },
     {
-      "label": "PERCY WALKER",
-      "field1": "Human",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mn97dfhg6z2n"
-    },
-    {
       "label": "CYCLOPS",
       "field1": "Synthetic",
       "field2": "First Appearance - ???",
@@ -269,6 +260,15 @@
       "field5": "",
       "id": "mn97u662cnra",
       "hasVideo": true
+    },
+    {
+      "label": "PERCY WALKER",
+      "field1": "Human",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mn97dfhg6z2n"
     },
     {
       "label": "STEED",
