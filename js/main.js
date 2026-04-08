@@ -558,7 +558,8 @@ function setupVideoOverlay() {
 function openVideoOverlay(src) {
   const overlay = document.getElementById('videoOverlay');
   const player = document.getElementById('videoOverlayPlayer');
-  player.src = src;
+  player.src = src + '?t=' + Date.now();
+  player.load();
   overlay.classList.add('active');
   document.body.style.overflow = 'hidden';
   player.play().catch(() => {});
