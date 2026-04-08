@@ -222,15 +222,6 @@
       "id": "mn97ncslsfiq"
     },
     {
-      "label": "PERCY WALKER",
-      "field1": "Human",
-      "field2": "First Appearance - ???",
-      "field3": "",
-      "field4": "",
-      "field5": "",
-      "id": "mn97dfhg6z2n"
-    },
-    {
       "label": "TILLY",
       "field1": "Synthetic",
       "field2": "First Appearance - ???",
@@ -239,6 +230,15 @@
       "field5": "",
       "id": "mn97hdvzc06o",
       "hasVideo": true
+    },
+    {
+      "label": "PERCY WALKER",
+      "field1": "Human",
+      "field2": "First Appearance - ???",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "id": "mn97dfhg6z2n"
     },
     {
       "label": "JOR'SECT",
