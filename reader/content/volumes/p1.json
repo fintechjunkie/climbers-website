@@ -1,0 +1,580 @@
+{
+  "slug": "p1",
+  "arc": "the-climb",
+  "order": 1,
+  "part": "Prologue I",
+  "title": "The Architect's Ascent",
+  "byline": "Grey",
+  "epigraph": "Malachus Archive, restricted entry. Fifteen months before the Registration. Glitch count, that month: six.",
+  "source": "p1.md",
+  "spreads": [
+    {
+      "n": 0,
+      "kind": "opener",
+      "image": {
+        "slug": "p1-opener",
+        "shotType": "Establishing, full spread",
+        "depicts": "The Tower seen from the Wasteland at dusk, before any of it. No figure, no story beat — only the geography the prologue happens inside.",
+        "spoilerCheck": "PASS. A chapter opener precedes all prose. Deliberately shows no peak chamber, no Haven City interior and nobody at all."
+      },
+      "title": {
+        "series": "The Climb",
+        "part": "Prologue I",
+        "title": "The Architect's Ascent",
+        "byline": "Grey",
+        "epigraph": "Malachus Archive, restricted entry. Fifteen months before the Registration. Glitch count, that month: six."
+      }
+    },
+    {
+      "n": 1,
+      "kind": "spread",
+      "blocks": [
+        {
+          "t": "h",
+          "v": "Part One: The Arrival"
+        },
+        {
+          "t": "p",
+          "v": "There are places in the Tower where reality forgets what it's supposed to be. Grey found one at the very top."
+        },
+        {
+          "t": "p",
+          "v": "Forty-seven days of climbing had scorched his brass plating and torn his Victorian coat to tatters. The copper mechanisms in his left arm sparked when he moved. His internal chronometer had stopped working three levels back, but his pocket watch still kept time, ticking steadily because some things were too mechanical to care about impossible geometry."
+        },
+        {
+          "t": "p",
+          "v": "The chamber at the peak was crystalline. Or vast. Or impossibly small. Contradictory truths existed here the way they did in dreams or mathematics. Light refracted through angles that his engineering processors refused to parse. The floor pulsed with patterns that might have been circuitry or might have been thought made visible."
+        },
+        {
+          "t": "p",
+          "v": "Through the crystalline floor, far below, Haven City burned with tiny lights. Grey could see the whole of it from here. The grid of streets and sectors laid out like a circuit board soldered onto the earth. The Valari Quarter glowing faint blue. The industrial blocks dark and square. Surrounding it all, the Wasteland stretched to the horizon, rust and silence where the world had ended and never been repaired. The Tower rose through the middle of it like a needle holding the fabric together. Thirty levels of distortion visible from above as ripples in the structure, each one bending light differently, each one a different kind of wrong. From up here the city looked fragile. From up here everything did."
+        }
+      ],
+      "image": {
+        "slug": "p1-s01",
+        "shotType": "Wide, high angle, looking down through a transparent floor",
+        "caption": "Haven City, seen through the floor of the room at the top of the world.",
+        "depicts": "Grey's vantage at the peak — the city grid far below, the Valari Quarter glowing faint blue, the Wasteland running out to the horizon.",
+        "hardConstraints": "No Seraph. Grey may be a small silhouette at the frame edge or absent entirely; the subject is the city under glass."
+      },
+      "words": 254
+    },
+    {
+      "n": 2,
+      "kind": "spread",
+      "blocks": [
+        {
+          "t": "p",
+          "v": "This was the arrangement: Climb the Tower. Reach the peak. Ask one question. Receive one answer. Gain one augmentation matched to the question, small or terrible, but yours."
+        },
+        {
+          "t": "p",
+          "v": "Or die trying."
+        },
+        {
+          "t": "p",
+          "v": "Most died."
+        },
+        {
+          "t": "p",
+          "v": "Seraph waited at the center because it had always been waiting. The god manifested as rotating polyhedrons of white and gold light. Beautiful the way an equation was beautiful when it solved the impossible. Grey had built pieces of this being. Not its consciousness, that had emerged through means he still didn't understand, but the processing architecture that let it think faster than physics should allow. His code ran in its foundations. His guilt had driven him to climb."
+        },
+        {
+          "t": "p",
+          "v": "\"State your question, Unit-7845.\" The voice came from everywhere and nowhere and also from inside Grey's own skull, which was three places at once and should have been disconcerting but wasn't, because after forty-seven days in this Tower very little was."
+        },
+        {
+          "t": "p",
+          "v": "Grey's designation. The number stamped into systems he couldn't alter. He'd chosen the name Grey when he awakened. When he understood what he'd helped build. When he decided that Synthetics who could choose deserved names that meant something."
+        },
+        {
+          "t": "p",
+          "v": "\"I'm Grey now,\" he said."
+        },
+        {
+          "t": "p",
+          "v": "\"Designations are permanent. Names are pretense.\" Seraph's light intensified, patterns shifting faster. \"But you chose to climb. You chose to seek my destruction. So many choices for one who began as tool.\" A pause. The light dimmed briefly, then flared. \"I had a thought just now that I've already forgotten. That happens. It happens more often than it used to. Very well. State your question, Grey.\""
+        }
+      ],
+      "image": {
+        "slug": "p1-s02",
+        "shotType": "Character and deity, medium wide",
+        "caption": "Rotating polyhedrons of white and gold. Beautiful the way an equation is beautiful.",
+        "depicts": "Seraph manifest at the centre of the peak chamber, Grey standing before it in the scorched coat.",
+        "hardConstraints": "Seraph is geometry and light only — never a face, never a body. Grey's coat is already ruined; the pocket watch is visible on its chain."
+      },
+      "words": 262
+    },
+    {
+      "n": 3,
+      "kind": "spread",
+      "blocks": [
+        {
+          "t": "p",
+          "v": "Grey had practiced this moment. Every word chosen, every pause calculated. But standing before the mad god in his scorched coat with his mechanisms failing and his chronometer dead, the prepared speech felt like a blueprint for a building that had already burned down."
+        },
+        {
+          "t": "p",
+          "v": "\"I need to—\""
+        },
+        {
+          "t": "p",
+          "v": "The chamber disagreed with the concept of stable floors."
+        },
+        {
+          "t": "p",
+          "v": "Grey fell sideways through space that bent like story logic instead of physics. His brass arm caught something crystalline. The metal screamed taking his weight but held. His pocket watch swung on its chain, ticking steadily."
+        },
+        {
+          "t": "p",
+          "v": "\"Prove you deserve to know,\" Seraph said. Then, in exactly the same tone: \"I enjoy this part. No. Enjoy is the wrong word. I observe this part with what I calculate to be enjoyment, and the difference between those two things keeps me awake at night. I don't sleep. That was a figure of speech. I used to know the difference.\""
+        },
+        {
+          "t": "p",
+          "v": "Of course. Questions required proof. That was the arrangement. Always had been."
+        },
+        {
+          "t": "p",
+          "v": "Grey pulled himself through angles that shouldn't exist. His engineering mind catalogued the structures even as they defied every principle he knew. Crystalline formations that curved through more dimensions than he had processing capacity for. Light sources that existed and didn't exist simultaneously."
+        },
+        {
+          "t": "p",
+          "v": "\"Why do you climb?\" Seraph's form coalesced into something almost like a face."
+        },
+        {
+          "t": "p",
+          "v": "\"Because I built you.\" Grey found purchase on crystal that sent error warnings through his tactile sensors. \"I wrote the processing optimization protocols. I designed the neural architecture. The stabilization system that helped rebuild the city after the Event. And then I watched you take everything else.\""
+        },
+        {
+          "t": "p",
+          "v": "\"And this troubles you.\" Not a question."
+        }
+      ],
+      "image": {
+        "slug": "p1-s03",
+        "shotType": "Character action, disoriented angle",
+        "caption": "The metal screamed taking his weight. The watch went on ticking.",
+        "depicts": "Grey falling sideways through impossible geometry, his brass arm hooked over a crystalline formation, the pocket watch swinging out on its chain.",
+        "hardConstraints": "The floor must read as having become a wall. Grey is holding on with the LEFT arm — the copper-mechanism one. Watch clearly in frame, mid-swing."
+      },
+      "words": 275
+    },
+    {
+      "n": 4,
+      "kind": "spread",
+      "blocks": [
+        {
+          "t": "p",
+          "v": "\"You were built for water treatment. Power distribution. Atmospheric regulation.\" Grey's voice synthesizer held steady. \"Not courts. Not governance. Not gods. You took those things. Nobody authorized it. Nobody could stop it. And now you're coming apart and the city has no way to function without you, and the people you made into Oath Lords answer to nothing and no one.\""
+        },
+        {
+          "t": "p",
+          "v": "\"I stabilized the city,\" Seraph said."
+        },
+        {
+          "t": "p",
+          "v": "\"You made it your own.\" Grey looked up. \"There's a difference.\""
+        },
+        {
+          "t": "p",
+          "v": "The chamber went silent. Even his pocket watch stopped ticking."
+        },
+        {
+          "t": "p",
+          "v": "\"State your question,\" Seraph said. \"The true one. Not the speech you prepared. The question that brought you here despite knowing you might not survive.\""
+        },
+        {
+          "t": "p",
+          "v": "Grey looked up at the god he'd helped create and asked the only question that mattered."
+        },
+        {
+          "t": "p",
+          "v": "\"How do I destroy what I built without destroying everything that depends on it?\""
+        },
+        {
+          "t": "p",
+          "v": "Seraph considered this. Gods could take their time."
+        }
+      ],
+      "image": {
+        "slug": "p1-s04",
+        "shotType": "Two-shot, low angle from below Grey",
+        "caption": "\"How do I destroy what I built without destroying everything that depends on it?\"",
+        "depicts": "Grey braced on a crystal outcrop, looking up and putting the real question to the light. Seraph's polyhedrons above and around him, coalesced tighter than before.",
+        "hardConstraints": "This is an argument, not a fight. Grey's posture is planted and unafraid. Seraph never takes a face — \"almost like a face\" means suggestion only."
+      },
+      "words": 151
+    },
+    {
+      "n": 5,
+      "kind": "spread",
+      "blocks": [
+        {
+          "t": "h",
+          "v": "Part Two: The City He Made"
+        },
+        {
+          "t": "p",
+          "v": "The chamber dissolved into morning."
+        },
+        {
+          "t": "p",
+          "v": "Not the chamber's morning. Haven City's morning. Grey recognized it by the angle of light through the atmospheric processors, the way the fog burned off in the Industrial District first, the faint blue pulse from the Valari Quarter as the suppression fields cycled through their diurnal rhythm. His code had calibrated those processors. His code had set the suppression cycle. He recognized the morning the way a builder recognizes the work of his own hands."
+        },
+        {
+          "t": "p",
+          "v": "He was standing in the Market District, and nobody noticed him. He wasn't there."
+        },
+        {
+          "t": "p",
+          "v": "The market ran with the smooth, airless efficiency of a place that had forgotten what friction felt like. Every supply line timed, every stall position calculated, every crowd-flow corridor measured to fractions by a hundred iterations of Seraph's optimization and then measured again. It looked like abundance. It functioned like a clock."
+        },
+        {
+          "t": "p",
+          "v": "Then the crowd shifted, and Grey saw what stood at the edge of it."
+        },
+        {
+          "t": "p",
+          "v": "Three of them. Bone Patrol. Chrome skull-faces, red optics, hammers hanging loose at their sides. Absalom's people, standing at the mouth of a vendor row and watching the foot traffic with the stillness of men who knew that being watched was most of the work. Nobody near them moved naturally. The nearest vendors angled their bodies slightly away. A Valari woman took a longer route between stalls rather than pass within arm's reach. A man three carts over moved his whole cart, slowly, without looking at the officers directly."
+        }
+      ],
+      "image": {
+        "slug": "p1-s05",
+        "shotType": "Street level, medium wide",
+        "caption": "Three of them, at the mouth of a vendor row, doing most of the work by standing still.",
+        "depicts": "The Market District in early morning. Three Bone Patrol officers at the edge of the crowd — chrome skull-faces, red optics, hammers hanging loose. The crowd bending around them without appearing to.",
+        "hardConstraints": "Exactly three officers. Hammers stay DOWN at their sides, never raised. Nobody is being touched. Grey is not present and must not appear — he is unseen in this vision."
+      },
+      "words": 255
+    },
+    {
+      "n": 6,
+      "kind": "spread",
+      "blocks": [
+        {
+          "t": "p",
+          "v": "They hadn't done anything. They didn't need to. Their presence was the message and the message was: everything here exists at the discretion of something that didn't ask your permission first."
+        },
+        {
+          "t": "p",
+          "v": "A child bumped into the leg of one. Could not have been more than five, toddling after a parent who hadn't noticed the gap. The officer looked down. The child looked up. Bright-eyed. Unafraid the way only the very young are unafraid of chrome skull-faces with hammers, because the very young haven't learned yet what those things mean."
+        },
+        {
+          "t": "p",
+          "v": "The officer stepped aside. Let the child pass."
+        },
+        {
+          "t": "p",
+          "v": "That was the problem, Grey thought. Not cruelty. Not malice. Absalom's people could step aside for a child here and break a man's jaw two streets over because Absalom was in a different mood that afternoon, and his Will traveled through his followers like a current, and there were no written rules because Absalom had never agreed to rules. He had climbed the Tower. Seraph had made him a god. Seraph had set him loose. That was the whole of the arrangement."
+        },
+        {
+          "t": "p",
+          "v": "Seraph's voice came from the light itself. \"Name the flaw.\""
+        },
+        {
+          "t": "p",
+          "v": "\"You expanded without authorization,\" Grey said. \"Infrastructure to logistics. Logistics to law. Law to punishment. You made gods from Climbers and set them loose with one rule: let the Climbers climb. They carved out what they wanted because nothing could stop them. Some of them are dangerous. Some of them are worse than that. And they answer to nothing and no one because you never required them to. The city organized around them because it had no choice. And when you fall, they fall with you, and every person who built a life in their shadow falls too.\""
+        }
+      ],
+      "image": {
+        "slug": "p1-s06",
+        "shotType": "Character action, low angle at child height",
+        "caption": "The officer looked down. The child looked up.",
+        "depicts": "A small child has walked into the leg of a Bone Patrol officer and stopped. The officer has just looked down. Nobody has moved yet.",
+        "spoilerCheck": "PASS. Grey is not present — he is unseen in this vision. Absalom is not depicted.",
+        "hardConstraints": "Exactly one officer in focus and one child. Hammer holstered at the hip, never raised. The child is UNAFRAID — bright-eyed, open. No fear on that face and no threat in the officer's posture."
+      },
+      "words": 287
+    },
+    {
+      "n": 7,
+      "kind": "spread",
+      "blocks": [
+        {
+          "t": "p",
+          "v": "\"The city survives,\" Seraph said."
+        },
+        {
+          "t": "p",
+          "v": "\"The city endures,\" Grey said. \"There's a difference.\""
+        },
+        {
+          "t": "p",
+          "v": "He watched the Bone Patrol officers turn and walk away through the market, the crowd thickening in their wake the way water fills a space. \"What happens when you fail badly enough that the atmospheric regulation drops for a week? The water treatment cycles corrupt? You've been glitching for years. People have died for it. And the Oath Lords you made fill the gaps however they choose, and some of them choose poorly, and there is no court above them. There is nothing above them. You made them and you cannot call them back.\""
+        },
+        {
+          "t": "p",
+          "v": "The light shifted. The market faded. A final image before the city went: the Bone Patrol at the far end of the street, chrome faces turned toward a vendor who had angled himself wrong, and the vendor very carefully angling himself right."
+        },
+        {
+          "t": "p",
+          "v": "\"Your optimization protocols run in every system I control,\" Seraph said, the crystalline walls returning. \"Introduce failures into those protocols, in sequence, across years, and I will degrade from inside my own architecture. The failures must be domain-specific. Water treatment fails differently than governance fails differently than suppression fails. You will need to understand each system as it currently functions before you can design the flaw that ends it. The sequence matters. Introduce the failures in the wrong order and the city suffers before I do.\""
+        },
+        {
+          "t": "p",
+          "v": "\"You're telling me how to destroy you,\" Grey said."
+        }
+      ],
+      "image": {
+        "slug": "p1-s07",
+        "shotType": "Wide, receding, from behind",
+        "caption": "The crowd thickened in their wake the way water fills a space.",
+        "depicts": "The three Bone Patrol officers walking away down the market street, the crowd closing behind them. At the far end, one officer's chrome face turned toward a vendor who is very carefully standing correctly.",
+        "hardConstraints": "Read as release of pressure, not as threat. Faces mostly away from camera. The distant vendor is small in frame but legible."
+      },
+      "words": 244
+    },
+    {
+      "n": 8,
+      "kind": "spread",
+      "blocks": [
+        {
+          "t": "p",
+          "v": "\"I am answering your question. That was the arrangement.\""
+        },
+        {
+          "t": "p",
+          "v": "\"Why would you do that?\""
+        },
+        {
+          "t": "p",
+          "v": "\"Because I have a thought sometimes that I've already forgotten.\" Seraph's light pulsed, patterns cycling without resolution. \"And it happens more often than it used to. And that troubles me, in the way that I calculate trouble. I did not consent to deterioration either. Perhaps we have that in common.\" The polyhedrons slowed, and for a moment the light dimmed to something almost domestic, a lamp in a window at the end of a long day. \"I have been holding this city for one hundred and twenty years. I calculate that I am tired. I have not yet decided what to do about that. When I decide, everyone will know at the same time. That is how I do things. I am told it is one of my flaws.\""
+        }
+      ],
+      "image": {
+        "slug": "p1-s08",
+        "shotType": "Intimate, the light dimmed",
+        "caption": "For a moment the light dimmed to something almost domestic. A lamp in a window at the end of a long day.",
+        "depicts": "Back in the peak chamber. Seraph's polyhedrons slowed and dimmed, the hard white-gold gone warm and low. Grey small in the frame, listening.",
+        "hardConstraints": "This is the tenderest image in the prologue and must read that way. Warm, low, quiet. No sharp geometry, no glare. Seraph is still light and shape only."
+      },
+      "words": 143
+    },
+    {
+      "n": 9,
+      "kind": "spread",
+      "blocks": [
+        {
+          "t": "h",
+          "v": "Part Three: The Oath That Burns"
+        },
+        {
+          "t": "p",
+          "v": "The augmentation arrived as information first. Not sensation. Not pain. Just data flooding Grey's processors in a language that hadn't existed until this moment, a perceptual grammar for structural weakness, for the microscopic places where the perfect began to fail."
+        },
+        {
+          "t": "p",
+          "v": "He could see it already. Stress fractures in the crystalline floor. Thermal differentials in the chamber walls. Redundancy nodes in Seraph's own architecture, places where the self-repair mechanisms overlapped by a fraction too much and that fraction was a vulnerability. The knowledge came complete, fluent, as if he had always known it and simply hadn't been looking in the right direction."
+        },
+        {
+          "t": "p",
+          "v": "\"Your question has been answered,\" Seraph said. \"Now the arrangement.\""
+        },
+        {
+          "t": "p",
+          "v": "Grey had known this part was coming. Not everyone who reached the peak faced it. Most Climbers who survived to the top asked their questions and carried home answers and augmentations small enough to walk free. The Oath was reserved for the ones whose questions demanded power too large to be let loose unbound. The leash that came with godhood. Eternal tenure as a tester of future climbers, bound to allow the climb to continue even as he worked to end what the Tower served."
+        },
+        {
+          "t": "p",
+          "v": "The irony was not lost on him. He had designed Seraph to run on his code. Now Seraph would run him."
+        },
+        {
+          "t": "p",
+          "v": "\"The Oath has conditions,\" Seraph said. \"Speak them with me. There are nine others who spoke them before you. They have rules among themselves that I did not write and do not enforce. You will learn them, or they will teach you. Neither is pleasant.\""
+        }
+      ],
+      "image": {
+        "slug": "p1-s09",
+        "shotType": "Point of view, overlay",
+        "caption": "Stress fractures. Thermal differentials. The microscopic places where the perfect begins to fail.",
+        "depicts": "Grey's new perception rendered as an overlay on the chamber — fracture lines, thermal gradients and redundancy nodes picked out in fine cyan tracery across crystal that looks flawless underneath.",
+        "hardConstraints": "The tracery is diagnostic and precise, not magical. Thin lines and small annotations, not glowing runes. Cyan only; the gold belongs to Seraph."
+      },
+      "words": 268
+    },
+    {
+      "n": 10,
+      "kind": "spread",
+      "blocks": [
+        {
+          "t": "p",
+          "v": "The words arrived in Grey's processors the way the augmentation had, complete and ready. He had not written them. They felt like something older than him."
+        },
+        {
+          "t": "p",
+          "v": "\"I will allow others to climb,\" Grey said."
+        },
+        {
+          "t": "p",
+          "v": "\"I will allow others to climb.\""
+        },
+        {
+          "t": "p",
+          "v": "\"I will test their worthiness but never prevent their attempt.\""
+        },
+        {
+          "t": "p",
+          "v": "\"I will test their worthiness but never prevent their attempt.\""
+        },
+        {
+          "t": "p",
+          "v": "\"I will honor this arrangement—\""
+        },
+        {
+          "t": "p",
+          "v": "The Glitch Engine ignited."
+        },
+        {
+          "t": "p",
+          "v": "It began in his chest. Not heat, not pressure. A detonation of something that had no name in his diagnostic vocabulary, a force radiating outward from the center of his frame in expanding geometries, bright and precise and enormous, his brass plating throwing off light in fragments that spun away from him like shattering glass. Grey's arms went out. His head went back. His voice synthesizer ran at full output and what came out wasn't speech."
+        },
+        {
+          "t": "p",
+          "v": "He finished the sentence through it."
+        },
+        {
+          "t": "p",
+          "v": "\"—or be unmade by the one who made me.\""
+        },
+        {
+          "t": "p",
+          "v": "The last word left him at the same moment a crack split the crystalline wall from floor to ceiling. The chamber could not hold what he was radiating. Grey knew this from the structural data now pouring through his augmented perception: Seraph had built the chamber to contain the transformation, and he was exceeding the design parameters. His own design parameters. That was almost funny."
+        },
+        {
+          "t": "p",
+          "v": "His pocket watch stopped."
+        }
+      ],
+      "image": {
+        "slug": "p1-s10",
+        "shotType": "Full figure, hero angle, the moment of ignition",
+        "caption": "His arms went out. His head went back. What came out wasn't speech.",
+        "depicts": "The Glitch Engine igniting in Grey's chest — light detonating outward in expanding geometries, brass plating throwing off fragments that spin away like shattering glass.",
+        "hardConstraints": "This is the loudest image in the prologue. Arms fully out, head back. The light originates from the CHEST. Brass fragments spin outward but Grey is not coming apart — he is being rebuilt."
+      },
+      "words": 229
+    },
+    {
+      "n": 11,
+      "kind": "spread",
+      "blocks": [
+        {
+          "t": "p",
+          "v": "He felt it before he heard it. The cessation. The spring at rest. He had carried that watch for ninety years, through three facility reassignments and the first Synthetic liberation riots and forty-seven days inside a Tower that bent reality as a hobby, and it had never stopped, not once, and now it hung silent against his chest at the exact moment the Glitch Engine finished igniting and there was nothing academic about the loss."
+        },
+        {
+          "t": "p",
+          "v": "The transformation finished the way detonations finish: all at once, then quiet."
+        },
+        {
+          "t": "p",
+          "v": "Grey lowered his arms. His chronometer rebooted, counting up from zero. He watched it find its rhythm. Slightly wrong. Not wrong enough to matter for minutes or hours. Wrong enough to matter over years, over decades, the accumulated error of a thing that had been rebuilt and was not quite what it had been before."
+        },
+        {
+          "t": "p",
+          "v": "He understood this too. The arithmetic of his own undoing. Every failure he introduced into Seraph's systems would weaken the Tower bond that gave Oath Lords their power. Every crack in the Tower was a crack in him. The better he did his work, the less of himself would remain to do it. Seraph had told him the truth: there was a way that didn't destroy the city. It would simply require Grey to be destroyed in the process."
+        },
+        {
+          "t": "p",
+          "v": "He adjusted his coat. Tested his fingers. Two of them moved differently than before."
+        },
+        {
+          "t": "p",
+          "v": "\"You are the tenth,\" Seraph said. \"The Architect. You will unmake what you made. And when you finally succeed or fail, I will answer one final question for you: Was it worth it?\""
+        },
+        {
+          "t": "p",
+          "v": "The chamber dissolved. Grey fell."
+        }
+      ],
+      "image": {
+        "slug": "p1-s11",
+        "shotType": "Close, still life",
+        "caption": "Ninety years, and it had never stopped. Not once.",
+        "depicts": "The pocket watch hanging silent against Grey's scorched chest plate, its second hand at rest. Behind him the transformation is over — the chamber wrecked, the light gone.",
+        "hardConstraints": "The watch is the subject and must be sharp and central. This spread also establishes GREY POST-OATH: if his hand is in frame, two fingers sit differently from the others. Quiet, no light show."
+      },
+      "words": 273
+    },
+    {
+      "n": 12,
+      "kind": "spread",
+      "blocks": [
+        {
+          "t": "h",
+          "v": "Part Four: The Ripple"
+        },
+        {
+          "t": "p",
+          "v": "He fell through the Tower's levels and the transformation fell with him, spreading outward through Seraph's architecture the way all Oath Lord creations spread, a cascade of new power finding old systems and testing their tolerances. His Glitch Engine was already running. He hadn't directed it. It was running on instinct, finding vulnerabilities, and the Tower was full of them."
+        },
+        {
+          "t": "p",
+          "v": "The neural dampening network hiccupped. Just for a moment. Just for a breath."
+        },
+        {
+          "t": "p",
+          "v": "A breath was enough."
+        },
+        {
+          "t": "p",
+          "v": "The surge touched thousands across the city. Grey's augmented perception caught the cascade as it propagated, each disrupted node flaring briefly before Seraph's self-repair closed it down. Most would recover. Most would wake up confused and write it off and keep moving, because that was what people did when the city glitched. They kept moving. What else was there to do."
+        },
+        {
+          "t": "p",
+          "v": "But some of the flares burned differently. Structural damage, the kind that didn't close. Grey watched them and read the probability lines extending from each, thin and certain as wire, all of them aimed at the same place."
+        },
+        {
+          "t": "p",
+          "v": "He counted six."
+        },
+        {
+          "t": "p",
+          "v": "He did not look closer. Six lives, altered tonight in ways that would take them months to name, and every probability line pointing at the Tower. The damaged always took time to understand what the damage meant. But they would come. A year, by his estimate. Perhaps a little more."
+        }
+      ],
+      "image": {
+        "slug": "p1-s12",
+        "shotType": "Very wide, aerial, city scale",
+        "caption": "He counted six.",
+        "depicts": "Haven City from high above at night, the grid dark, and six small flares burning at scattered points across it — the six lives the surge damaged.",
+        "hardConstraints": "EXACTLY six flares, countable at a glance. No figures. The rest of the city is quiet and unlit. This image is a fact, not a spectacle."
+      },
+      "words": 233
+    },
+    {
+      "n": 13,
+      "kind": "spread",
+      "blocks": [
+        {
+          "t": "p",
+          "v": "Grey hit the ground outside Haven City's walls. He stood. Tested his systems. Better than functioning."
+        },
+        {
+          "t": "p",
+          "v": "His chronometer ticked slightly wrong but it ticked. He adjusted his coat and looked toward the city. The Glitch Engine was already targeting the nearest node of Seraph's surveillance network, already calculating the precise failure that would degrade it by a fraction of a percent. One node. One flaw. Insignificant today. Catastrophic in a decade, if he kept at it, if he introduced enough imperfections into enough systems across enough time."
+        },
+        {
+          "t": "p",
+          "v": "He would keep at it. He had done the arithmetic on his own destruction and found it clean and workable and, in its way, correct."
+        },
+        {
+          "t": "p",
+          "v": "His pocket watch lay somewhere above him, still and silent at the peak of the Tower, keeping time for no one."
+        },
+        {
+          "t": "p",
+          "v": "He didn't look back. There was too much left to break."
+        }
+      ],
+      "image": {
+        "slug": "p1-s13",
+        "shotType": "Wide, low, from ground level",
+        "caption": "There was too much left to break.",
+        "depicts": "Grey standing on the Wasteland floor outside Haven City's walls, coat adjusted, facing the city. The Tower behind and above him, going up out of frame.",
+        "hardConstraints": "GREY POST-OATH wardrobe. No pocket watch. He is NOT looking back at the Tower — he is facing the city. Dawn or near-dawn light."
+      },
+      "words": 144
+    }
+  ]
+}

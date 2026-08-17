@@ -1,0 +1,143 @@
+/* ============================================================
+   The only real stylesheet in the reader.
+
+   Everything else is inline styles driven by lib/series.js. What lives here is
+   what inline styles cannot express: @keyframes, media queries, :focus-visible,
+   and the container-query declaration the type scale is sized against.
+   ============================================================ */
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #08080a;
+  color: #d6d6db;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Never let the body scroll sideways, whatever a page does inside itself. */
+body { overflow-x: hidden; }
+
+/* ============================================================
+   The page turn.
+
+   A curl, not a slide and not a card flip: the sheet rotates about the gutter
+   and casts a moving shadow on the page beneath it. 520ms.
+   ============================================================ */
+
+/* Forward: the right page lifts and rotates left about the gutter. */
+@keyframes cl-turn-fwd {
+  0%   { transform: rotateY(0deg); }
+  100% { transform: rotateY(-180deg); }
+}
+/* Back: the left page lifts and rotates right. */
+@keyframes cl-turn-back {
+  0%   { transform: rotateY(0deg); }
+  100% { transform: rotateY(180deg); }
+}
+/* Compact turns a single full-width page about its inner edge. Stopping at
+   170 rather than 180 keeps a sliver of the sheet visible at the end of the
+   turn, so it reads as paper landing rather than as a panel vanishing. */
+@keyframes cl-turn-fwd-single {
+  0%   { transform: rotateY(0deg); }
+  100% { transform: rotateY(-170deg); }
+}
+@keyframes cl-turn-back-single {
+  0%   { transform: rotateY(0deg); }
+  100% { transform: rotateY(170deg); }
+}
+
+/* The shadow the lifting sheet casts on the page beneath it. Rises as the
+   sheet passes overhead, falls away as it lands. */
+@keyframes cl-turn-shade {
+  0%   { opacity: 0; }
+  38%  { opacity: 0.46; }
+  70%  { opacity: 0.20; }
+  100% { opacity: 0; }
+}
+
+/* The sheet's own face darkens as it tips away from the light. */
+@keyframes cl-turn-self {
+  0%   { opacity: 0; }
+  50%  { opacity: 0.34; }
+  100% { opacity: 0; }
+}
+
+@keyframes cl-fade {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* ============================================================
+   Reduced motion.
+
+   The curl is replaced by a crossfade, NOT by a faster curl. A 3D rotation is
+   exactly the vestibular trigger this preference exists to remove, so speeding
+   it up misses the point.
+
+   The JS reads the same media query and shortens its turn timer to match. That
+   duplication is deliberate: if only the CSS changed, the state machine would
+   still hold the turn lock for 520ms and the reader would feel laggy; if only
+   the JS changed, the animation would be cut off mid-rotation.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .cl-sheet {
+    animation-name: cl-fade !important;
+    animation-duration: 120ms !important;
+  }
+  .cl-shade, .cl-self { animation: none !important; opacity: 0 !important; }
+  * { scroll-behavior: auto !important; }
+}
+
+/* ============================================================
+   Chrome auto-hide and focus.
+   ============================================================ */
+
+.cl-chrome { transition: opacity 260ms cubic-bezier(0.22, 0.61, 0.36, 1); }
+.cl-chrome[data-hidden='true'] { opacity: 0; pointer-events: none; }
+
+/* Focus rings are never suppressed without a replacement. */
+.cl-focus:focus-visible {
+  outline: 2px solid #7fefef;
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* ============================================================
+   The page as a container.
+
+   Body type is sized in cqh against this box, which is what makes the spread
+   look identical at every book size. Without the container declaration every
+   cqh unit in lib/series.js silently resolves against the viewport instead,
+   and the type stops tracking the page.
+   ============================================================ */
+.cl-page {
+  container-type: size;
+  container-name: page;
+}
+
+/* Prose columns scroll rather than clip when a page overruns. Millbrook clips
+   silently and guards it with a build-time fill check; until that check exists
+   here, a scrollbar is the honest failure mode — a reader can still reach the
+   words. */
+.cl-flow {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #2a2a33 transparent;
+}
+.cl-flow::-webkit-scrollbar { width: 6px; }
+.cl-flow::-webkit-scrollbar-thumb { background: #2a2a33; border-radius: 3px; }
+.cl-flow::-webkit-scrollbar-track { background: transparent; }
+
+/* Anything that must not be seen but must be heard. */
+.cl-sr {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

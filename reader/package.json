@@ -1,0 +1,25 @@
+{
+  "name": "climbers-reader",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "parse": "node scripts/parse-specs.mjs",
+    "parse:check": "node scripts/parse-specs.mjs --check",
+    "prebuild": "node scripts/parse-specs.mjs --check",
+    "fill": "node scripts/check-fill.mjs"
+  },
+  "dependencies": {
+    "next": "14.2.35",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "eslint": "^8",
+    "eslint-config-next": "14.2.35",
+    "puppeteer-core": "^23"
+  }
+}
