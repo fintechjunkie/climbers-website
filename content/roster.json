@@ -1,12 +1,9 @@
 {
   "_": "The canonical locks. This is the machine-readable half of references/ — every entity here gets a folder there, scaffolded by `npm run refs`. Prompts in content/specs/*.md reference these by token: {{STYLE}}, {{CHAR:GREY}}, {{WARDROBE:GREY_POST_OATH}}, {{LOC:PEAK_CHAMBER}}. Nothing is edited by hand in the generated prompt sheets; edit here and in the specs.",
-
   "styleName": "Climbers — Haven City",
   "styleApproved": false,
   "style": ">>> STYLE BLOCK NOT YET WRITTEN. Generate one canonical style plate, approve it, then paste the description here and set styleApproved to true. <<<",
-
   "styleNotes": "The site's existing chapter art is the reference point: high-contrast neon cyberpunk, deep blacks, gold and cyan accents, volumetric light, painterly rather than photographic. Write the block once, lock it, and put it at the HEAD of every prompt — Millbrook found that a style clause sitting in the negative block at the foot gets ignored, and hoisting it to the head fixed it on one pass.",
-
   "characters": {
     "GREY": {
       "name": "Grey",
@@ -15,7 +12,10 @@
       "locked": false,
       "block": "",
       "notes": "Synthetic. Brass plating, torn Victorian coat, copper mechanisms in the LEFT arm, pocket watch on a chain. The watch is a plot object across four spreads and must be identical in every one. Appears in p1 spreads 1-11 pre-oath.",
-      "wardrobe": ["GREY_CLIMB_WORN", "GREY_POST_OATH"]
+      "wardrobe": [
+        "GREY_CLIMB_WORN",
+        "GREY_POST_OATH"
+      ]
     },
     "SERAPH": {
       "name": "Seraph",
@@ -40,7 +40,10 @@
       "locked": false,
       "block": "",
       "notes": "Synthetic courier. His face is a DISPLAY SURFACE, not a face: pale blue grid when he wants it to show nothing, blank dark glass in a pale frame when he wants to show less than that. Which state he is in is dramatic information and is specified per spread.",
-      "wardrobe": ["PIXELS_GRID", "PIXELS_BLANK"]
+      "wardrobe": [
+        "PIXELS_GRID",
+        "PIXELS_BLANK"
+      ]
     },
     "SEVORAN": {
       "name": "Sev'oran",
@@ -73,9 +76,96 @@
       "locked": false,
       "block": "",
       "notes": "Sister Silence's people. The threat is entirely in the flatness of the attention — no weapon drawn, no lean-in, in any plate we have specced."
+    },
+    "RAINBOW": {
+      "name": "Rainbow",
+      "kind": "CHARACTER",
+      "ref": "char-rainbow-canonical.png",
+      "locked": false,
+      "block": "",
+      "notes": "Runs The Prism, nineteen years. Wide-brimmed hat with a SPIKED CROWN, covered in nineteen years of patches, pins and tokens. Coat of every colour at once, layered and heavy, built up like a reef. LEFT eye is his own; RIGHT eye is a Bone Patrol officer's, taken by Absalom as a reminder — mismatched and deliberately not hidden. Carries a cane. Not a small man. The narrator of Prologue III and present in most of its plates."
+    },
+    "SABLE": {
+      "name": "Sable",
+      "kind": "CHARACTER",
+      "ref": "char-sable-canonical.png",
+      "locked": false,
+      "block": "",
+      "notes": "Sherpa, contracted to Vesper Quill. Lean, a face you would forget, third stool from the wall. One of the Ascended and wears it quietly — you have to know what he is to see it. Climbed once and came back able never to lose a path he has walked."
+    },
+    "MARCUS": {
+      "name": "Marcus Torres",
+      "kind": "CHARACTER",
+      "ref": "char-marcus-canonical.png",
+      "locked": false,
+      "block": "",
+      "notes": "Human. Military cybernetic behind the LEFT socket — faint blue-white gleam that tracks a room in pieces before he finishes looking. Broad-shouldered, military posture calcified into something he cannot turn off."
+    },
+    "SIGNAL": {
+      "name": "Signal",
+      "kind": "CHARACTER",
+      "ref": "char-signal-canonical.png",
+      "locked": false,
+      "block": "",
+      "notes": "Korinth KI-series combat chassis, black and grey composite, built for function at the cost of subtlety. Has to duck at a door frame. Nathan Zhao is inside it. Moves like something very large trying not to break the furniture."
+    },
+    "NYXARA": {
+      "name": "Nyx'ara",
+      "kind": "CHARACTER",
+      "ref": "char-nyxara-canonical.png",
+      "locked": false,
+      "block": "",
+      "notes": "Valari. Tall even sitting. Circuit patterns the length of her neck and jaw in faint bioluminescent blue, DIM — suppressed by the city field and by her own effort. Keeps her hands flat on the table."
+    },
+    "SPARK": {
+      "name": "Spark",
+      "kind": "CHARACTER",
+      "ref": "char-spark-canonical.png",
+      "locked": false,
+      "block": "",
+      "notes": "Human, green and gold. Mechanical RIGHT arm with fresh tool marks at the elbow, integrated deep enough that the shoulder sits differently from the left. Shakes with the mechanical hand by habit. Easy energy of someone whose mind is already made up."
+    },
+    "KIMO": {
+      "name": "Kimo Tomiko",
+      "kind": "CHARACTER",
+      "ref": "char-kimo-canonical.png",
+      "locked": false,
+      "block": "",
+      "notes": "Human. Face fully concealed behind a dark mask, a single eye burning at the LEFT socket in a specific orange-gold. Moves with geometric efficiency; counts exits before sitting down. Carries a blade that lights."
+    },
+    "TAL_VOSS": {
+      "name": "Tal'Voss / The Devil",
+      "kind": "CHARACTER",
+      "ref": "char-tal-voss-canonical.png",
+      "locked": false,
+      "block": "",
+      "notes": "Valari. Wears a DEMON MASK over his features. His circuits are not dimmed like Nyx'ara's — they are HIDDEN, down to almost nothing, chosen. He discards the name Tal'Voss at the registration wall and takes The Devil. Same appearance either side of it; what changes is what he is called."
+    },
+    "UNIT_9911": {
+      "name": "Unit-9911",
+      "kind": "CHARACTER",
+      "ref": "char-unit-9911-canonical.png",
+      "locked": false,
+      "block": "",
+      "notes": "Synthetic. Presides over the Oath of Ascent. Dark hooded robe, hands pressed together at the chest, a single ring of pale light at the forehead — the only bright thing about it. A stillness that is not indifference."
+    },
+    "QUESTRON": {
+      "name": "a Questron",
+      "kind": "ENTITY",
+      "ref": "char-questron-canonical.png",
+      "locked": false,
+      "block": "",
+      "notes": "Blue suit, faceted dark head, a gold question mark centred on the face — neither glowing nor dim, simply there, permanent. Identical units throughout Haven City. Hands at its sides; no ceremony in it. NOTE: the site already has Questron art in public/assets — check it before generating, and match it."
+    },
+    "KORINTH_OPERATIVE": {
+      "name": "a Korinth operative",
+      "kind": "FACTION",
+      "ref": "char-korinth-operative-canonical.png",
+      "locked": false,
+      "block": "",
+      "notes": "Plainclothes, professional, moving with a coordinated looseness civilians do not have. Reads as a group only to someone looking for a group. Not uniformed and not obviously armed."
     }
   },
-
   "wardrobe": {
     "GREY_CLIMB_WORN": {
       "value": "",
@@ -92,9 +182,16 @@
     "PIXELS_BLANK": {
       "value": "",
       "notes": "No colour, no pattern, just dark glass in a pale frame — what he shows when the grid would be information. t1 spreads 3-4."
+    },
+    "NYXARA_SUPPRESSED": {
+      "value": "",
+      "notes": "Circuits dim and low — the city field plus her own effort. Her default in every p3 plate."
+    },
+    "TAL_VOSS_HIDDEN": {
+      "value": "",
+      "notes": "Circuits hidden to almost nothing beneath the demon mask. Deliberate, not suppression. His default in every p3 plate."
     }
   },
-
   "locations": {
     "PEAK_CHAMBER": {
       "name": "the chamber at the peak of the Tower",
@@ -165,6 +262,34 @@
       "locked": false,
       "block": "",
       "notes": "Reached through a utility door off the maintenance corridor; connects to the eastern residential district. t2 spread 4."
+    },
+    "THE_PRISM": {
+      "name": "The Prism",
+      "ref": "loc-the-prism.png",
+      "locked": false,
+      "block": "",
+      "notes": "Rainbow's bar at the end of the approach road to the Tower gate. Front door and a side entrance. A long bar with stools — Sable's is third from the wall — tables at the back and corner booths. p3 spreads 1-6 and 21-23."
+    },
+    "TOWER_PLAZA": {
+      "name": "the Tower ground plaza",
+      "ref": "loc-tower-plaza.png",
+      "locked": false,
+      "block": "",
+      "notes": "Holds three hundred on a quiet week. The registration wall at the front. Screens on every building face carrying the registration feed. p3 spreads 7-18."
+    },
+    "TOWER_GATE": {
+      "name": "the Tower gate",
+      "ref": "loc-tower-gate.png",
+      "locked": false,
+      "block": "",
+      "notes": "Enormous and gold-lit, geometric lines layered back in receding arches the way a cathedral is layered — except it simply stands open and lets you decide. Always open. Visible from The Prism's door on clear mornings. p3 spread 18 and the opener."
+    },
+    "APPROACH_ROAD": {
+      "name": "the approach road",
+      "ref": "loc-approach-road.png",
+      "locked": false,
+      "block": "",
+      "notes": "Runs from the Tower gate down past The Prism. Transit hub across the street with a surveillance node above it. p3 spreads 19-20."
     }
   }
 }

@@ -222,14 +222,22 @@ function EdgeStack({ side, count }) {
   return (
     <div
       aria-hidden="true"
+      // Sitting OUTSIDE the book rather than inside it, and wider than before.
+      // This is the most literal "you are holding a book" signal available —
+      // the cut edge of the paper still to come — and at 1.6px a sheet it was
+      // a hairline nobody read as anything. Now the stack is visibly a stack.
       style={{
         position: 'absolute',
-        top: 6, bottom: 6, [side]: -1,
-        width: n * 1.6 + 2,
+        top: 10, bottom: 10,
+        [side]: -(n * 2.4),
+        width: n * 2.4,
         display: 'flex',
         flexDirection: side === 'right' ? 'row' : 'row-reverse',
         pointerEvents: 'none',
         zIndex: 1,
+        borderRadius: side === 'right' ? '0 2px 2px 0' : '2px 0 0 2px',
+        overflow: 'hidden',
+        boxShadow: '0 10px 26px rgba(0,0,0,0.6)',
       }}
     >
       {Array.from({ length: n }, (_, i) => (
@@ -237,10 +245,12 @@ function EdgeStack({ side, count }) {
           key={i}
           style={{
             flex: 1,
-            borderRight: side === 'right' ? `1px solid ${paper.ruleSoft}` : 'none',
-            borderLeft: side === 'left' ? `1px solid ${paper.ruleSoft}` : 'none',
+            borderRight: side === 'right' ? '1px solid rgba(0,0,0,0.45)' : 'none',
+            borderLeft: side === 'left' ? '1px solid rgba(0,0,0,0.45)' : 'none',
             background: i % 2 ? paper.stockAlt : paper.stock,
-            opacity: 1 - i * 0.06,
+            // Falls away toward the outside of the stack, so the edge reads as
+            // curving out of the light rather than as a flat striped bar.
+            filter: `brightness(${1 - i * 0.075})`,
           }}
         />
       ))}
@@ -637,10 +647,16 @@ export default function FlipBook({ volume, next = null }) {
           // is the lit top edge of the paper stack; the shadow is what it
           // throws on the desk.
           boxShadow: [
-            '0 0 0 1px rgba(255,255,255,0.07)',
-            '0 2px 0 rgba(255,255,255,0.04) inset',
-            '0 30px 60px rgba(0,0,0,0.75)',
-            '0 60px 120px rgba(0,0,0,0.55)',
+            // The lit top edge of the sheet.
+            '0 0 0 1px rgba(255,255,255,0.13)',
+            '0 1px 0 rgba(255,255,255,0.10) inset',
+            // Contact shadow, then the soft body of it. Two shadows rather than
+            // one: a single large blur reads as a glow, and it is the tight
+            // dark line right under an object that tells you it is resting on
+            // something.
+            '0 4px 10px rgba(0,0,0,0.9)',
+            '0 34px 70px rgba(0,0,0,0.85)',
+            '0 80px 150px rgba(0,0,0,0.6)',
           ].join(', '),
         }}
         aria-live="polite"

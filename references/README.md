@@ -7,29 +7,15 @@ authoritative for. Same shape as Millbrook's `patch-notes/reference-source/`.
 Nothing here is served to readers — `references/` is outside `public/`, so it
 is production material only.
 
+**33 entities, 48 plates.** `npm run refs` prints the current list and what is
+still missing — that command is the authority, not this file, because the
+folders are generated from `content/roster.json`.
+
 ```
 references/
-  STYLE/                       style-canonical.png     ← do this one first
-  CHARACTERS/
-    GREY/                      char-grey-canonical.png
-    SERAPH/                    char-seraph-canonical.png
-    BONE_PATROL/               char-bone-patrol-canonical.png
-    PIXELS/                    char-pixels-canonical.png
-    SEVORAN/                   char-sevoran-canonical.png
-    PHOENIX/                   char-phoenix-canonical.png
-    RELMIA/                    char-relmia-canonical.png
-    SANDMAN/                   char-sandman-canonical.png
-  LOCATIONS/
-    PEAK_CHAMBER/              loc-peak-chamber.png
-    HAVEN_CITY_AERIAL/         loc-haven-city-aerial.png
-    MARKET_DISTRICT/           loc-market-district.png
-    WASTELAND/                 loc-wasteland.png
-    COURIERS_EXCHANGE/         loc-couriers-exchange.png
-    RECLAMATION_ALLEY/         loc-reclamation-alley.png
-    PATROL_STATION/            loc-patrol-station.png
-    RESIDENTIAL_BLOCK_14/      loc-residential-block-14.png
-    WELLNESS_CENTER/           loc-wellness-center.png
-    SERVICE_LANE/              loc-service-lane.png
+  STYLE/          style-canonical.png              ← do this one first
+  CHARACTERS/     19 folders, char-<name>-canonical.png
+  LOCATIONS/      14 folders, loc-<name>.png
 ```
 
 **The filenames are not suggestions.** Each folder's README names the exact file
@@ -82,15 +68,22 @@ here, and it is the first thing every prompt says.
 
 ## Order worth working in
 
-The 24 plates need 18 locks, but they are not equally urgent:
+The 48 plates need 33 locks, but they are not equally urgent:
 
 | | |
 |---|---|
 | 1 | `STYLE` — everything depends on it |
-| 2 | `GREY`, `PEAK_CHAMBER`, `SERAPH` — 8 of Prologue I's 14 plates |
-| 3 | `BONE_PATROL`, `MARKET_DISTRICT` — 3 more in p1, 1 in t1 |
-| 4 | `HAVEN_CITY_AERIAL`, `WASTELAND` — the p1 opener and 2 plates |
-| 5 | The Tales: `PIXELS`, `SEVORAN`, `PHOENIX`, `RELMIA`, `SANDMAN` and their four locations |
+| 2 | `RAINBOW`, `THE_PRISM` — 9 of Prologue III's 24 plates, and Rainbow is in most of the rest |
+| 3 | `GREY`, `PEAK_CHAMBER`, `SERAPH` — 8 of Prologue I's 14 |
+| 4 | `TOWER_PLAZA`, `UNIT_9911`, `QUESTRON` — the whole registration sequence, 8 plates |
+| 5 | The six climbers: `MARCUS`, `SIGNAL`, `NYXARA`, `SPARK`, `KIMO`, `TAL_VOSS` |
+| 6 | `BONE_PATROL`, `MARKET_DISTRICT`, `HAVEN_CITY_AERIAL`, `WASTELAND`, `TOWER_GATE` |
+| 7 | The Tales: `PIXELS`, `SEVORAN`, `PHOENIX`, `RELMIA`, `SANDMAN` and their four locations |
+
+The six climbers are the highest-leverage group after the style: Prologue III
+introduces all of them, they carry the whole arc from here, and every one of
+them appears in the plaza sequence as well as in The Prism — so a wrong lock
+costs you two scenes, not one.
 
 `GREY` also needs two wardrobe rows written, and the second one matters beyond
 this prologue: `GREY_POST_OATH` is the state every future appearance of him has

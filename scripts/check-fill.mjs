@@ -52,6 +52,7 @@ const VIEWPORTS = [
 
 const TARGETS = [
   { url: '/climb/p1/read', count: 13, name: 'p1' },
+  { url: '/climb/p3/read', count: 23, name: 'p3' },
   { url: '/tales/t1/read', count: 4, name: 't1' },
   { url: '/tales/t2/read', count: 4, name: 't2' },
 ];

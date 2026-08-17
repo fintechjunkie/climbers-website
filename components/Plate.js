@@ -45,7 +45,10 @@ export function PlatePlaceholder({ slug, shotType, depicts }) {
         position: 'relative',
         width: '100%',
         aspectRatio: '1 / 1',
-        background: `radial-gradient(120% 100% at 50% 0%, ${paper.stockAlt} 0%, ${reader.bg} 100%)`,
+        // Page values, not ground values. A placeholder that fades to the
+        // desk colour reads as a hole cut in the book — which is exactly what
+        // it looked like once the page was lifted away from the ground.
+        background: `radial-gradient(120% 100% at 50% 8%, ${paper.stock} 0%, ${paper.stockAlt} 100%)`,
         border: `1px solid ${paper.rule}`,
         display: 'flex',
         flexDirection: 'column',

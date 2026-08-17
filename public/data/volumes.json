@@ -12,6 +12,18 @@
     "words": 3018
   },
   {
+    "slug": "p3",
+    "arc": "the-climb",
+    "order": 3,
+    "part": "Prologue III",
+    "title": "The Registration",
+    "epigraph": "Malachus Archive, public record. Registration Day. Glitch count, that month: eleven.",
+    "href": "/climb/p3/read",
+    "cover": "/plates/p3-opener.jpg",
+    "spreadCount": 23,
+    "words": 5584
+  },
+  {
     "slug": "t1",
     "arc": "tales",
     "order": 1,
