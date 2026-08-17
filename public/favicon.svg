@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" fill="#0d0d0d"/>
+  <!-- The Tower: a needle holding the fabric together. -->
+  <path d="M16 3 L20.5 27 H11.5 Z" fill="#c9a84c"/>
+  <path d="M16 3 L18 27 H14 Z" fill="#e2c464"/>
+  <rect x="8" y="27" width="16" height="2" fill="#7fefef" opacity="0.85"/>
+</svg>

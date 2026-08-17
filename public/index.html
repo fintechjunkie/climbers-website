@@ -11,10 +11,22 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <script>
-    // Auto-bust cache on all CSS/JS resources so visitors always get latest
-    (function(){var v='?v='+Date.now();document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('link[rel=stylesheet]').forEach(function(l){if(l.href&&!l.href.includes('fonts.googleapis'))l.href=l.href.split('?')[0]+v});document.querySelectorAll('script[src]').forEach(function(s){var n=document.createElement('script');n.src=s.src.split('?')[0]+v;s.parentNode.replaceChild(n,s)})})})();
-  </script>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <!--
+    The cache-busting script that used to live here has been removed, and it
+    was not doing what it claimed.
+
+    It ran on DOMContentLoaded and REPLACED every <script src> with a fresh
+    copy carrying a ?v= stamp — but those scripts had already loaded and run by
+    then, so the replacements ran them a SECOND time. storage.js and main.js
+    were executing twice on every page load: duplicate const declarations
+    throwing on the second pass, every render running twice, every listener
+    bound twice.
+
+    It is also no longer needed. It was a workaround for GitHub Pages caching
+    assets aggressively; Vercel serves everything in public/ with
+    must-revalidate, so a changed file is picked up on the next load anyway.
+  -->
 </head>
 <body>
 
@@ -107,7 +119,7 @@
     <p class="reg-intro-desc">The Oath Lords govern Haven City. Ten individuals, each augmented by the Tower, each bound by a question they asked and an answer they received. Their alliances shift. Their conflicts endure. Study the registry. Choose who speaks.</p>
 
     <!-- Section banner -->
-    <img class="reg-banner" src="public/assets/oath-lords/icons-illustration.png" alt="The Oath Lords" onerror="this.style.display='none'">
+    <img class="reg-banner" src="assets/oath-lords/icons-illustration.png" alt="The Oath Lords" onerror="this.style.display='none'">
 
     <!-- Header bar -->
     <div class="reg-header">

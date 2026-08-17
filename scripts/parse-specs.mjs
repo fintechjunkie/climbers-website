@@ -223,6 +223,7 @@ if (!files.length) {
 
 let stale = 0;
 let warnings = 0;
+const manifest = [];
 
 for (const file of files) {
   const vol = parseSpec(readFileSync(join(SPECS, file), 'utf8'), file);
@@ -269,6 +270,44 @@ for (const file of files) {
       writeFileSync(dest, json);
       console.log(`  → wrote content/volumes/${vol.slug}.json`);
     }
+  }
+
+  manifest.push({
+    slug: vol.slug,
+    arc: vol.arc,
+    order: vol.order,
+    part: vol.part,
+    title: vol.title,
+    epigraph: vol.epigraph,
+    href: `/${vol.arc === 'the-climb' ? 'climb' : vol.arc}/${vol.slug}/read`,
+    cover: `/plates/${vol.spreads.find((s) => s.kind === 'opener')?.image?.slug || `${vol.slug}-opener`}.jpg`,
+    spreadCount: story.length,
+    words,
+  });
+}
+
+/**
+ * The manifest the ORIGINAL static homepage reads.
+ *
+ * public/index.html is not part of the React app and cannot import anything,
+ * so it needs a plain JSON file to know which volumes exist and where they are
+ * read. Generating it here rather than hand-keeping a list in main.js is what
+ * stops the homepage and the reader disagreeing about what has been published.
+ *
+ * It lives in public/data/ beside site.json, which is where that page already
+ * looks for its content.
+ */
+manifest.sort((a, b) => (a.arc === b.arc ? a.order - b.order : a.arc < b.arc ? 1 : -1));
+const manifestJson = `${JSON.stringify(manifest, null, 2)}\n`;
+const manifestPath = join(ROOT, 'public', 'data', 'volumes.json');
+const manifestExisting = existsSync(manifestPath) ? readFileSync(manifestPath, 'utf8') : null;
+if (manifestExisting !== manifestJson) {
+  if (CHECK) {
+    stale++;
+    console.error('  ✗ public/data/volumes.json is stale — run `npm run parse`');
+  } else {
+    writeFileSync(manifestPath, manifestJson);
+    console.log('  → wrote public/data/volumes.json');
   }
 }
 

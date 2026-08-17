@@ -1,0 +1,38 @@
+[
+  {
+    "slug": "p1",
+    "arc": "the-climb",
+    "order": 1,
+    "part": "Prologue I",
+    "title": "The Architect's Ascent",
+    "epigraph": "Malachus Archive, restricted entry. Fifteen months before the Registration. Glitch count, that month: six.",
+    "href": "/climb/p1/read",
+    "cover": "/plates/p1-opener.jpg",
+    "spreadCount": 13,
+    "words": 3018
+  },
+  {
+    "slug": "t1",
+    "arc": "tales",
+    "order": 1,
+    "part": "Tale",
+    "title": "The Delivery",
+    "epigraph": "A courier, a sealed pouch, and a name he recognised.",
+    "href": "/tales/t1/read",
+    "cover": "/plates/t1-opener.jpg",
+    "spreadCount": 4,
+    "words": 831
+  },
+  {
+    "slug": "t2",
+    "arc": "tales",
+    "order": 2,
+    "part": "Tale",
+    "title": "Seven",
+    "epigraph": "Six was the number he helped escape. The child tonight would make seven.",
+    "href": "/tales/t2/read",
+    "cover": "/plates/t2-opener.jpg",
+    "spreadCount": 4,
+    "words": 967
+  }
+]

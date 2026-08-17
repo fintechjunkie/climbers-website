@@ -14,11 +14,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   heroBannerImg.onload = () => { heroBannerImg.style.display = 'block'; };
   heroBannerImg.onerror = () => { heroBannerImg.style.display = 'none'; };
 
-  // --- Render chapters ---
-  renderChapters(data.chapters);
-
-  // --- Render tales ---
-  renderTales(data.tales);
+  // --- Render chapters and tales from the flipbook manifest ---
+  // Both are volumes now, not site.json entries, so one fetch serves both.
+  await loadVolumes();
+  renderChapters();
+  renderTales();
 
   // --- Render gallery ---
   renderGallery(data.gallery);
@@ -32,8 +32,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   // --- Gallery expand modal ---
   setupGalleryExpand();
 
-  // --- Reader modal close ---
-  setupReaderModal();
+  // The old accordion readers (openReader / openTalesReader and their modals)
+  // are no longer reachable: chapters and tales are flipbooks now. Their
+  // definitions further down this file, and the #readerModal / #talesReaderModal
+  // markup in index.html, are dead and can be deleted in a cleanup pass.
 
   // --- Video overlay ---
   setupVideoOverlay();
@@ -77,55 +79,92 @@ function formatStoryText(raw) {
   return escaped.replace(/\*\*(.+?)\*\*/g, '<span class="highlight-glow">$1</span>');
 }
 
-function renderChapters(chapters) {
+/* ===========================
+   VOLUME MANIFEST
+
+   Chapters and Tales are no longer stored in site.json and no longer read in
+   an accordion on this page. They are flipbooks, authored as spec files and
+   generated into content/volumes/*.json for the reader.
+
+   This page cannot import any of that — it is plain script tags — so the build
+   also emits data/volumes.json listing what exists and where it is read. One
+   source of truth: the specs. Nothing here to keep in agreement by hand.
+   =========================== */
+let VOLUMES = [];
+
+async function loadVolumes() {
+  try {
+    const resp = await fetch('data/volumes.json?t=' + Date.now());
+    if (resp.ok) VOLUMES = await resp.json();
+  } catch (e) {
+    console.warn('Volume manifest unavailable:', e);
+  }
+  return VOLUMES;
+}
+
+const volumesForArc = arc => VOLUMES.filter(v => v.arc === arc);
+
+/**
+ * One flipbook card.
+ *
+ * An <a>, not a div with a click handler, because it navigates. That gets
+ * middle-click, cmd-click, "copy link" and the status bar for free, and it is
+ * reachable by keyboard without binding anything.
+ */
+function volumeCard(vol, className) {
+  const card = document.createElement('a');
+  card.className = className;
+  card.href = vol.href;
+
+  const img = document.createElement('img');
+  img.src = vol.cover;
+  img.alt = vol.title;
+  img.loading = 'lazy';
+  img.onerror = () => {
+    // The cover plate is not made yet. Fall back to a titled panel rather than
+    // a broken image, so an unillustrated volume still reads as a volume.
+    img.src = 'data:image/svg+xml,' + encodeURIComponent(
+      '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><rect width="400" height="400" fill="#141418"/>'
+      + '<text x="50%" y="46%" fill="#8c7433" text-anchor="middle" font-size="15" font-family="Orbitron,sans-serif" letter-spacing="3">'
+      + (vol.part || '').toUpperCase() + '</text>'
+      + '<text x="50%" y="56%" fill="#c9a84c" text-anchor="middle" font-size="21" font-family="Orbitron,sans-serif">'
+      + (vol.title || '') + '</text></svg>'
+    );
+    img.onerror = null; // prevent infinite loop
+  };
+
+  const label = document.createElement('div');
+  label.className = 'card-label';
+  label.textContent = vol.title;
+
+  card.appendChild(img);
+  card.appendChild(label);
+  return card;
+}
+
+function renderChapters() {
   const grid = document.getElementById('chaptersGrid');
-  if (!chapters || chapters.length === 0) {
+  const vols = volumesForArc('the-climb');
+
+  if (vols.length === 0) {
     grid.innerHTML = '<p class="empty-state">No chapters released yet. Stay tuned!</p>';
     return;
   }
 
   grid.innerHTML = '';
-  chapters.forEach((ch, index) => {
-    const card = document.createElement('div');
-    card.className = 'chapter-card';
-    card.setAttribute('role', 'button');
-    card.setAttribute('tabindex', '0');
-
-    const img = document.createElement('img');
-    img.src = Storage.getChapterImageUrl(ch.id);
-    img.alt = ch.title || 'Chapter ' + (index + 1);
-    img.loading = 'lazy';
-    img.onerror = () => {
-      img.src = 'data:image/svg+xml,' + encodeURIComponent(
-        '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><rect width="400" height="400" fill="#1a1a1a"/><text x="50%" y="50%" fill="#555" text-anchor="middle" font-size="20" font-family="Georgia,serif">' + (ch.title || 'Chapter') + '</text></svg>'
-      );
-      img.onerror = null; // prevent infinite loop
-    };
-
-    const label = document.createElement('div');
-    label.className = 'card-label';
-    label.textContent = ch.title || 'Chapter ' + (index + 1);
-
-    card.appendChild(img);
-    card.appendChild(label);
-    grid.appendChild(card);
-
-    card.addEventListener('click', () => openReader(ch));
-    card.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openReader(ch); }
-    });
-  });
+  vols.forEach(v => grid.appendChild(volumeCard(v, 'chapter-card')));
 }
 
 // ===========================
 // TALES FROM HAVEN CITY
 // ===========================
-function renderTales(tales) {
+function renderTales() {
   const grid = document.getElementById('talesGrid');
   const section = document.getElementById('tales-section');
   const navLink = document.getElementById('talesNavLink');
+  const vols = volumesForArc('tales');
 
-  if (!tales || tales.length === 0) {
+  if (vols.length === 0) {
     section.style.display = 'none';
     if (navLink) navLink.style.display = 'none';
     return;
@@ -135,38 +174,7 @@ function renderTales(tales) {
   if (navLink) navLink.style.display = '';
   grid.innerHTML = '';
 
-  tales.forEach((tale, index) => {
-    const card = document.createElement('div');
-    card.className = 'tale-card';
-    card.setAttribute('role', 'button');
-    card.setAttribute('tabindex', '0');
-
-    const img = document.createElement('img');
-    img.src = Storage.getTaleImageUrl(tale.id);
-    img.alt = tale.title || 'Tale ' + (index + 1);
-    img.loading = 'lazy';
-    img.onerror = () => {
-      img.src = 'data:image/svg+xml,' + encodeURIComponent(
-        '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><rect width="400" height="400" fill="#1a1a1a"/><text x="50%" y="50%" fill="#555" text-anchor="middle" font-size="20" font-family="Georgia,serif">' + (tale.title || 'Tale') + '</text></svg>'
-      );
-      img.onerror = null;
-    };
-
-    const label = document.createElement('div');
-    label.className = 'card-label';
-    label.textContent = tale.title || 'Tale ' + (index + 1);
-
-    card.appendChild(img);
-    card.appendChild(label);
-    grid.appendChild(card);
-
-    card.addEventListener('click', () => openTalesReader(tale));
-    card.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openTalesReader(tale); }
-    });
-  });
-
-  setupTalesReaderModal();
+  vols.forEach(v => grid.appendChild(volumeCard(v, 'tale-card')));
 }
 
 function setupTalesReaderModal() {
@@ -960,7 +968,7 @@ function setupSeraph(data) {
   seraphImg.onerror = function() {
     this.onload = function() { this.style.display = ''; };
     this.onerror = function() { this.style.display = 'none'; };
-    this.src = 'public/assets/oath-lords/seraph-constructed.png';
+    this.src = 'assets/oath-lords/seraph-constructed.png';
   };
   seraphImg.src = Storage.getSeraphImageUrl() + '?t=' + Date.now();
 
@@ -968,7 +976,7 @@ function setupSeraph(data) {
   towerImg.onerror = function() {
     this.onload = function() { this.style.display = ''; };
     this.onerror = function() { this.style.display = 'none'; };
-    this.src = 'public/assets/timeline/the-event.png';
+    this.src = 'assets/timeline/the-event.png';
   };
   towerImg.src = Storage.getTowerImageUrl() + '?t=' + Date.now();
 }
@@ -1031,7 +1039,7 @@ function renderRegistryListPanel() {
     row.className = 'reg-lord-row';
     row.dataset.lord = lord.id;
     row.innerHTML = `
-      <img class="reg-lord-row-icon" src="public/assets/oath-lords/${lord.id}-faction.png" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display=''" onload="this.style.display='';this.nextElementSibling.style.display='none'">
+      <img class="reg-lord-row-icon" src="assets/oath-lords/${lord.id}-faction.png" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display=''" onload="this.style.display='';this.nextElementSibling.style.display='none'">
       <span class="reg-lord-dot" style="background:${lord.color}"></span>
       <div class="reg-lord-row-info">
         <span class="reg-lord-row-name">${lord.name}</span>
@@ -1095,7 +1103,7 @@ function renderLordDetail(lord) {
     // Portrait image — show immediately if preloaded
     if (portraitLoaded) {
       html += `<div class="reg-portrait-fade">`;
-      html += `<img class="reg-portrait" src="public/assets/oath-lords/${lord.id}-portrait.png" alt="${lord.name}" style="display:block">`;
+      html += `<img class="reg-portrait" src="assets/oath-lords/${lord.id}-portrait.png" alt="${lord.name}" style="display:block">`;
       html += `</div>`;
     }
     html += `<div class="reg-portrait-bar" style="background:${lord.color}"></div>`;
@@ -1103,7 +1111,7 @@ function renderLordDetail(lord) {
     // Name + faction icon
     html += `<div class="reg-name-row">`;
     html += `<span class="reg-lord-name" style="color:${lord.color}">${lord.name.toUpperCase()}</span>`;
-    html += `<img class="reg-faction-icon" src="public/assets/oath-lords/${lord.id}-faction.png" alt="" onerror="this.style.display='none'" onload="this.style.display='block'">`;
+    html += `<img class="reg-faction-icon" src="assets/oath-lords/${lord.id}-faction.png" alt="" onerror="this.style.display='none'" onload="this.style.display='block'">`;
     html += `</div>`;
     html += `<div class="reg-lord-title">${lord.title.toUpperCase()}</div>`;
     html += `<div class="reg-lord-number">${lord.number.toUpperCase()}</div>`;
@@ -1149,7 +1157,7 @@ function renderLordDetail(lord) {
   const preload = new Image();
   preload.onload = () => buildBody(true);
   preload.onerror = () => buildBody(false);
-  preload.src = 'public/assets/oath-lords/' + lord.id + '-portrait.png';
+  preload.src = 'assets/oath-lords/' + lord.id + '-portrait.png';
 }
 
 function regField(label, value, color) {
@@ -1266,7 +1274,7 @@ function setupRegistryEvents(workerUrl) {
       btn.dataset.lord = lord.id;
       const icon = document.createElement('img');
       icon.className = 'reg-sit-lord-icon';
-      icon.src = 'public/assets/oath-lords/' + lord.id + '-faction.png';
+      icon.src = 'assets/oath-lords/' + lord.id + '-faction.png';
       icon.alt = '';
       icon.onerror = function() { this.style.display = 'none'; };
       btn.appendChild(icon);
@@ -1454,7 +1462,7 @@ function renderArchiveSpine() {
     // Thumbnail
     const thumb = document.createElement('img');
     thumb.className = 'archive-row-thumb';
-    thumb.src = 'public/assets/timeline/' + evt.image;
+    thumb.src = 'assets/timeline/' + evt.image;
     thumb.alt = evt.imageAlt;
     thumb.loading = 'lazy';
     thumb.onerror = function() {
@@ -1510,7 +1518,7 @@ function renderArchiveModalContent() {
   // Image
   const img = document.getElementById('archiveModalImg');
   const placeholder = document.getElementById('archiveModalPlaceholder');
-  img.src = 'public/assets/timeline/' + evt.image;
+  img.src = 'assets/timeline/' + evt.image;
   img.alt = evt.imageAlt;
   img.style.display = '';
   placeholder.style.display = 'none';

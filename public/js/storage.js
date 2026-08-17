@@ -9,7 +9,23 @@
 
 const REPO_OWNER = 'fintechjunkie';
 const REPO_NAME = 'climbers-website';
-const DATA_PATH = 'data/site.json';
+
+/* Where the served site lives INSIDE the repository.
+ *
+ * Two kinds of path exist in this file and they are not interchangeable:
+ *
+ *   repo paths     what the GitHub API writes to. Must include this prefix,
+ *                  because Next serves the site out of public/.
+ *   browser paths  what the page fetches ('data/site.json', 'uploads/x.jpg').
+ *                  Must NOT include it — public/ is the server root, so those
+ *                  resolve to /data/... and /uploads/... already.
+ *
+ * Getting this wrong is not a visible error, which is what makes it dangerous:
+ * a write to the un-prefixed path quietly creates a second file the site never
+ * reads, so the admin panel reports success and the change never appears.
+ */
+const REPO_ROOT = 'public/';
+const DATA_PATH = REPO_ROOT + 'data/site.json';
 const GH_API = 'https://api.github.com/repos/' + REPO_OWNER + '/' + REPO_NAME + '/contents/';
 
 const GH_TOKEN_KEY = 'climbers_gh_token';
@@ -143,13 +159,15 @@ const Storage = {
     await this._ghPut(DATA_PATH, base64, 'Update site content');
   },
 
+  // Repo paths, so both carry REPO_ROOT. The matching getters below return
+  // BROWSER paths and deliberately do not.
   async _uploadImage(filename, dataURL) {
     const base64 = dataURL.split(',')[1];
-    await this._ghPut('uploads/' + filename, base64, 'Upload ' + filename);
+    await this._ghPut(REPO_ROOT + 'uploads/' + filename, base64, 'Upload ' + filename);
   },
 
   async _deleteImage(filename) {
-    await this._ghDelete('uploads/' + filename);
+    await this._ghDelete(REPO_ROOT + 'uploads/' + filename);
   },
 
   getDefaults() {
