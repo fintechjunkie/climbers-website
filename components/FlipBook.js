@@ -589,6 +589,7 @@ export default function FlipBook({ volume, next = null }) {
       style={{
         minHeight: '100svh',
         background: reader.bg,
+        backgroundImage: reader.ground,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -631,7 +632,16 @@ export default function FlipBook({ volume, next = null }) {
             ? { aspectRatio: `${geometry.spreadAspect} / 1` }
             : { height: `calc(100svh - ${geometry.readerPad.compactTop + geometry.readerPad.compactBottom}px)` }),
           perspective: '2400px',
-          boxShadow: '0 24px 70px rgba(0,0,0,0.6)',
+          // A rim and a cast shadow, which together are what make this read as
+          // a physical object rather than a region of the page. The hairline
+          // is the lit top edge of the paper stack; the shadow is what it
+          // throws on the desk.
+          boxShadow: [
+            '0 0 0 1px rgba(255,255,255,0.07)',
+            '0 2px 0 rgba(255,255,255,0.04) inset',
+            '0 30px 60px rgba(0,0,0,0.75)',
+            '0 60px 120px rgba(0,0,0,0.55)',
+          ].join(', '),
         }}
         aria-live="polite"
       >

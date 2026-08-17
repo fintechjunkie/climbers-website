@@ -190,9 +190,18 @@ export function TextPage({ spread, compact, typeScale = 1 }) {
  * is a phrase to be read, and uppercase letterspacing removes the word shapes
  * a reader uses to take in running text.
  */
+/**
+ * The illustration half of a spread.
+ *
+ * No caption. Millbrook set one under its plates because a 3:2 picture on a
+ * square page left a third of the page empty and the caption had somewhere to
+ * live; here the plate fills the page corner to corner, so a caption can only
+ * be an overlay sitting on top of the picture. The spec still carries
+ * `caption` — it is useful as alt text and as a note to whoever generates the
+ * plate — it is simply not drawn.
+ */
 export function GraphicPage({ spread, compact }) {
   const g = spread.image || {};
-  const caption = g.caption;
 
   return (
     <div
@@ -213,51 +222,29 @@ export function GraphicPage({ spread, compact }) {
         justifyContent: compact ? 'center' : 'flex-start',
       }}
     >
-      {/* The scrim is anchored to the PLATE, not the page. On a wide spread
-          those are the same box; on a phone they are not, and a caption pinned
-          to the page floor would float in the ground well below the picture it
-          belongs to. */}
       <div style={{ position: 'relative', width: '100%', flexShrink: 0 }}>
         <Plate slug={g.slug} alt={g.alt} shotType={g.shotType} depicts={g.depicts} />
 
-        <div
+        {/* The folio stays. It is the one mark that says this is a page of a
+            book rather than a picture, and at this size it costs the art
+            nothing. Shadowed rather than scrimmed, so it stays legible over a
+            bright plate without laying a band across the foot of every one. */}
+        <span
           aria-hidden="true"
           style={{
             position: 'absolute',
-            left: 0, right: 0, bottom: 0,
-          padding: `${space(12)} ${space(6)} ${space(4)}`,
-          display: 'flex',
-          alignItems: 'flex-end',
-          justifyContent: 'space-between',
-          gap: space(4),
-          background: 'linear-gradient(180deg, rgba(8,8,10,0) 0%, rgba(8,8,10,0.82) 62%, rgba(8,8,10,0.94) 100%)',
-          pointerEvents: 'none',
-        }}
-      >
-        <span
-          style={{
-            fontFamily: face.body,
-            fontStyle: 'italic',
-            fontSize: 'clamp(11px, 1.6cqh, 15px)',
-            lineHeight: 1.45,
-            color: caption ? color.ink : 'transparent',
-            maxWidth: '46ch',
-          }}
-        >
-          {caption || ' '}
-        </span>
-        <span
-          style={{
+            right: space(4),
+            bottom: space(3),
             fontFamily: face.display,
             fontSize: type.folio,
             letterSpacing: '0.24em',
-            color: color.inkSoft,
-            flexShrink: 0,
+            color: 'rgba(255,255,255,0.58)',
+            textShadow: '0 1px 4px rgba(0,0,0,0.9), 0 0 12px rgba(0,0,0,0.7)',
+            pointerEvents: 'none',
           }}
         >
           {String(spread.n * 2).padStart(2, '0')}
         </span>
-        </div>
       </div>
     </div>
   );

@@ -1,0 +1,170 @@
+{
+  "_": "The canonical locks. This is the machine-readable half of references/ — every entity here gets a folder there, scaffolded by `npm run refs`. Prompts in content/specs/*.md reference these by token: {{STYLE}}, {{CHAR:GREY}}, {{WARDROBE:GREY_POST_OATH}}, {{LOC:PEAK_CHAMBER}}. Nothing is edited by hand in the generated prompt sheets; edit here and in the specs.",
+
+  "styleName": "Climbers — Haven City",
+  "styleApproved": false,
+  "style": ">>> STYLE BLOCK NOT YET WRITTEN. Generate one canonical style plate, approve it, then paste the description here and set styleApproved to true. <<<",
+
+  "styleNotes": "The site's existing chapter art is the reference point: high-contrast neon cyberpunk, deep blacks, gold and cyan accents, volumetric light, painterly rather than photographic. Write the block once, lock it, and put it at the HEAD of every prompt — Millbrook found that a style clause sitting in the negative block at the foot gets ignored, and hoisting it to the head fixed it on one pass.",
+
+  "characters": {
+    "GREY": {
+      "name": "Grey",
+      "kind": "CHARACTER",
+      "ref": "char-grey-canonical.png",
+      "locked": false,
+      "block": "",
+      "notes": "Synthetic. Brass plating, torn Victorian coat, copper mechanisms in the LEFT arm, pocket watch on a chain. The watch is a plot object across four spreads and must be identical in every one. Appears in p1 spreads 1-11 pre-oath.",
+      "wardrobe": ["GREY_CLIMB_WORN", "GREY_POST_OATH"]
+    },
+    "SERAPH": {
+      "name": "Seraph",
+      "kind": "ENTITY",
+      "ref": "char-seraph-canonical.png",
+      "locked": false,
+      "block": "",
+      "notes": "Rotating polyhedrons of white and gold light. NEVER a face, never a body — 'almost like a face' means suggestion only. Beautiful the way an equation is beautiful."
+    },
+    "BONE_PATROL": {
+      "name": "a Bone Patrol officer",
+      "kind": "FACTION UNIFORM",
+      "ref": "char-bone-patrol-canonical.png",
+      "locked": false,
+      "block": "",
+      "notes": "Absalom's people. Chrome skull-face, red optics, hammer at the hip. The hammer is NEVER raised in any plate we have specced. Appears in p1 spreads 5-7 and t1 spread 3."
+    },
+    "PIXELS": {
+      "name": "Pixels",
+      "kind": "CHARACTER",
+      "ref": "char-pixels-canonical.png",
+      "locked": false,
+      "block": "",
+      "notes": "Synthetic courier. His face is a DISPLAY SURFACE, not a face: pale blue grid when he wants it to show nothing, blank dark glass in a pale frame when he wants to show less than that. Which state he is in is dramatic information and is specified per spread.",
+      "wardrobe": ["PIXELS_GRID", "PIXELS_BLANK"]
+    },
+    "SEVORAN": {
+      "name": "Sev'oran",
+      "kind": "CHARACTER",
+      "ref": "char-sevoran-canonical.png",
+      "locked": false,
+      "block": "",
+      "notes": "Valari, lives three doors down from Pixels. Dries protein strips on the hallway radiator to discourage rats. In t1 spread 4 her expression is recognition and mild curiosity — NOT yet fear."
+    },
+    "PHOENIX": {
+      "name": "Phoenix",
+      "kind": "CHARACTER",
+      "ref": "char-phoenix-canonical.png",
+      "locked": false,
+      "block": "",
+      "notes": "Synthetic, designation Unit-3317, intake coordinator. ORANGE optical sensors. Holds a textbook-correct posture to the point of performance — 'furniture with good posture'."
+    },
+    "RELMIA": {
+      "name": "Rel'mia",
+      "kind": "CHARACTER",
+      "ref": "char-relmia-canonical.png",
+      "locked": false,
+      "block": "",
+      "notes": "Valari, seven years old. Her look is OPEN ASSESSMENT — the way children look at Synthetics before they learn not to. Never afraid in any specced plate."
+    },
+    "SANDMAN": {
+      "name": "a Sandman",
+      "kind": "FACTION UNIFORM",
+      "ref": "char-sandman-canonical.png",
+      "locked": false,
+      "block": "",
+      "notes": "Sister Silence's people. The threat is entirely in the flatness of the attention — no weapon drawn, no lean-in, in any plate we have specced."
+    }
+  },
+
+  "wardrobe": {
+    "GREY_CLIMB_WORN": {
+      "value": "",
+      "notes": "Forty-seven days of climbing: plating scorched, coat torn to tatters, left-arm mechanisms sparking. Pocket watch present on its chain. p1 spreads 1-11."
+    },
+    "GREY_POST_OATH": {
+      "value": "",
+      "notes": "After the Glitch Engine. Coat repaired but changed; pocket watch GONE; two fingers sit differently from the others. Everything from p1 spread 11 onward must match this, and so must every future appearance of Grey anywhere in the series."
+    },
+    "PIXELS_GRID": {
+      "value": "",
+      "notes": "Pale blue grid pattern on the visor — what he shows when he wants to show nothing. t1 spreads 1-2."
+    },
+    "PIXELS_BLANK": {
+      "value": "",
+      "notes": "No colour, no pattern, just dark glass in a pale frame — what he shows when the grid would be information. t1 spreads 3-4."
+    }
+  },
+
+  "locations": {
+    "PEAK_CHAMBER": {
+      "name": "the chamber at the peak of the Tower",
+      "ref": "loc-peak-chamber.png",
+      "locked": false,
+      "block": "",
+      "notes": "Crystalline. Or vast. Or impossibly small — contradictory truths hold here the way they do in dreams or mathematics. Transparent floor with Haven City far below. p1 spreads 1-4, 8-11."
+    },
+    "HAVEN_CITY_AERIAL": {
+      "name": "Haven City from above",
+      "ref": "loc-haven-city-aerial.png",
+      "locked": false,
+      "block": "",
+      "notes": "Street grid like a circuit board soldered onto the earth. Valari Quarter glowing faint blue, industrial blocks dark and square, the Wasteland out to the horizon, the Tower through the middle like a needle. p1 spreads 1 and 12."
+    },
+    "MARKET_DISTRICT": {
+      "name": "the Market District",
+      "ref": "loc-market-district.png",
+      "locked": false,
+      "block": "",
+      "notes": "Smooth, airless efficiency — it looks like abundance and functions like a clock. Vendor rows, crowd-flow corridors measured to fractions. p1 spreads 5-7."
+    },
+    "WASTELAND": {
+      "name": "the Wasteland outside Haven City's walls",
+      "ref": "loc-wasteland.png",
+      "locked": false,
+      "block": "",
+      "notes": "Rust and silence where the world ended and was never repaired. The Tower going up out of frame. p1 spread 13, and the p1 opener."
+    },
+    "COURIERS_EXCHANGE": {
+      "name": "the Courier's Exchange",
+      "ref": "loc-couriers-exchange.png",
+      "locked": false,
+      "block": "",
+      "notes": "Where dispatch work is handed out. Window light on a working table. t1 spread 1."
+    },
+    "RECLAMATION_ALLEY": {
+      "name": "the alley behind the water reclamation building",
+      "ref": "loc-reclamation-alley.png",
+      "locked": false,
+      "block": "",
+      "notes": "Narrow, wet, rain finding the gaps. Bone Patrol checkpoint lights turning the rain silver two blocks north. t1 opener and spread 2."
+    },
+    "PATROL_STATION": {
+      "name": "Third Patrol Station, Sector Four",
+      "ref": "loc-patrol-station.png",
+      "locked": false,
+      "block": "",
+      "notes": "The patrol bay and its exit. t1 spread 3."
+    },
+    "RESIDENTIAL_BLOCK_14": {
+      "name": "Residential Block 14, third floor",
+      "ref": "loc-residential-block-14.png",
+      "locked": false,
+      "block": "",
+      "notes": "Narrow stairwell, third-floor hallway, a radiator with dried protein strips on it. t1 spread 4."
+    },
+    "WELLNESS_CENTER": {
+      "name": "the Wellness and Optimization Center",
+      "ref": "loc-wellness-center.png",
+      "locked": false,
+      "block": "",
+      "notes": "Calm institutional facade, atrium with a reflecting pool, intake desk. Designed to look like medicine. t2 opener and spreads 1-4."
+    },
+    "SERVICE_LANE": {
+      "name": "the service lane behind the Wellness Center",
+      "ref": "loc-service-lane.png",
+      "locked": false,
+      "block": "",
+      "notes": "Reached through a utility door off the maintenance corridor; connects to the eastern residential district. t2 spread 4."
+    }
+  }
+}

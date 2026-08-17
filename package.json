@@ -12,7 +12,9 @@
     "prebuild": "node scripts/parse-specs.mjs --check",
     "fill": "node scripts/check-fill.mjs",
     "images": "node scripts/build-images.mjs",
-    "images:check": "node scripts/build-images.mjs --check"
+    "images:check": "node scripts/build-images.mjs --check",
+    "refs": "node scripts/refs.mjs",
+    "prompts": "node scripts/refs.mjs && node scripts/build-prompts.mjs"
   },
   "dependencies": {
     "next": "14.2.35",
