@@ -58,6 +58,46 @@ CANONICAL REFERENCE ON DISK <<<` and its description carries the weight. Every
 sheet ends with a list of what is blocking it, and the run prints an
 `n/24 plates ready` count.
 
+## Writing a prompt
+
+Prompts live in the `prompt:` field of each `::: image` block in
+`content/specs/*.md`, and expand through the roster. Prologue I spread 6 is the
+worked example. The shape:
+
+```
+{{STYLE}}                       always first — see below
+{{LOC:MARKET_DISTRICT}}         setting
+{{CHAR:BONE_PATROL}}            one line per figure, in order of importance
+EXACTLY ONE OFFICER AND ONE SMALL CHILD AND NOBODY ELSE SHARP.
+<the beat, in present tense, one paragraph>
+THE CHILD is the subject and is doing <specific physical thing>.
+THE OFFICER is doing <specific physical thing>.
+<background, out of focus>
+<camera: angle, height, distance>
+<light: source, direction, time of day>
+```
+
+Five things that make the difference between a plate that lands and one that
+has to be regenerated:
+
+- **Cap the cast in capitals, at the top.** "EXACTLY THREE FIGURES AND NOBODY
+  ELSE." Image models add people. This is the single most effective line.
+- **Give every named figure a physical verb.** Not "Vex is confident" —
+  "one boot planted on the bumper, leaning her weight onto that knee, head
+  turned back over her shoulder." A mood is not a pose.
+- **Say what must NOT be there**, and say it near the top rather than in a
+  negative block at the foot. Hammers holstered. No text anywhere. Grey is not
+  present in this vision.
+- **Write the moment before or after, not during.** "The officer has just
+  looked down. Nobody has moved yet." A frozen instant beats an action.
+- **`spoilerCheck` is load-bearing.** Every plate is seen next to prose it
+  must not get ahead of. Write down what the plate is deliberately not
+  showing, and why that is correct.
+
+The four `HARD RULES` — square, no text, no frame, keep the lower-right clear
+for the folio — are appended automatically to every `{{STYLE}}` expansion. Do
+not repeat them per prompt.
+
 ## Do STYLE first
 
 Every prompt starts with `{{STYLE}}`, and until `styleApproved` is `true` in
