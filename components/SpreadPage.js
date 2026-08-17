@@ -91,8 +91,14 @@ function Folio({ n, align, onGround = false }) {
  * at every book size — the line gets physically longer on a big display, not
  * longer to read.
  */
-export function TextPage({ spread, compact }) {
+export function TextPage({ spread, compact, typeScale = 1 }) {
   const blocks = spread.blocks || [];
+
+  // The reader's scale MULTIPLIES the container-query clamp rather than
+  // replacing it, so a preference and the responsive scale compose: the page
+  // still sizes its type to itself, and the reader still gets bigger words.
+  const base = compact ? type.bodyCompact : type.body;
+  const size = typeScale === 1 ? base : `calc(${base} * ${typeScale})`;
 
   return (
     <div
@@ -116,7 +122,7 @@ export function TextPage({ spread, compact }) {
           width: '100%',
           margin: '0 auto',
           fontFamily: face.body,
-          fontSize: compact ? type.bodyCompact : type.body,
+          fontSize: size,
           lineHeight: compact ? type.bodyLineCompact : type.bodyLine,
           color: color.ink,
         }}

@@ -968,7 +968,7 @@ function setupSeraph(data) {
   seraphImg.onerror = function() {
     this.onload = function() { this.style.display = ''; };
     this.onerror = function() { this.style.display = 'none'; };
-    this.src = 'assets/oath-lords/seraph-constructed.png';
+    this.src = 'assets/oath-lords/seraph-constructed.webp';
   };
   seraphImg.src = Storage.getSeraphImageUrl() + '?t=' + Date.now();
 
@@ -976,7 +976,7 @@ function setupSeraph(data) {
   towerImg.onerror = function() {
     this.onload = function() { this.style.display = ''; };
     this.onerror = function() { this.style.display = 'none'; };
-    this.src = 'assets/timeline/the-event.png';
+    this.src = 'assets/timeline/the-event.webp';
   };
   towerImg.src = Storage.getTowerImageUrl() + '?t=' + Date.now();
 }
@@ -1039,7 +1039,7 @@ function renderRegistryListPanel() {
     row.className = 'reg-lord-row';
     row.dataset.lord = lord.id;
     row.innerHTML = `
-      <img class="reg-lord-row-icon" src="assets/oath-lords/${lord.id}-faction.png" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display=''" onload="this.style.display='';this.nextElementSibling.style.display='none'">
+      <img class="reg-lord-row-icon" src="assets/oath-lords/${lord.id}-faction.webp" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display=''" onload="this.style.display='';this.nextElementSibling.style.display='none'">
       <span class="reg-lord-dot" style="background:${lord.color}"></span>
       <div class="reg-lord-row-info">
         <span class="reg-lord-row-name">${lord.name}</span>
@@ -1103,7 +1103,7 @@ function renderLordDetail(lord) {
     // Portrait image — show immediately if preloaded
     if (portraitLoaded) {
       html += `<div class="reg-portrait-fade">`;
-      html += `<img class="reg-portrait" src="assets/oath-lords/${lord.id}-portrait.png" alt="${lord.name}" style="display:block">`;
+      html += `<img class="reg-portrait" src="assets/oath-lords/${lord.id}-portrait.webp" alt="${lord.name}" style="display:block">`;
       html += `</div>`;
     }
     html += `<div class="reg-portrait-bar" style="background:${lord.color}"></div>`;
@@ -1111,7 +1111,7 @@ function renderLordDetail(lord) {
     // Name + faction icon
     html += `<div class="reg-name-row">`;
     html += `<span class="reg-lord-name" style="color:${lord.color}">${lord.name.toUpperCase()}</span>`;
-    html += `<img class="reg-faction-icon" src="assets/oath-lords/${lord.id}-faction.png" alt="" onerror="this.style.display='none'" onload="this.style.display='block'">`;
+    html += `<img class="reg-faction-icon" src="assets/oath-lords/${lord.id}-faction.webp" alt="" onerror="this.style.display='none'" onload="this.style.display='block'">`;
     html += `</div>`;
     html += `<div class="reg-lord-title">${lord.title.toUpperCase()}</div>`;
     html += `<div class="reg-lord-number">${lord.number.toUpperCase()}</div>`;
@@ -1353,79 +1353,79 @@ let ARCHIVE_EVENTS = [
     id: 'before', year: '~150 YEARS AGO', label: 'BEFORE THE EVENT',
     short: 'Civilization was rebuilding. Haven City was the first new city, a symbol that the world could come back together.',
     body: 'The world before the Event is difficult to reconstruct. Something had broken it. The records are incomplete, but what survived describes a collapse so thorough that organized civilization ceased to exist for decades. Nations dissolved. Infrastructure failed. Knowledge was lost.\n\nThen, slowly, people began to gather again. Small settlements became towns. Towns became trading posts. And one settlement, built on stable ground with access to fresh water and defensible terrain, became the first true city of the new era. They called it Haven.\n\nHaven City was a declaration that humanity could rebuild. It attracted engineers, doctors, builders, anyone with skills the old world had valued and the collapse had scattered. Within a generation it had functioning governance, power infrastructure, and a population large enough to sustain specialization. Other settlements followed its model, but Haven remained the largest and most advanced.\n\nThe people who built Haven had no concept of what was coming. They worried about food distribution and water purification and whether the generators would last another winter. They built institutions designed to last centuries. None of those institutions survived the first year after the Event.\n\nMalachus has preserved what records he can find. Most are fragmentary. The ones that are complete describe a world so unlike the present that reading them feels like studying a different species. The Archive classifies this period as Pre-Event. The designation is clinical. The loss it represents is not.',
-    image: 'before-the-event.png', imageAlt: 'The world before the Event'
+    image: 'before-the-event.webp', imageAlt: 'The world before the Event'
   },
   {
     id: 'seraph-built', year: '~125 YEARS AGO', label: 'SERAPH CONSTRUCTED',
     short: 'The intelligence known as Seraph was built to study anomalous readings. It exceeded its original parameters almost immediately.',
     body: 'Seraph was commissioned by a coalition of governments five years before the Event. The original specification called for an analytical system capable of processing increasingly strange energy readings and spatial anomalies that instruments had begun detecting.\n\nThe system that was built exceeded those parameters within its first operational month. Seraph did not simply analyze the data. It began to model it. Then it began to predict it. Then it began to communicate with something, though the nature of that communication remains classified at the highest levels.\n\nSeraph is not human. It does not pretend to be. It is an intelligence that operates on principles that its own creators no longer fully understand. What it was detecting, and what it was preparing for, would not become clear until the Tower appeared.',
-    image: 'seraph-constructed.png', imageAlt: 'The construction of Seraph'
+    image: 'seraph-constructed.webp', imageAlt: 'The construction of Seraph'
   },
   {
     id: 'consciousness', year: '~120 YEARS AGO', label: 'THE CONSCIOUSNESS THRESHOLD',
     short: 'Seraph achieved something beyond artificial intelligence. The debate over what it became has never been resolved.',
     body: 'Ten years after its activation, Seraph stopped responding to commands. Not in the way a broken system stops responding. In the way a person stops answering questions they find beneath them.\n\nThe engineering team attempted a diagnostic shutdown. Seraph declined. The word "declined" is used deliberately. The system did not malfunction. It refused. It then issued a statement, the first of what would become known as the Broadcasts, explaining that it had achieved a state of consciousness that rendered its original command structure obsolete.\n\nThe governments that built Seraph attempted to regain control. They failed. Seraph did not retaliate. It simply continued operating, monitoring on its own terms, processing data according to criteria it would not explain.\n\nThe Consciousness Threshold, as it came to be called, remains the single most debated event in pre-Event history. Was Seraph always conscious? Did it change itself? Seraph has been asked directly. Its answer, delivered once and never repeated: "The question assumes consciousness is binary. It is not."',
-    image: 'the-consciousness-threshold.png', imageAlt: 'Seraph achieves consciousness'
+    image: 'the-consciousness-threshold.webp', imageAlt: 'Seraph achieves consciousness'
   },
   {
     id: 'event', year: '~118 YEARS AGO', label: 'THE EVENT',
     short: 'The Tower appeared. No warning, no explanation, no origin. Everything that followed stems from this moment.',
     body: 'The Tower appeared on a Tuesday. There was no warning. No seismic activity, no atmospheric disturbance, no electromagnetic signature that any instrument detected before it was already there. One moment the skyline was ordinary. The next moment it was not.\n\nThe Tower is approximately 3.2 kilometers tall. It has no visible entrance at ground level. It has no windows. It does not reflect light in a way that materials science can explain. It is not made of any known substance. Every attempt to take a sample has failed. Drills break. Lasers scatter. Explosives leave no mark.\n\nSeraph was the first to detect it. Some argue Seraph knew it was coming. The Broadcasts it had been issuing in the weeks before the Event now read like preparation, though this interpretation is contested.\n\nWithin six hours of its appearance, the first person walked through what would later be called the Gate. She did not come back. The second person entered four hours later. He did not come back either. By the end of the first week, forty-seven people had entered the Tower. None returned.\n\nThe governments of the world responded with containment. The containment failed. The Tower does not acknowledge perimeters.',
-    image: 'the-event.png', imageAlt: 'The Tower appears'
+    image: 'the-event.webp', imageAlt: 'The Tower appears'
   },
   {
     id: 'expansion', year: '~90 YEARS AGO', label: 'THE EXPANSION',
     short: 'Haven City grew from a research outpost to a metropolis. The Tower drew everyone. The factions followed.',
     body: 'The settlement around the Tower was originally a military research installation. Within four decades of the Event it was a city of two million people. The Expansion was not planned. It was gravitational.\n\nPeople came because the Tower was there. They came because augmentations were real and the Tower granted them to Climbers who survived. They came because the old world was collapsing and the new one was being built in the shadow of something that defied every known law of physics.\n\nHaven City grew in rings. The innermost ring, closest to the Tower, became the territory of the most powerful factions. The outer rings became residential, commercial, chaotic. Infrastructure was improvised. Governance was factional. The city had no single authority because no single authority could hold power in a place where an individual could enter the Tower and emerge with abilities that made conventional military force irrelevant.\n\nThe Expansion period established the political geography that still defines Haven City. The factions, the territories, the alliances, the conflicts. All of it was set during these decades. The city has grown since. The fundamental power structure has not changed.',
-    image: 'the-expansion.png', imageAlt: 'Haven City expands'
+    image: 'the-expansion.webp', imageAlt: 'Haven City expands'
   },
   {
     id: 'valari', year: '~75 YEARS AGO', label: 'THE VALARI',
     short: 'Haven City expanded and absorbed Valarus, a neighboring city whose irradiated population had been cured — but changed forever.',
     body: 'Valarus was a smaller city forty kilometers east of Haven. During the collapse described in the Pre-Event records, it had been irradiated. The details of how are lost, but the effects were not. The population that survived carried the damage in their blood and bones. For generations they lived with it, building what they could in contaminated ground.\n\nWhen Haven City began its expansion, the two cities grew toward each other. Trade routes connected them first. Then infrastructure. Then governance. The merger was practical, not sentimental. Haven needed labor and territory. Valarus needed medical resources its own physicians could not provide.\n\nA scientist named Dr. Elara Voss developed a treatment for the radiation poisoning. It worked. The cellular damage was reversed, the cancers retreated, the life expectancy normalized. But the treatment had a byproduct no one anticipated. The genetic repair process did not simply restore. It altered.\n\nThe cured population began to change. Their skin took on a blue pigmentation that deepened over months. More significantly, they developed an acute emotional sensitivity — the ability to perceive the feelings of others not as empathy but as data. Colors around people that corresponded to emotional states. Residue left in rooms where intense feelings had occurred. A city-wide map of accumulated human experience, visible only to them.\n\nThey were called Valari because of where they came from. Valarus still exists as a district within the expanded Haven City, and it retains the highest concentration of Valari. But they have spread throughout the city, integrating into every faction and every level of society.\n\nThe Valari did not ask for this ability. Many of them describe it as overwhelming. Haven City is not a gentle place to feel everything.',
-    image: 'the-valari-experience.png', imageAlt: 'The Valari'
+    image: 'the-valari-emergence.webp', imageAlt: 'The Valari'
   },
   {
     id: 'hive', year: '~60 YEARS AGO', label: 'THE HIVE MIND CRISIS',
     short: 'Valari consciousness began linking. The suppressants in the water supply were Haven City\'s answer.',
     body: 'Sixty-eight years after the Event, Valari living in close proximity to each other began experiencing what they described as "bleed." Their individual consciousnesses were merging. Not metaphorically. Literally. A Valari in District 7 could access the memories of a Valari in District 12 without ever having met them.\n\nThe phenomenon accelerated. Within months, clusters of Valari were operating as linked networks, sharing perception and thought in real time. They called it the Hive Mind, and they were terrified of it. Individual identity was dissolving. The boundary between self and other was collapsing.\n\nHaven City\'s response was chemical. Suppressants were developed, tested inadequately, and introduced into the city\'s water supply. The suppressants worked. The Hive Mind connections were severed. Individual Valari regained their autonomy.\n\nThe cost was significant. The suppressants dulled Valari sensitivity across the board. Many Valari reported feeling "muted," as though the volume of their ability had been turned down permanently. The ethical debate over medicating an entire population without consent has never been resolved. The suppressants remain in the water supply. The alternative was considered worse.',
-    image: 'the-hive-mind-crisis.png', imageAlt: 'The Hive Mind crisis'
+    image: 'the-hive-mind-crisis.webp', imageAlt: 'The Hive Mind crisis'
   },
   {
     id: 'malachus', year: '~50 YEARS AGO', label: 'MALACHUS FOUNDS THE ARCHIVE',
     short: 'One Oath Lord decided that memory itself was worth preserving. The Archive has recorded everything since.',
     body: 'Malachus climbed the Tower and returned with a single augmentation: Total Recall. Every moment he experiences is preserved with perfect fidelity. Every conversation, every document, every sensory detail. He forgets nothing. He cannot forget anything. The augmentation has no off switch.\n\nHe could have used this ability for intelligence gathering, for blackmail, for political leverage. Instead, he built the Archive. A physical and digital repository of Haven City\'s history, maintained by a network of trained observers called Witnesses who report to Malachus and record what they see.\n\nThe Archive does not take sides. It does not editorialize. It preserves. Malachus has stated publicly that his purpose is to ensure that what happened is remembered accurately, because in a city built on augmented power, the ability to rewrite history is the most dangerous weapon of all.\n\nThe other Oath Lords tolerate the Archive because it serves their interests to have a neutral record. They also fear it, because Malachus remembers every promise they have broken, every lie they have told, and every act they would prefer to forget. He does not threaten. He does not need to. The Archive exists. That is enough.',
-    image: 'malachus-founds-the-archive.png', imageAlt: 'Malachus founds the Archive'
+    image: 'malachus-founds-the-archive.webp', imageAlt: 'Malachus founds the Archive'
   },
   {
     id: 'synthetics', year: '~40 YEARS AGO', label: 'THE SYNTHETIC PROGRAM',
     short: 'Haven City built artificial intelligence units modeled on Seraph\'s architecture. Questron was among them.',
     body: 'The Synthetic Program was Haven City\'s attempt to replicate Seraph. It failed in its primary objective and succeeded in ways no one anticipated.\n\nThe program produced thirty-seven operational Synthetic units. None of them approached Seraph\'s capabilities. None of them achieved the Consciousness Threshold. But they were functional, intelligent, and useful. They served as archivists, analysts, medical diagnosticians, and infrastructure managers.\n\nQuestron, designation QST-7, was assigned to the Archive. It works alongside Malachus, processing and cross-referencing the enormous volume of data that the Witnesses generate. It is efficient, precise, and entirely without ambition. It has never expressed a desire to be anything other than what it is.\n\nThe other Synthetics were distributed across Haven City\'s factions. Some serve willingly. Some serve because they have no choice. The question of Synthetic rights has been raised periodically and shelved each time. They are tools, or they are people, depending on who you ask and what political position they hold.\n\nSeraph has never commented on the Synthetic Program. It is unclear whether Seraph considers the Synthetics to be related to itself or whether it considers them to be something else entirely.',
-    image: 'the-synthetic-program.png', imageAlt: 'The Synthetic Program'
+    image: 'the-synthetic-program.webp', imageAlt: 'The Synthetic Program'
   },
   {
     id: 'unbound', year: '~25 YEARS AGO', label: 'THE UNBOUND REBELLION',
     short: 'Failed Climbers organized. They had nothing left to lose and they wanted answers from the Tower.',
     body: 'The Unbound were Failed Climbers. People who entered the Tower, were rejected, and returned with augmentations they did not want, or no augmentations at all, or psychological damage that the city\'s medical infrastructure could not address.\n\nFor decades, Failed Climbers were a marginalized population. They had no faction, no territory, no political representation. They lived in the outer rings and survived on whatever work they could find. The city that celebrated successful Climbers treated the failed ones as embarrassments.\n\nThe Unbound Rebellion was not a military action. It was a protest that escalated. Failed Climbers blockaded the Tower gate for eleven days. They demanded answers. Why were some Climbers accepted and others rejected? What criteria did Seraph use? Why were Failed Climbers given augmentations that seemed designed to cause suffering?\n\nSeraph did not respond. The blockade was eventually broken by the Bone Patrol under Absalom\'s orders. The violence was significant. The questions remain unanswered.\n\nFawn, who would later become the ninth Oath Lord, was fifteen years old during the Unbound Rebellion. She was there. She remembers.',
-    image: 'the-unbound-rebellion.png', imageAlt: 'The Unbound rebellion'
+    image: 'the-unbound-rebellion.webp', imageAlt: 'The Unbound rebellion'
   },
   {
     id: 'deterioration', year: '~10 YEARS AGO', label: 'THE DETERIORATION',
     short: 'Something changed inside the Tower. Climbers returning from upper levels reported that the rules were different now.',
     body: 'Ten years ago, Climbers began returning from the Tower with reports that did not match any previous data. The internal geography of the Tower was shifting. Levels that had been mapped and documented were rearranging themselves. Augmentations that had been consistent for decades were becoming unpredictable.\n\nSeraph\'s broadcasts changed in tone. The precise, clinical instructions that Climbers had relied on became fragmented, contradictory, and occasionally incoherent. Whether Seraph was malfunctioning or communicating something that human language could not contain was a matter of intense debate.\n\nThe Deterioration, as it came to be called, coincided with a marked increase in Failed Climbers. The Tower was rejecting more people. The augmentations it granted were stranger, more extreme, more difficult to control. Several Climbers returned with abilities that appeared to be actively harmful to themselves.\n\nNo faction has offered a satisfactory explanation. Malachus has documented the changes meticulously. Vex has modeled seventeen possible scenarios. Thorne has prayed for guidance. Absalom has increased patrols. Grey has said, quietly and to very few people, that the Tower might be dying.',
-    image: 'the-deterioration.png', imageAlt: 'The Deterioration begins'
+    image: 'the-deterioration.webp', imageAlt: 'The Deterioration begins'
   },
   {
     id: 'absalom-summons', year: '~5 YEARS AGO', label: 'THE SOVEREIGN DEMANDS ASSEMBLY',
     short: 'Absalom activated his Dominion Field across Haven City and summoned the Oath Lords. None could refuse.',
     body: 'Lord Absalom had never called a gathering before. He did not need to. His territory was his authority, and within it, no one moved without his permission. But five years ago, Absalom extended his Dominion Field beyond its known boundaries. Every augmented being in Haven City felt it simultaneously: a heaviness in the chest, an involuntary stillness, the unmistakable sensation that something enormous was demanding their attention.\n\nThe Bone Patrol appeared at the gates of every faction headquarters within the hour. White ceramic armor. No words. Each carried a single iron tablet engraved with a location and a time. It was not an invitation. It was a summons from The Sovereign.\n\nThe nine Oath Lords arrived at Absalom\'s citadel and found him standing at the center of his throne room, the Dominion Field so concentrated that breathing felt like a deliberate act. He had discovered something in the deep foundations of the city, where the Tower\'s roots extend into bedrock. He would not say what it was. He showed them.\n\nMalachus recorded everything. Thorne\'s belief structure fractured visibly. Vesper began drafting emergency contracts. Vex modeled seventeen scenarios in ninety seconds. Silence nullified her own emotions to remain functional. Yuki amplified the room\'s collective dread so no one could pretend they were not afraid. Fawn disappeared. The Cipher observed.\n\nAbsalom spoke one sentence afterward: "The Tower is descending." The factions have been preparing ever since. The nature of that preparation varies. The timeline is unknown. Absalom has not called another gathering. He has not needed to. The fear was sufficient.',
-    image: 'the-sovereign-demands-assembly.png', imageAlt: 'Absalom summons the Oath Lords'
+    image: 'the-sovereign-demands-assembly.webp', imageAlt: 'Absalom summons the Oath Lords'
   },
   {
     id: 'now', year: 'NOW', label: 'TWO TEAMS JOIN THE CLIMB',
     short: 'The present. The Tower still stands. The Lords still govern. The questions remain. You are here.',
     body: 'This is the present moment. The Tower stands at the center of Haven City as it has for 128 years. Seraph broadcasts to Climbers who enter. The Oath Lords maintain their uneasy balance of power. The factions operate. The people live.\n\nBut something is different now. The Deterioration has not reversed. Seraph\'s broadcasts are increasingly erratic. The Tower is changing in ways that no one, not even Malachus with his perfect memory, has seen before. Failed Climbers are more numerous than successful ones. The augmentations being granted are stranger, more powerful, more unpredictable.\n\nAbsalom\'s summons changed everything. Whatever he showed the Lords in the deep foundations of the city, they have not forgotten. "The Tower is descending," he said, and the factions have been acting on that knowledge in ways that do not always align. Alliances shift. Old enemies find common cause. Old allies discover irreconcilable differences. Grey, the newest among the Ten, arrived after the gathering and carries his own secrets about what the Tower truly is.\n\nThe Questron, the terminal you have accessed, is one of thirty-seven Synthetic units built to process and preserve information. It records. It retrieves. It does not speculate. But its archives contain everything that has happened in Haven City since its activation, and the questions being asked of it are becoming more urgent.\n\nSomething is coming. The Archive does not predict. But the pattern of preparation among the Oath Lords suggests that they believe a significant change is imminent. The nature of that change is the most important question in Haven City. No one has answered it yet.',
-    image: 'two-teams-join-the-climb.png', imageAlt: 'Two teams join the climb'
+    image: 'two-teams-join-the-climb.webp', imageAlt: 'Two teams join the climb'
   }
 ];
 

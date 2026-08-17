@@ -10,7 +10,9 @@
     "parse": "node scripts/parse-specs.mjs",
     "parse:check": "node scripts/parse-specs.mjs --check",
     "prebuild": "node scripts/parse-specs.mjs --check",
-    "fill": "node scripts/check-fill.mjs"
+    "fill": "node scripts/check-fill.mjs",
+    "images": "node scripts/build-images.mjs",
+    "images:check": "node scripts/build-images.mjs --check"
   },
   "dependencies": {
     "next": "14.2.35",
@@ -20,6 +22,7 @@
   "devDependencies": {
     "eslint": "^8",
     "eslint-config-next": "14.2.35",
-    "puppeteer-core": "^23"
+    "puppeteer-core": "^23",
+    "sharp": "^0.35.3"
   }
 }

@@ -125,19 +125,89 @@ function Bar({ children, side, innerRef, hidden }) {
   );
 }
 
+/**
+ * The reader's controls.
+ *
+ * These were inkSoft on a transparent ground, which measured about 5.8:1 in
+ * theory and was genuinely hard to read in practice: Orbitron at 10px with
+ * 0.2em tracking is thin, widely spaced and uppercase, and small thin type
+ * needs far more contrast than a ratio calculated on a solid block predicts.
+ *
+ * Full ink, a slightly larger size, a panel behind them and a brighter rule.
+ * The controls of a reader should be quiet, but "quiet" cannot mean "you have
+ * to hunt for the next-page arrow".
+ */
 const btn = {
   fontFamily: face.display,
-  fontSize: 10,
-  letterSpacing: '0.2em',
+  fontSize: 11,
+  fontWeight: 600,
+  letterSpacing: '0.16em',
   textTransform: 'uppercase',
-  color: color.inkSoft,
-  background: 'transparent',
+  color: color.ink,
+  background: 'rgba(28,28,36,0.92)',
   border: `1px solid ${paper.rule}`,
-  borderRadius: 2,
+  borderRadius: 3,
   padding: `${space(2)} ${space(3)}`,
   cursor: 'pointer',
-  transition: 'color 160ms, border-color 160ms',
+  transition: 'color 160ms, border-color 160ms, background 160ms',
 };
+
+// Disabled still has to be legible. It should read as "not available now",
+// not as "smudge" — a reader at the last page should be able to see that the
+// forward arrow exists and has stopped, rather than wonder where it went.
+const btnDisabled = {
+  ...btn,
+  color: '#6f6f7a',
+  background: 'rgba(20,20,26,0.7)',
+  cursor: 'default',
+};
+
+/* ============================================================
+   Reader type size
+
+   Millbrook's reader lets a reader set their own size and this one did not,
+   which is a real omission: the page is sized to the viewport, so someone on a
+   large display reading at arm's length has no way to make the prose bigger.
+
+   The scale MULTIPLIES the container-query clamp rather than replacing it, so
+   type still tracks the page — a reader's preference and the responsive scale
+   compose instead of fighting.
+   ============================================================ */
+const TYPE_STOPS = [0.85, 0.92, 1, 1.12, 1.26, 1.42];
+const TYPE_KEY = 'climbers_type_scale';
+
+function useTypeScale() {
+  const [i, setI] = useState(TYPE_STOPS.indexOf(1));
+
+  // Read on mount, not during render: localStorage does not exist on the
+  // server, and reading it in the initial state would make the first client
+  // render disagree with the prerendered HTML.
+  useEffect(() => {
+    // getItem returns null when nothing is stored, and Number(null) is 0 —
+    // which is a VALID index here, the smallest stop. Coercing first therefore
+    // started every first-time reader at the smallest type instead of the
+    // default. Check for the absent key before converting.
+    const raw = window.localStorage.getItem(TYPE_KEY);
+    if (raw === null) return;
+    const saved = Number(raw);
+    if (Number.isInteger(saved) && TYPE_STOPS[saved] !== undefined) setI(saved);
+  }, []);
+
+  const set = useCallback((next) => {
+    const clamped = Math.max(0, Math.min(TYPE_STOPS.length - 1, next));
+    setI(clamped);
+    try { window.localStorage.setItem(TYPE_KEY, String(clamped)); } catch (e) { /* private mode */ }
+  }, []);
+
+  return {
+    scale: TYPE_STOPS[i],
+    index: i,
+    atMin: i === 0,
+    atMax: i === TYPE_STOPS.length - 1,
+    smaller: () => set(i - 1),
+    bigger: () => set(i + 1),
+  };
+}
 
 /**
  * The visible thickness of the paper still to come on each side.
@@ -307,6 +377,7 @@ export default function FlipBook({ volume, next = null }) {
   const [contents, setContents] = useState(false);
   const [chromeHidden, setChromeHidden] = useState(false);
   const [bars, setBars] = useState({ top: 0, bottom: 0 });
+  const typeSize = useTypeScale();
 
   const topBarRef = useRef(null);
   const botBarRef = useRef(null);
@@ -381,7 +452,7 @@ export default function FlipBook({ volume, next = null }) {
     const wake = () => {
       setChromeHidden(false);
       clearTimeout(id);
-      id = setTimeout(() => setChromeHidden(true), 3000);
+      id = setTimeout(() => setChromeHidden(true), 4500);
     };
     wake();
     const evs = ['pointermove', 'keydown', 'touchstart', 'pointerdown'];
@@ -440,7 +511,7 @@ export default function FlipBook({ volume, next = null }) {
     if (!l) return <BlankPage />;
     if (l.kind === 'opener') return <OpenerSpread spread={l.spread} side="left" />;
     if (l.kind === 'end') return <BlankPage />;
-    return <TextPage spread={l.spread} compact={false} />;
+    return <TextPage spread={l.spread} compact={false} typeScale={typeSize.scale} />;
   };
   const renderRight = (l) => {
     if (!l) return <BlankPage />;
@@ -454,7 +525,7 @@ export default function FlipBook({ volume, next = null }) {
     if (l.kind === 'opener') return <OpenerSpread spread={l.spread} side={null} compact />;
     if (l.kind === 'end') return <EndCard volume={volume} next={next} />;
     return p.half === 0
-      ? <TextPage spread={l.spread} compact />
+      ? <TextPage spread={l.spread} compact typeScale={typeSize.scale} />
       : <GraphicPage spread={l.spread} compact />;
   };
 
@@ -662,17 +733,76 @@ export default function FlipBook({ volume, next = null }) {
       </div>
 
       <Bar side="bottom" innerRef={botBarRef} hidden={chromeHidden}>
-        <button className="cl-focus" style={btn} onClick={() => setContents(true)}>
-          Contents
-        </button>
+        <span style={{ display: 'flex', gap: space(2), alignItems: 'center' }}>
+          <button className="cl-focus" style={btn} onClick={() => setContents(true)}>
+            Contents
+          </button>
+
+          {/* Type size. Two buttons rather than a popover: the whole control is
+              visible at a glance and needs no second interaction to discover. */}
+          <span
+            style={{
+              display: 'flex', alignItems: 'stretch',
+              border: `1px solid ${paper.rule}`, borderRadius: 3, overflow: 'hidden',
+              background: 'rgba(28,28,36,0.92)',
+            }}
+          >
+            <button
+              className="cl-focus"
+              aria-label="Smaller text"
+              onClick={typeSize.smaller}
+              disabled={typeSize.atMin}
+              style={{
+                ...(typeSize.atMin ? btnDisabled : btn),
+                border: 'none', borderRadius: 0, background: 'transparent',
+                fontSize: 11, padding: `${space(2)} ${space(3)}`,
+              }}
+            >
+              A&minus;
+            </button>
+            <span aria-hidden="true" style={{ width: 1, background: paper.rule }} />
+            <button
+              className="cl-focus"
+              aria-label="Larger text"
+              onClick={typeSize.bigger}
+              disabled={typeSize.atMax}
+              style={{
+                ...(typeSize.atMax ? btnDisabled : btn),
+                border: 'none', borderRadius: 0, background: 'transparent',
+                fontSize: 14, padding: `${space(2)} ${space(3)}`,
+              }}
+            >
+              A+
+            </button>
+          </span>
+        </span>
+
         <span style={{
-          fontFamily: face.display, fontSize: 10, letterSpacing: '0.22em', color: color.inkSoft,
+          fontFamily: face.display, fontSize: 11, fontWeight: 600,
+          letterSpacing: '0.18em', color: color.ink,
         }}>
           {spreadNo ? `${spreadNo} / ${String(volume.spreadCount).padStart(2, '0')}` : '—'}
         </span>
+
         <span style={{ display: 'flex', gap: space(2) }}>
-          <button className="cl-focus" style={btn} onClick={() => go('back')} disabled={atStart}>←</button>
-          <button className="cl-focus" style={btn} onClick={() => go('fwd')} disabled={atEnd}>→</button>
+          <button
+            className="cl-focus"
+            aria-label="Previous page"
+            style={atStart ? btnDisabled : btn}
+            onClick={() => go('back')}
+            disabled={atStart}
+          >
+            &larr;
+          </button>
+          <button
+            className="cl-focus"
+            aria-label="Next page"
+            style={atEnd ? btnDisabled : btn}
+            onClick={() => go('fwd')}
+            disabled={atEnd}
+          >
+            &rarr;
+          </button>
         </span>
       </Bar>
 
