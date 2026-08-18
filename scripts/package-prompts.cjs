@@ -57,6 +57,17 @@ const formatBlock = (isOpener) => (isOpener ? [
   'It spans both pages of an opening and each page shows one half, so compose the',
   'LEFT half and the RIGHT half to each work alone, and keep the centre clear of',
   'anything load-bearing — the gutter runs through it.',
+  '',
+  '>>> AND: NOT ONE READABLE CHARACTER ANYWHERE IN THE PICTURE. <<<',
+  'No words, no letters, no numbers, no captions, no signatures, no watermarks.',
+  'This applies to EVERY surface in the frame and it is the rule most often',
+  'broken: shop and bar signage, street and station names, transit boards,',
+  'arrivals lists, screens and displays, posters, banners, labels on machinery,',
+  'stencilled pipe and door numbers, logos, badges, insignia, and writing on a',
+  'page. A city full of signs is fine — the SIGNS themselves carry abstract',
+  'shape, colour and pattern instead of text, and screens carry abstract feed.',
+  'Where a plate needs handwriting, draw the rhythm and slope of writing with no',
+  'formed word in it. The page draws its own words; the plate never does.',
 ] : [
   '>>> FORMAT: SQUARE. 1:1. EQUAL WIDTH AND HEIGHT. <<<',
   'Check this before anything else. Not 4:3, not 3:2, not 16:9, not 5:4, not',
@@ -68,10 +79,21 @@ const formatBlock = (isOpener) => (isOpener ? [
   "The reader is looking at a square page and the plate fills it edge to edge, so any other",
   'ratio either leaves dead bands on the page or cuts the edges off the picture.',
   'If the image is wider than it is tall, the plate has failed.',
+  '',
+  '>>> AND: NOT ONE READABLE CHARACTER ANYWHERE IN THE PICTURE. <<<',
+  'No words, no letters, no numbers, no captions, no signatures, no watermarks.',
+  'This applies to EVERY surface in the frame and it is the rule most often',
+  'broken: shop and bar signage, street and station names, transit boards,',
+  'arrivals lists, screens and displays, posters, banners, labels on machinery,',
+  'stencilled pipe and door numbers, logos, badges, insignia, and writing on a',
+  'page. A city full of signs is fine — the SIGNS themselves carry abstract',
+  'shape, colour and pattern instead of text, and screens carry abstract feed.',
+  'Where a plate needs handwriting, draw the rhythm and slope of writing with no',
+  'formed word in it. The page draws its own words; the plate never does.',
 ]);
 const formatTail = (isOpener) => (isOpener
-  ? 'REMINDER, AND IT OVERRIDES ANY IMPULSE FROM THE COMPOSITION ABOVE: this plate is 2:1 LANDSCAPE — exactly twice as wide as it is tall.'
-  : 'REMINDER, AND IT OVERRIDES ANY IMPULSE FROM THE COMPOSITION ABOVE: this plate is SQUARE, 1:1 — equal width and height. Not landscape, not portrait, not nearly square.');
+  ? 'REMINDER, AND IT OVERRIDES ANY IMPULSE FROM THE COMPOSITION ABOVE: this plate is 2:1 LANDSCAPE — exactly twice as wide as it is tall, and there is NOT ONE READABLE CHARACTER anywhere in it.'
+  : 'REMINDER, AND IT OVERRIDES ANY IMPULSE FROM THE COMPOSITION ABOVE: this plate is SQUARE, 1:1 — equal width and height. Not landscape, not portrait, not nearly square. And there is NOT ONE READABLE CHARACTER anywhere in it — no signage text, no screen text, no numbers, no logos.');
 const isOpener = (p) => /opener/i.test(p.slug) || /opener/i.test(p.leaf);
 
 const nlMd = String.fromCharCode(10);
@@ -79,7 +101,7 @@ const EOL = String.fromCharCode(13) + String.fromCharCode(10);
 const TITLE = (() => {
   const spec = path.join('content', 'specs', SLUG + '.md');
   if (!fs.existsSync(spec)) return SLUG;
-  const m = /^title:s*(.+)$/m.exec(fs.readFileSync(spec, 'utf8'));
+  const m = /^title:[ \t]*(.+)$/m.exec(fs.readFileSync(spec, 'utf8'));
   return m ? m[1].trim().replace(/^["']|["']$/g, '') : SLUG;
 })();
 const index = [];
