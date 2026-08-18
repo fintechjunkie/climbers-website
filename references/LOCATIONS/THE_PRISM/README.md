@@ -9,7 +9,7 @@ Use `loc-the-prism.png` as the required visual reference whenever this location 
 
 ## What this has to hold
 
-Rainbow's bar at the end of the approach road to the Tower gate. Front door and a side entrance. A long bar with stools — Sable's is third from the wall — tables at the back and corner booths. p3 spreads 1-6 and 21-23.
+Rainbow's bar at the end of the approach road to the Tower gate. Four zones — bar, floor, booths, back room up a step — because p3 sets six plates here and one narrow room could only ever produce one shot. p3 spreads 1-6, and p4 spreads 8-10.
 
 ## How to lock this
 
