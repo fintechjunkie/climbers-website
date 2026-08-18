@@ -17,13 +17,13 @@
     "arc": "the-climb",
     "order": 2,
     "part": "Prologue II",
-    "title": "Not yet written",
-    "blurb": "The second prologue. Between an Architect's ascent and a registration morning there is a story the archive has not released yet.",
-    "status": "planned",
-    "href": null,
-    "cover": null,
-    "spreadCount": 0,
-    "words": 0
+    "title": "Off The Map",
+    "epigraph": "Malachus Archive, municipal record 44-C. Four months before the Registration. Glitch count, that month: nine.",
+    "blurb": "A grid contractor finds a pipe carrying water a god says does not exist, and a maintenance door that was painted shut sixty years ago. What is behind the door is a street. What is in his own notebook is worse.",
+    "href": "/climb/p2/read",
+    "cover": "/plates/p2-opener.jpg",
+    "spreadCount": 12,
+    "words": 2674
   },
   {
     "slug": "p3",

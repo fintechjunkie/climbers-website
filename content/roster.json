@@ -167,6 +167,31 @@
       "block": "Plainclothes Korinth security. Ordinary street clothes in muted colours, deliberately unremarkable, no uniform and no visible weapon. Adult, fit, average build — nothing memorable about any one of them. The tell is entirely behavioural: they hold a wider spacing than civilians do, they move at one shared pace, and they orient on the same point without looking at each other. Reads as a group only to someone already looking for a group.",
       "notes": "Plainclothes, professional, moving with a coordinated looseness civilians do not have. Reads as a group only to someone looking for a group. Not uniformed and not obviously armed.",
       "inline": true
+    },
+    "COLE": {
+      "name": "Cole Porter",
+      "kind": "CHARACTER",
+      "ref": "char-cole-canonical.png",
+      "locked": true,
+      "block": "Human, mid-fifties, twenty-two years of physical work in the shoulders and hands. A DIAGNOSTIC LENS is mounted over the LEFT eye on a simple municipal rig — a working tool, scuffed and repaired, NOT elegant and not military. It reads grid signatures, and when it is active it throws a faint electric-blue cast on that side of his face and nowhere else. A PAPER NOTEBOOK rides in his chest pocket, worn soft at the corners, with a PENCIL. Heavy municipal work coat, tool kit, shoulder lamp. He is competent and unhurried and he is nobody's hero; draw him as a tradesman, never as an adventurer.",
+      "notes": "Grid contractor, twenty-two years. Narrator of Prologue II. The lens is over the LEFT eye; the notebook is the plot object and appears in five plates."
+    },
+    "THE_CARTOGRAPHER": {
+      "name": "The Man With The Book",
+      "kind": "CHARACTER",
+      "ref": "char-cartographer-canonical.png",
+      "locked": false,
+      "inline": true,
+      "block": "HE MUST NOT BE MEMORABLE, AND THAT IS THE ENTIRE DIRECTION. Cole can swear there was nothing unusual about him and afterward cannot say whether he was tall or short, old or young, or what his face looked like. Draw him accordingly: average height, average build, plain coat in a colour that is not a colour, a face with NO strong feature — no scar, no jaw, no distinctive nose, no memorable eyes, no augmentation, no expression worth naming. Keep him slightly turned, slightly soft, or slightly shadowed so the face never fully resolves, but do NOT hide it behind a mask, a hood or a blur effect — an obscured face is memorable and that is the opposite of what this is. He should read as somebody you have already forgotten while you are still looking at him. HE CARRIES A SMALL PAPER BOOK, worn soft at the corners and thick with use, and a PENCIL STUB. The book is the one thing about him anybody remembers, so the book is always clearly visible.",
+      "notes": "Takes names in a paper book in the lost block. Deliberately has NO canonical reference: a locked face would destroy the character. p2 spreads 7 and 8."
+    },
+    "SISTER_SILENCE": {
+      "name": "Sister Silence",
+      "kind": "CHARACTER",
+      "ref": "char-sister-silence-canonical.png",
+      "locked": true,
+      "block": "Valari. SMALL — noticeably smaller than the people around her, and never drawn as imposing. Old in a way that does not show in the skin, only in how completely still she is. Her circuits are the FAINTEST SILVER, barely lit, like frost on glass — this is the one Valari in the setting whose circuits are silver rather than the usual blue-to-magenta-violet drift, and that exception is the point, so do not correct it. THE HORROR IS THE KINDNESS. Her expression is genuine, warm, unfaked care — the real thing, not a mask and not a smirk. She is never sinister, never cold, never smiling strangely. Somebody looking at her face alone would think they were looking at a healer. Draw her that way and let the situation do the rest.",
+      "notes": "Takes memories. Everybody in Haven City knows the name the way you know about lightning. The Sandmen are hers. p2 spread 11."
     }
   },
   "wardrobe": {
@@ -293,6 +318,34 @@
       "locked": true,
       "block": "The broad street running from the Tower gate - visible small and gold at one end - down past THE PRISM, the building with the triangular faceted window over its entrance. Across the street from The Prism is a TRANSIT HUB, and mounted on a bracket above it is a SURVEILLANCE NODE: a compact armoured housing on a curved bracket with a cable, high enough that a failure drops it about eight feet to hang from that cable. Blocky angular Haven City architecture both sides, warm ochre morning light low along the street. The node is intact and powered unless a plate says otherwise.",
       "notes": "Runs from the Tower gate down past The Prism. Transit hub across the street with a surveillance node above it. p3 spreads 19-20."
+    },
+    "BLOCK_44_SURFACE": {
+      "name": "Block 44, street level",
+      "ref": "loc-block-44-surface.png",
+      "locked": false,
+      "block": "An ordinary Haven City residential street during a GLITCH STUTTER. Corridor and street lighting at HALF POWER, uneven, some fixtures out entirely. Doors along the block WEDGED OPEN with whatever came to hand and windows CRACKED open — a habit the block has developed, done without being told, the way shutters get closed before a storm. Older construction than the Tower district: heavy blockwork, exposed conduit runs, service hatches. At one end, the WATER RECLAMATION BUILDING with an ACCESS SHAFT behind it. Nothing is dramatic and nothing is ruined; this is a working neighbourhood having a bad evening.",
+      "notes": "p2 opener and spread 2."
+    },
+    "SUB_LEVEL_GALLERY": {
+      "name": "Block 44 sub-level service gallery",
+      "ref": "loc-sub-level-gallery.png",
+      "locked": false,
+      "block": "A long, low SERVICE GALLERY under Block 44. Pipe and conduit run along BOTH walls in tagged, numbered municipal runs. Standing water on the floor, two inches and rising, holding reflections. The far end of the gallery is BLACK — the only light is what Cole brings with him, a shoulder lamp throwing a long cone that ends in nothing. At the NORTH wall, a heavy unmarked FEEDER PIPE enters the gallery through what the map calls solid foundation, and four meters east of it the painted-over outline of a MAINTENANCE DOOR, sealed so long its hinges are under sixty years of paint. Pre-Seraph construction: older, heavier and cruder than anything on the surface.",
+      "notes": "p2 spreads 3, 4 and 5."
+    },
+    "THE_LOST_BLOCK": {
+      "name": "The block that fell off the map",
+      "ref": "loc-the-lost-block.png",
+      "locked": false,
+      "block": "An entire SUB-LEVEL STREET, underground and low-ceilinged, that the city has no record of. Strings of small WHITE LAMPS run its length, wired clean and spliced by somebody who knew what they were doing. LAUNDRY on lines between the support columns. A GARDEN of pale vegetables under GROW LAMPS, planted in beds built out of lifted paving stones. A CISTERN with a valve rig on it that is better work than most municipal jobs. Twenty or thirty small DWELLINGS with CURTAINS for doors. A child's CHALK DRAWING loops across the paving. THIS PLACE IS NOT A SLUM, A HIDEOUT OR A RUIN. It is maintained, lit, planted and lived in, and it is warmer and more human than anything on the surface. Somebody is always cooking. Draw it as a home.",
+      "notes": "p2 spreads 6, 7 and 8."
+    },
+    "WHITE_ROOM": {
+      "name": "The white room",
+      "ref": "loc-white-room.png",
+      "locked": false,
+      "block": "WHITE TILE walls, a WHITE CEILING, and light arriving from EVERY DIRECTION AT ONCE so that the room contains NO SHADOWS ANYWHERE. That is the defining fact and it must be absolute: no cast shadow under the table, none under a chin, none behind a figure, no falloff into any corner. Nothing in the room reads as three-dimensional in the normal way, because shadow is what normally does that. A single TABLE at the centre, and the table is COMFORTABLE — padded, clean, considerate, the sort of surface built for somebody's ease. That detail is the worst thing in the room and it must be legible. No restraints, no instruments, no medical clutter, no gore, no menace in the props. This room is frightening BECAUSE it is gentle.",
+      "notes": "p2 spread 11. The one plate in the volume with no palette mode."
     }
   }
 }
