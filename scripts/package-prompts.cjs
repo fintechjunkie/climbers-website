@@ -14,8 +14,13 @@ const OUT = path.join('prompt-packages', SLUG);
 const sheet = fs.readFileSync(SHEET, 'utf8');
 const blocks = sheet.split(/^---$/m).slice(1);
 
+// READ-ME-FIRST.txt is written by hand, not generated, so carry it across the
+// clean rebuild. Losing it once was enough.
+const README = path.join(OUT, 'READ-ME-FIRST.txt');
+const keep = fs.existsSync(README) ? fs.readFileSync(README) : null;
 fs.rmSync(OUT, { recursive: true, force: true });
 fs.mkdirSync(OUT, { recursive: true });
+if (keep) fs.writeFileSync(README, keep);
 
 const plates = [];
 for (const b of blocks) {
@@ -35,6 +40,36 @@ for (const b of blocks) {
   });
 }
 
+
+// The frame shape, resolved to ONE ratio for this plate and pushed to the top
+// and the bottom of the prompt. Stating both ratios in a single rule, forty
+// lines in, is what let the first p2 plates come back non-square.
+const formatBlock = (isOpener) => (isOpener ? [
+  '>>> FORMAT: 2:1 LANDSCAPE. EXACTLY TWICE AS WIDE AS IT IS TALL. <<<',
+  'Check this before anything else. Not 16:9, not 3:2, not 4:3, not square, not',
+  'portrait. A true 2:1 frame — if the height is anything other than half the',
+  'width, this plate is wrong no matter how good the picture inside it is.',
+  'It spans both pages of an opening and each page shows one half, so compose the',
+  'LEFT half and the RIGHT half to each work alone, and keep the centre clear of',
+  'anything load-bearing — the gutter runs through it.',
+] : [
+  '>>> FORMAT: SQUARE. 1:1. EQUAL WIDTH AND HEIGHT. <<<',
+  'Check this before anything else. Not 4:3, not 3:2, not 16:9, not 5:4, not',
+  'portrait, not landscape, not close to square — a true 1:1 frame with the same',
+  'number of pixels across as down.',
+  'COMPOSE THE PICTURE INTO A SQUARE. Do not compose it wide and crop it down, and',
+  'do not let a wide subject — a room, a horizon, a line of figures — pull the',
+  'frame wider. Stage the subject to fit the square instead.',
+  "The reader is looking at a square page and the plate fills it edge to edge, so any other",
+  'ratio either leaves dead bands on the page or cuts the edges off the picture.',
+  'If the image is wider than it is tall, the plate has failed.',
+]);
+const formatTail = (isOpener) => (isOpener
+  ? 'REMINDER, AND IT OVERRIDES ANY IMPULSE FROM THE COMPOSITION ABOVE: this plate is 2:1 LANDSCAPE — exactly twice as wide as it is tall.'
+  : 'REMINDER, AND IT OVERRIDES ANY IMPULSE FROM THE COMPOSITION ABOVE: this plate is SQUARE, 1:1 — equal width and height. Not landscape, not portrait, not nearly square.');
+const isOpener = (p) => /opener/i.test(p.slug) || /opener/i.test(p.leaf);
+
+const nlMd = String.fromCharCode(10);
 const index = [];
 plates.forEach((p, i) => {
   const n = String(i).padStart(2, '0');
@@ -51,7 +86,10 @@ plates.forEach((p, i) => {
   lines.push('', 'Shot: ' + p.shot);
   if (p.caption) lines.push('Caption (not drawn — alt text only): ' + p.caption);
   if (p.spoiler) lines.push('Spoiler check: ' + p.spoiler);
-  lines.push('', '-'.repeat(60), '', p.prompt, '');
+  const op = isOpener(p);
+  lines.push('', '-'.repeat(60), '');
+  lines.push(...formatBlock(op), '');
+  lines.push(p.prompt, '', formatTail(op), '');
   fs.writeFileSync(path.join(dir, 'PROMPT.txt'), lines.join('\r\n'));
 
   for (const a of p.attach) {
@@ -89,7 +127,7 @@ plates.forEach((p, i) => {
   if (p.depicts) md.push('**Depicts:** ' + p.depicts, '');
   if (p.hard) md.push('**Hard constraints:** ' + p.hard, '');
   if (p.spoiler) md.push('**Spoiler check:** ' + p.spoiler, '');
-  md.push('```', p.prompt, '```', '');
+  md.push('```', formatBlock(isOpener(p)).join(nlMd), '', p.prompt, '', formatTail(isOpener(p)), '```', '');
 });
 fs.writeFileSync(path.join(OUT, 'ALL-PROMPTS.md'), md.join('\n'));
 

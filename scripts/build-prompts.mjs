@@ -47,14 +47,11 @@ const onDisk = (rel, file) => Boolean(file) && existsSync(join(REFS, rel, file))
 const HARD = `
 
 HARD RULES FOR EVERY PLATE
-- Square, 1:1, for every plate EXCEPT a chapter opener. The reader's page is
-  square and the plate fills it edge to edge. Any other ratio leaves dead space
-  on the page or loses the edges of the composition.
-- A CHAPTER OPENER is 2:1 landscape instead, because it spans both pages of the
-  spread and each page shows its own half. An opener that is square gets shown
-  twice, once on each page, which is the one thing it must not do. Compose it so
-  the LEFT half and the RIGHT half each work as a picture on their own, and keep
-  the centre clear of anything load-bearing — the gutter runs through it.
+- THE FRAME SHAPE IS STATED AT THE TOP OF THIS PROMPT AND AGAIN AT THE BOTTOM.
+  It is the first thing to get right and the easiest thing to get wrong, because
+  a wrong ratio cannot be fixed later — the page is a fixed shape and the plate
+  fills it edge to edge. Obey the FORMAT line exactly and do not average it with
+  whatever ratio the composition seems to want.
 - No text, no lettering, no captions, no signatures, no watermarks anywhere in
   the image. The page draws its own furniture.
 - No frame, no border, no vignette. The plate IS the page.
