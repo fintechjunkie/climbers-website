@@ -1,7 +1,7 @@
 'use client';
 
 import { Fragment } from 'react';
-import Plate from './Plate';
+import Plate, { useBrokenImage } from './Plate';
 import { color, face, geometry, grainStyle, pageInset, paper, reader, space, type } from '@/lib/series';
 
 const PAGE_ATTR = { 'data-cl-page': '' };
@@ -264,6 +264,11 @@ export function OpenerSpread({ spread, side, compact }) {
   // one file, two windows onto it.
   const half = side === 'left' ? 'left center' : 'right center';
 
+  // Same pre-hydration 404 the shelf tiles hit: the error event fires before
+  // React attaches a handler, so onError alone left the browser's broken-image
+  // glyph sitting in the corner of an undrawn cover.
+  const [imgRef, broken, markBroken] = useBrokenImage(g.slug);
+
   return (
     <div
       {...PAGE_ATTR}
@@ -278,18 +283,40 @@ export function OpenerSpread({ spread, side, compact }) {
         padding: compact ? space(6) : space(8),
       }}
     >
-      {g.slug ? (
+      {g.slug && !broken ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img
+          ref={imgRef}
           src={`/plates/${g.slug}.jpg`}
           alt=""
           aria-hidden="true"
-          onError={(e) => { e.currentTarget.style.display = 'none'; }}
+          onError={markBroken}
           style={{
             position: 'absolute', inset: 0, width: '100%', height: '100%',
             objectFit: 'cover',
             objectPosition: compact || !side ? 'center' : half,
             opacity: 0.42,
+          }}
+        />
+      ) : null}
+
+      {/* The scrim the title sits on.
+       *
+       * A cover plate is a picture chosen for being striking, which makes it
+       * the worst possible background for small type: the epigraph was landing
+       * on lit sky and corroded metal at once and simply could not be read.
+       * Dimming the whole plate further would have cost the cover its impact,
+       * so the darkness is spent only where the words are — a soft pool under
+       * the type block that fades out well before the page edge, leaving the
+       * picture's corners at full strength. */}
+      {g.slug && !broken && side !== 'left' ? (
+        <div
+          aria-hidden="true"
+          style={{
+            position: 'absolute', inset: 0, pointerEvents: 'none',
+            background:
+              'radial-gradient(62% 50% at 50% 50%, rgba(2,2,3,0.90) 0%, '
+              + 'rgba(2,2,3,0.78) 42%, rgba(2,2,3,0.42) 66%, rgba(2,2,3,0) 82%)',
           }}
         />
       ) : null}
@@ -301,7 +328,8 @@ export function OpenerSpread({ spread, side, compact }) {
           {t.series ? (
             <div style={{
               fontFamily: face.display, fontSize: type.kicker, letterSpacing: '0.34em',
-              textTransform: 'uppercase', color: color.goldSoft, marginBottom: space(4),
+              textTransform: 'uppercase', color: color.gold, marginBottom: space(4),
+              textShadow: '0 1px 8px rgba(0,0,0,0.95)',
             }}>
               {t.series}
             </div>
@@ -309,9 +337,10 @@ export function OpenerSpread({ spread, side, compact }) {
           <h1 style={{
             margin: 0,
             fontFamily: face.display, fontWeight: 700,
-            fontSize: 'clamp(22px, 4.4cqh, 46px)', lineHeight: 1.12,
+            lineHeight: 1.12,
             letterSpacing: '0.04em', color: color.gold,
-            textShadow: '0 0 24px rgba(201,168,76,.22)',
+            fontSize: 'clamp(26px, 5.2cqh, 54px)',
+            textShadow: '0 0 24px rgba(201,168,76,.22), 0 2px 14px rgba(0,0,0,0.95)',
           }}>
             {t.title}
           </h1>
@@ -319,6 +348,7 @@ export function OpenerSpread({ spread, side, compact }) {
             <div style={{
               marginTop: space(4), fontFamily: face.display, fontSize: type.kicker,
               letterSpacing: '0.28em', textTransform: 'uppercase', color: color.cyan,
+              textShadow: '0 1px 8px rgba(0,0,0,0.95)',
             }}>
               {t.part}
             </div>
@@ -326,7 +356,8 @@ export function OpenerSpread({ spread, side, compact }) {
           {t.byline ? (
             <div style={{
               marginTop: space(6), fontFamily: face.body, fontStyle: 'italic',
-              fontSize: 'clamp(12px, 1.8cqh, 17px)', color: color.inkSoft,
+              fontSize: 'clamp(14px, 2.2cqh, 21px)', color: color.ink,
+              textShadow: '0 1px 10px rgba(0,0,0,0.9)',
             }}>
               {t.byline}
             </div>
@@ -336,8 +367,12 @@ export function OpenerSpread({ spread, side, compact }) {
               marginTop: space(5), paddingTop: space(4),
               borderTop: `1px solid ${paper.rule}`,
               fontFamily: face.body, fontStyle: 'italic',
-              fontSize: 'clamp(10.5px, 1.5cqh, 14px)', lineHeight: 1.55,
-              color: color.inkFaint,
+              // Was clamp(10.5px, 1.5cqh, 14px) in inkFaint, which is a value
+              // chosen to recede on PAPER. Over a picture it did not recede,
+              // it vanished.
+              fontSize: 'clamp(12.5px, 1.9cqh, 17px)', lineHeight: 1.6,
+              color: color.inkSoft,
+              textShadow: '0 1px 10px rgba(0,0,0,0.9)',
             }}>
               {t.epigraph}
             </div>

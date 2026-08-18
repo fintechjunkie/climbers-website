@@ -7,7 +7,7 @@ const ARC = 'the-climb';
 
 export const metadata = {
   title: 'The Climb · Climbers',
-  description: 'Three prologues from the years before the Registration.',
+  description: 'Four prologues from the years before the Registration.',
 };
 
 export default function ClimbShelf() {

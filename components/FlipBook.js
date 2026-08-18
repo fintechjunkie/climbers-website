@@ -681,11 +681,19 @@ export default function FlipBook({ volume, next = null }) {
             // The lit top edge of the sheet.
             '0 0 0 1px rgba(255,255,255,0.13)',
             '0 1px 0 rgba(255,255,255,0.10) inset',
-            // Contact shadow, then the soft body of it. Two shadows rather than
-            // one: a single large blur reads as a glow, and it is the tight
-            // dark line right under an object that tells you it is resting on
-            // something.
+            // The tight dark line right under the object, which is what tells
+            // you it is resting on something rather than floating. Stays ABOVE
+            // the glow so the halo can never wash it out.
             '0 4px 10px rgba(0,0,0,0.9)',
+            // Cyan halo. Order matters twice over here, because box-shadow
+            // paints the first layer on top. Below the contact line, so the
+            // book keeps sitting on the desk; above the soft black body,
+            // because underneath it the black simply ate the glow — 0.85 alpha
+            // spread over 70px leaves nothing for a 0.30 cyan to show through,
+            // and the halo came out visible only along the top edge, which is
+            // the one place the cast shadow does not reach.
+            ...reader.edgeGlow,
+            // The soft body of the cast shadow, carrying the book's weight.
             '0 34px 70px rgba(0,0,0,0.85)',
             '0 80px 150px rgba(0,0,0,0.6)',
           ].join(', '),

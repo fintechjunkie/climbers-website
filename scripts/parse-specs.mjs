@@ -206,6 +206,10 @@ function parseSpec(src, file) {
     title: meta.title,
     byline: meta.byline || '',
     epigraph: meta.epigraph || '',
+    // The shelf card's selling line. The epigraph is an archive citation and
+    // reads as one; a card needs a sentence that tells a stranger what the
+    // volume IS. Optional, so a spec written before this existed still parses.
+    blurb: meta.blurb || '',
     source: file,
     spreads,
   };
@@ -279,6 +283,7 @@ for (const file of files) {
     part: vol.part,
     title: vol.title,
     epigraph: vol.epigraph,
+    blurb: vol.blurb,
     href: `/${vol.arc === 'the-climb' ? 'climb' : vol.arc}/${vol.slug}/read`,
     cover: `/plates/${vol.spreads.find((s) => s.kind === 'opener')?.image?.slug || `${vol.slug}-opener`}.jpg`,
     spreadCount: story.length,
@@ -297,6 +302,16 @@ for (const file of files) {
  * It lives in public/data/ beside site.json, which is where that page already
  * looks for its content.
  */
+/* Planned-but-unwritten volumes go into the manifest too, flagged, so the
+   static homepage can show the shape of an arc the way the React shelf does.
+   Without them the homepage jumped Prologue I -> Prologue III and the missing
+   tile read as a bug rather than as work in progress. */
+const planned = JSON.parse(readFileSync(join(ROOT, 'content', 'planned.json'), 'utf8'));
+for (const p of planned) {
+  if (manifest.some((v) => v.slug === p.slug)) continue;  // it got written
+  manifest.push({ ...p, status: 'planned', href: null, cover: null, spreadCount: 0, words: 0 });
+}
+
 manifest.sort((a, b) => (a.arc === b.arc ? a.order - b.order : a.arc < b.arc ? 1 : -1));
 const manifestJson = `${JSON.stringify(manifest, null, 2)}\n`;
 const manifestPath = join(ROOT, 'public', 'data', 'volumes.json');

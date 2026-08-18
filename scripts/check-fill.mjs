@@ -22,7 +22,7 @@
    almost always to trim the spread or split it, not to shrink the type.
    ============================================================ */
 
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import puppeteer from 'puppeteer-core';
 
 const BASE = process.env.FILL_BASE || 'http://localhost:3399';
@@ -50,12 +50,19 @@ const VIEWPORTS = [
   { w: 360, h: 740, label: 'small android' },
 ];
 
-const TARGETS = [
-  { url: '/climb/p1/read', count: 13, name: 'p1' },
-  { url: '/climb/p3/read', count: 23, name: 'p3' },
-  { url: '/tales/t1/read', count: 4, name: 't1' },
-  { url: '/tales/t2/read', count: 4, name: 't2' },
-];
+/**
+ * What to measure, read from the manifest the parser generates.
+ *
+ * This was a hand-kept list and it had drifted: t2 was listed at 4 spreads
+ * when it has 5, so its last page had never been measured, and p3 was listed
+ * at 23 when it had 24. A stale count here does not fail — it silently skips
+ * pages, which is the worst way for a checker to be wrong. The manifest is
+ * regenerated from the specs on every `npm run parse`, so deriving from it
+ * means a new volume is measured the moment it exists.
+ */
+const TARGETS = JSON.parse(
+  readFileSync(new URL('../public/data/volumes.json', import.meta.url), 'utf8'),
+).map((v) => ({ url: v.href, count: v.spreadCount, name: v.slug }));
 
 const browser = await puppeteer.launch({ executablePath: exe, headless: 'new', args: ['--no-sandbox'] });
 

@@ -6,10 +6,24 @@
     "part": "Prologue I",
     "title": "The Architect's Ascent",
     "epigraph": "Malachus Archive, restricted entry. Fifteen months before the Registration. Glitch count, that month: six.",
+    "blurb": "An Architect climbs the Tower he wrote, past thirty levels built to test what a man believes he is, to ask a question of the god he made. Forty-seven days, start to finish. Nobody has come close since.",
     "href": "/climb/p1/read",
     "cover": "/plates/p1-opener.jpg",
     "spreadCount": 13,
     "words": 3018
+  },
+  {
+    "slug": "p2",
+    "arc": "the-climb",
+    "order": 2,
+    "part": "Prologue II",
+    "title": "Not yet written",
+    "blurb": "The second prologue. Between an Architect's ascent and a registration morning there is a story the archive has not released yet.",
+    "status": "planned",
+    "href": null,
+    "cover": null,
+    "spreadCount": 0,
+    "words": 0
   },
   {
     "slug": "p3",
@@ -18,10 +32,24 @@
     "part": "Prologue III",
     "title": "The Registration",
     "epigraph": "Malachus Archive, public record. Registration Day. Glitch count, that month: eleven.",
+    "blurb": "Six strangers drink in the same bar the night before the climb, and a bartender who has read nineteen years of registration eves reads them one at a time. In the morning they walk to a wall and tell a god the truest thing they carry.",
     "href": "/climb/p3/read",
     "cover": "/plates/p3-opener.jpg",
-    "spreadCount": 24,
-    "words": 5602
+    "spreadCount": 13,
+    "words": 3137
+  },
+  {
+    "slug": "p4",
+    "arc": "the-climb",
+    "order": 4,
+    "part": "Prologue IV",
+    "title": "The Eleventh",
+    "epigraph": "Malachus Archive, public record. Registration Day, 09:14. Every screen in Haven City held forty seconds of white light. What was said during them is reproduced here unedited.",
+    "blurb": "A god interrupts its own ceremony to put its throne on the table, and three hundred people discover they were standing in the last quiet morning Haven City would get. By the time the gate closes, six climbers are the most valuable people in the city and none of them know it yet.",
+    "href": "/climb/p4/read",
+    "cover": "/plates/p4-opener.jpg",
+    "spreadCount": 11,
+    "words": 2469
   },
   {
     "slug": "t1",
@@ -30,6 +58,7 @@
     "part": "Tale",
     "title": "The Delivery",
     "epigraph": "A courier, a sealed pouch, and a name he recognised.",
+    "blurb": "A sealed pouch with black wax, a destination he should have read first, and a name on the manifest that a courier in Haven City does not want to recognise.",
     "href": "/tales/t1/read",
     "cover": "/plates/t1-opener.jpg",
     "spreadCount": 4,
@@ -42,6 +71,7 @@
     "part": "Tale",
     "title": "Seven",
     "epigraph": "Six was the number he helped escape. The child tonight would make seven.",
+    "blurb": "Six was the number he had helped out of the building. Phoenix had eight minutes, a corridor with no cameras, and a child who had already worked out more than the adults thought she had.",
     "href": "/tales/t2/read",
     "cover": "/plates/t2-opener.jpg",
     "spreadCount": 5,

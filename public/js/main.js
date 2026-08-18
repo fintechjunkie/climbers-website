@@ -110,15 +110,29 @@ const volumesForArc = arc => VOLUMES.filter(v => v.arc === arc);
  * An <a>, not a div with a click handler, because it navigates. That gets
  * middle-click, cmd-click, "copy link" and the status bar for free, and it is
  * reachable by keyboard without binding anything.
+ *
+ * The card carries text under the plate rather than the plate alone. A wall of
+ * unlabelled squares asks a visitor to guess what they are clicking; the same
+ * squares with a part, a title and two sentences of what the volume IS let
+ * somebody choose. The blurb comes from the spec front matter through
+ * data/volumes.json, so the shelf and the reader cannot disagree about it.
  */
 function volumeCard(vol, className) {
-  const card = document.createElement('a');
-  card.className = className;
-  card.href = vol.href;
+  // A planned volume is a <div>, not an <a>. Rendering it as a dead link would
+  // put it in the tab order and give it a hover state and a status-bar URL for
+  // a page that does not exist.
+  const live = vol.status !== 'planned';
+  const card = document.createElement(live ? 'a' : 'div');
+  card.className = className + (live ? '' : ' card-planned');
+  if (live) card.href = vol.href;
+  else card.setAttribute('aria-disabled', 'true');
+
+  const frame = document.createElement('div');
+  frame.className = 'card-frame';
 
   const img = document.createElement('img');
-  img.src = vol.cover;
-  img.alt = vol.title;
+  img.src = vol.cover || '';
+  img.alt = live ? vol.title : '';
   img.loading = 'lazy';
   img.onerror = () => {
     // The cover plate is not made yet. Fall back to a titled panel rather than
@@ -132,13 +146,50 @@ function volumeCard(vol, className) {
     );
     img.onerror = null; // prevent infinite loop
   };
+  frame.appendChild(img);
+
+  const body = document.createElement('div');
+  body.className = 'card-body';
+
+  const kicker = document.createElement('div');
+  kicker.className = 'card-kicker';
+  kicker.textContent = vol.part || '';
 
   const label = document.createElement('div');
   label.className = 'card-label';
   label.textContent = vol.title;
 
-  card.appendChild(img);
-  card.appendChild(label);
+  body.appendChild(kicker);
+  body.appendChild(label);
+
+  if (vol.blurb) {
+    const blurb = document.createElement('p');
+    blurb.className = 'card-blurb';
+    blurb.textContent = vol.blurb;
+    body.appendChild(blurb);
+  }
+
+  const foot = document.createElement('div');
+  foot.className = 'card-foot';
+  if (live) {
+    const read = document.createElement('span');
+    read.className = 'card-read';
+    read.textContent = 'Read →';
+    const meta = document.createElement('span');
+    meta.className = 'card-meta';
+    meta.textContent = (vol.spreadCount || 0) + ' spreads';
+    foot.appendChild(read);
+    foot.appendChild(meta);
+  } else {
+    const soon = document.createElement('span');
+    soon.className = 'card-meta';
+    soon.textContent = 'Soon';
+    foot.appendChild(soon);
+  }
+  body.appendChild(foot);
+
+  card.appendChild(frame);
+  card.appendChild(body);
   return card;
 }
 

@@ -15,7 +15,7 @@ import { color, face, paper, reader, space } from '@/lib/series';
  * Both paths are kept: the ref covers the pre-hydration failure and the
  * handler covers a later one.
  */
-function useBrokenImage(src) {
+export function useBrokenImage(src) {
   const ref = useRef(null);
   const [failed, setFailed] = useState(false);
 

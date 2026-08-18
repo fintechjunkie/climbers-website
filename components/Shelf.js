@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { PlatePlaceholder } from './Plate';
+import { PlatePlaceholder, useBrokenImage } from './Plate';
 import { color, face, paper, space } from '@/lib/series';
 
 /**
@@ -14,9 +14,17 @@ import { color, face, paper, space } from '@/lib/series';
  */
 export function Tile({ volume, href }) {
   const live = volume.status !== 'planned';
-  const [failed, setFailed] = useState(false);
   const cover = volume.spreads?.find((s) => s.kind === 'opener')?.image?.slug;
   const [hover, setHover] = useState(false);
+
+  /* The tile is prerendered, so the browser requests the cover from the static
+   * HTML long before React hydrates. For a volume whose opener plate is not
+   * drawn yet, the 404 fires with no listener attached and onError alone never
+   * hears it — two of the four tiles on The Climb sat there showing the
+   * browser's broken-image glyph instead of the "plate pending" placeholder.
+   * Plate already solved this, which is why the INTERIOR pages fell back
+   * correctly while the shelf did not. Same hook, one implementation. */
+  const [imgRef, broken, markBroken] = useBrokenImage(cover);
 
   const inner = (
     <>
@@ -24,12 +32,13 @@ export function Tile({ volume, href }) {
         width: '100%', aspectRatio: '1 / 1', overflow: 'hidden',
         border: `1px solid ${paper.ruleSoft}`, background: paper.stockAlt,
       }}>
-        {live && cover && !failed ? (
+        {live && cover && !broken ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
+            ref={imgRef}
             src={`/plates/${cover}.jpg`}
             alt=""
-            onError={() => setFailed(true)}
+            onError={markBroken}
             style={{
               width: '100%', height: '100%', objectFit: 'cover', display: 'block',
               transition: 'transform 400ms', transform: hover ? 'scale(1.04)' : 'none',
@@ -57,12 +66,18 @@ export function Tile({ volume, href }) {
         {volume.title}
       </div>
 
-      {volume.epigraph && live ? (
+      {/* The blurb, not the epigraph. An epigraph is an archive citation and
+          reads as one — it is atmosphere for somebody who has already decided
+          to open the volume. A shelf card is talking to somebody who has not,
+          so it needs the sentence that says what this IS. Falls back to the
+          epigraph for any volume written before blurbs existed. */}
+      {(volume.blurb || volume.epigraph) && live ? (
         <div style={{
-          fontFamily: face.body, fontStyle: 'italic', fontSize: 13.5, lineHeight: 1.5,
+          fontFamily: face.body, fontSize: 13.5, lineHeight: 1.55,
+          fontStyle: volume.blurb ? 'normal' : 'italic',
           color: color.inkSoft, flex: 1,
         }}>
-          {volume.epigraph}
+          {volume.blurb || volume.epigraph}
         </div>
       ) : <div style={{ flex: 1 }} />}
 

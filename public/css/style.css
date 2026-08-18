@@ -41,20 +41,39 @@ img{max-width:100%;display:block}
 .section-title{font-family:'Orbitron',sans-serif;font-size:2rem;color:#c9a84c;text-align:center;margin-bottom:2.5rem;letter-spacing:.08em;text-transform:uppercase}
 
 /* ===== CHAPTERS GRID ===== */
-.chapters-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.5rem}
-.chapter-card{background:#1a1a1a;border-radius:12px;overflow:hidden;cursor:pointer;transition:transform .25s,box-shadow .25s;border:1px solid #262626}
-.chapter-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(201,168,76,.15)}
+/* Cards carry text now, so the track has to be wide enough to set a sentence
+   in. Under about 240px the blurb breaks to three words a line and the card
+   reads as a paragraph of debris rather than a description. */
+.chapters-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:1.5rem;align-items:stretch}
+.chapter-card{display:flex;flex-direction:column;background:#1a1a1a;border-radius:12px;overflow:hidden;cursor:pointer;transition:transform .25s,box-shadow .25s,border-color .25s;border:1px solid #262626;border-top:3px solid #8c7433;color:inherit}
+.chapter-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(201,168,76,.15);border-top-color:#c9a84c;text-decoration:none}
 .chapter-card img{width:100%;aspect-ratio:1/1;object-fit:cover;transition:filter .3s}
 .chapter-card:hover img{filter:brightness(1.1)}
-.chapter-card .card-label{display:none}
 
 /* ===== TALES GRID ===== */
-.tales-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1rem}
-.tale-card{background:#1a1a1a;border-radius:12px;overflow:hidden;cursor:pointer;transition:transform .25s,box-shadow .25s;border:1px solid #262626}
-.tale-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(201,168,76,.15)}
+.tales-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:1.5rem;align-items:stretch}
+.tale-card{display:flex;flex-direction:column;background:#1a1a1a;border-radius:12px;overflow:hidden;cursor:pointer;transition:transform .25s,box-shadow .25s,border-color .25s;border:1px solid #262626;border-top:3px solid #8c7433;color:inherit}
+.tale-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(201,168,76,.15);border-top-color:#c9a84c;text-decoration:none}
 .tale-card img{width:100%;aspect-ratio:1/1;object-fit:cover;transition:filter .3s}
 .tale-card:hover img{filter:brightness(1.1)}
-.tale-card .card-label{display:none}
+
+/* ===== SHELF CARD TEXT (chapters and tales share it) ===== */
+/* card-body is the flex child that grows, and the blurb inside it grows in
+   turn, so the footer rule sits on the bottom edge of every card in a row
+   regardless of how long the blurb is. Ragged footers were the giveaway that
+   these were separate boxes rather than one shelf. */
+.card-frame{position:relative;overflow:hidden}
+.card-body{display:flex;flex-direction:column;gap:.5rem;padding:1rem 1.1rem 1.1rem;flex:1}
+.card-kicker{font-family:'Orbitron',sans-serif;font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:#8c7433}
+.card-label{font-family:'Orbitron',sans-serif;font-size:1.05rem;line-height:1.25;letter-spacing:.03em;color:#c9a84c}
+.card-blurb{font-size:.86rem;line-height:1.55;color:#a8a8b0;flex:1;margin:0}
+.card-foot{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;margin-top:.35rem;padding-top:.65rem;border-top:1px solid #262626;font-family:'Orbitron',sans-serif;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase}
+.card-read{color:#7fefef}
+.card-meta{color:#5c5c66}
+.card-planned{opacity:.5;cursor:default;border-top-color:#262626}
+.card-planned:hover{transform:none;box-shadow:none;border-top-color:#262626}
+.card-planned .card-label{color:#5c5c66}
+.card-planned img{filter:grayscale(1) brightness(.5)}
 
 /* ===== READER MODAL (full-screen overlay) ===== */
 .reader-modal{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.95);display:none;flex-direction:column;overflow:hidden;border-top:4px solid #0ff}
@@ -563,7 +582,7 @@ img{max-width:100%;display:block}
 
 /* ===== RESPONSIVE ===== */
 @media(max-width:600px){
-  .chapters-grid{grid-template-columns:repeat(2,1fr);gap:1rem}
+  .chapters-grid,.tales-grid{grid-template-columns:1fr;gap:1.25rem}
   .gallery-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}
   .hero-subtitle{height:7rem;font-size:clamp(.8rem,3.5vw,.95rem)}
   .nav{gap:.75rem;font-size:.7rem}
