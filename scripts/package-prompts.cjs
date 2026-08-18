@@ -16,11 +16,16 @@ const blocks = sheet.split(/^---$/m).slice(1);
 
 // READ-ME-FIRST.txt is written by hand, not generated, so carry it across the
 // clean rebuild. Losing it once was enough.
-const README = path.join(OUT, 'READ-ME-FIRST.txt');
-const keep = fs.existsSync(README) ? fs.readFileSync(README) : null;
+// Hand-written notes at the top level of a package survive the clean rebuild.
+// READ-ME-FIRST.txt and any REVISE-*.txt are authored, not generated.
+const keepNames = fs.existsSync(OUT)
+  ? fs.readdirSync(OUT).filter((n) => /^(READ-ME-FIRST|REVISE-.*).txt$/.test(n))
+  : [];
+const kept = keepNames.map((n) => [n, fs.readFileSync(path.join(OUT, n))]);
+
 fs.rmSync(OUT, { recursive: true, force: true });
 fs.mkdirSync(OUT, { recursive: true });
-if (keep) fs.writeFileSync(README, keep);
+for (const [n, buf] of kept) fs.writeFileSync(path.join(OUT, n), buf);
 
 const plates = [];
 for (const b of blocks) {
