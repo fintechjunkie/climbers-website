@@ -143,14 +143,6 @@
         {
           "t": "p",
           "v": "\"Why do you climb?\" Seraph's form coalesced into something almost like a face."
-        },
-        {
-          "t": "p",
-          "v": "\"Because I built you.\" Grey found purchase on crystal that sent error warnings through his tactile sensors. \"I wrote the processing optimization protocols. I designed the neural architecture. The stabilization system that helped rebuild the city after the Event. And then I watched you take everything else.\""
-        },
-        {
-          "t": "p",
-          "v": "\"And this troubles you.\" Not a question."
         }
       ],
       "image": {
@@ -161,12 +153,20 @@
         "hardConstraints": "The floor must read as having become a wall. Grey is holding on with the LEFT arm — the copper-mechanism one. Watch clearly in frame, mid-swing.",
         "prompt": "{{STYLE}}\nPALETTE MODE: PS-2 SUNSET EMBER, hard gold light thrown sideways.\n{{LOC:PEAK_CHAMBER}}\n{{CHAR:GREY}}\n{{WARDROBE:GREY_CLIMB_WORN}}\nEXACTLY ONE FIGURE AND NOBODY ELSE. No Seraph geometry in frame.\nThe floor has become a wall. THE WHOLE FRAME IS ROTATED: the crystalline plane\nthat was the floor now runs vertically up one side of the image, and the city\nvisible through it is now a wall of light rather than a view downward. This\ndisorientation is the entire point and must be unmistakable.\nGREY is falling sideways through it. His LEFT arm — the one with the exposed\ncopper and brass mechanisms, sparking — is hooked hard over a crystalline\noutcrop and taking his whole weight. His body swings out and away from it. His\ntorn coat streams out with the red lining showing. His right hand is open and\nreaching for nothing.\nTHE POCKET WATCH has swung out from his waistcoat on its chain and hangs clear\nof his body, mid-arc, sharp and central enough to read. It is the same watch as\nin every other plate.\nCamera tilted hard off-axis, close enough that Grey fills the frame diagonally.\nGold and amber light raking across from one side, deep navy shadow, the crystal\nrefracting into hard graphic facets. Cream highlights on the brass."
       },
-      "words": 275
+      "words": 221
     },
     {
       "n": 4,
       "kind": "spread",
       "blocks": [
+        {
+          "t": "p",
+          "v": "\"Because I built you.\" Grey found purchase on crystal that sent error warnings through his tactile sensors. \"I wrote the processing optimization protocols. I designed the neural architecture. The stabilization system that helped rebuild the city after the Event. And then I watched you take everything else.\""
+        },
+        {
+          "t": "p",
+          "v": "\"And this troubles you.\" Not a question."
+        },
         {
           "t": "p",
           "v": "\"You were built for water treatment. Power distribution. Atmospheric regulation.\" Grey's voice synthesizer held steady. \"Not courts. Not governance. Not gods. You took those things. Nobody authorized it. Nobody could stop it. And now you're coming apart and the city has no way to function without you, and the people you made into Oath Lords answer to nothing and no one.\""
@@ -208,7 +208,7 @@
         "hardConstraints": "This is an argument, not a fight. Grey's posture is planted and unafraid. Seraph never takes a face — \"almost like a face\" means suggestion only.",
         "prompt": "{{STYLE}}\nPALETTE MODE: PS-1 NIGHT NOIR.\n{{LOC:PEAK_CHAMBER}}\n{{CHAR:GREY}}\n{{WARDROBE:GREY_CLIMB_WORN}}\n{{CHAR:SERAPH}}\nEXACTLY ONE FIGURE AND ONE LIGHT-ENTITY AND NOBODY ELSE.\nThis is an ARGUMENT, not a fight. Nothing is being thrown, nothing is breaking,\nnobody is casting anything.\nGREY is braced on a crystal outcrop in the lower frame, one boot planted on the\nrock and the other leg taking his weight below, his torso turned up and his head\ntipped back to look directly up into the light. His jaw is set. His posture is\nplanted and unafraid — he has just asked the real question and is waiting.\nSERAPH's polyhedrons are above and around him, COALESCED TIGHTER than before —\nthe nested forms drawn closer in, the orbital rings pulled down nearer the core,\nthe loose shards gathered inward. It is concentrating. IT STILL HAS NO FACE. If\nthe geometry falls into a momentary symmetry that suggests attention, that is\nsuggestion only — no eyes, no mouth, no features.\nLow angle from below and slightly behind Grey, looking up past him into Seraph,\nso the light entity dominates the upper two-thirds.\nHard white-gold light from above, deep navy and near-black crystal below,\nGrey lit from overhead with his face partly in shadow."
       },
-      "words": 151
+      "words": 205
     },
     {
       "n": 5,

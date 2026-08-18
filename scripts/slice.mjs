@@ -30,6 +30,17 @@
    scripts/check-fill.mjs is the authority — this is the cheap proxy that gets
    you close without starting a browser.
 
+   RECALIBRATED for IBM Plex Serif at 1.42 leading. Plex sets wider than the
+   Georgia these numbers were first fitted to: measured across 176 spread /
+   viewport pairs it costs +4.2 points of fill on average, and tightening the
+   leading from 1.48 gave back all but +1.4. FULL and CEILING came down from
+   340/342 to absorb the rest.
+
+   The proxy still under-costs dialogue. Prologue I spread 3 scored 329 here
+   and measured 117%: ten short quoted lines each burn a whole line plus its
+   gap, and Plex's wider glyphs wrap some of them twice. When a spread is
+   mostly dialogue, believe check-fill and not this file.
+
    ---- two ways to get the packing wrong ----
 
    1. Do NOT balance a part evenly. Minimising the fullest page pushes EVERY
@@ -54,8 +65,8 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const WORDS_PER_LINE = 11;
 const GAP = 4;
 const HEADING = 30;
-const FULL = 340;      // cost that measures ~100% fill at 1280x720
-const CEILING = 342;   // hard cap per page
+const FULL = 330;      // cost that measures ~100% fill at 1280x720
+const CEILING = 330;   // hard cap per page
 const TAIL_MIN = 150;  // a part's last page may be short, but not an orphan
 
 const W = (s) => s.trim().split(/\s+/).filter(Boolean).length;

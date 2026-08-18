@@ -52,10 +52,6 @@
         {
           "t": "p",
           "v": "Phoenix had seen this before. The adults always understood more than the children did."
-        },
-        {
-          "t": "p",
-          "v": "The girl's name was Rel'mia. She was seven years old according to the intake form, and she looked at Phoenix the way children looked at Synthetics, with the open assessment that adults had already learned to hide. His orange optical sensors tracked down to meet her level. She did not look away."
         }
       ],
       "image": {
@@ -65,12 +61,16 @@
         "depicts": "A Valari couple and their daughter at the intake desk. The father's hand on the girl's shoulder, the mother looking at the reflecting pool, and Rel'mia looking directly up at Phoenix while he processes the forms.",
         "hardConstraints": "Phoenix is a Synthetic with hot ORANGE-RED optical sensors, in the issued security-pattern service uniform. HIS SIDEARM STAYS HOLSTERED and both his hands are on the forms. Exactly three family members. The Sandman escort is at the door, background, not the subject. Rel'mia's look is OPEN ASSESSMENT, not fear. NOTHING HERE READS AS VIOLENT — he is doing paperwork."
       },
-      "words": 267
+      "words": 215
     },
     {
       "n": 2,
       "kind": "spread",
       "blocks": [
+        {
+          "t": "p",
+          "v": "The girl's name was Rel'mia. She was seven years old according to the intake form, and she looked at Phoenix the way children looked at Synthetics, with the open assessment that adults had already learned to hide. His orange optical sensors tracked down to meet her level. She did not look away."
+        },
         {
           "t": "p",
           "v": "He stamped the forms and directed the family to the waiting area. The Sandman escort nodded once and positioned himself by the door."
@@ -98,14 +98,6 @@
         {
           "t": "p",
           "v": "The Sandman looked at him for a moment with the flat evaluation that Sister Silence's followers used on everyone, the permanent assessment of whether a thing was useful or a problem. Phoenix kept his optical sensors at mid-level and his posture at the precise angle the facility's conduct protocols recommended for staff interactions. Furniture with good posture."
-        },
-        {
-          "t": "p",
-          "v": "\"The child is in the file as a secondary,\" the Sandman said. \"Don't let her wander. Last week one of them got into the north corridor and it delayed the evening sequence by forty minutes.\""
-        },
-        {
-          "t": "p",
-          "v": "\"I will manage the child,\" Phoenix said."
         }
       ],
       "image": {
@@ -115,12 +107,20 @@
         "depicts": "The Sandman evaluating Phoenix across the intake desk, reading the forms upside down. Phoenix holding a precisely neutral posture, optical sensors at mid-level, giving nothing.",
         "hardConstraints": "The threat is entirely in the flatness of the Sandman's attention. NEITHER FIGURE TOUCHES A WEAPON — no draw, no hand near the holster, no lean-in. Phoenix's posture is textbook-correct to the point of being a performance."
       },
-      "words": 225
+      "words": 235
     },
     {
       "n": 3,
       "kind": "spread",
       "blocks": [
+        {
+          "t": "p",
+          "v": "\"The child is in the file as a secondary,\" the Sandman said. \"Don't let her wander. Last week one of them got into the north corridor and it delayed the evening sequence by forty minutes.\""
+        },
+        {
+          "t": "p",
+          "v": "\"I will manage the child,\" Phoenix said."
+        },
         {
           "t": "p",
           "v": "The Sandman went back to his door. Phoenix went back to his terminal and started building the distraction."
@@ -140,7 +140,21 @@
         {
           "t": "p",
           "v": "He opened the maintenance log for the north wing and entered a coolant pressure fault in Junction Seven. False reading, precisely calibrated, the kind of alert that required immediate physical inspection by two staff members and generated a ten-minute gap in the secondary corridor's monitoring rotation. He had used this specific fault twice before. He would need to retire it after tonight and build a new one."
-        },
+        }
+      ],
+      "image": {
+        "slug": "t2-s03",
+        "shotType": "Screen study, close, over the shoulder",
+        "caption": "Processed. Released to registered guardian. Departure logged at the third bell.",
+        "depicts": "Phoenix's terminal showing Rel'mia's intake record being altered — status changed, a fabricated guardian signature, his own authorization code and timestamp. A coolant fault alert in the corner of the display.",
+        "hardConstraints": "The screen is the subject and the altered fields must be legible. Phoenix's hands at the terminal; face out of frame or in reflection only."
+      },
+      "words": 187
+    },
+    {
+      "n": 4,
+      "kind": "spread",
+      "blocks": [
         {
           "t": "p",
           "v": "Then he opened Rel'mia's intake file and changed her status. Processed. Released to registered guardian. Departure logged at the third bell. The entry carried his authorization code, his timestamp, and a guardian signature he had constructed from the city's public registration database three months ago for exactly this purpose. If anyone checked, the record would show she had never stayed."
@@ -152,21 +166,7 @@
         {
           "t": "p",
           "v": "He had eight minutes."
-        }
-      ],
-      "image": {
-        "slug": "t2-s03",
-        "shotType": "Screen study, close, over the shoulder",
-        "caption": "Processed. Released to registered guardian. Departure logged at the third bell.",
-        "depicts": "Phoenix's terminal showing Rel'mia's intake record being altered — status changed, a fabricated guardian signature, his own authorization code and timestamp. A coolant fault alert in the corner of the display.",
-        "hardConstraints": "The screen is the subject and the altered fields must be legible. Phoenix's hands at the terminal; face out of frame or in reflection only."
-      },
-      "words": 223
-    },
-    {
-      "n": 4,
-      "kind": "spread",
-      "blocks": [
+        },
         {
           "t": "h",
           "v": "The Corridor"
@@ -182,7 +182,21 @@
         {
           "t": "p",
           "v": "At the utility door, he stopped and crouched to her level."
-        },
+        }
+      ],
+      "image": {
+        "slug": "t2-s05",
+        "shotType": "Wide, from inside the doorway, looking out",
+        "caption": "\"Walk east. Don't stop.\"",
+        "depicts": "Phoenix holding the utility door open onto the service lane, Rel'mia stepping through into the dark. He is straightening from her level.",
+        "hardConstraints": "We see her from BEHIND, going. His face is toward her. His sidearm stays holstered and both hands are on the door. Do not depict her parents. The door is open, not closing."
+      },
+      "words": 195
+    },
+    {
+      "n": 5,
+      "kind": "spread",
+      "blocks": [
         {
           "t": "p",
           "v": "He told her the name of the street outside. He told her to walk east and find the market at the third intersection, and that there were Valari vendors there who would help her if she told them she was alone. He told her not to run until she was two blocks clear."
@@ -212,14 +226,8 @@
           "v": "The Inner Chamber logged two new procedures that evening. His name appeared nowhere near either of them."
         }
       ],
-      "image": {
-        "slug": "t2-s04",
-        "shotType": "Wide, from inside the doorway, looking out",
-        "caption": "\"Walk east. Don't stop.\"",
-        "depicts": "Phoenix holding the utility door open onto the service lane, Rel'mia stepping through into the dark. He is straightening from her level.",
-        "hardConstraints": "We see her from BEHIND, going. His face is toward her. His sidearm stays holstered and both hands are on the door. Do not depict her parents. The door is open, not closing."
-      },
-      "words": 252
+      "image": {},
+      "words": 135
     }
   ]
 }

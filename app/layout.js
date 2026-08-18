@@ -1,4 +1,4 @@
-import { Orbitron } from 'next/font/google';
+import { IBM_Plex_Serif, Orbitron } from 'next/font/google';
 import './globals.css';
 
 // Self-hosted at build time by next/font, so there is no runtime request to
@@ -9,6 +9,17 @@ const orbitron = Orbitron({
   weight: ['400', '600', '700'],
   display: 'swap',
   variable: '--font-orbitron',
+});
+
+// Prose. Self-hosted at build time like Orbitron, so no runtime request and
+// no layout shift. Weights are what the reader actually uses: regular, italic
+// for emphasis, and 600 for the section headings inside a spread.
+const plexSerif = IBM_Plex_Serif({
+  subsets: ['latin'],
+  weight: ['400', '600'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+  variable: '--font-plex-serif',
 });
 
 export const metadata = {
@@ -25,7 +36,7 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={orbitron.variable}>
+    <html lang="en" className={`${orbitron.variable} ${plexSerif.variable}`}>
       <body>{children}</body>
     </html>
   );
