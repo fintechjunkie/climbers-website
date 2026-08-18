@@ -17,7 +17,7 @@
     "images": "node scripts/build-images.mjs",
     "images:check": "node scripts/build-images.mjs --check",
     "refs": "node scripts/refs.mjs",
-    "prompts": "node scripts/refs.mjs && node scripts/build-prompts.mjs",
+    "prompts": "node scripts/parse-specs.mjs && node scripts/refs.mjs && node scripts/build-prompts.mjs",
     "slice": "node scripts/slice.mjs",
     "package": "node scripts/package-prompts.cjs",
     "package:check": "node scripts/check-packages.cjs"
