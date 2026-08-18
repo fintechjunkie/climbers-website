@@ -14,3 +14,8 @@ out/
 # Regenerate with `npm run prompts`, `npm run package`, `node scripts/package-regen.cjs`.
 plate-sources/
 prompt-packages/
+
+# Canonical drop inbox: files here are temporary and get committed at their
+# real path under references/<TYPE>/<TOKEN>/ instead.
+references/_INBOX/*
+!references/_INBOX/README.md
