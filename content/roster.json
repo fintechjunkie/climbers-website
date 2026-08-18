@@ -1,16 +1,16 @@
 {
   "_": "The canonical locks. This is the machine-readable half of references/ — every entity here gets a folder there, scaffolded by `npm run refs`. Prompts in content/specs/*.md reference these by token: {{STYLE}}, {{CHAR:GREY}}, {{WARDROBE:GREY_POST_OATH}}, {{LOC:PEAK_CHAMBER}}. Nothing is edited by hand in the generated prompt sheets; edit here and in the specs.",
-  "styleName": "Climbers — Haven City",
-  "styleApproved": false,
-  "style": ">>> STYLE BLOCK NOT YET WRITTEN. Generate one canonical style plate, approve it, then paste the description here and set styleApproved to true. <<<",
+  "styleName": "CLIMBERS Pulp SciFi",
+  "styleApproved": true,
+  "style": "Bold retro-futurist pulp science-fiction illustration. Vintage pulp sci-fi poster energy with graphic-novel readability: screen-printed / lithographic texture, visible print grain, bold graphic shadow masses, crisp ink-like edge definition, strong silhouettes, selective detail rather than uniform micro-detail, restrained and controlled luminous accents, angular futuristic architecture, dramatic perspective, cinematic story composition.\n\nIt must read as ILLUSTRATED AND PRINTED. Not photorealistic, not glossy 3D, not airbrushed, not painterly-mushy.\n\nVALUE STRUCTURE - every plate carries three readable zones:\n  1. a dark anchor (foreground mass, silhouette or structure),\n  2. a midtone story field where most character and environment detail lives,\n  3. a bright focal region (sky, screen, sun, energy, signage, costume metal).\nIf all three are dark the plate has failed. If all three are bright it has no depth.\n\nCOLOUR OWNERSHIP - characters keep their own palette. The environment shifts by palette mode; the figures are not recoloured beyond believable scene lighting.\n\nAVOID - photoreal skin, glossy game-render materials, smooth airbrushed gradients, overall bloom, photographic lens flare, fog that destroys shape, uniform tint over all materials, black crush, tiny detail everywhere, rainbow noise.\n\nPALETTE MODE is named per plate. The four locked modes:\n  PS-1 NIGHT NOIR - deep navy, near-black blue, charcoal, burnt orange, red-orange, small electric blue accents, limited cream. Darkest mode; faces and silhouettes still readable.\n  PS-2 SUNSET EMBER - burnt orange, amber, warm ochre, cream, deep navy, dark teal-blue, selective cobalt. Medium-bright, warm field against darker figures.\n  PS-3 SKYLINE DAY - pale cyan sky, cream and warm paper, medium blue, navy, sand, orange accents. Brightest mode; large light areas, dark linework for contrast.\n  PS-4 FESTIVAL NEON - magenta, violet, electric blue, cyan, hot pink, amber highlights, dark navy anchors. Saturated with a clear hierarchy, never uniform saturation.",
   "styleNotes": "The site's existing chapter art is the reference point: high-contrast neon cyberpunk, deep blacks, gold and cyan accents, volumetric light, painterly rather than photographic. Write the block once, lock it, and put it at the HEAD of every prompt — Millbrook found that a style clause sitting in the negative block at the foot gets ignored, and hoisting it to the head fixed it on one pass.",
   "characters": {
     "GREY": {
       "name": "Grey",
       "kind": "CHARACTER",
       "ref": "char-grey-canonical.png",
-      "locked": false,
-      "block": "",
+      "locked": true,
+      "block": "Synthetic. A pale polished-steel skull-face with fine seams, humanlike in structure but unmistakably machined; the RIGHT eye is a large ornate amber-red lens like a watch movement, and the LEFT is a smaller pale optic - the two are NOT the same and never become the same. Skeletal chrome-and-brass mechanical hands and forearms. Dressed as a Victorian gentleman: black three-piece suit, high collar, dark cravat, and a long dark greatcoat with a DEEP RED LINING that shows when it moves. Gold pocket watch on a gold chain at the waistcoat - ornate, sunburst dial. Understated brass and gold hardware throughout. Tall, and holds himself with composure. HE CARRIES TWO WATCHES. The larger one hanging on the long gold chain from the waistcoat is THE WATCH — the plot object across four plates, and it must be identical in every one: same case, same chain, same sunburst dial. The smaller piece fixed higher at the cravat is a decorative fob and is NEVER the subject of a plate. When a plate says \"the watch\", it means the one on the long chain.",
       "notes": "Synthetic. Brass plating, torn Victorian coat, copper mechanisms in the LEFT arm, pocket watch on a chain. The watch is a plot object across four spreads and must be identical in every one. Appears in p1 spreads 1-11 pre-oath.",
       "wardrobe": [
         "GREY_CLIMB_WORN",
@@ -21,16 +21,16 @@
       "name": "Seraph",
       "kind": "ENTITY",
       "ref": "char-seraph-canonical.png",
-      "locked": false,
-      "block": "",
+      "locked": true,
+      "block": "Not a person and never a person. Rotating polyhedrons of white and gold light - layered diamond and arrowhead forms nested inside each other, ringed by concentric gold orbital bands at several angles, small gold shards suspended in the air around them, and a vertical shaft of white light through the centre. NEVER a face. NEVER a body. NEVER eyes, limbs, wings or a figure. Where the prose says 'almost like a face' that means suggestion only - a momentary symmetry, never features. Beautiful the way an equation is beautiful: precise, cold, and not designed to comfort anyone. Brightness and rotation speed carry its mood; the geometry itself does not change.",
       "notes": "Rotating polyhedrons of white and gold light. NEVER a face, never a body — 'almost like a face' means suggestion only. Beautiful the way an equation is beautiful."
     },
     "BONE_PATROL": {
       "name": "a Bone Patrol officer",
       "kind": "FACTION UNIFORM",
       "ref": "char-bone-patrol-canonical.png",
-      "locked": false,
-      "block": "",
+      "locked": true,
+      "block": "Absalom's enforcers. Heavy segmented gunmetal armour, near-black and matte, with narrow ORANGE-AMBER light strips let into the chest, shoulders, forearms, thighs and shins. The head is a pale steel SKULL faceplate - brow, cheekbones and teeth clearly readable as a skull - with deep orange-red optics in the sockets. An amber skull sigil on a hexagonal plate at the right chest. Utility belt with pouches. Big through the shoulders; built to be looked at. A heavy HAMMER at the hip is standard issue and must be added when a plate calls for it - the canonical reference does not show it. THE HAMMER IS NEVER RAISED, never swung, never in both hands in any specced plate: it stays holstered at the hip.",
       "notes": "Absalom's people. Chrome skull-face, red optics, hammer at the hip. The hammer is NEVER raised in any plate we have specced. Appears in p1 spreads 5-7 and t1 spread 3."
     },
     "PIXELS": {
@@ -50,24 +50,26 @@
       "kind": "CHARACTER",
       "ref": "char-sevoran-canonical.png",
       "locked": false,
-      "block": "",
-      "notes": "Valari, lives three doors down from Pixels. Dries protein strips on the hallway radiator to discourage rats. In t1 spread 4 her expression is recognition and mild curiosity — NOT yet fear."
+      "block": "Valari woman, adult. Blue skin, pointed ears, pale luminous eyes. Faint circuit tracery at the temples and along the neck, drifting slowly between soft blue and dusty magenta-violet, low and steady — she is not suppressing them, there is simply not much there. Practical indoor clothes, worn soft, nothing decorative: this is someone answering her own door at night. Tired around the eyes. Not frightened, not hostile. In her one plate her expression is recognition and mild curiosity and NOT yet fear — she has no reason yet to be anything else. VALARI CIRCUIT RULE: circuits are never one fixed colour — they drift slowly between a soft blue and a dusty magenta-violet, both low-saturation. Never hot pink, never electric blue, never neon. Brightness carries the emotion; the hue drift is constant and ambient.",
+      "notes": "Valari, lives three doors down from Pixels. Dries protein strips on the hallway radiator to discourage rats. In t1 spread 4 her expression is recognition and mild curiosity — NOT yet fear.",
+      "inline": true
     },
     "PHOENIX": {
       "name": "Phoenix",
       "kind": "CHARACTER",
       "ref": "char-phoenix-canonical.png",
-      "locked": false,
-      "block": "",
-      "notes": "Synthetic, designation Unit-3317, intake coordinator. ORANGE optical sensors. Holds a textbook-correct posture to the point of performance — 'furniture with good posture'."
+      "locked": true,
+      "block": "Synthetic, designation Unit-3317, intake coordinator. Humanlike proportions, slim rather than heavy. Faceted pale-steel faceplate with a smooth brow and cheeks, segmented ear housings, an exposed articulated neck; the optics are hot ORANGE-RED and are his single most identifying feature. Segmented steel mechanical hands and forearms. Dark charcoal-navy service uniform with narrow ORANGE accent striping at collar, shoulders, thighs, knees and boots, a utility belt with pouches, a plain sidearm at the right thigh, armoured knee and shin plating and heavy service boots. HE IS ISSUED A SECURITY-PATTERN CHASSIS AND KIT — the Center dresses its intake staff this way — but he is administrative staff and the kit is never used: THE SIDEARM STAYS HOLSTERED IN EVERY SPECCED PLATE and both hands stay visible and empty of weapons. His posture is textbook-correct to the point of being a performance. Not friendly, not threatening. Impeccable.",
+      "notes": "Synthetic, designation Unit-3317, intake coordinator. Orange-red optical sensors. Issued a security-pattern chassis with a holstered sidearm he never draws. Holds a textbook-correct posture to the point of performance - 'furniture with good posture'."
     },
     "RELMIA": {
       "name": "Rel'mia",
       "kind": "CHARACTER",
       "ref": "char-relmia-canonical.png",
       "locked": false,
-      "block": "",
-      "notes": "Valari, seven years old. Her look is OPEN ASSESSMENT — the way children look at Synthetics before they learn not to. Never afraid in any specced plate."
+      "block": "Valari girl, seven years old. Blue skin, pointed ears, pale luminous eyes, small circuit tracery at the temples only, drifting slowly between soft blue and dusty magenta-violet. Plain clothes chosen by a parent. She looks directly and steadily at whatever she is looking at — OPEN ASSESSMENT, the way children look at Synthetics before they learn not to. Never afraid, never cowering, never tearful in any plate we have specced. Do not make her pitiable; she is the most composed person in either of her scenes. VALARI CIRCUIT RULE: circuits are never one fixed colour — they drift slowly between a soft blue and a dusty magenta-violet, both low-saturation. Never hot pink, never electric blue, never neon. Brightness carries the emotion; the hue drift is constant and ambient.",
+      "notes": "Valari, seven years old. Her look is OPEN ASSESSMENT — the way children look at Synthetics before they learn not to. Never afraid in any specced plate.",
+      "inline": true
     },
     "SANDMAN": {
       "name": "a Sandman",
@@ -115,7 +117,7 @@
       "ref": "char-nyxara-canonical.png",
       "locked": false,
       "block": "",
-      "notes": "Valari. Tall even sitting. Circuit patterns the length of her neck and jaw in faint bioluminescent blue, DIM — suppressed by the city field and by her own effort. Keeps her hands flat on the table."
+      "notes": "Valari. Tall even sitting. Circuit patterns the length of her neck and jaw, drifting slowly between soft blue and dusty magenta-violet, DIM — suppressed by the city field and by her own effort. Keeps her hands flat on the table. VALARI CIRCUIT RULE: circuits are never one fixed colour — they drift slowly between a soft blue and a dusty magenta-violet, both low-saturation. Never hot pink, never electric blue, never neon. Brightness carries the emotion; the hue drift is constant and ambient."
     },
     "SPARK": {
       "name": "Spark",
@@ -139,7 +141,7 @@
       "ref": "char-tal-voss-canonical.png",
       "locked": false,
       "block": "",
-      "notes": "Valari. Wears a DEMON MASK over his features. His circuits are not dimmed like Nyx'ara's — they are HIDDEN, down to almost nothing, chosen. He discards the name Tal'Voss at the registration wall and takes The Devil. Same appearance either side of it; what changes is what he is called."
+      "notes": "Valari. Wears a DEMON MASK over his features. His circuits are not dimmed like Nyx'ara's — they are HIDDEN, down to almost nothing, chosen. He discards the name Tal'Voss at the registration wall and takes The Devil. Same appearance either side of it; what changes is what he is called. VALARI CIRCUIT RULE: circuits are never one fixed colour — they drift slowly between a soft blue and a dusty magenta-violet, both low-saturation. Never hot pink, never electric blue, never neon. Brightness carries the emotion; the hue drift is constant and ambient."
     },
     "UNIT_9911": {
       "name": "Unit-9911",
@@ -162,17 +164,18 @@
       "kind": "FACTION",
       "ref": "char-korinth-operative-canonical.png",
       "locked": false,
-      "block": "",
-      "notes": "Plainclothes, professional, moving with a coordinated looseness civilians do not have. Reads as a group only to someone looking for a group. Not uniformed and not obviously armed."
+      "block": "Plainclothes Korinth security. Ordinary street clothes in muted colours, deliberately unremarkable, no uniform and no visible weapon. Adult, fit, average build — nothing memorable about any one of them. The tell is entirely behavioural: they hold a wider spacing than civilians do, they move at one shared pace, and they orient on the same point without looking at each other. Reads as a group only to someone already looking for a group.",
+      "notes": "Plainclothes, professional, moving with a coordinated looseness civilians do not have. Reads as a group only to someone looking for a group. Not uniformed and not obviously armed.",
+      "inline": true
     }
   },
   "wardrobe": {
     "GREY_CLIMB_WORN": {
-      "value": "",
+      "value": "Forty-seven days of climbing. The greatcoat is torn to tatters at hem and cuffs, scorched dark along one side, the red lining showing through the rips. Steel plating on face and hands is scorched, scuffed and heat-discoloured. The copper and brass mechanisms of the LEFT forearm are exposed and intermittently sparking. The suit beneath is filthy and torn. THE POCKET WATCH IS PRESENT on its chain, undamaged and clean - it is the one cared-for thing on him.",
       "notes": "Forty-seven days of climbing: plating scorched, coat torn to tatters, left-arm mechanisms sparking. Pocket watch present on its chain. p1 spreads 1-11."
     },
     "GREY_POST_OATH": {
-      "value": "",
+      "value": "After the Glitch Engine. The greatcoat has been repaired but not restored - tears closed with visible seams and mismatched cloth, and it hangs differently than it did. The plating is still scorched; that damage is permanent now. THE POCKET WATCH IS GONE - no watch, no chain, nothing at the waistcoat where it hung. TWO FINGERS of one hand sit at a slightly wrong angle from the others, permanently. This is the state EVERY future appearance of Grey anywhere in the series must match.",
       "notes": "After the Glitch Engine. Coat repaired but changed; pocket watch GONE; two fingers sit differently from the others. Everything from p1 spread 11 onward must match this, and so must every future appearance of Grey anywhere in the series."
     },
     "PIXELS_GRID": {
@@ -196,99 +199,99 @@
     "PEAK_CHAMBER": {
       "name": "the chamber at the peak of the Tower",
       "ref": "loc-peak-chamber.png",
-      "locked": false,
-      "block": "",
+      "locked": true,
+      "block": "Interior at the top of the Tower. Faceted crystal in pale gold, cold white and slate blue - cut and angular, never organic. Spires and outcrops rise from the floor at intervals, large enough for a figure to brace against or hook an arm over. The floor is FULLY TRANSPARENT with Haven City far below through it: street grid, the Valari Quarter as a soft blue patch, the wasteland beyond. The walls open onto a horizon at the same level as that floor-city - a spatial contradiction that is CORRECT and must be preserved; scale here is deliberately unresolvable, vast and impossibly small at once. Light falls from the peak overhead.",
       "notes": "Crystalline. Or vast. Or impossibly small — contradictory truths hold here the way they do in dreams or mathematics. Transparent floor with Haven City far below. p1 spreads 1-4, 8-11."
     },
     "HAVEN_CITY_AERIAL": {
       "name": "Haven City from above",
       "ref": "loc-haven-city-aerial.png",
-      "locked": false,
-      "block": "",
+      "locked": true,
+      "block": "Haven City from very high above. A walled quadrilateral city on a rust-red wasteland plain, its street grid orthogonal and dense like a circuit board soldered onto the earth. Four zones stay separable: the VALARI QUARTER glowing soft blue at one side; the INDUSTRIAL BLOCKS dark and square; the civic core; and the WASTELAND outside the wall, rust-coloured to the horizon. The TOWER rises through the centre like a needle - gold, faceted, stepped back in setbacks, one vertical seam of light up its full height. At this distance the Valari Quarter reads as a single blue mass; the blue / magenta-violet drift of individual circuits is only visible close up.",
       "notes": "Street grid like a circuit board soldered onto the earth. Valari Quarter glowing faint blue, industrial blocks dark and square, the Wasteland out to the horizon, the Tower through the middle like a needle. p1 spreads 1 and 12."
     },
     "MARKET_DISTRICT": {
       "name": "the Market District",
       "ref": "loc-market-district.png",
-      "locked": false,
-      "block": "",
+      "locked": true,
+      "block": "Street level. Vendor stalls in rows at identical intervals under orange awnings, pale cream and sand stone, navy structural linework, goods stacked with unsettling regularity. Crowd-flow corridors are marked into the paving itself as inlaid lines and circular medallions. Smooth, clean, airless efficiency - it looks like abundance and functions like a clock. Nothing is crooked, handmade, cluttered or improvised. The discomfort comes from the REGULARITY, never from decay: this is not a slum and not a ruin.",
       "notes": "Smooth, airless efficiency — it looks like abundance and functions like a clock. Vendor rows, crowd-flow corridors measured to fractions. p1 spreads 5-7."
     },
     "WASTELAND": {
       "name": "the Wasteland outside Haven City's walls",
       "ref": "loc-wasteland.png",
-      "locked": false,
-      "block": "",
+      "locked": true,
+      "block": "Outside Haven City's walls. Oxidised structure half-buried in rust-coloured ground: collapsed infrastructure, corroded spans, drum forms, the bones of machinery that was never repaired. Flat, long sightlines, nothing moving, nothing alive. Haven City's WALL runs across the middle distance and the TOWER rises behind it and out of the top of frame, gold and faceted with its vertical light seam. This is where the world ended.",
       "notes": "Rust and silence where the world ended and was never repaired. The Tower going up out of frame. p1 spread 13, and the p1 opener."
     },
     "COURIERS_EXCHANGE": {
       "name": "the Courier's Exchange",
       "ref": "loc-couriers-exchange.png",
-      "locked": false,
-      "block": "",
+      "locked": true,
+      "block": "Interior. A working dispatch room: long sorting tables with worn tops, pigeonhole racks along one wall, hanging task boards, stacked pouches and sealed packets, a claim counter at the back. Municipal, utilitarian, built for throughput. A TALL WINDOW on one side throws hard directional light across the nearest table in a sharp-edged shape - that light is the reason the room exists, and its direction and hardness must not change.",
       "notes": "Where dispatch work is handed out. Window light on a working table. t1 spread 1."
     },
     "RECLAMATION_ALLEY": {
       "name": "the alley behind the water reclamation building",
       "ref": "loc-reclamation-alley.png",
-      "locked": false,
-      "block": "",
+      "locked": true,
+      "block": "Night, rain. A narrow alley behind the water reclamation building with both walls in frame. Bulk pipework, condensate lines, valve housings, vent stacks and grated drains on both sides; standing water, runoff pouring from outlets, rain visibly falling in the air. Two blocks north the alley opens onto a cross street where a BONE PATROL CHECKPOINT is running: its cold white light turns the falling rain SILVER at that end of frame. Dark alley, lit far end - the distance between them is the composition.",
       "notes": "Narrow, wet, rain finding the gaps. Bone Patrol checkpoint lights turning the rain silver two blocks north. t1 opener and spread 2."
     },
     "PATROL_STATION": {
       "name": "Third Patrol Station, Sector Four",
       "ref": "loc-patrol-station.png",
-      "locked": false,
-      "block": "",
+      "locked": true,
+      "block": "Interior. The vehicle and processing bay of Third Patrol Station: structural ribs, high ceiling, poured floor with painted lane and chevron markings, equipment lockers and rack frames with small red indicators, a processing counter along one side. A WIDE EXIT DOORWAY at the far end with two flanking piers - those two positions are where officers stand and must not move. NOTE: this canonical is lit dark. When a figure has to cross the bay, ask for one additional working overhead fixture near the middle so they do not become a silhouette in a black room.",
       "notes": "The patrol bay and its exit. t1 spread 3."
     },
     "RESIDENTIAL_BLOCK_14": {
       "name": "Residential Block 14, third floor",
       "ref": "loc-residential-block-14.png",
-      "locked": false,
-      "block": "",
+      "locked": true,
+      "block": "Interior, night. A narrow stairwell arriving at a third-floor landing, and the hallway running off it past apartment doors. Warm and dim: a single caged fixture, ochre and amber light, deep shadow. Heavy panelled doors with mechanical latches and SECURITY CHAINS. A wall-mounted RADIATOR with dried protein strips laid across it to cure. Scuffed panelling, low ceiling, worn floor. A window on the stair landing shows the lit city at night. Cramped, tired, lived-in and cared for.",
       "notes": "Narrow stairwell, third-floor hallway, a radiator with dried protein strips on it. t1 spread 4."
     },
     "WELLNESS_CENTER": {
       "name": "the Wellness and Optimization Center",
       "ref": "loc-wellness-center.png",
-      "locked": false,
-      "block": "",
+      "locked": true,
+      "block": "Dusk. A low, wide, calm institutional frontage in pale cream limestone with tall glazed bays, approached across a clean forecourt with planting and ground lanterns. Behind the glass: a tall daylit ATRIUM with a curved ceiling and skylights, a still REFLECTING POOL set into the floor, and the INTAKE DESK at the far side with terminal stations behind it. A recessed SERVICE OPENING on the right of the atrium leads into a narrow, cooler, strip-lit MAINTENANCE CORRIDOR - easy to overlook, and the route to the service lane. IT IS DESIGNED TO LOOK LIKE MEDICINE and must be genuinely reassuring: the horror is that it is beautiful. Never sinister, never clinical-cold.",
       "notes": "Calm institutional facade, atrium with a reflecting pool, intake desk. Designed to look like medicine. t2 opener and spreads 1-4."
     },
     "SERVICE_LANE": {
       "name": "the service lane behind the Wellness Center",
       "ref": "loc-service-lane.png",
-      "locked": false,
-      "block": "",
+      "locked": true,
+      "block": "Night. The rear elevation of the Wellness Center - the same pale cream limestone and flat roofline as its front, but blank and windowless, with extract ducting, plant housings, conduit, junction boxes, loading bays and waste bins bolted onto good stone. A UTILITY DOOR in the near wall up a short step, a lamp above it, cool corridor light spilling out. The lane runs away into darkness and meets the eastern residential district at the far end: blocky angular Haven City blocks with warm, ordinary, occupied windows. Dark lane, somewhere to go lit at the end.",
       "notes": "Reached through a utility door off the maintenance corridor; connects to the eastern residential district. t2 spread 4."
     },
     "THE_PRISM": {
       "name": "The Prism",
       "ref": "loc-the-prism.png",
-      "locked": false,
-      "block": "",
+      "locked": true,
+      "block": "Interior. Rainbow's bar. A LONG BAR down one side with a row of STOOLS; behind it a back bar of bottles lit warm amber, with a SMALL SCREEN mounted above it. A FRONT DOOR at one end and a separate SIDE ENTRANCE. TABLES at the back, CORNER BOOTHS with red banquettes, and one CORNER TABLE apart from the rest. Magenta, violet and electric blue room light with cyan accents and amber warmth from the back bar; deep navy structure. 'THE WALL' means the far end of the bar away from the front door - Sable's seat is the THIRD STOOL counting from that end, and it is the same stool every time.",
       "notes": "Rainbow's bar at the end of the approach road to the Tower gate. Front door and a side entrance. A long bar with stools — Sable's is third from the wall — tables at the back and corner booths. p3 spreads 1-6 and 21-23."
     },
     "TOWER_PLAZA": {
       "name": "the Tower ground plaza",
       "ref": "loc-tower-plaza.png",
-      "locked": false,
-      "block": "",
+      "locked": true,
+      "block": "The public square at the foot of the Tower. Mirror-polished pale stone floor; a ring of pale glass towers around it; the TOWER rising gold and faceted from the far side with its arched gate of receding arches at the base. The REGISTRATION WALL stands across the front of the plaza facing the crowd - a broad, flat, monumental pale surface people walk up to and set a palm against. SCREENS on every surrounding building face at several sizes and heights, carrying an abstract feed and NEVER readable text. One SMALL CRACKED DISPLAY above a water station at the plaza edge. Chain-post perimeter; the eastern streets enter at one side. Holds three hundred on a quiet week.",
       "notes": "Holds three hundred on a quiet week. The registration wall at the front. Screens on every building face carrying the registration feed. p3 spreads 7-18."
     },
     "TOWER_GATE": {
       "name": "the Tower gate",
       "ref": "loc-tower-gate.png",
-      "locked": false,
-      "block": "",
+      "locked": true,
+      "block": "The Tower's gate. Enormous: geometric lines layered back in receding arches the way a cathedral is layered, gold light filling the opening, a vertical seam of white light rising out of the arch, faceted gold-and-navy mass around it, mirror-polished approach floor. THE GATE SIMPLY STANDS OPEN. It has no doors, no leaves, no hinges, no mechanism, nothing that could ever be shut. It has always been open and it lets you decide. When light 'closes behind' someone passing through, that is an optical effect of depth and glare, never a door.",
       "notes": "Enormous and gold-lit, geometric lines layered back in receding arches the way a cathedral is layered — except it simply stands open and lets you decide. Always open. Visible from The Prism's door on clear mornings. p3 spread 18 and the opener."
     },
     "APPROACH_ROAD": {
       "name": "the approach road",
       "ref": "loc-approach-road.png",
-      "locked": false,
-      "block": "",
+      "locked": true,
+      "block": "The broad street running from the Tower gate - visible small and gold at one end - down past THE PRISM, the building with the triangular faceted window over its entrance. Across the street from The Prism is a TRANSIT HUB, and mounted on a bracket above it is a SURVEILLANCE NODE: a compact armoured housing on a curved bracket with a cable, high enough that a failure drops it about eight feet to hang from that cable. Blocky angular Haven City architecture both sides, warm ochre morning light low along the street. The node is intact and powered unless a plate says otherwise.",
       "notes": "Runs from the Tower gate down past The Prism. Transit hub across the street with a surveillance node above it. p3 spreads 19-20."
     }
   }

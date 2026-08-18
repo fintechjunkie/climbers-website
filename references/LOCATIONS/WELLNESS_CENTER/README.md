@@ -5,7 +5,7 @@ Required file: `loc-wellness-center.png`
 
 Use `loc-wellness-center.png` as the required visual reference whenever this location appears. Preserve the exact layout, palette and construction. 
 
-**Status: NOT LOCKED — no canonical image yet.**
+**Status: LOCKED.**
 
 ## What this has to hold
 

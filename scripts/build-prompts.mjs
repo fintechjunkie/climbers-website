@@ -54,7 +54,26 @@ HARD RULES FOR EVERY PLATE
   the image. The page draws its own furniture.
 - No frame, no border, no vignette. The plate IS the page.
 - Composition must survive a folio sitting in the bottom-right corner: keep the
-  last ~6% of the lower-right free of anything load-bearing.`;
+  last ~6% of the lower-right free of anything load-bearing.
+
+RENDERING AUTHORITY — READ THIS BEFORE LOOKING AT THE ATTACHMENTS
+The attached references and the style block above are authorities over
+DIFFERENT things, and mixing them up is the single most likely way this plate
+comes back wrong.
+- The STYLE BLOCK is the authority for HOW this plate is drawn: palette, light,
+  value structure, surface, finish, edge quality, texture, and print feel.
+- A CHARACTER reference is the authority for WHO is in the plate, and for
+  nothing else. Those files are production reference sheets drawn in a
+  glossier, more polished library language than the plates are. Take identity
+  from them — face, build, proportion, costume geometry, signature colours,
+  permanent accessories. Do NOT take rendering from them. Do not carry over
+  their gloss, their airbrushed shading, their rim light, their glow bloom,
+  their dark vignette, or their background.
+- A LOCATION reference is already drawn in the plate style. Follow both its
+  construction AND its rendering.
+- If a character reference and the style block disagree about how something
+  should LOOK, the style block wins every time. If they disagree about WHO
+  someone is, the character reference wins every time.`;
 
 function expand(prompt) {
   const attach = [];
@@ -82,7 +101,12 @@ function expand(prompt) {
       const have = onDisk(charDir(k), c.ref);
       if (have) {
         attach.push({ file: join(charDir(k), c.ref), label: c.name });
-        return `${c.kind}: ${c.name}. Use the attached canonical reference "${c.ref}" as the authority for face, build, proportion and colour. Match it; do not reinterpret it.${c.block ? `\n${c.block}` : ''}`;
+        return `${c.kind}: ${c.name}. Use the attached canonical reference "${c.ref}" as the authority for IDENTITY ONLY — face, build, proportion, colour, costume geometry and signature details. Match those exactly; do not reinterpret them. Draw them in the style described above, NOT in the rendering language of the reference file.${c.block ? `\n${c.block}` : ''}`;
+      }
+      if (c.inline) {
+        return `${c.kind}: ${c.name}. Described inline by design — there is no canonical image for this figure and none is planned, so the description below is the whole of the authority. If this figure appears on more than one plate, generate those plates in a single session; continuity between them is otherwise not guaranteed.${c.block ? `
+${c.block}` : `
+>>> AND NO DESCRIPTION WRITTEN: ${c.notes} <<<`}`;
       }
       missing.push(`CHAR:${k} (${c.ref})`);
       return `${c.kind}: ${c.name}. >>> NO CANONICAL REFERENCE ON DISK — nothing is attached for this figure, so the description below is the ONLY authority and continuity with other plates is not guaranteed. <<<${c.block ? `\n${c.block}` : `\n>>> AND NO DESCRIPTION BLOCK EITHER: ${c.notes} <<<`}`;
@@ -92,7 +116,12 @@ function expand(prompt) {
       const w = roster.wardrobe[k];
       if (!w) { missing.push(`WARDROBE:${k}`); return `>>> UNKNOWN WARDROBE:${k} <<<`; }
       if (!w.value) { missing.push(`WARDROBE:${k} (empty)`); return `WARDROBE: >>> ${k} NOT WRITTEN — ${w.notes} <<<`; }
-      return `WARDROBE: ${w.value}`;
+      // The canonical shows a figure in default condition. Three chamber plates
+      // came back with a pristine Grey on day forty-seven of a climb because the
+      // reference's CONDITION rode in alongside its identity. So this shouts.
+      return `>>> WARDROBE — READ THIS BEFORE YOU LOOK AT THE CHARACTER REFERENCE <<<
+The attached canonical shows this figure in its DEFAULT, UNDAMAGED, STUDIO condition. That is NOT the condition in this plate. Take IDENTITY from the reference and CONDITION from the line below; where they disagree, the line below wins completely.
+${w.value}`;
     })
 
     .replace(/\{\{LOC:([A-Z_0-9]+)\}\}/g, (_, k) => {
@@ -102,7 +131,7 @@ function expand(prompt) {
       const have = onDisk(locDir(k), l.ref);
       if (have) {
         attach.push({ file: join(locDir(k), l.ref), label: `location — ${l.name}` });
-        return `SETTING: ${l.name}. Use the attached canonical establishing image "${l.ref}" as the authority for layout, palette and construction.${l.block ? `\n${l.block}` : ''}`;
+        return `SETTING: ${l.name}. Use the attached canonical establishing image "${l.ref}" as the authority for layout, palette and construction. It is already drawn in the plate style, so follow its rendering as well as its geometry.${l.block ? `\n${l.block}` : ''}`;
       }
       missing.push(`LOC:${k} (${l.ref})`);
       return `SETTING: ${l.name}. >>> NO CANONICAL REFERENCE ON DISK — the description below is the only authority. <<<${l.block ? `\n${l.block}` : `\n>>> AND NO DESCRIPTION BLOCK EITHER: ${l.notes} <<<`}`;

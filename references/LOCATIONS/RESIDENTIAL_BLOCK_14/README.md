@@ -5,7 +5,7 @@ Required file: `loc-residential-block-14.png`
 
 Use `loc-residential-block-14.png` as the required visual reference whenever this location appears. Preserve the exact layout, palette and construction. 
 
-**Status: NOT LOCKED — no canonical image yet.**
+**Status: LOCKED.**
 
 ## What this has to hold
 

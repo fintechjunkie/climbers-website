@@ -6,3 +6,11 @@ node_modules/
 .next/
 out/
 .vercel
+
+# Working material for image generation. Both are derived and neither is
+# needed to build or render the site:
+#   plate-sources/    the original PNGs; public/plates/*.jpg is what ships
+#   prompt-packages/  drop-folders, mostly duplicated reference images
+# Regenerate with `npm run prompts`, `npm run package`, `node scripts/package-regen.cjs`.
+plate-sources/
+prompt-packages/

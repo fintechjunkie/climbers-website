@@ -1,9 +1,9 @@
-# Climbers — Haven City
+# CLIMBERS Pulp SciFi
 
 Token: `{{STYLE}}`
 Required file: `style-canonical.png`
 
-**Status: NOT APPROVED.**
+**Status: APPROVED.**
 
 The site's existing chapter art is the reference point: high-contrast neon cyberpunk, deep blacks, gold and cyan accents, volumetric light, painterly rather than photographic. Write the block once, lock it, and put it at the HEAD of every prompt — Millbrook found that a style clause sitting in the negative block at the foot gets ignored, and hoisting it to the head fixed it on one pass.
 

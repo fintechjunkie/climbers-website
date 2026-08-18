@@ -9,7 +9,7 @@ Use `char-nyxara-canonical.png` as the required visual reference whenever this f
 
 ## What this has to hold
 
-Valari. Tall even sitting. Circuit patterns the length of her neck and jaw in faint bioluminescent blue, DIM — suppressed by the city field and by her own effort. Keeps her hands flat on the table.
+Valari. Tall even sitting. Circuit patterns the length of her neck and jaw, drifting slowly between soft blue and dusty magenta-violet, DIM — suppressed by the city field and by her own effort. Keeps her hands flat on the table. VALARI CIRCUIT RULE: circuits are never one fixed colour — they drift slowly between a soft blue and a dusty magenta-violet, both low-saturation. Never hot pink, never electric blue, never neon. Brightness carries the emotion; the hue drift is constant and ambient.
 
 ## How to lock this
 

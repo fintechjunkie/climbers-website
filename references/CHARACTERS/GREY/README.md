@@ -5,7 +5,7 @@ Required file: `char-grey-canonical.png`
 
 Use `char-grey-canonical.png` as the required visual reference whenever this figure appears. Preserve the exact face, silhouette, proportions and coloration. Clothing may change only where the wardrobe rows below permit it.
 
-**Status: NOT LOCKED — no canonical image yet.**
+**Status: LOCKED.**
 
 ## What this has to hold
 

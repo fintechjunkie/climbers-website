@@ -5,11 +5,11 @@ Required file: `char-phoenix-canonical.png`
 
 Use `char-phoenix-canonical.png` as the required visual reference whenever this figure appears. Preserve the exact face, silhouette, proportions and coloration. Clothing may change only where the wardrobe rows below permit it.
 
-**Status: NOT LOCKED — no canonical image yet.**
+**Status: LOCKED.**
 
 ## What this has to hold
 
-Synthetic, designation Unit-3317, intake coordinator. ORANGE optical sensors. Holds a textbook-correct posture to the point of performance — 'furniture with good posture'.
+Synthetic, designation Unit-3317, intake coordinator. Orange-red optical sensors. Issued a security-pattern chassis with a holstered sidearm he never draws. Holds a textbook-correct posture to the point of performance - 'furniture with good posture'.
 
 ## How to lock this
 

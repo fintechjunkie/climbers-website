@@ -5,7 +5,7 @@ Required file: `loc-market-district.png`
 
 Use `loc-market-district.png` as the required visual reference whenever this location appears. Preserve the exact layout, palette and construction. 
 
-**Status: NOT LOCKED — no canonical image yet.**
+**Status: LOCKED.**
 
 ## What this has to hold
 
