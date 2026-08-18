@@ -9,7 +9,7 @@ Use `char-sable-canonical.png` as the required visual reference whenever this fi
 
 ## What this has to hold
 
-Sherpa, contracted to Vesper Quill. Lean, a face you would forget, third stool from the wall. One of the Ascended and wears it quietly — you have to know what he is to see it. Climbed once and came back able never to lose a path he has walked.
+Sherpa, under contract to VESPER QUILL — who is an Oath Lord, and a separate person from Sable. Sable is one of the Ascended and wears it quietly; you have to know what he is to see it. Lean, a face you would forget, third stool from the wall. Climbed once and came back able never to lose a path he has walked.
 
 ## How to lock this
 
