@@ -110,9 +110,11 @@ plates.forEach((p, i) => {
   // A plate already in public/plates/ is finished. Nest it under _DONE/ so the
   // top level of the package is exactly the work that is left, in running order.
   const done = fs.existsSync(path.join('public', 'plates', p.slug + '.jpg'));
+  const hasRevise = keepNames.some((x) => x.startsWith('REVISE-' + n + '-'));
+  const tag = hasRevise ? '-REVISE-ME' : '';
   const dir = done
     ? path.join(OUT, '_DONE', n + '-' + p.slug)
-    : path.join(OUT, n + '-' + p.slug);
+    : path.join(OUT, n + '-' + p.slug + tag);
   fs.mkdirSync(dir, { recursive: true });
 
   const lines = [
