@@ -193,6 +193,19 @@ function volumeCard(vol, className) {
   return card;
 }
 
+/**
+ * The Climb, drawn as ONE arc rather than as loose cards.
+ *
+ * Four prologues laid out 4-up (or 2x2, or stacked) inside a single ruled
+ * panel with the arc's name on it. The point is the enclosure: on an auto-fill
+ * grid the four tiles broke 3 + 1, which reads as "three volumes, and also
+ * another one" instead of as a set. A fixed column count and a border around
+ * the whole thing say the four belong together and that the set is complete.
+ *
+ * The count is written into the panel's own label rather than assumed, so an
+ * arc that grows to five volumes describes itself correctly without anyone
+ * remembering to edit a string.
+ */
 function renderChapters() {
   const grid = document.getElementById('chaptersGrid');
   const vols = volumesForArc('the-climb');
@@ -203,7 +216,26 @@ function renderChapters() {
   }
 
   grid.innerHTML = '';
-  vols.forEach(v => grid.appendChild(volumeCard(v, 'chapter-card')));
+  grid.classList.add('arc-panel');
+  grid.style.setProperty('--arc-count', vols.length);
+
+  const head = document.createElement('div');
+  head.className = 'arc-head';
+  const kicker = document.createElement('span');
+  kicker.className = 'arc-kicker';
+  kicker.textContent = 'Arc One';
+  const count = document.createElement('span');
+  count.className = 'arc-count';
+  const written = vols.filter(v => v.status !== 'planned').length;
+  count.textContent = written + ' of ' + vols.length + ' written';
+  head.appendChild(kicker);
+  head.appendChild(count);
+  grid.appendChild(head);
+
+  const row = document.createElement('div');
+  row.className = 'arc-row';
+  vols.forEach(v => row.appendChild(volumeCard(v, 'chapter-card')));
+  grid.appendChild(row);
 }
 
 // ===========================

@@ -59,7 +59,10 @@ const CHECK = process.argv.includes('--check');
  */
 const WORDS_PER_LINE = 11;
 const GAP = 4;
-const HEADING_COST = 30;
+/* A part break now sets at type.sectionHead rather than type.kicker — about
+   2.4x the height, plus its margins grew — so it eats materially more of the
+   page than it did when this proxy was calibrated. Raised in proportion. */
+const HEADING_COST = 58;
 const FIT = { min: 150, max: 342 };
 
 const countWords = (s) => s.trim().split(/\s+/).filter(Boolean).length;

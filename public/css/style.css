@@ -38,9 +38,23 @@ img{max-width:100%;display:block}
 
 /* ===== SECTIONS ===== */
 .section{max-width:1100px;margin:0 auto;padding:3rem 1.5rem}
+/* The Climb runs four tiles across, which does not fit 1100. */
+#chapters-section{max-width:1320px}
 .section-title{font-family:'Orbitron',sans-serif;font-size:2rem;color:#c9a84c;text-align:center;margin-bottom:2.5rem;letter-spacing:.08em;text-transform:uppercase}
 
 /* ===== CHAPTERS GRID ===== */
+/* The arc panel: one ruled enclosure around the whole set.
+   auto-fill broke the four prologues 3 + 1, which reads as three volumes plus
+   a straggler. A fixed column count keeps the set square — 4-up wide, 2x2 on
+   a tablet, stacked on a phone — and the border says they are one arc. */
+.chapters-grid.arc-panel{display:block;border:1px solid #262626;border-radius:14px;padding:1.25rem;background:linear-gradient(180deg,rgba(201,168,76,.035) 0%,rgba(0,0,0,0) 42%)}
+.arc-head{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:0 .25rem .9rem;margin-bottom:1.1rem;border-bottom:1px solid #262626}
+.arc-kicker{font-family:'Orbitron',sans-serif;font-size:.68rem;letter-spacing:.34em;text-transform:uppercase;color:#c9a84c}
+.arc-count{font-family:'Orbitron',sans-serif;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:#5c5c66}
+.arc-row{display:grid;grid-template-columns:repeat(var(--arc-count,4),1fr);gap:1.1rem;align-items:stretch}
+@media(max-width:1000px){.arc-row{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.arc-row{grid-template-columns:1fr}}
+
 /* Cards carry text now, so the track has to be wide enough to set a sentence
    in. Under about 240px the blurb breaks to three words a line and the card
    reads as a paragraph of debris rather than a description. */
@@ -582,7 +596,7 @@ img{max-width:100%;display:block}
 
 /* ===== RESPONSIVE ===== */
 @media(max-width:600px){
-  .chapters-grid,.tales-grid{grid-template-columns:1fr;gap:1.25rem}
+  .tales-grid{grid-template-columns:1fr;gap:1.25rem}
   .gallery-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}
   .hero-subtitle{height:7rem;font-size:clamp(.8rem,3.5vw,.95rem)}
   .nav{gap:.75rem;font-size:.7rem}

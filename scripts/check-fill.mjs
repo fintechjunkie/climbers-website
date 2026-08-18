@@ -62,7 +62,11 @@ const VIEWPORTS = [
  */
 const TARGETS = JSON.parse(
   readFileSync(new URL('../public/data/volumes.json', import.meta.url), 'utf8'),
-).map((v) => ({ url: v.href, count: v.spreadCount, name: v.slug }));
+)
+  // Planned volumes are in the manifest so the homepage can show the shape of
+  // an arc, but they have no href and nothing to measure.
+  .filter((v) => v.status !== 'planned' && v.href)
+  .map((v) => ({ url: v.href, count: v.spreadCount, name: v.slug }));
 
 const browser = await puppeteer.launch({ executablePath: exe, headless: 'new', args: ['--no-sandbox'] });
 

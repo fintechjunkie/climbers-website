@@ -133,11 +133,18 @@ export function TextPage({ spread, compact, typeScale = 1 }) {
               <h2
                 key={i}
                 style={{
-                  margin: i === 0 ? `0 0 ${space(4)}` : `${space(6)} 0 ${space(3)}`,
+                  margin: i === 0 ? `0 0 ${space(5)}` : `${space(7)} 0 ${space(4)}`,
                   fontFamily: face.display,
-                  fontSize: type.kicker,
+                  // A part break was set at type.kicker — the 10.5px ceiling
+                  // used for folios and captions, roughly HALF the body size.
+                  // It is not furniture, it is the loudest structural signal
+                  // in the volume, and it was the quietest thing on the page.
+                  // type.sectionHead sits a step above the prose instead.
+                  fontSize: type.sectionHead,
                   fontWeight: 600,
-                  letterSpacing: '0.24em',
+                  // Tracking comes down as the size goes up. 0.24em is a
+                  // legibility aid at 10px caps and a word-splitter at 20.
+                  letterSpacing: '0.13em',
                   textTransform: 'uppercase',
                   color: color.gold,
                 }}
