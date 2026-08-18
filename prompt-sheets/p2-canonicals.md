@@ -1,6 +1,6 @@
 # CLIMBERS — PROLOGUE II CANONICALS
 
-Six references. Two characters, four locations. Prologue II's thirteen plates
+Five references. One character, four locations. Prologue II's thirteen plates
 are written and every one of them is blocked until these exist.
 
 Save each result into the path given, under the **exact** filename. `npm run
@@ -18,13 +18,21 @@ not restate its rules.
 **A canonical is not a plate.** It is a production reference. Its job is to make
 the *next* thirteen images consistent, so it shows construction, not mood.
 
-**Aspect ratio: 3:2 landscape** for the locations, **square** for the two
-character sheets.
+**Aspect ratio: 3:2 landscape** for the locations, **square** for the character
+sheet.
 
 **No roster characters inside a location canonical.** Where a location needs a
 human for scale, use an anonymous silhouette with no face and no costume
 identity — a canonical location carrying a canonical character contaminates
 both.
+
+**Sister Silence already exists** and is not in this sheet. She is one of the
+ten Oath Lords and her canonical was filed in `references/OATH_LORDS/`; it has
+been moved to `references/CHARACTERS/SISTER_SILENCE/` under the filename the
+tooling looks for, and her roster block has been rewritten from the actual art.
+She wears a worked-gold band across the eyes and heavy gold-and-black
+ecclesiastical vestments — nothing like the plain robes I had first written for
+her, and the plate that features her has been corrected to match.
 
 **The man with the book gets no canonical, deliberately.** He is defined by
 nobody being able to describe him afterward, and a locked reference sheet would
@@ -81,59 +89,7 @@ Full bleed to all four edges.
 
 ---
 
-## 2 — SISTER SILENCE
-
-Save as `references/CHARACTERS/SISTER_SILENCE/char-sister-silence-canonical.png`
-
-```
-Character reference sheet, CLIMBERS pulp sci-fi illustration style. SQUARE, 1:1.
-
-SISTER SILENCE — Valari. She takes memories, and the whole design problem is
-that she must not look like it.
-
-Full figure, standing, neutral pose, three-quarter view, plain neutral
-background. Production reference, not a scene.
-
-SCALE: SMALL. Noticeably smaller and slighter than an average adult, and she
-must never be drawn as imposing, towering or physically threatening. If a scale
-silhouette is included she should be visibly the smaller figure.
-
-AGE: old in a way that does not show in the skin. Her face is not deeply lined.
-The age reads in her STILLNESS — the settled, unhurried way she holds herself,
-hands quiet, weight even, nothing in her body doing anything unnecessary.
-
-CIRCUITS — a deliberate exception to the Valari rule. Every other Valari in this
-setting carries circuits that drift between soft blue and dusty magenta-violet.
-Hers are the FAINTEST SILVER, barely lit, like frost on cold glass. Almost
-colourless. They do not glow, do not pulse, and do not light anything around
-them. This exception is intentional and must not be corrected toward blue or
-violet.
-
-THE FACE IS THE ENTIRE SHEET. Her expression carries GENUINE, WARM, UNFAKED
-KINDNESS — real care, the sort you cannot fake, the face of somebody who
-believes completely that she is helping. She is NOT sinister. NOT cold. NOT
-smirking. NOT smiling strangely. NOT eerie, NOT uncanny, NOT hollow-eyed. There
-is no menace anywhere in her face or posture. Somebody shown this sheet with no
-context should think they are looking at a healer who loves her work. That
-misreading is the character, and if she looks like a villain the sheet has
-failed.
-
-WARDROBE: simple, soft, undecorated robes in off-white and pale bone, clean and
-well kept. Nothing clinical, nothing ceremonial, nothing occult. No hood — the
-hoods belong to her people, not to her. No instruments and nothing in her hands.
-
-Include a secondary detail view in a corner: her hands, open and relaxed, palms
-showing, and a closer study of the frost-silver circuit tracery at the wrist.
-
-Neutral even lighting so colour and construction read clearly.
-
-Square, 1:1. No text, no labels, no captions, no watermark, no border, no frame.
-Full bleed to all four edges.
-```
-
----
-
-## 3 — BLOCK 44, STREET LEVEL
+## 2 — BLOCK 44, STREET LEVEL
 
 Save as `references/LOCATIONS/BLOCK_44_SURFACE/loc-block-44-surface.png`
 
@@ -181,7 +137,7 @@ frame. Full bleed to all four edges.
 
 ---
 
-## 4 — BLOCK 44 SUB-LEVEL SERVICE GALLERY
+## 3 — BLOCK 44 SUB-LEVEL SERVICE GALLERY
 
 Save as `references/LOCATIONS/SUB_LEVEL_GALLERY/loc-sub-level-gallery.png`
 
@@ -230,7 +186,7 @@ frame. Full bleed to all four edges.
 
 ---
 
-## 5 — THE BLOCK THAT FELL OFF THE MAP
+## 4 — THE BLOCK THAT FELL OFF THE MAP
 
 Save as `references/LOCATIONS/THE_LOST_BLOCK/loc-the-lost-block.png`
 
@@ -282,7 +238,7 @@ frame. Full bleed to all four edges.
 
 ---
 
-## 6 — THE WHITE ROOM
+## 5 — THE WHITE ROOM
 
 Save as `references/LOCATIONS/WHITE_ROOM/loc-white-room.png`
 

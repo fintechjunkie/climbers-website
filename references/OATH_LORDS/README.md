@@ -4,8 +4,11 @@ Ten canonical figures. **Not roster entities**, so `npm run refs` neither
 creates this folder nor audits it, and nothing here counts toward the
 `n/33` ready count.
 
-Absalom · Cipher · Fawn · Malacus · Sister Silence · Thorne · Unit-5947 ·
-Vesper · Vex · Yuki
+Absalom · Cipher · Fawn · Malacus · Thorne · Unit-5947 · Vesper · Vex · Yuki
+
+**Sister Silence has left this folder.** She appears in Prologue II spread 11,
+so by the rule below her image moved to `CHARACTERS/SISTER_SILENCE/` and she is
+now a roster entity that `npm run refs` audits.
 
 They live here because they are canonical for the world even though no plate
 in the four written volumes depicts one. When an Oath Lord first appears in

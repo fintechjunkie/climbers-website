@@ -9,7 +9,7 @@ Use `char-sister-silence-canonical.png` as the required visual reference wheneve
 
 ## What this has to hold
 
-Takes memories. Everybody in Haven City knows the name the way you know about lightning. The Sandmen are hers. p2 spread 11.
+One of the ten Oath Lords; her canonical came from references/OATH_LORDS. Takes memories. The Sandmen are hers. p2 spread 11.
 
 ## How to lock this
 
