@@ -83,80 +83,80 @@
       "name": "Rainbow",
       "kind": "CHARACTER",
       "ref": "char-rainbow-canonical.png",
-      "locked": false,
-      "block": "",
+      "locked": true,
+      "block": "Wide-brimmed hat with a SPIKED CROWN, carrying nineteen years of patches, pins and small tokens — the hat is his silhouette and must be readable as his from across a room. Coat of every colour at once, layered and heavy, built up like a reef rather than designed. LEFT eye is his own; RIGHT eye is a Bone Patrol optic, and it is NEVER hidden, shadowed or turned away from camera — the mismatch is the character. Carries a cane. He is not a small man and should never be drawn as a slight one.",
       "notes": "Runs The Prism, nineteen years. Wide-brimmed hat with a SPIKED CROWN, covered in nineteen years of patches, pins and tokens. Coat of every colour at once, layered and heavy, built up like a reef. LEFT eye is his own; RIGHT eye is a Bone Patrol officer's, taken by Absalom as a reminder — mismatched and deliberately not hidden. Carries a cane. Not a small man. The narrator of Prologue III and present in most of its plates."
     },
     "SABLE": {
       "name": "Sable",
       "kind": "CHARACTER",
       "ref": "char-sable-canonical.png",
-      "locked": false,
-      "block": "",
+      "locked": true,
+      "block": "Deliberately forgettable, and that is a direction rather than a shortcut: lean, plain, a face the eye slides off. NOTHING marks him as Ascended — no glow, no augmentation, no tell. He always sits on the THIRD STOOL counting from the wall end of the bar, and there is exactly one drink in front of him, barely touched. In any frame he shares, he should be the least visually interesting thing in it.",
       "notes": "Sherpa, contracted to Vesper Quill. Lean, a face you would forget, third stool from the wall. One of the Ascended and wears it quietly — you have to know what he is to see it. Climbed once and came back able never to lose a path he has walked."
     },
     "MARCUS": {
       "name": "Marcus Torres",
       "kind": "CHARACTER",
       "ref": "char-marcus-canonical.png",
-      "locked": false,
-      "block": "",
+      "locked": true,
+      "block": "Human. Military cybernetic behind the LEFT socket ONLY — a faint blue-white gleam, never a bright lens and never both eyes. Broad-shouldered, with a military posture that has calcified into something he cannot switch off; he stands squared even when nothing is happening. No grief on the face at any point. Whatever he is carrying is carried in the posture.",
       "notes": "Human. Military cybernetic behind the LEFT socket — faint blue-white gleam that tracks a room in pieces before he finishes looking. Broad-shouldered, military posture calcified into something he cannot turn off."
     },
     "SIGNAL": {
       "name": "Signal",
       "kind": "CHARACTER",
       "ref": "char-signal-canonical.png",
-      "locked": false,
-      "block": "",
+      "locked": true,
+      "block": "Korinth KI-series combat chassis, black and grey composite, built for function at the cost of every other consideration. LARGE — has to duck at an ordinary door frame, and the scale must be legible against any human in frame. Moves like something very big trying not to break the furniture. A man named Nathan Zhao is inside it, so the posture reads as a person, never as a drone or a robot.",
       "notes": "Korinth KI-series combat chassis, black and grey composite, built for function at the cost of subtlety. Has to duck at a door frame. Nathan Zhao is inside it. Moves like something very large trying not to break the furniture."
     },
     "NYXARA": {
       "name": "Nyx'ara",
       "kind": "CHARACTER",
       "ref": "char-nyxara-canonical.png",
-      "locked": false,
-      "block": "",
+      "locked": true,
+      "block": "Valari. Tall even sitting down. Circuit patterns run the length of her neck and jaw. Keeps her hands FLAT on the table — not folded, not fidgeting. Composed rather than frightened in every plate. VALARI CIRCUIT RULE: the circuits are never one fixed colour. They drift slowly between a soft blue and a dusty magenta-violet, both low-saturation. Never hot pink, never electric blue, never neon. BRIGHTNESS carries the emotion; the hue drift is constant and ambient underneath it.",
       "notes": "Valari. Tall even sitting. Circuit patterns the length of her neck and jaw, drifting slowly between soft blue and dusty magenta-violet, DIM — suppressed by the city field and by her own effort. Keeps her hands flat on the table. VALARI CIRCUIT RULE: circuits are never one fixed colour — they drift slowly between a soft blue and a dusty magenta-violet, both low-saturation. Never hot pink, never electric blue, never neon. Brightness carries the emotion; the hue drift is constant and ambient."
     },
     "SPARK": {
       "name": "Spark",
       "kind": "CHARACTER",
       "ref": "char-spark-canonical.png",
-      "locked": false,
-      "block": "",
+      "locked": true,
+      "block": "Human, green and gold. Mechanical RIGHT arm with fresh tool marks at the elbow, integrated deep enough that the right shoulder sits differently from the left — the asymmetry should be visible in the silhouette. Shakes with the mechanical hand out of habit. Carries the easy energy of somebody whose mind is already made up.",
       "notes": "Human, green and gold. Mechanical RIGHT arm with fresh tool marks at the elbow, integrated deep enough that the shoulder sits differently from the left. Shakes with the mechanical hand by habit. Easy energy of someone whose mind is already made up."
     },
     "KIMO": {
       "name": "Kimo Tomiko",
       "kind": "CHARACTER",
       "ref": "char-kimo-canonical.png",
-      "locked": false,
-      "block": "",
+      "locked": true,
+      "block": "Human, face FULLY concealed behind a dark mask — no skin, no jaw, no mouth visible at any point. A single eye burns at the LEFT socket in a specific ORANGE-GOLD; the right socket is dark and empty. Moves with geometric efficiency and counts the exits before he sits. His mask and Tal'Voss's demon mask are two completely different objects and must never converge.",
       "notes": "Human. Face fully concealed behind a dark mask, a single eye burning at the LEFT socket in a specific orange-gold. Moves with geometric efficiency; counts exits before sitting down. Carries a blade that lights."
     },
     "TAL_VOSS": {
       "name": "Tal'Voss / The Devil",
       "kind": "CHARACTER",
       "ref": "char-tal-voss-canonical.png",
-      "locked": false,
-      "block": "",
+      "locked": true,
+      "block": "Valari. Wears a DEMON MASK over his features — a distinct object, not a variant of Kimo's plain dark mask, and the two must never be blended. His circuits are HIDDEN rather than dimmed: almost nothing visible, and that is a deliberate act rather than suppression by the city field. He is the same figure before and after he discards the name at the wall; only what he is called changes. VALARI CIRCUIT RULE: the circuits are never one fixed colour. They drift slowly between a soft blue and a dusty magenta-violet, both low-saturation. Never hot pink, never electric blue, never neon. BRIGHTNESS carries the emotion; the hue drift is constant and ambient underneath it.",
       "notes": "Valari. Wears a DEMON MASK over his features. His circuits are not dimmed like Nyx'ara's — they are HIDDEN, down to almost nothing, chosen. He discards the name Tal'Voss at the registration wall and takes The Devil. Same appearance either side of it; what changes is what he is called. VALARI CIRCUIT RULE: circuits are never one fixed colour — they drift slowly between a soft blue and a dusty magenta-violet, both low-saturation. Never hot pink, never electric blue, never neon. Brightness carries the emotion; the hue drift is constant and ambient."
     },
     "UNIT_9911": {
       "name": "Unit-9911",
       "kind": "CHARACTER",
       "ref": "char-unit-9911-canonical.png",
-      "locked": false,
-      "block": "",
+      "locked": true,
+      "block": "Synthetic. A dark hooded robe, hands pressed together at the chest, and a single ring of pale light at the forehead which is the ONLY bright thing about it. Its stillness is not indifference and not blankness — it has presided over hundreds of these and it carries them. Draw it as something that remembers.",
       "notes": "Synthetic. Presides over the Oath of Ascent. Dark hooded robe, hands pressed together at the chest, a single ring of pale light at the forehead — the only bright thing about it. A stillness that is not indifference."
     },
     "QUESTRON": {
       "name": "a Questron",
       "kind": "ENTITY",
       "ref": "char-questron-canonical.png",
-      "locked": false,
-      "block": "",
+      "locked": true,
+      "block": "Blue suit, faceted dark head, a gold question mark centred on the face — neither glowing nor dim, simply there and permanent. Hands at its sides. There is no ceremony in it whatsoever; the ceremony belongs to Unit-9911 and the Questron is an intake terminal that happens to stand upright. Identical units exist throughout Haven City, so this one is a type rather than an individual.",
       "notes": "Blue suit, faceted dark head, a gold question mark centred on the face — neither glowing nor dim, simply there, permanent. Identical units throughout Haven City. Hands at its sides; no ceremony in it. NOTE: the site already has Questron art in public/assets — check it before generating, and match it."
     },
     "KORINTH_OPERATIVE": {
@@ -187,11 +187,11 @@
       "notes": "No colour, no pattern, just dark glass in a pale frame — what he shows when the grid would be information. t1 spreads 3-4."
     },
     "NYXARA_SUPPRESSED": {
-      "value": "",
+      "value": "Her circuits are DIM and LOW — soft blue drifting toward dusty magenta-violet, unsaturated, suppressed by the city field and by her own effort. They are present and readable but they do not light anything around them and they never glow. This is her condition in every Prologue III plate.",
       "notes": "Circuits dim and low — the city field plus her own effort. Her default in every p3 plate."
     },
     "TAL_VOSS_HIDDEN": {
-      "value": "",
+      "value": "His circuits are HIDDEN, down to almost nothing — not dimmed like Nyx'ara's, but deliberately shut down beneath the demon mask. At most a faint trace where the mask meets the neck. This is his condition in every Prologue III plate.",
       "notes": "Circuits hidden to almost nothing beneath the demon mask. Deliberate, not suppression. His default in every p3 plate."
     }
   },

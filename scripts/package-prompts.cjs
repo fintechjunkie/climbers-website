@@ -4,7 +4,9 @@
 const fs = require('fs');
 const path = require('path');
 
-const SLUG = 'p1';
+// Which volume to package. `npm run package -- p3`, defaulting to the one
+// most likely to be wanted rather than to a volume that is already finished.
+const SLUG = process.argv[2] || 'p3';
 const SHEET = path.join('prompt-sheets', SLUG + '.md');
 const REFS = 'references';
 const OUT = path.join('prompt-packages', SLUG);
