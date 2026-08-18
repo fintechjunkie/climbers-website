@@ -136,3 +136,27 @@ if (missing.length) {
   console.log('\nWaiting on:');
   for (const m of missing) console.log(`  ${m.split("\\").join("/")}`);
 }
+
+/* Canonicals that EXIST but are known to be WRONG.
+ *
+ * A missing reference announces itself: the file is not there, and the prompt
+ * sheet refuses to claim an authority it does not have. A reference that is
+ * present but wrong is silent, and every plate drawn from it inherits the
+ * fault. Four have already cost regenerations here — Cole's lens, Marcus's eye,
+ * Rainbow's face and Signal's block — and in each case the plate was faithfully
+ * copying a sheet that disagreed with the prose.
+ *
+ * So a known-bad canonical is recorded in the roster as `revisionPending` and
+ * reported every time the tooling runs, until somebody fixes it. Deliberately
+ * not a reminder living in a chat log or in anybody's head.
+ */
+const pending = [];
+for (const group of ['characters', 'wardrobe', 'locations']) {
+  for (const [key, v] of Object.entries(roster[group] || {})) {
+    if (v && v.revisionPending) pending.push({ key, why: v.revisionPending });
+  }
+}
+if (pending.length) {
+  console.log(`\nREVISION PENDING — ${pending.length} canonical(s) on disk are known to be WRONG:`);
+  for (const p of pending) console.log(`  ${p.key}: ${p.why}`);
+}
