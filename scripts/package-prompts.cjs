@@ -70,6 +70,7 @@ const formatTail = (isOpener) => (isOpener
 const isOpener = (p) => /opener/i.test(p.slug) || /opener/i.test(p.leaf);
 
 const nlMd = String.fromCharCode(10);
+const EOL = String.fromCharCode(13) + String.fromCharCode(10);
 const index = [];
 plates.forEach((p, i) => {
   const n = String(i).padStart(2, '0');
@@ -91,6 +92,16 @@ plates.forEach((p, i) => {
   lines.push(...formatBlock(op), '');
   lines.push(p.prompt, '', formatTail(op), '');
   fs.writeFileSync(path.join(dir, 'PROMPT.txt'), lines.join('\r\n'));
+
+  // A folder for a plate that already shipped looks exactly like a folder for
+  // one that has not, which is how work gets redone. Say so inside the folder.
+  const shipped = path.join('public', 'plates', p.slug + '.jpg');
+  if (fs.existsSync(shipped)) {
+    fs.writeFileSync(path.join(dir, 'ALREADY-DONE.txt'),
+      'THIS PLATE IS DONE.' + EOL + EOL
+      + 'Shipped as public/plates/' + p.slug + '.jpg and the reader is using it.' + EOL
+      + 'Nothing to generate here unless you are deliberately replacing it.' + EOL);
+  }
 
   for (const a of p.attach) {
     const src = path.join(REFS, a.file);
