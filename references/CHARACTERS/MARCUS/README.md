@@ -9,7 +9,7 @@ Use `char-marcus-canonical.png` as the required visual reference whenever this f
 
 ## What this has to hold
 
-Human. Military cybernetic behind the LEFT socket — faint blue-white gleam that tracks a room in pieces before he finishes looking. Broad-shouldered, military posture calcified into something he cannot turn off.
+Human. Military cybernetic behind the LEFT socket, blue-white — matches the prose in p3 spread 3. An earlier canonical had it red and on the right and was replaced 18 Aug.
 
 ## How to lock this
 
