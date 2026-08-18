@@ -25,6 +25,36 @@ function buildLeaves(volume) {
 }
 
 /**
+ * Fetch the plates a reader is about to need, before they need them.
+ *
+ * Without this a turn LOOKS broken rather than slow: the sheet lifts, the new
+ * page mounts with no image decoded yet, so the old plate stays on screen for
+ * the whole 520ms turn and the new one pops in afterwards. The reader reads
+ * that as "it showed me the last picture again".
+ *
+ * A window rather than the whole volume: 24 plates at ~450kB is 11MB, which is
+ * a lot to spend on a reader who turns two pages. Two ahead covers a fast
+ * double-tap; one behind covers turning back.
+ */
+function usePlatePreload(leaves, idx) {
+  useEffect(() => {
+    const want = [idx - 1, idx + 1, idx + 2]
+      .filter((i) => i >= 0 && i < leaves.length)
+      .map((i) => leaves[i]?.spread?.image?.slug)
+      .filter(Boolean);
+    // Held in a local so the browser cannot bin the request as unreferenced
+    // before it lands; the HTTP cache is what the <img> then hits.
+    const imgs = want.map((slug) => {
+      const im = new Image();
+      im.decoding = 'async';
+      im.src = `/plates/${slug}.jpg`;
+      return im;
+    });
+    return () => imgs.forEach((im) => { im.src = ''; });
+  }, [leaves, idx]);
+}
+
+/**
  * How many swipes a leaf costs.
  *
  * Wide: always one — you see both pages at once. Compact: a story spread is
@@ -388,6 +418,7 @@ export default function FlipBook({ volume, next = null }) {
   const [chromeHidden, setChromeHidden] = useState(false);
   const [bars, setBars] = useState({ top: 0, bottom: 0 });
   const typeSize = useTypeScale();
+  usePlatePreload(leaves, pos.idx);
 
   const topBarRef = useRef(null);
   const botBarRef = useRef(null);
