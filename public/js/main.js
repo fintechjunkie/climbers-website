@@ -10,9 +10,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (data.subtitle) setupRotatingSubtitle(heroSubtitle, data.subtitle);
 
   // Load banner image from repo (uploads/banner.jpg)
+  // The wrapper carries the animated overlays, so it is what gets shown or
+  // hidden — revealing them over a banner that failed to load would leave two
+  // glows floating on the page ground.
+  const heroBannerWrap = document.getElementById('heroBannerWrap');
   heroBannerImg.src = Storage.getBannerImageUrl() + '?t=' + Date.now();
-  heroBannerImg.onload = () => { heroBannerImg.style.display = 'block'; };
-  heroBannerImg.onerror = () => { heroBannerImg.style.display = 'none'; };
+  heroBannerImg.onload = () => { if (heroBannerWrap) heroBannerWrap.style.display = ''; };
+  heroBannerImg.onerror = () => { if (heroBannerWrap) heroBannerWrap.style.display = 'none'; };
 
   // --- Render chapters and tales from the flipbook manifest ---
   // Both are volumes now, not site.json entries, so one fetch serves both.
@@ -38,16 +42,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   // definitions further down this file, and the #readerModal / #talesReaderModal
   // markup in index.html, are dead and can be deleted in a cleanup pass.
 
-  // --- Video overlay ---
-  setupVideoOverlay();
-
   // --- Ambient audio ---
   setupAmbientAudio();
-
-  // --- Questron ---
-  if (data.questron && data.questron.enabled) {
-    setupQuestron(data.questron);
-  }
 
   // --- Override Oath Lords / Archive from site.json if admin has edited them ---
   if (data.oathLords && data.oathLords.length) OATH_LORDS = data.oathLords;
@@ -64,6 +60,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   // --- Malachus Archive (Timeline) ---
   if (data.questron && data.questron.workerUrl) {
     setupArchive(data.questron.workerUrl);
+  }
+
+  // --- The Terminal ---
+  // Last, because it reads the Lords and the archive events that the two
+  // blocks above may have replaced from site.json.
+  if (data.questron && data.questron.enabled) {
+    setupTerminal(data.questron);
   }
 
   // --- Scroll spy + section footer nav ---
@@ -95,7 +98,7 @@ function setupMotion() {
     ['.climbers-intro', 60],
     ['.chapter-card', 60],
     ['.tale-card', 60],
-    ['.lord-card', 45],
+    ['.lord-card', 55],
     ['.seraph-entry', 0],
     ['.archive-row', 25],
     ['.gallery-item', 18],
@@ -106,7 +109,10 @@ function setupMotion() {
     document.querySelectorAll(sel).forEach((el, i) => {
       if (el.classList.contains('reveal')) return;
       el.classList.add('reveal');
-      if (step) el.style.setProperty('--d', Math.min(i * step, 400) + 'ms');
+      // The cap keeps a long list (the hundred-tile gallery) from taking a
+      // visible age to finish, but it has to clear a full ten-card wall or the
+      // last Lords would arrive together and the sequence would break.
+      if (step) el.style.setProperty('--d', Math.min(i * step, 620) + 'ms');
     });
   });
 
@@ -825,45 +831,6 @@ function toRoman(num) {
 // ===========================
 // VIDEO OVERLAY
 // ===========================
-function setupVideoOverlay() {
-  const overlay = document.getElementById('videoOverlay');
-  const player = document.getElementById('videoOverlayPlayer');
-  const closeBtn = document.getElementById('videoOverlayClose');
-  const replayBtn = document.getElementById('videoOverlayReplay');
-
-  closeBtn.addEventListener('click', closeVideoOverlay);
-  overlay.addEventListener('click', e => {
-    if (e.target === overlay) closeVideoOverlay();
-  });
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && overlay.classList.contains('active')) closeVideoOverlay();
-  });
-
-  replayBtn.addEventListener('click', () => {
-    player.currentTime = 0;
-    player.play();
-  });
-}
-
-function openVideoOverlay(src) {
-  const overlay = document.getElementById('videoOverlay');
-  const player = document.getElementById('videoOverlayPlayer');
-  player.src = src + '?t=' + Date.now();
-  player.load();
-  overlay.classList.add('active');
-  document.body.style.overflow = 'hidden';
-  player.play().catch(() => {});
-}
-
-function closeVideoOverlay() {
-  const overlay = document.getElementById('videoOverlay');
-  const player = document.getElementById('videoOverlayPlayer');
-  player.pause();
-  player.src = '';
-  overlay.classList.remove('active');
-  document.body.style.overflow = '';
-}
-
 // ===========================
 // AMBIENT AUDIO
 // ===========================
@@ -1277,9 +1244,6 @@ function setupSeraph(data) {
 // ===========================
 // OATH LORD REGISTRY
 // ===========================
-let regSituationPool = [];
-let regCurrentSituation = null;
-let regSitSelectedLord = null;
 
 function setupRegistry(workerUrl) {
   const section = document.getElementById('registry-section');
@@ -1435,9 +1399,11 @@ function renderLordDetail(lord) {
     html += `<div class="reg-field"><div class="reg-field-label" style="color:#5a8060">KNOWN ALLIANCES</div><div class="reg-field-value reg-alliances">${lord.alliances}</div></div>`;
     html += `<div class="reg-field"><div class="reg-field-label" style="color:#804040">KNOWN ENEMIES</div><div class="reg-field-value reg-enemies">${lord.enemies}</div></div>`;
 
-    if (regCurrentSituation) {
-      html += `<button class="reg-respond-btn" id="regRespondBtn" style="border-color:${lord.color};color:${lord.color}">HOW WOULD ${lord.surname.toUpperCase()} RESPOND?</button>`;
-    }
+    // Straight into the terminal on this Lord's channel, with them already
+    // selected. Previously this button only appeared once a situation had been
+    // generated in a panel further down the page, which meant that most of the
+    // time a reader opened a file there was nothing to do at the end of it.
+    html += `<button class="reg-respond-btn" id="regRespondBtn" style="border-color:${lord.color};color:${lord.color}">PUT A SITUATION TO ${lord.surname.toUpperCase()}</button>`;
 
     body.innerHTML = html;
 
@@ -1457,11 +1423,8 @@ function renderLordDetail(lord) {
     const respondBtn = document.getElementById('regRespondBtn');
     if (respondBtn) {
       respondBtn.addEventListener('click', () => {
-        regSitSelectedLord = lord;
-        document.querySelectorAll('.reg-sit-lord-btn').forEach(btn => {
-          btn.classList.toggle('active', btn.dataset.lord === lord.id);
-        });
-        fetchLordResponse(lord);
+        deselectLord();
+        openTerminal('lords', { lordId: lord.id });
       });
     }
   }
@@ -1495,97 +1458,6 @@ function setupRegistryEvents(workerUrl) {
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && document.getElementById('regDetail').classList.contains('open')) deselectLord();
   });
-
-  // Situation generator
-  regSituationPool = [...REGISTRY_SITUATIONS];
-  shuffleArray(regSituationPool);
-  let sitIndex = 0;
-
-  const genBtn = document.getElementById('regSitGenerate');
-  genBtn.addEventListener('click', () => {
-    if (sitIndex >= regSituationPool.length) {
-      regSituationPool = [...REGISTRY_SITUATIONS];
-      shuffleArray(regSituationPool);
-      sitIndex = 0;
-    }
-    regCurrentSituation = regSituationPool[sitIndex++];
-    document.getElementById('regSitCard').style.display = '';
-    document.getElementById('regSitText').textContent = regCurrentSituation;
-    genBtn.textContent = 'NEW SITUATION';
-
-    // Show lord selector
-    const lordsContainer = document.getElementById('regSitLords');
-    lordsContainer.style.display = '';
-    const row = document.getElementById('regSitLordsRow');
-    row.innerHTML = '';
-    OATH_LORDS.forEach(lord => {
-      const btn = document.createElement('button');
-      btn.className = 'reg-sit-lord-btn';
-      btn.dataset.lord = lord.id;
-      const icon = document.createElement('img');
-      icon.className = 'reg-sit-lord-icon';
-      icon.src = 'assets/oath-lords/' + lord.id + '-faction.webp';
-      icon.alt = '';
-      icon.onerror = function() { this.style.display = 'none'; };
-      btn.appendChild(icon);
-      btn.appendChild(document.createTextNode(lord.surname));
-      btn.style.setProperty('--lord-color', lord.color);
-      if (regSelectedLord && regSelectedLord.id === lord.id) btn.classList.add('active');
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.reg-sit-lord-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        regSitSelectedLord = lord;
-        fetchLordResponse(lord);
-      });
-      row.appendChild(btn);
-    });
-
-    // Clear previous response
-    document.getElementById('regSitResponse').style.display = 'none';
-    document.getElementById('regSitResponse').innerHTML = '';
-
-    // Update detail panel respond button if a lord is selected
-    if (regSelectedLord) renderLordDetail(regSelectedLord);
-  });
-
-  // Store workerUrl for API calls
-  window._registryWorkerUrl = workerUrl;
-}
-
-async function fetchLordResponse(lord) {
-  const responseDiv = document.getElementById('regSitResponse');
-  responseDiv.style.display = '';
-  responseDiv.style.borderColor = lord.color;
-  responseDiv.innerHTML = `<span class="reg-sit-loading">The Lord considers...</span>`;
-
-  // Disable respond button in detail panel
-  const respondBtn = document.getElementById('regRespondBtn');
-  if (respondBtn) { respondBtn.disabled = true; respondBtn.style.opacity = '0.4'; }
-
-  try {
-    const response = await fetch(window._registryWorkerUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        type: 'oath-lord',
-        lordName: lord.name,
-        lordTitle: lord.title,
-        lordAug: lord.aug,
-        lordAugDesc: lord.augDesc,
-        lordAlignment: lord.alignment,
-        lordVoice: lord.voice,
-        lordAlliances: lord.alliances,
-        lordEnemies: lord.enemies,
-        situation: regCurrentSituation
-      })
-    });
-    const data = await response.json();
-    responseDiv.innerHTML = `<span class="reg-sit-resp-label" style="color:${lord.color}">${lord.name.toUpperCase()} RESPONDS</span><p class="reg-sit-resp-text">${data.answer}</p>`;
-  } catch (err) {
-    responseDiv.innerHTML = `<span class="reg-sit-resp-label" style="color:#804040">TRANSMISSION ERROR</span><p class="reg-sit-resp-text">Connection to worker failed. Check terminal configuration.</p>`;
-  }
-
-  if (respondBtn) { respondBtn.disabled = false; respondBtn.style.opacity = ''; }
 }
 
 function shuffleArray(arr) {
@@ -1836,260 +1708,433 @@ function setupArchiveEvents(workerUrl) {
   });
 
   // Ask the Archive form
-  document.getElementById('archiveAskForm').addEventListener('submit', async e => {
-    e.preventDefault();
-    const input = document.getElementById('archiveAskInput');
-    const question = input.value.trim();
-    if (!question) return;
-
-    const evt = ARCHIVE_EVENTS[archiveCurrentIndex];
-    const responseDiv = document.getElementById('archiveAskResponse');
-    responseDiv.style.display = '';
-    responseDiv.innerHTML = '<span class="archive-ask-loading">Malachus is consulting the Archive</span>';
-
-    input.disabled = true;
-    document.querySelector('.archive-ask-btn').disabled = true;
-
-    try {
-      const response = await fetch(workerUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          type: 'archive',
-          question: question,
-          eventId: evt.id,
-          eventLabel: evt.label,
-          eventYear: evt.year,
-          eventBody: evt.body
-        })
-      });
-      const data = await response.json();
-      responseDiv.innerHTML = '<span class="archive-ask-response-label">MALACHUS RESPONDS</span><div class="archive-ask-response-text">' + data.answer + '</div>';
-    } catch (err) {
-      responseDiv.innerHTML = '<span class="archive-ask-response-label" style="color:#804040">TRANSMISSION ERROR</span><div class="archive-ask-response-text">Connection to the Archive failed. The records are temporarily unavailable.</div>';
-    }
-
-    input.disabled = false;
-    document.querySelector('.archive-ask-btn').disabled = false;
-    input.value = '';
-  });
+  // Asking Malachus is no longer a form buried at the foot of this modal. The
+  // button hands the open record to the shared terminal, which already knows
+  // how to talk to him.
+  const askBtn = document.getElementById('archiveAskBtn');
+  if (askBtn) {
+    askBtn.addEventListener('click', () => {
+      const evt = ARCHIVE_EVENTS[archiveCurrentIndex];
+      closeArchiveModal();
+      openTerminal('archive', { eventIndex: archiveCurrentIndex, eventId: evt && evt.id });
+    });
+  }
 
   window._archiveWorkerUrl = workerUrl;
 }
 
-let questronKbCache = null;
-let questronHistory = [];
-let questronQuestionCount = 0;
-let questronWorkerUrl = '';
-const QUESTRON_MAX_QUESTIONS = 5;
+/* ===========================================================================
+   THE TERMINAL
 
-function setupQuestron(config) {
-  questronWorkerUrl = config.workerUrl;
+   One interface, three channels, replacing three separate chat boxes that each
+   had their own frame, their own input, their own loading state and their own
+   idea of what a conversation looked like:
 
-  // Show nav link and section
+     - the Questron terminal (a modal, 5-query limit, knowledge base)
+     - the Oath Lord situation generator (a panel in the registry section)
+     - Ask the Archive (a form at the foot of the archive modal)
+
+   All three already spoke to the same Cloudflare worker; only the framing
+   differed. Here they are one transcript with a channel switch, so a reader
+   learns the interface once. Every channel keeps its own history, so switching
+   away and back does not throw the conversation away.
+
+   Entry points elsewhere on the page hand this module a context and a channel:
+   a Lord's file opens it on 'lords' with that Lord selected, an archive record
+   opens it on 'archive' with that record selected.
+   =========================================================================== */
+
+const TM_MAX_QUERIES = 5;
+
+const TM_CHANNELS = {
+  questron: {
+    label: 'Questron',
+    sub: 'QST-7 // SYNTHETIC INTELLIGENCE UNIT',
+    accent: '#3fd7ff',
+    placeholder: 'Ask Questron about Haven City...',
+    limited: true
+  },
+  lords: {
+    label: 'The Ten',
+    sub: 'OATH LORD RESPONSE CHANNEL',
+    accent: '#c9a84c',
+    placeholder: 'Describe a situation, or generate one...',
+    limited: false
+  },
+  archive: {
+    label: 'The Archive',
+    sub: 'MALACHUS // RECORD ENQUIRY',
+    accent: '#7fe08a',
+    placeholder: 'Ask Malachus about this record...',
+    limited: false
+  }
+};
+
+const tmState = {
+  workerUrl: '',
+  channel: 'questron',
+  kb: null,
+  open: false,
+  lordId: null,
+  eventIndex: 0,
+  situation: null,
+  situationPool: [],
+  situationIndex: 0,
+  queries: 0,
+  history: { questron: [], lords: [], archive: [] },
+  transcript: { questron: [], lords: [], archive: [] }
+};
+
+function setupTerminal(config) {
+  tmState.workerUrl = (config && config.workerUrl) || '';
+
   const navLink = document.getElementById('questronNavLink');
   if (navLink) navLink.style.display = '';
   const section = document.getElementById('questron-section');
   if (section) section.style.display = '';
 
-  // Load header image
   const headerImg = document.getElementById('questronHeaderImg');
-  headerImg.src = Storage.getQuestronHeaderUrl() + '?t=' + Date.now();
-  headerImg.onload = () => { headerImg.style.display = ''; };
-  headerImg.onerror = () => { headerImg.style.display = 'none'; };
-
-  // Load avatar in terminal header
-  const avatar = document.getElementById('qtAvatar');
-  avatar.src = Storage.getQuestronAvatarUrl() + '?t=' + Date.now();
-  avatar.onload = () => { avatar.style.display = ''; };
-  avatar.onerror = () => { avatar.style.display = 'none'; };
-
-  // Wire enter button
-  document.getElementById('questronEnterBtn').addEventListener('click', () => {
-    openQuestronTerminal();
-  });
-
-  // Wire close button
-  document.getElementById('questronClose').addEventListener('click', closeQuestronTerminal);
-
-  // Click backdrop to close
-  document.getElementById('questronTerminal').addEventListener('click', e => {
-    if (e.target.id === 'questronTerminal') closeQuestronTerminal();
-  });
-
-  // ESC to close
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && document.getElementById('questronTerminal').classList.contains('active')) {
-      closeQuestronTerminal();
-    }
-  });
-
-  // Wire input form
-  document.getElementById('qtInputForm').addEventListener('submit', e => {
-    e.preventDefault();
-    sendQuestronMessage(questronWorkerUrl);
-  });
-}
-
-async function openQuestronTerminal() {
-  const terminal = document.getElementById('questronTerminal');
-  const messages = document.getElementById('qtMessages');
-  const input = document.getElementById('qtInput');
-  const sendBtn = document.querySelector('.qt-send-btn');
-
-  // Reset session
-  questronQuestionCount = 0;
-  questronHistory = [];
-  messages.innerHTML = '<div class="qt-line qt-system">BOOTING TERMINAL... ESTABLISHING LINK...</div>';
-  input.disabled = false;
-  sendBtn.disabled = false;
-  updateQuestionCounter();
-
-  terminal.classList.add('active');
-  document.body.style.overflow = 'hidden';
-
-  // Auto-introduction from Questron
-  try {
-    // Fetch knowledge base if not cached
-    if (questronKbCache === null) {
-      try {
-        const kbResponse = await fetch(Storage.getQuestronKbUrl() + '?t=' + Date.now());
-        questronKbCache = kbResponse.ok ? await kbResponse.text() : '';
-      } catch (e) { questronKbCache = ''; }
-    }
-
-    const processing = document.createElement('div');
-    processing.className = 'qt-processing';
-    processing.textContent = 'INITIALIZING';
-    messages.appendChild(processing);
-
-    const response = await fetch(questronWorkerUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        question: 'Introduce yourself briefly. State your designation, your purpose, and that the user has 5 queries available in this session.',
-        knowledgeBase: questronKbCache,
-        history: []
-      })
-    });
-    const data = await response.json();
-    if (processing.parentNode) processing.remove();
-
-    // Clear boot message and show intro
-    messages.innerHTML = '';
-    const sysLine = document.createElement('div');
-    sysLine.className = 'qt-line qt-system';
-    sysLine.textContent = 'SYSTEM ONLINE. LINK ESTABLISHED.';
-    messages.appendChild(sysLine);
-
-    const introLine = document.createElement('div');
-    introLine.className = 'qt-line qt-bot';
-    introLine.textContent = data.answer;
-    messages.appendChild(introLine);
-  } catch (err) {
-    messages.innerHTML = '<div class="qt-line qt-system">SYSTEM ONLINE. LINK ESTABLISHED.</div><div class="qt-line qt-bot">I am Questron. Designation QST-7. Synthetic intelligence unit. You have 5 queries available. Proceed.</div>';
+  if (headerImg) {
+    headerImg.src = Storage.getQuestronHeaderUrl() + '?t=' + Date.now();
+    headerImg.onload = () => { headerImg.style.display = ''; };
+    headerImg.onerror = () => { headerImg.style.display = 'none'; };
   }
 
-  messages.scrollTop = messages.scrollHeight;
-  input.focus();
+  const avatar = document.getElementById('tmAvatar');
+  if (avatar) {
+    avatar.src = Storage.getQuestronAvatarUrl() + '?t=' + Date.now();
+    avatar.onload = () => { avatar.style.display = ''; };
+    avatar.onerror = () => { avatar.style.display = 'none'; };
+  }
+
+  // Every door into the terminal, wherever it sits on the page.
+  document.querySelectorAll('.terminal-open-btn').forEach(btn => {
+    btn.addEventListener('click', () => openTerminal(btn.dataset.channel || 'questron'));
+  });
+
+  document.getElementById('tmClose').addEventListener('click', closeTerminal);
+  document.getElementById('terminal').addEventListener('click', e => {
+    if (e.target.id === 'terminal') closeTerminal();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && tmState.open) closeTerminal();
+  });
+
+  document.querySelectorAll('.tm-channel').forEach(btn => {
+    btn.addEventListener('click', () => switchChannel(btn.dataset.channel));
+  });
+
+  document.getElementById('tmForm').addEventListener('submit', e => {
+    e.preventDefault();
+    tmSend();
+  });
+
+  tmState.situationPool = [...REGISTRY_SITUATIONS];
+  shuffleArray(tmState.situationPool);
 }
 
-function closeQuestronTerminal() {
-  const terminal = document.getElementById('questronTerminal');
-  terminal.classList.remove('active');
+function openTerminal(channel, context) {
+  const modal = document.getElementById('terminal');
+  tmState.open = true;
+  if (context && context.lordId) tmState.lordId = context.lordId;
+  if (context && typeof context.eventIndex === 'number') tmState.eventIndex = context.eventIndex;
+
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  switchChannel(channel || tmState.channel);
+  setTimeout(() => { const i = document.getElementById('tmInput'); if (i) i.focus(); }, 60);
+}
+
+function closeTerminal() {
+  tmState.open = false;
+  document.getElementById('terminal').classList.remove('active');
   document.body.style.overflow = '';
 }
 
-function updateQuestionCounter() {
-  const counter = document.getElementById('qtQuestionCount');
-  if (counter) counter.textContent = 'QUERIES: ' + questronQuestionCount + '/' + QUESTRON_MAX_QUESTIONS;
+function switchChannel(channel) {
+  if (!TM_CHANNELS[channel]) channel = 'questron';
+  tmState.channel = channel;
+  const cfg = TM_CHANNELS[channel];
+
+  const frame = document.querySelector('.tm-frame');
+  if (frame) frame.style.setProperty('--tm-accent', cfg.accent);
+
+  document.getElementById('tmSub').textContent = cfg.sub;
+  document.getElementById('tmInput').placeholder = cfg.placeholder;
+  document.querySelectorAll('.tm-channel').forEach(b => {
+    b.classList.toggle('active', b.dataset.channel === channel);
+  });
+
+  tmRenderContext();
+  tmRenderActions();
+  tmRenderTranscript();
+  tmUpdateStatus();
+
+  // Questron introduces itself once per session; the other two channels are
+  // led by the context you brought with you, so they open with a prompt
+  // instead of a greeting.
+  if (channel === 'questron' && !tmState.transcript.questron.length) tmQuestronIntro();
+  if (channel === 'lords' && !tmState.transcript.lords.length) {
+    tmPush('system', 'Select an Oath Lord, then put a situation to them. Generate one, or write your own.');
+  }
+  if (channel === 'archive' && !tmState.transcript.archive.length) {
+    tmPush('system', 'Select a record, then ask. Malachus answers from the Archive and does not speculate.');
+  }
 }
 
-async function sendQuestronMessage(workerUrl) {
-  const input = document.getElementById('qtInput');
-  const messages = document.getElementById('qtMessages');
-  const sendBtn = document.querySelector('.qt-send-btn');
+/* --- context row: who or what this channel is currently pointed at -------- */
+function tmRenderContext() {
+  const row = document.getElementById('tmContext');
+  row.innerHTML = '';
+  const ch = tmState.channel;
+
+  if (ch === 'lords') {
+    if (!tmState.lordId && OATH_LORDS.length) tmState.lordId = OATH_LORDS[0].id;
+    const label = document.createElement('span');
+    label.className = 'tm-context-label';
+    label.textContent = 'Responding';
+    row.appendChild(label);
+
+    const scroller = document.createElement('div');
+    scroller.className = 'tm-chips';
+    OATH_LORDS.forEach(lord => {
+      const chip = document.createElement('button');
+      chip.className = 'tm-chip' + (lord.id === tmState.lordId ? ' active' : '');
+      chip.style.setProperty('--chip-color', lord.color);
+      chip.textContent = lord.surname;
+      chip.addEventListener('click', () => { tmState.lordId = lord.id; tmRenderContext(); });
+      scroller.appendChild(chip);
+    });
+    row.appendChild(scroller);
+    row.style.display = '';
+    return;
+  }
+
+  if (ch === 'archive') {
+    const label = document.createElement('span');
+    label.className = 'tm-context-label';
+    label.textContent = 'Record';
+    row.appendChild(label);
+
+    const scroller = document.createElement('div');
+    scroller.className = 'tm-chips';
+    ARCHIVE_EVENTS.forEach((evt, i) => {
+      const chip = document.createElement('button');
+      chip.className = 'tm-chip' + (i === tmState.eventIndex ? ' active' : '');
+      chip.style.setProperty('--chip-color', '#7fe08a');
+      chip.textContent = evt.label || evt.year || ('Record ' + (i + 1));
+      chip.title = evt.year || '';
+      chip.addEventListener('click', () => { tmState.eventIndex = i; tmRenderContext(); });
+      scroller.appendChild(chip);
+    });
+    row.appendChild(scroller);
+    row.style.display = '';
+    return;
+  }
+
+  row.style.display = 'none';
+}
+
+/* --- quick actions ------------------------------------------------------- */
+function tmRenderActions() {
+  const bar = document.getElementById('tmActions');
+  bar.innerHTML = '';
+
+  if (tmState.channel === 'lords') {
+    const gen = document.createElement('button');
+    gen.className = 'tm-action';
+    gen.textContent = tmState.situation ? 'New situation' : 'Generate a situation';
+    gen.addEventListener('click', () => {
+      if (tmState.situationIndex >= tmState.situationPool.length) {
+        tmState.situationPool = [...REGISTRY_SITUATIONS];
+        shuffleArray(tmState.situationPool);
+        tmState.situationIndex = 0;
+      }
+      tmState.situation = tmState.situationPool[tmState.situationIndex++];
+      document.getElementById('tmInput').value = tmState.situation;
+      tmRenderActions();
+      document.getElementById('tmInput').focus();
+    });
+    bar.appendChild(gen);
+    bar.style.display = '';
+    return;
+  }
+
+  bar.style.display = 'none';
+}
+
+/* --- transcript ---------------------------------------------------------- */
+function tmPush(role, text) {
+  tmState.transcript[tmState.channel].push({ role, text });
+  tmRenderTranscript();
+}
+
+function tmRenderTranscript() {
+  const box = document.getElementById('tmMessages');
+  box.innerHTML = '';
+  tmState.transcript[tmState.channel].forEach(line => {
+    const el = document.createElement('div');
+    el.className = 'tm-line tm-' + line.role;
+    if (line.speaker) {
+      const who = document.createElement('span');
+      who.className = 'tm-speaker';
+      who.textContent = line.speaker;
+      if (line.color) who.style.color = line.color;
+      el.appendChild(who);
+    }
+    const body = document.createElement('span');
+    body.className = 'tm-text';
+    body.textContent = line.text;
+    el.appendChild(body);
+    box.appendChild(el);
+  });
+  box.scrollTop = box.scrollHeight;
+}
+
+function tmPushRich(role, text, speaker, color) {
+  tmState.transcript[tmState.channel].push({ role, text, speaker, color });
+  tmRenderTranscript();
+}
+
+function tmUpdateStatus() {
+  const right = document.getElementById('tmStatusRight');
+  const cfg = TM_CHANNELS[tmState.channel];
+  right.textContent = cfg.limited
+    ? 'QUERIES: ' + tmState.queries + '/' + TM_MAX_QUERIES
+    : 'FEED: HAVEN CITY CENTRAL';
+}
+
+function tmBusy(on) {
+  const input = document.getElementById('tmInput');
+  const btn = document.querySelector('.tm-send-btn');
+  input.disabled = on;
+  btn.disabled = on;
+  const box = document.getElementById('tmMessages');
+  const existing = box.querySelector('.tm-processing');
+  if (on && !existing) {
+    const p = document.createElement('div');
+    p.className = 'tm-processing';
+    p.textContent = tmState.channel === 'lords' ? 'CONSIDERING'
+      : tmState.channel === 'archive' ? 'CONSULTING THE ARCHIVE'
+      : 'PROCESSING';
+    box.appendChild(p);
+    box.scrollTop = box.scrollHeight;
+  }
+  if (!on && existing) existing.remove();
+}
+
+/* --- sending ------------------------------------------------------------- */
+async function tmSend() {
+  const input = document.getElementById('tmInput');
   const question = input.value.trim();
   if (!question) return;
 
-  // Check question limit
-  if (questronQuestionCount >= QUESTRON_MAX_QUESTIONS) {
+  if (TM_CHANNELS[tmState.channel].limited && tmState.queries >= TM_MAX_QUERIES) {
+    tmPush('system', 'QUERY LIMIT REACHED. LINK CLOSING.');
     return;
   }
 
   input.value = '';
-
-  // Show user's question
-  const userLine = document.createElement('div');
-  userLine.className = 'qt-line qt-user';
-  userLine.textContent = question;
-  messages.appendChild(userLine);
-
-  // Show processing indicator
-  const processing = document.createElement('div');
-  processing.className = 'qt-processing';
-  processing.textContent = 'PROCESSING';
-  messages.appendChild(processing);
-  messages.scrollTop = messages.scrollHeight;
+  tmPush('user', question);
+  tmBusy(true);
 
   try {
-    // Fetch knowledge base (cache after first load)
-    if (questronKbCache === null) {
-      try {
-        const kbResponse = await fetch(Storage.getQuestronKbUrl() + '?t=' + Date.now());
-        questronKbCache = kbResponse.ok ? await kbResponse.text() : '';
-      } catch (e) { questronKbCache = ''; }
-    }
+    if (tmState.channel === 'lords') await tmSendLord(question);
+    else if (tmState.channel === 'archive') await tmSendArchive(question);
+    else await tmSendQuestron(question);
+  } catch (err) {
+    tmBusy(false);
+    tmPush('error', 'TRANSMISSION FAILED. The link to Haven City could not be established.');
+  }
 
-    // Call the worker
-    const response = await fetch(workerUrl, {
+  tmBusy(false);
+  tmUpdateStatus();
+  if (!input.disabled) input.focus();
+}
+
+async function tmSendQuestron(question) {
+  if (tmState.kb === null) {
+    try {
+      const r = await fetch(Storage.getQuestronKbUrl() + '?t=' + Date.now());
+      tmState.kb = r.ok ? await r.text() : '';
+    } catch (e) { tmState.kb = ''; }
+  }
+  const resp = await fetch(tmState.workerUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ question, knowledgeBase: tmState.kb, history: tmState.history.questron })
+  });
+  const data = await resp.json();
+  tmBusy(false);
+  tmPushRich('bot', data.answer, 'QUESTRON', '#3fd7ff');
+  tmState.history.questron.push({ question, answer: data.answer });
+  if (tmState.history.questron.length > 10) tmState.history.questron.shift();
+  tmState.queries++;
+  if (tmState.queries >= TM_MAX_QUERIES) {
+    tmPush('system', 'QUERY LIMIT REACHED. Reopen the terminal for a new session.');
+  }
+}
+
+async function tmSendLord(situation) {
+  const lord = OATH_LORDS.find(l => l.id === tmState.lordId) || OATH_LORDS[0];
+  if (!lord) throw new Error('no lords loaded');
+  const resp = await fetch(tmState.workerUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      type: 'oath-lord',
+      lordName: lord.name, lordTitle: lord.title, lordAug: lord.aug,
+      lordAugDesc: lord.augDesc, lordAlignment: lord.alignment, lordVoice: lord.voice,
+      lordAlliances: lord.alliances, lordEnemies: lord.enemies,
+      situation
+    })
+  });
+  const data = await resp.json();
+  tmBusy(false);
+  tmPushRich('bot', data.answer, lord.name.toUpperCase(), lord.color);
+}
+
+async function tmSendArchive(question) {
+  const evt = ARCHIVE_EVENTS[tmState.eventIndex] || ARCHIVE_EVENTS[0];
+  if (!evt) throw new Error('no archive events loaded');
+  const resp = await fetch(tmState.workerUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      type: 'archive',
+      question,
+      eventId: evt.id, eventLabel: evt.label, eventYear: evt.year, eventBody: evt.body
+    })
+  });
+  const data = await resp.json();
+  tmBusy(false);
+  tmPushRich('bot', data.answer, 'MALACHUS', '#7fe08a');
+}
+
+async function tmQuestronIntro() {
+  tmPush('system', 'LINK ESTABLISHED.');
+  tmBusy(true);
+  try {
+    if (tmState.kb === null) {
+      try {
+        const r = await fetch(Storage.getQuestronKbUrl() + '?t=' + Date.now());
+        tmState.kb = r.ok ? await r.text() : '';
+      } catch (e) { tmState.kb = ''; }
+    }
+    const resp = await fetch(tmState.workerUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        question: question,
-        knowledgeBase: questronKbCache,
-        history: questronHistory
+        question: 'Introduce yourself briefly. State your designation, your purpose, and that the user has 5 queries available in this session.',
+        knowledgeBase: tmState.kb,
+        history: []
       })
     });
-
-    const data = await response.json();
-
-    // Remove processing indicator
-    if (processing.parentNode) processing.remove();
-
-    // Show answer
-    const botLine = document.createElement('div');
-    botLine.className = 'qt-line qt-bot';
-    botLine.textContent = data.answer;
-    messages.appendChild(botLine);
-
-    // Save to history for context
-    questronHistory.push({ question: question, answer: data.answer });
-    if (questronHistory.length > 10) questronHistory.shift();
-
-    // Increment question count
-    questronQuestionCount++;
-    updateQuestionCounter();
-
-    // Check if limit reached
-    if (questronQuestionCount >= QUESTRON_MAX_QUESTIONS) {
-      const limitLine = document.createElement('div');
-      limitLine.className = 'qt-line qt-system';
-      limitLine.textContent = 'SESSION LIMIT REACHED. TERMINAL ACCESS EXHAUSTED. CLOSE AND RE-ENTER TO START A NEW SESSION.';
-      messages.appendChild(limitLine);
-      input.disabled = true;
-      sendBtn.disabled = true;
-    }
-
+    const data = await resp.json();
+    tmBusy(false);
+    tmPushRich('bot', data.answer, 'QUESTRON', '#3fd7ff');
   } catch (err) {
-    if (processing.parentNode) processing.remove();
-
-    const errorLine = document.createElement('div');
-    errorLine.className = 'qt-line qt-error';
-    errorLine.textContent = 'TRANSMISSION ERROR: CONNECTION TO WORKER FAILED. CHECK TERMINAL CONFIGURATION.';
-    messages.appendChild(errorLine);
+    tmBusy(false);
+    tmPushRich('bot', 'I am Questron. Designation QST-7. Synthetic intelligence unit. You have 5 queries available. Proceed.', 'QUESTRON', '#3fd7ff');
   }
-
-  messages.scrollTop = messages.scrollHeight;
-  input.focus();
 }

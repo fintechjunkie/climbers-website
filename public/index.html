@@ -32,7 +32,14 @@
 
   <!-- ===== HERO BANNER ===== -->
   <section class="hero" id="hero">
-    <img class="hero-banner-img" id="heroBannerImg" src="" alt="Climbers Banner" style="display:none">
+    <!-- The banner is a still, so the movement is added over it: a slow bloom
+         where the Tower's seam burns, and a band of city neon along the foot
+         that drifts through the signage colours. -->
+    <div class="hero-banner-wrap" id="heroBannerWrap" style="display:none">
+      <img class="hero-banner-img" id="heroBannerImg" src="" alt="Climbers Banner">
+      <span class="hero-seam"></span>
+      <span class="hero-citylight"></span>
+    </div>
     <p class="hero-subtitle" id="heroSubtitle">A story waiting to be told...</p>
     <div class="scroll-hint">
       <svg viewBox="0 0 24 24"><path d="M12 16l-6-6h12z"/></svg>
@@ -137,35 +144,11 @@
       </div>
     </div>
 
-    <!-- Situation generator -->
-    <div class="reg-situation" id="regSituation">
-      <div class="reg-sit-frame">
-        <div class="reg-sit-frame-corner reg-sit-corner-tl"></div>
-        <div class="reg-sit-frame-corner reg-sit-corner-tr"></div>
-        <div class="reg-sit-frame-corner reg-sit-corner-bl"></div>
-        <div class="reg-sit-frame-corner reg-sit-corner-br"></div>
-        <div class="reg-sit-frame-header">
-          <span class="reg-sit-frame-title">SITUATION GENERATOR</span>
-          <span class="reg-sit-frame-version">HAVEN CITY // INTELLIGENCE FEED</span>
-        </div>
-        <div class="reg-sit-frame-body">
-          <p class="reg-sit-desc">Generate a situation from Haven City. Select an Oath Lord to see how they respond.</p>
-          <button class="reg-sit-btn" id="regSitGenerate">GENERATE SITUATION</button>
-          <div class="reg-sit-card" id="regSitCard" style="display:none">
-            <span class="reg-sit-card-label">// INCOMING TRANSMISSION</span>
-            <p class="reg-sit-card-text" id="regSitText"></p>
-          </div>
-          <div class="reg-sit-lords" id="regSitLords" style="display:none">
-            <span class="reg-sit-lords-label">SELECT AN OATH LORD TO RESPOND</span>
-            <div class="reg-sit-lords-row" id="regSitLordsRow"></div>
-          </div>
-          <div class="reg-sit-response" id="regSitResponse" style="display:none"></div>
-        </div>
-        <div class="reg-sit-frame-status">
-          <span>LINK: ACTIVE</span>
-          <span>FEED: HAVEN CITY CENTRAL</span>
-        </div>
-      </div>
+    <!-- The situation generator used to be a third chat box with its own
+         frame. It is now a door into the one shared terminal. -->
+    <div class="section-cta">
+      <button class="terminal-open-btn" data-channel="lords">Put a situation to the Ten</button>
+      <span class="section-cta-note">Generate a crisis from Haven City and hear how any Oath Lord answers it.</span>
     </div>
   </section>
 
@@ -210,14 +193,8 @@
         <div class="archive-modal-text" id="archiveModalText"></div>
 
         <!-- Ask the Archive -->
-        <div class="archive-ask">
-          <div class="archive-ask-label">ASK THE ARCHIVE</div>
-          <form class="archive-ask-form" id="archiveAskForm" autocomplete="off">
-            <span class="archive-ask-prompt">&gt;</span>
-            <input type="text" id="archiveAskInput" placeholder="Query Malachus about this event..." autocomplete="off" spellcheck="false">
-            <button type="submit" class="archive-ask-btn">TRANSMIT</button>
-          </form>
-          <div class="archive-ask-response" id="archiveAskResponse" style="display:none"></div>
+        <div class="section-cta archive-cta">
+          <button class="terminal-open-btn" id="archiveAskBtn" data-channel="archive">Ask Malachus about this record</button>
         </div>
       </div>
 
@@ -236,44 +213,64 @@
     </div>
   </section>
 
-  <!-- ===== QUESTRON ===== -->
+  <!-- ===== THE TERMINAL =====
+       One interface, three channels. This replaces three separate chat boxes
+       that each had their own frame, their own input and their own idea of
+       what a conversation looked like: the Questron terminal, the Oath Lord
+       situation generator, and Ask the Archive. Same worker, same shape. -->
   <section class="section" id="questron-section" style="display:none">
-    <h2 class="section-title">Questron</h2>
+    <h2 class="section-title">The Terminal</h2>
     <div class="questron-intro">
       <img id="questronHeaderImg" src="" alt="Questron" class="questron-header-img" style="display:none">
-      <p class="questron-desc">Questron is a Synthetic intelligence unit that has witnessed the full history of this world. Access the terminal to query the archives.</p>
-      <button class="questron-enter-btn" id="questronEnterBtn">&#9654; ENTER TERMINAL</button>
+      <p class="questron-desc">One link into Haven City. Question Questron about the world, put a situation to any of the Ten and hear how they answer it, or ask Malachus what the Archive holds.</p>
+      <div class="terminal-doors">
+        <button class="terminal-open-btn" data-channel="questron">&#9654; Question Questron</button>
+        <button class="terminal-open-btn" data-channel="lords">&#9654; Put it to the Ten</button>
+        <button class="terminal-open-btn" data-channel="archive">&#9654; Query the Archive</button>
+      </div>
     </div>
   </section>
 
-  <!-- ===== QUESTRON TERMINAL MODAL ===== -->
-  <div class="questron-terminal" id="questronTerminal">
-    <div class="qt-frame">
-      <div class="qt-frame-corner qt-corner-tl"></div>
-      <div class="qt-frame-corner qt-corner-tr"></div>
-      <div class="qt-frame-corner qt-corner-bl"></div>
-      <div class="qt-frame-corner qt-corner-br"></div>
-      <div class="qt-header">
-        <div class="qt-header-left">
-          <img class="qt-avatar" id="qtAvatar" src="" alt="QST-7" style="display:none">
-          <div class="qt-header-text">
-            <span class="qt-title">QUESTRON TERMINAL</span>
-            <span class="qt-version">v2.1 // QST-7 SYNTHETIC UNIT</span>
+  <!-- ===== TERMINAL MODAL ===== -->
+  <div class="terminal" id="terminal">
+    <div class="tm-frame">
+      <div class="tm-corner tm-corner-tl"></div>
+      <div class="tm-corner tm-corner-tr"></div>
+      <div class="tm-corner tm-corner-bl"></div>
+      <div class="tm-corner tm-corner-br"></div>
+
+      <div class="tm-header">
+        <div class="tm-header-left">
+          <img class="tm-avatar" id="tmAvatar" src="" alt="" style="display:none">
+          <div class="tm-header-text">
+            <span class="tm-title">HAVEN CITY TERMINAL</span>
+            <span class="tm-sub" id="tmSub">SELECT A CHANNEL</span>
           </div>
         </div>
-        <button class="qt-close" id="questronClose">&times;</button>
+        <button class="tm-close" id="tmClose" aria-label="Close terminal">&times;</button>
       </div>
-      <div class="qt-messages" id="qtMessages">
-        <div class="qt-line qt-system">INITIALIZING TERMINAL...</div>
+
+      <div class="tm-channels" id="tmChannels" role="tablist">
+        <button class="tm-channel" data-channel="questron" role="tab">Questron</button>
+        <button class="tm-channel" data-channel="lords" role="tab">The Ten</button>
+        <button class="tm-channel" data-channel="archive" role="tab">The Archive</button>
       </div>
-      <form class="qt-input-bar" id="qtInputForm" autocomplete="off">
-        <span class="qt-prompt-char">&gt;</span>
-        <input type="text" id="qtInput" placeholder="Enter your question..." autocomplete="off" spellcheck="false">
-        <button type="submit" class="qt-send-btn">TRANSMIT</button>
+
+      <div class="tm-context" id="tmContext"></div>
+
+      <div class="tm-messages" id="tmMessages"></div>
+
+      <div class="tm-actions" id="tmActions"></div>
+
+      <form class="tm-input-bar" id="tmForm" autocomplete="off">
+        <span class="tm-prompt-char">&gt;</span>
+        <input type="text" id="tmInput" placeholder="Enter your question..." autocomplete="off" spellcheck="false">
+        <button type="submit" class="tm-send-btn">TRANSMIT</button>
       </form>
-      <div class="qt-status-bar">
-        <span class="qt-status-left">LINK: ACTIVE</span>
-        <span class="qt-status-right" id="qtQuestionCount">QUERIES: 0/5</span>
+
+      <div class="tm-status-bar">
+        <span class="tm-status-left" id="tmStatusLeft">LINK: ACTIVE</span>
+        <span class="tm-status-right" id="tmStatusRight"></span>
       </div>
     </div>
   </div>
@@ -301,13 +298,6 @@
         <p class="gallery-expand-field" id="galleryExpandField5"></p>
       </div>
     </div>
-  </div>
-
-  <!-- ===== VIDEO OVERLAY ===== -->
-  <div class="video-overlay" id="videoOverlay">
-    <button class="video-overlay-close" id="videoOverlayClose">&times;</button>
-    <video id="videoOverlayPlayer" controls playsinline></video>
-    <button class="video-overlay-replay" id="videoOverlayReplay">&#8635; Replay</button>
   </div>
 
   <!-- ===== AMBIENT AUDIO ===== -->
