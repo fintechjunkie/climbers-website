@@ -65,7 +65,11 @@ img{max-width:100%;display:block}
 .chapter-card:hover img{filter:brightness(1.1)}
 
 /* ===== TALES GRID ===== */
+/* The Tales now render into .arc-panel > .arc-row, the same enclosure and the
+   same fixed track grid as The Climb, so a tale tile is exactly as wide as a
+   prologue tile. This rule is the fallback for before the panel class lands. */
 .tales-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:1.5rem;align-items:stretch}
+.tales-grid.arc-panel{display:block;border:1px solid #262626;border-radius:14px;padding:1.25rem;background:linear-gradient(180deg,rgba(201,168,76,.035) 0%,rgba(0,0,0,0) 42%)}
 .tale-card{display:flex;flex-direction:column;background:#1a1a1a;border-radius:12px;overflow:hidden;cursor:pointer;transition:transform .25s,box-shadow .25s,border-color .25s;border:1px solid #262626;border-top:3px solid #8c7433;color:inherit}
 .tale-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(201,168,76,.15);border-top-color:#c9a84c;text-decoration:none}
 .tale-card img{width:100%;aspect-ratio:1/1;object-fit:cover;transition:filter .3s}

@@ -114,6 +114,24 @@ ${c.block}` : `
       return `${c.kind}: ${c.name}. >>> NO CANONICAL REFERENCE ON DISK — nothing is attached for this figure, so the description below is the ONLY authority and continuity with other plates is not guaranteed. <<<${c.block ? `\n${c.block}` : `\n>>> AND NO DESCRIPTION BLOCK EITHER: ${c.notes} <<<`}`;
     })
 
+    .replace(/\{\{SPECIESREF:([A-Z_0-9]+)\}\}/g, (_, k) => {
+      const c = roster.characters[k];
+      if (!c) { missing.push(`SPECIESREF:${k}`); return `>>> UNKNOWN SPECIESREF:${k} <<<`; }
+      if (!onDisk(charDir(k), c.ref)) {
+        missing.push(`SPECIESREF:${k} (${c.ref})`);
+        return `>>> SPECIES REFERENCE ${k} NOT ON DISK <<<`;
+      }
+      attach.push({ file: join(charDir(k), c.ref), label: 'species reference — Valari look ONLY, not a character in this plate' });
+      return `>>> SPECIES REFERENCE: "${c.ref}" IS ATTACHED FOR THE VALARI LOOK ONLY. <<<
+>>> THE PERSON IN THAT IMAGE IS NOT IN THIS PLATE AND MUST NOT BE DRAWN. <<<
+It is attached because a Valari character here has no canonical of her own, and
+without something Valari in front of you she comes back as a human child. Take
+from it ONLY: the SKIN COLOUR, the POINTED EARS, the pale luminous EYES, and the
+look of the CIRCUIT TRACERY. Take nothing else — not the face, not the age, not
+the build, not the hair, not the clothing, not the pose, not the expression, and
+not the lighting.`;
+    })
+
     .replace(/\{\{WARDROBE:([A-Z_0-9]+)\}\}/g, (_, k) => {
       const w = roster.wardrobe[k];
       if (!w) { missing.push(`WARDROBE:${k}`); return `>>> UNKNOWN WARDROBE:${k} <<<`; }

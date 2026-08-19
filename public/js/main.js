@@ -257,7 +257,31 @@ function renderTales() {
   if (navLink) navLink.style.display = '';
   grid.innerHTML = '';
 
-  vols.forEach(v => grid.appendChild(volumeCard(v, 'tale-card')));
+  // Same enclosure as the arc above, and — importantly — the same TRACK WIDTH.
+  // The track count comes from The Climb's volume count, not the Tales', so a
+  // tale tile is exactly as wide as a prologue tile instead of stretching to
+  // fill half the shelf. Two tales occupy the first two of four tracks.
+  grid.classList.add('arc-panel');
+  const tracks = Math.max(vols.length, volumesForArc('the-climb').length || vols.length);
+  grid.style.setProperty('--arc-count', tracks);
+
+  const head = document.createElement('div');
+  head.className = 'arc-head';
+  const kicker = document.createElement('span');
+  kicker.className = 'arc-kicker';
+  kicker.textContent = 'Standalone';
+  const count = document.createElement('span');
+  count.className = 'arc-count';
+  const written = vols.filter(v => v.status !== 'planned').length;
+  count.textContent = written + ' of ' + vols.length + ' written';
+  head.appendChild(kicker);
+  head.appendChild(count);
+  grid.appendChild(head);
+
+  const row = document.createElement('div');
+  row.className = 'arc-row';
+  vols.forEach(v => row.appendChild(volumeCard(v, 'tale-card')));
+  grid.appendChild(row);
 }
 
 function setupTalesReaderModal() {
