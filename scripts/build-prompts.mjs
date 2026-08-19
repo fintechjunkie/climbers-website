@@ -133,7 +133,8 @@ ${w.value}`;
       const have = onDisk(locDir(k), l.ref);
       if (have) {
         attach.push({ file: join(locDir(k), l.ref), label: `location — ${l.name}` });
-        return `SETTING: ${l.name}. Use the attached canonical establishing image "${l.ref}" as the authority for layout, palette and construction. It is already drawn in the plate style, so follow its rendering as well as its geometry.${l.block ? `\n${l.block}` : ''}`;
+        return `SETTING: ${l.name}. Use the attached canonical establishing image "${l.ref}" as the authority for WHAT IS THERE: layout, geometry, construction, materials, and the identity and placement of the things in it. It is drawn in the plate style, so follow its surface and finish too.
+>>> IT IS NOT THE AUTHORITY FOR LIGHT, AND IT IS NOT THE AUTHORITY FOR COMPOSITION. <<< Time of day, weather, which lights are switched on, palette, camera height, angle and framing are all set by THIS PROMPT, and where the two disagree THIS PROMPT WINS COMPLETELY. In particular, DO NOT COPY THE CANONICAL'S VIEWPOINT. It is a reference image of a place, not a design for this picture — if it is a symmetrical head-on view and this plate asks for something else, obey this plate.${l.block ? `\n${l.block}` : ''}`;
       }
       missing.push(`LOC:${k} (${l.ref})`);
       return `SETTING: ${l.name}. >>> NO CANONICAL REFERENCE ON DISK — the description below is the only authority. <<<${l.block ? `\n${l.block}` : `\n>>> AND NO DESCRIPTION BLOCK EITHER: ${l.notes} <<<`}`;
