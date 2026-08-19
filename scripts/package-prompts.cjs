@@ -144,6 +144,28 @@ plates.forEach((p, i) => {
     if (fs.existsSync(src)) { fs.copyFileSync(src, path.join(dir, path.basename(a.file))); copied++; }
     else console.log('  MISSING ' + src);
   }
+  // A revision folder holds what a revision needs and nothing else at its top
+  // level: the note and the picture being fixed. The full prompt and the
+  // canonicals go one level down, available but out of the way, because
+  // dragging them in would start the plate over instead of fixing it.
+  if (hasRevise) {
+    const note = keepNames.find((x) => x.startsWith('REVISE-' + n + '-'));
+    const text = fs.readFileSync(path.join(OUT, note), 'utf8');
+    const m = /([A-Za-z0-9._/-]*plate-sources\/candidates\/[A-Za-z0-9._-]+\.png)/.exec(text);
+    const deep = path.join(dir, 'full-prompt-if-starting-over');
+    fs.mkdirSync(deep, { recursive: true });
+    for (const nm of fs.readdirSync(dir)) {
+      if (nm === 'full-prompt-if-starting-over') continue;
+      fs.renameSync(path.join(dir, nm), path.join(deep, nm));
+    }
+    fs.writeFileSync(path.join(dir, 'REVISE.txt'), text);
+    if (m && fs.existsSync(m[1])) {
+      fs.copyFileSync(m[1], path.join(dir, path.basename(m[1])));
+    } else if (m) {
+      console.log('  MISSING revision image ' + m[1]);
+    }
+  }
+
   index.push({ n, p, dir });
 });
 
