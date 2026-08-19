@@ -20,7 +20,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   renderChapters();
   renderTales();
 
-  // --- Render gallery ---
+  // --- Render the climber lineup and the wider cast ---
+  renderClimbers(data.gallery);
   renderGallery(data.gallery);
 
   // --- Footer year ---
@@ -68,7 +69,73 @@ document.addEventListener('DOMContentLoaded', async () => {
   // --- Scroll spy + section footer nav ---
   setupScrollSpy();
   setupSectionFooterNav();
+
+  // --- Motion: reveal on scroll ---
+  setupMotion();
 });
+
+/* ===========================
+   MOTION
+
+   One observer, one class. Anything tagged .reveal starts translated down and
+   transparent and settles when it first enters the viewport; --d staggers
+   siblings so a row of cards arrives as a sequence rather than a block.
+
+   Deliberately one-way: elements are unobserved once shown, so nothing
+   re-animates on the way back up. A page that replays its entrances every
+   time you scroll past reads as a page that cannot sit still.
+   =========================== */
+function setupMotion() {
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Auto-tag the repeating furniture. Anything already marked .reveal by a
+  // renderer (the team panels and climber cards) keeps the delay it was given.
+  const auto = [
+    ['.section-title', 0],
+    ['.climbers-intro', 60],
+    ['.chapter-card', 60],
+    ['.tale-card', 60],
+    ['.lord-card', 45],
+    ['.seraph-entry', 0],
+    ['.archive-row', 25],
+    ['.gallery-item', 18],
+    ['.questron-intro', 0],
+    ['.reg-situation', 0]
+  ];
+  auto.forEach(([sel, step]) => {
+    document.querySelectorAll(sel).forEach((el, i) => {
+      if (el.classList.contains('reveal')) return;
+      el.classList.add('reveal');
+      if (step) el.style.setProperty('--d', Math.min(i * step, 400) + 'ms');
+    });
+  });
+
+  const targets = document.querySelectorAll('.reveal');
+
+  if (reduced || !('IntersectionObserver' in window)) {
+    targets.forEach(el => el.classList.add('in'));
+    return;
+  }
+
+  const io = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('in');
+      obs.unobserve(entry.target);
+    });
+  }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+
+  targets.forEach(el => io.observe(el));
+
+  // Anything already on screen at load settles immediately rather than waiting
+  // for a scroll that may never come on a short viewport.
+  requestAnimationFrame(() => {
+    targets.forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight && r.bottom > 0) el.classList.add('in');
+    });
+  });
+}
 
 // ===========================
 // CHAPTERS
@@ -499,6 +566,97 @@ function closeReader() {
 // ===========================
 // GALLERY
 // ===========================
+/* ===========================
+   THE CLIMBERS
+
+   Six people, two teams, above the stories. The teams are established in
+   Prologue III (both arrive at The Prism the night before) and confirmed in
+   Prologue IV — "all six climbers of two unrelated teams".
+
+   Members are matched by LABEL rather than by gallery id, because the ids are
+   generated and would silently break this lineup if an entry were ever
+   recreated in the admin panel. A label that stops matching drops one card;
+   a stale id would drop it just as quietly but be far harder to spot.
+   =========================== */
+const CLIMBER_TEAMS = [
+  {
+    kicker: 'First Team',
+    name: "Marcus's Team",
+    note: 'Came in together, by the front door, a few minutes after the tenth bell.',
+    accent: '#ff8a3d',
+    members: ['MARCUS TORRES', 'SIGNAL', "NYX'ARA"]
+  },
+  {
+    kicker: 'Second Team',
+    name: "Kimo's Team",
+    note: 'Came in by the side entrance, separately, within ten minutes of each other.',
+    accent: '#c86bff',
+    members: ['KIMO TOMIKO', 'SPARK', 'THE DEVIL']
+  }
+];
+
+/* field3 reads "Registered Question - How do I make it stop?" on every climber.
+   The lineup wants the question on its own. */
+function climberQuestion(item) {
+  const raw = item.field3 || '';
+  const cut = raw.split(/\s[-–—]\s/);
+  return (cut.length > 1 ? cut.slice(1).join(' - ') : raw).trim();
+}
+
+function renderClimbers(gallery) {
+  const wrap = document.getElementById('teamsWrap');
+  if (!wrap) return;
+  const list = gallery || [];
+  const byLabel = {};
+  list.forEach(g => { if (g.label) byLabel[g.label.trim().toUpperCase()] = g; });
+
+  wrap.innerHTML = '';
+  CLIMBER_TEAMS.forEach((team, ti) => {
+    const found = team.members.map(m => byLabel[m]).filter(Boolean);
+    if (!found.length) return;
+
+    const panel = document.createElement('div');
+    panel.className = 'team reveal';
+    panel.style.setProperty('--team-color', team.accent);
+    panel.style.setProperty('--d', (ti * 90) + 'ms');
+
+    const head = document.createElement('div');
+    head.className = 'team-head';
+    head.innerHTML = `
+      <span class="team-kicker">${team.kicker}</span>
+      <span class="team-name">${team.name}</span>
+      <span class="team-note">${team.note}</span>
+    `;
+    panel.appendChild(head);
+
+    const row = document.createElement('div');
+    row.className = 'team-row';
+    found.forEach((item, i) => {
+      const card = document.createElement('button');
+      card.type = 'button';
+      card.className = 'climber-card reveal';
+      card.style.setProperty('--d', (ti * 90 + i * 70) + 'ms');
+      card.setAttribute('aria-label', item.label + ' — open file');
+      card.innerHTML = `
+        <span class="climber-frame">
+          <img class="climber-portrait" src="${Storage.getGalleryImageUrl(item.id)}" alt="${item.label}" loading="lazy">
+          <span class="climber-wash"></span>
+          <span class="climber-q">&ldquo;${climberQuestion(item)}&rdquo;</span>
+        </span>
+        <span class="climber-plate">
+          <span class="climber-name">${item.label}</span>
+          <span class="climber-race">${item.field1 || ''}</span>
+          <span class="climber-open">Open file</span>
+        </span>
+      `;
+      card.addEventListener('click', () => openGalleryExpand(item));
+      row.appendChild(card);
+    });
+    panel.appendChild(row);
+    wrap.appendChild(panel);
+  });
+}
+
 function renderGallery(gallery) {
   const grid = document.getElementById('galleryGrid');
   if (!gallery || gallery.length === 0) {
@@ -841,8 +999,21 @@ function setupScrollSpy() {
   setTimeout(observeSections, 2000);
 }
 
+/* This list is the page order and has to stay in agreement with index.html —
+   it is what the "next section" link at the foot of each section walks. */
+const FOOTER_NAV_LABELS = {
+  'climbers-section': 'THE CLIMBERS',
+  'chapters-section': 'THE CLIMB',
+  'tales-section': 'TALES',
+  'seraph-section': 'SERAPH & THE TOWER',
+  'registry-section': 'OATH LORDS',
+  'archive-section': 'THE MALACHUS ARCHIVE',
+  'gallery-section': 'CHARACTERS',
+  'questron-section': 'QUESTRON'
+};
+
 function setupSectionFooterNav() {
-  const sectionIds = ['chapters-section', 'tales-section', 'gallery-section', 'seraph-section', 'registry-section', 'archive-section', 'questron-section'];
+  const sectionIds = Object.keys(FOOTER_NAV_LABELS);
   const visibleSections = sectionIds.filter(id => {
     const el = document.getElementById(id);
     return el && el.offsetParent !== null;
@@ -865,8 +1036,7 @@ function setupSectionFooterNav() {
 
     if (idx < visibleSections.length - 1) {
       const nextId = visibleSections[idx + 1];
-      const nextEl = document.getElementById(nextId);
-      const nextName = nextId.replace('-section', '').replace('registry', 'oath lords').toUpperCase();
+      const nextName = FOOTER_NAV_LABELS[nextId] || nextId.replace('-section', '').toUpperCase();
       const nextLink = document.createElement('a');
       nextLink.href = '#' + nextId;
       nextLink.textContent = nextName + ' \u25BC';
@@ -1101,7 +1271,6 @@ function setupRegistry(workerUrl) {
   if (navLink) navLink.style.display = '';
 
   renderLordsWall();
-  renderOathQuestions();
   setupRegistryEvents(workerUrl);
 }
 
@@ -1172,51 +1341,6 @@ function renderLordsWall() {
   });
 }
 
-/* ---------------------------------------------------------------------------
-   THE TEN QUESTIONS
-
-   What stood here was an alignment chart: ten dots on a 3x3 grid, which told
-   a reader two adjectives they could already read in the list. This tells them
-   the thing the world actually turns on — what each Lord asked the Tower, and
-   what it said back. Click a card to turn it.
-   --------------------------------------------------------------------------- */
-function renderOathQuestions() {
-  const rail = document.getElementById('oqRail');
-  if (!rail) return;
-  rail.innerHTML = '';
-
-  lordsInRank().forEach(lord => {
-    const rank = lordRank(lord);
-    const card = document.createElement('div');
-    card.className = 'oq-card';
-    card.dataset.lord = lord.id;
-    card.style.setProperty('--lord-color', lord.color);
-    card.tabIndex = 0;
-    card.setAttribute('role', 'button');
-    card.setAttribute('aria-label', lord.name + ' asked: ' + lord.question + ' Turn the card for the answer.');
-    card.innerHTML = `
-      <div class="oq-inner">
-        <div class="oq-face oq-front">
-          <span class="oq-numeral">${ROMAN[rank] || ''}</span>
-          <p class="oq-question">${lord.question}</p>
-          <span class="oq-asker">asked by ${lord.name}</span>
-          <span class="oq-hint">Answer &rsaquo;</span>
-        </div>
-        <div class="oq-face oq-back">
-          <span class="oq-back-label">The Tower answered</span>
-          <p class="oq-answer">${lord.answer}</p>
-          <span class="oq-hint">&lsaquo; Question</span>
-        </div>
-      </div>
-    `;
-    const flip = () => card.classList.toggle('flipped');
-    card.addEventListener('click', flip);
-    card.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); }
-    });
-    rail.appendChild(card);
-  });
-}
 
 function selectLord(lordId) {
   const lord = OATH_LORDS.find(l => l.id === lordId);

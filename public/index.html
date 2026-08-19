@@ -40,19 +40,31 @@
   </section>
 
   <!-- ===== NAVIGATION ===== -->
+  <!-- Nav order follows the page order: who is climbing, what they climbed
+       into, then the world around it, then the wider cast, then the terminal. -->
   <nav class="nav" id="mainNav">
+    <a href="#climbers-section">Climbers</a>
     <a href="#chapters-section">The Climb</a>
     <a href="#tales-section" id="talesNavLink" style="display:none">Tales</a>
-    <a href="#gallery-section">Gallery</a>
     <a href="#seraph-section" id="seraphNavLink" style="display:none">Seraph</a>
     <a href="#registry-section" id="registryNavLink" style="display:none">Oath Lords</a>
     <a href="#archive-section" id="archiveNavLink" style="display:none">History</a>
+    <a href="#gallery-section">Characters</a>
     <a href="#questron-section" id="questronNavLink" style="display:none">Questron</a>
     <button class="nav-audio-btn hidden" id="audioToggle" title="Toggle background music">
       <span id="audioIconOff">&#128263; Sound</span>
       <span id="audioIconOn" style="display:none">&#128266; Sound</span>
     </button>
   </nav>
+
+  <!-- ===== THE CLIMBERS =====
+       Above the stories on purpose: a reader should know who they are about to
+       follow before they are offered four volumes to start in. -->
+  <section class="section climbers-page" id="climbers-section">
+    <h2 class="section-title">The Climbers</h2>
+    <p class="climbers-intro">Six people registered on the same morning, in two teams that had never met. Each of them walked to the wall, gave a name, and asked the Tower one question. Each is climbing for the answer.</p>
+    <div class="teams" id="teamsWrap"></div>
+  </section>
 
   <!-- ===== CHAPTERS ===== -->
   <section class="section" id="chapters-section">
@@ -88,14 +100,6 @@
     <div class="reader-modal-body" id="readerBody"></div>
   </div>
 
-  <!-- ===== GALLERY ===== -->
-  <section class="section" id="gallery-section">
-    <h2 class="section-title">Characters</h2>
-    <div class="gallery-grid" id="galleryGrid">
-      <p class="empty-state">Gallery coming soon!</p>
-    </div>
-  </section>
-
   <!-- ===== SERAPH & THE TOWER ===== -->
   <section class="section seraph-page" id="seraph-section" style="display:none">
     <h2 class="section-title">Seraph &amp; The Tower</h2>
@@ -121,17 +125,6 @@
     <!-- The Ten — portrait wall. Click a face to open their file. -->
     <div class="lords-wall" id="lordsWall"></div>
 
-    <!-- THE TEN QUESTIONS — replaces the alignment registry.
-         Every Lord asked the Tower one question and was answered. That is the
-         premise of the whole world and it was previously buried three scrolls
-         deep inside the detail modal. -->
-    <div class="oath-questions" id="oathQuestions">
-      <div class="oq-head">
-        <span class="oq-kicker">The Ten Questions</span>
-        <span class="oq-note">Each Lord asked the Tower one question. Each was answered. Turn a card to read what came back.</span>
-      </div>
-      <div class="oq-rail" id="oqRail"></div>
-    </div>
 
     <!-- Detail panel (modal overlay) -->
     <div class="reg-detail" id="regDetail">
@@ -234,6 +227,14 @@
       </div>
     </div>
   </div>
+
+  <!-- ===== CHARACTERS (the wider cast) ===== -->
+  <section class="section" id="gallery-section">
+    <h2 class="section-title">Characters</h2>
+    <div class="gallery-grid" id="galleryGrid">
+      <p class="empty-state">Gallery coming soon!</p>
+    </div>
+  </section>
 
   <!-- ===== QUESTRON ===== -->
   <section class="section" id="questron-section" style="display:none">

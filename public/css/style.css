@@ -325,7 +325,7 @@ img{max-width:100%;display:block}
 @media(max-width:860px){.lords-wall{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:620px){.lords-wall{grid-template-columns:repeat(2,1fr);gap:.75rem}}
 
-.lord-card{display:flex;flex-direction:column;padding:0;text-align:left;font:inherit;color:inherit;cursor:pointer;background:#14161d;border:1px solid #272b36;border-radius:12px;overflow:hidden;transition:transform .28s cubic-bezier(.2,.7,.3,1),box-shadow .28s,border-color .28s}
+.lord-card{display:flex;flex-direction:column;padding:0;text-align:left;font:inherit;color:inherit;cursor:pointer;background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;transition:transform .28s cubic-bezier(.2,.7,.3,1),box-shadow .28s,border-color .28s}
 .lord-card:hover,.lord-card:focus-visible{transform:translateY(-6px);border-color:var(--lord-color);box-shadow:0 14px 34px rgba(0,0,0,.6),0 0 26px -6px var(--lord-color);outline:none}
 .lord-card.selected{border-color:var(--lord-color);box-shadow:0 0 0 1px var(--lord-color),0 0 30px -8px var(--lord-color)}
 
@@ -349,40 +349,10 @@ img{max-width:100%;display:block}
 .lord-card-quote{position:absolute;left:.7rem;right:.7rem;bottom:.7rem;font-size:.72rem;line-height:1.45;font-style:italic;color:#eef0f6;text-shadow:0 2px 10px rgba(0,0,0,.95);opacity:0;transform:translateY(8px);transition:opacity .3s,transform .3s;pointer-events:none}
 .lord-card:hover .lord-card-quote{opacity:1;transform:translateY(0)}
 
-.lord-card-plate{display:flex;flex-direction:column;gap:2px;padding:.65rem .75rem .75rem;border-top:2px solid var(--lord-color);background:linear-gradient(180deg,color-mix(in srgb,var(--lord-color) 9%,#14161d) 0%,#14161d 70%)}
+.lord-card-plate{display:flex;flex-direction:column;gap:2px;padding:.65rem .75rem .75rem;border-top:2px solid var(--lord-color);background:linear-gradient(180deg,color-mix(in srgb,var(--lord-color) 9%,var(--panel)) 0%,var(--panel) 70%)}
 .lord-card-name{font-family:'Orbitron',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.04em;color:#eceef4;line-height:1.2}
 .lord-card-title{font-family:'Orbitron',sans-serif;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:var(--lord-color);opacity:.95}
 .lord-card-aug{font-size:.68rem;color:#8b90a0;margin-top:2px}
-
-/* ---------------------------------------------------------------------------
-   THE TEN QUESTIONS — flip cards, in place of the alignment chart
-   --------------------------------------------------------------------------- */
-.oath-questions{margin-bottom:3rem}
-.oq-head{display:flex;flex-direction:column;gap:.35rem;padding-bottom:.9rem;margin-bottom:1.25rem;border-bottom:1px solid #272b36}
-.oq-kicker{font-family:'Orbitron',sans-serif;font-size:.72rem;letter-spacing:.34em;text-transform:uppercase;color:#c9a84c;text-shadow:0 0 18px rgba(201,168,76,.35)}
-.oq-note{font-size:.85rem;color:#8b90a0;line-height:1.6}
-
-.oq-rail{display:grid;grid-template-columns:repeat(5,1fr);gap:.75rem}
-@media(max-width:1100px){.oq-rail{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:700px){.oq-rail{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:460px){.oq-rail{grid-template-columns:1fr}}
-
-.oq-card{perspective:1200px;cursor:pointer;min-height:250px;outline:none}
-.oq-inner{position:relative;width:100%;height:100%;min-height:250px;transition:transform .6s cubic-bezier(.2,.7,.3,1);transform-style:preserve-3d}
-.oq-card.flipped .oq-inner{transform:rotateY(180deg)}
-.oq-card:focus-visible .oq-inner{box-shadow:0 0 0 2px var(--lord-color)}
-
-.oq-face{position:absolute;inset:0;display:flex;flex-direction:column;gap:.5rem;padding:.85rem .9rem;border:1px solid #272b36;border-top:2px solid var(--lord-color);border-radius:10px;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden}
-.oq-front{background:linear-gradient(160deg,color-mix(in srgb,var(--lord-color) 12%,#14161d) 0%,#101219 65%)}
-.oq-back{background:linear-gradient(160deg,#101219 0%,color-mix(in srgb,var(--lord-color) 16%,#14161d) 100%);transform:rotateY(180deg)}
-.oq-card:hover .oq-face{border-color:var(--lord-color);box-shadow:0 0 24px -8px var(--lord-color)}
-
-.oq-numeral{font-family:'Orbitron',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.18em;color:var(--lord-color)}
-.oq-question{font-size:.86rem;line-height:1.55;color:#e2e5ee;font-style:italic;flex:1;margin:0}
-.oq-asker{font-family:'Orbitron',sans-serif;font-size:.54rem;letter-spacing:.14em;text-transform:uppercase;color:#8b90a0}
-.oq-back-label{font-family:'Orbitron',sans-serif;font-size:.54rem;letter-spacing:.18em;text-transform:uppercase;color:var(--lord-color)}
-.oq-answer{font-size:.82rem;line-height:1.6;color:#cfd3de;font-style:italic;flex:1;margin:0}
-.oq-hint{font-family:'Orbitron',sans-serif;font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;color:var(--lord-color);opacity:.75;align-self:flex-end}
 
 /* Standing chips inside a Lord's file */
 .reg-standings{display:flex;flex-wrap:wrap;gap:6px}
@@ -671,11 +641,11 @@ img{max-width:100%;display:block}
    =========================================================================== */
 
 :root{
-  --ink:#07080c;
-  --panel:#14161d;
-  --panel-hi:#1a1d26;
-  --line:#272b36;
-  --line-hot:#343a4a;
+  --ink:#06070b;
+  --panel:#171a24;
+  --panel-hi:#1e2230;
+  --line:#30364a;
+  --line-hot:#3d4459;
   --text:#dfe2ea;
   --muted:#9aa0b2;
   --gold:#c9a84c;
@@ -692,10 +662,10 @@ img{max-width:100%;display:block}
 body{
   background-color:var(--ink);
   background-image:
-    radial-gradient(60rem 42rem at 6% -6%,rgba(63,215,255,.11),transparent 62%),
-    radial-gradient(52rem 38rem at 104% 20%,rgba(255,62,165,.075),transparent 62%),
-    radial-gradient(62rem 46rem at -12% 58%,rgba(155,107,255,.085),transparent 64%),
-    radial-gradient(54rem 40rem at 112% 88%,rgba(255,176,58,.07),transparent 62%);
+    radial-gradient(58rem 40rem at 4% -4%,rgba(63,215,255,.30),transparent 58%),
+    radial-gradient(50rem 36rem at 106% 18%,rgba(255,62,165,.24),transparent 58%),
+    radial-gradient(60rem 44rem at -14% 56%,rgba(155,107,255,.27),transparent 60%),
+    radial-gradient(52rem 38rem at 114% 86%,rgba(255,176,58,.22),transparent 58%);
   background-attachment:fixed;
   background-repeat:no-repeat;
   color:var(--text);
@@ -710,9 +680,24 @@ body{
 #archive-section{--accent:var(--neon-green)}
 #questron-section{--accent:var(--neon-cyan)}
 
-/* A hairline at the head of each section, lit in that section's colour. It is
-   the cheapest possible way to say "a new thing starts here" on a long scroll. */
-.section{position:relative}
+/* Each section sits in a visible band of its own colour rather than on bare
+   black — a broad glow anchored at the top edge, falling off before the next
+   section starts, so the boundaries between sections are read as changes in
+   light. The fixed washes on the body alone were too subtle to break the
+   black; this is the layer that actually does it. */
+.section{
+  position:relative;
+  background-image:
+    radial-gradient(120% 62% at 50% 0%,color-mix(in srgb,var(--accent) 17%,transparent) 0%,transparent 68%),
+    linear-gradient(180deg,rgba(255,255,255,.045) 0%,rgba(255,255,255,.012) 40%,transparent 82%);
+}
+/* Alternating sections carry a touch more lift, so two adjacent bands can
+   never resolve into one continuous field. */
+.section:nth-of-type(even){
+  background-image:
+    radial-gradient(120% 62% at 50% 0%,color-mix(in srgb,var(--accent) 22%,transparent) 0%,transparent 70%),
+    linear-gradient(180deg,rgba(255,255,255,.02) 0%,rgba(255,255,255,.05) 46%,transparent 88%);
+}
 .section::before{
   content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
   width:min(100%,780px);height:1px;pointer-events:none;
@@ -805,7 +790,6 @@ body{
 .reg-answer{color:#b9c0cf}
 
 @media(prefers-reduced-motion:reduce){
-  .oq-inner{transition:none}
   .lord-card,.lord-card-portrait{transition:none}
 }
 
@@ -824,3 +808,137 @@ body{
   background-image:linear-gradient(180deg,rgba(0,0,0,.62) 0%,rgba(7,8,12,0) 100%);
 }
 .footer{color:#7c8194}
+
+/* ===========================================================================
+   THE CLIMBERS — the lineup above the stories
+
+   Two team panels, three cards each. The art is already posed hero work in a
+   consistent 2:3 crop, so the job here is to frame it as a lineup and get out
+   of its way: one accent per team, the character's registered question surfaced
+   on hover, and the existing character file opening on click.
+   =========================================================================== */
+#climbers-section{--accent:#ff8a3d;max-width:1320px}
+.climbers-intro{max-width:760px;margin:0 auto 2.5rem;text-align:center;color:var(--muted);font-size:.95rem;line-height:1.75}
+
+.teams{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+@media(max-width:1000px){.teams{grid-template-columns:1fr;gap:2rem}}
+
+.team{
+  --team-color:var(--accent);
+  border:1px solid var(--line);border-radius:14px;padding:1.25rem;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--team-color) 10%,transparent) 0%,transparent 46%);
+}
+.team-head{display:flex;flex-direction:column;gap:.3rem;padding:0 .25rem .9rem;margin-bottom:1.1rem;border-bottom:1px solid var(--line)}
+.team-kicker{font-family:'Orbitron',sans-serif;font-size:.6rem;letter-spacing:.34em;text-transform:uppercase;color:var(--team-color);text-shadow:0 0 16px color-mix(in srgb,var(--team-color) 45%,transparent)}
+.team-name{font-family:'Orbitron',sans-serif;font-size:1.05rem;letter-spacing:.04em;color:#eceef4}
+.team-note{font-size:.78rem;color:#8b90a0;line-height:1.5}
+
+.team-row{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem}
+@media(max-width:520px){.team-row{grid-template-columns:1fr 1fr;gap:.7rem}}
+
+.climber-card{
+  display:flex;flex-direction:column;padding:0;text-align:left;font:inherit;color:inherit;cursor:pointer;
+  background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;
+  transition:transform .3s cubic-bezier(.2,.7,.3,1),box-shadow .3s,border-color .3s;
+}
+.climber-card:hover,.climber-card:focus-visible{transform:translateY(-6px);border-color:var(--team-color);box-shadow:0 16px 38px rgba(0,0,0,.62),0 0 30px -8px var(--team-color);outline:none}
+
+.climber-frame{position:relative;display:block;aspect-ratio:2/3;overflow:hidden;background:#0b0d12}
+.climber-portrait{width:100%;height:100%;object-fit:cover;object-position:50% 22%;filter:brightness(.9) saturate(1.05);transition:filter .35s,transform .55s cubic-bezier(.2,.7,.3,1)}
+.climber-card:hover .climber-portrait{filter:brightness(1.14) saturate(1.2);transform:scale(1.06)}
+.climber-wash{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.28) 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,0) 44%,rgba(8,9,12,.94) 100%)}
+.climber-frame::after{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 76% at 50% 110%,var(--team-color) 0%,transparent 60%);opacity:.2;mix-blend-mode:screen;transition:opacity .35s}
+.climber-card:hover .climber-frame::after{opacity:.44}
+
+/* The question is the reason to click, so it arrives on hover the way the
+   Lords' questions do. Same idiom in both lineups on purpose. */
+.climber-q{position:absolute;left:.7rem;right:.7rem;bottom:.7rem;font-size:.74rem;line-height:1.45;font-style:italic;color:#eef0f6;text-shadow:0 2px 10px rgba(0,0,0,.95);opacity:0;transform:translateY(8px);transition:opacity .3s,transform .3s;pointer-events:none}
+.climber-card:hover .climber-q{opacity:1;transform:translateY(0)}
+
+.climber-plate{display:flex;flex-direction:column;gap:2px;padding:.65rem .75rem .75rem;border-top:2px solid var(--team-color);background:linear-gradient(180deg,color-mix(in srgb,var(--team-color) 10%,var(--panel)) 0%,var(--panel) 70%)}
+.climber-name{font-family:'Orbitron',sans-serif;font-size:.74rem;font-weight:700;letter-spacing:.03em;color:#eceef4;line-height:1.2}
+.climber-race{font-size:.68rem;color:#8b90a0;line-height:1.35}
+.climber-open{font-family:'Orbitron',sans-serif;font-size:.52rem;letter-spacing:.16em;text-transform:uppercase;color:var(--team-color);opacity:0;transform:translateY(-3px);transition:opacity .25s,transform .25s;margin-top:2px}
+.climber-card:hover .climber-open{opacity:.95;transform:translateY(0)}
+
+@media(max-width:700px){
+  .climber-q{display:none}
+  .climber-open{opacity:.8;transform:none}
+}
+
+/* ===========================================================================
+   MOTION
+
+   Two things carry the movement, and both are cheap: a one-way reveal as
+   content enters the viewport, and a slow live sheen on the section headers so
+   the page has a pulse even when nothing is being scrolled.
+
+   Only transform and opacity are animated — the two properties the compositor
+   can handle without laying the page out again — so this stays smooth on a
+   phone. Everything here is switched off under prefers-reduced-motion.
+   =========================================================================== */
+.reveal{opacity:0;transform:translateY(22px);will-change:opacity,transform}
+.reveal.in{
+  opacity:1;transform:none;
+  transition:opacity .7s cubic-bezier(.2,.7,.3,1) var(--d,0ms),transform .7s cubic-bezier(.2,.7,.3,1) var(--d,0ms);
+}
+
+/* Headers breathe: the glow behind the letterforms rises and falls, and the
+   letters warm toward white at the top of the breath. Slow enough that it
+   never competes with the text, present enough that the page is never still.
+
+   Deliberately NOT a background-clip:text sheen — that requires a transparent
+   text fill, which fights the glow and drops the letters out entirely on any
+   browser that misses the clip. */
+.section-title{animation:titleBreath 6s ease-in-out infinite}
+@keyframes titleBreath{
+  0%,100%{
+    text-shadow:0 0 22px color-mix(in srgb,var(--accent) 32%,transparent);
+    filter:brightness(1);
+  }
+  50%{
+    text-shadow:0 0 34px color-mix(in srgb,var(--accent) 62%,transparent),
+                0 0 60px color-mix(in srgb,var(--accent) 26%,transparent);
+    filter:brightness(1.16);
+  }
+}
+.section-title::after{animation:rulePulse 4.5s ease-in-out infinite}
+@keyframes rulePulse{
+  0%,100%{opacity:.62;width:104px;box-shadow:0 0 12px var(--accent)}
+  50%{opacity:1;width:150px;box-shadow:0 0 26px var(--accent)}
+}
+
+/* The hairline at the head of each section drifts, so the seam between two
+   sections is a moving light rather than a static rule. */
+.section::before{
+  background-size:220% 100%;
+  animation:seamDrift 9s linear infinite;
+}
+@keyframes seamDrift{
+  0%{background-position:0 0}
+  100%{background-position:220% 0}
+}
+
+/* Terminal furniture gets a slow breath instead of sitting inert. */
+.reg-sit-frame,.questron-enter-btn{animation:frameBreath 5s ease-in-out infinite}
+@keyframes frameBreath{
+  0%,100%{box-shadow:0 0 30px rgba(0,255,255,.13),inset 0 0 40px rgba(0,0,0,.8)}
+  50%{box-shadow:0 0 44px rgba(0,255,255,.24),0 0 70px rgba(0,255,255,.08),inset 0 0 40px rgba(0,0,0,.8)}
+}
+
+/* The scroll hint already bounced; give it a fading tail so it reads as an
+   invitation rather than a metronome. */
+.scroll-hint svg{animation:hintGlow 2.6s ease-in-out infinite}
+@keyframes hintGlow{
+  0%,100%{opacity:.35}
+  50%{opacity:.9;filter:drop-shadow(0 0 10px var(--neon-cyan))}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none}
+  .section-title,.section-title::after,.section::before,
+  .reg-sit-frame,.questron-enter-btn,.scroll-hint,.scroll-hint svg,
+  .lord-card,.lord-card-portrait,.climber-card,.climber-portrait{
+    animation:none!important;transition:none!important;
+  }
+}
