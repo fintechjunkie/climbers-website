@@ -291,12 +291,7 @@ function renderChapters() {
   const kicker = document.createElement('span');
   kicker.className = 'arc-kicker';
   kicker.textContent = 'Arc One';
-  const count = document.createElement('span');
-  count.className = 'arc-count';
-  const written = vols.filter(v => v.status !== 'planned').length;
-  count.textContent = written + ' of ' + vols.length + ' written';
   head.appendChild(kicker);
-  head.appendChild(count);
   grid.appendChild(head);
 
   const row = document.createElement('div');
@@ -337,12 +332,7 @@ function renderTales() {
   const kicker = document.createElement('span');
   kicker.className = 'arc-kicker';
   kicker.textContent = 'Standalone';
-  const count = document.createElement('span');
-  count.className = 'arc-count';
-  const written = vols.filter(v => v.status !== 'planned').length;
-  count.textContent = written + ' of ' + vols.length + ' written';
   head.appendChild(kicker);
-  head.appendChild(count);
   grid.appendChild(head);
 
   const row = document.createElement('div');
@@ -657,6 +647,17 @@ function renderClimbers(gallery) {
   });
 }
 
+/* A hundred tiles is the longest single block on the page by some distance —
+   roughly thirteen rows of scrolling before Questron. The cast a reader has
+   actually met comes first and is shown by default; the rest of the city is
+   one click away. Sorting is stable within each group, so the hand-ordered
+   sequence in site.json survives. */
+const GALLERY_PREVIEW = 24;
+
+function hasAppeared(item) {
+  return !!(item.field4 && !/Not yet seen/i.test(item.field4));
+}
+
 function renderGallery(gallery) {
   const grid = document.getElementById('galleryGrid');
   if (!gallery || gallery.length === 0) {
@@ -664,10 +665,15 @@ function renderGallery(gallery) {
     return;
   }
 
+  const seen = gallery.filter(hasAppeared);
+  const unseen = gallery.filter(g => !hasAppeared(g));
+  const ordered = seen.concat(unseen);
+
   grid.innerHTML = '';
-  gallery.forEach(item => {
+  ordered.forEach((item, idx) => {
     const div = document.createElement('div');
     div.className = 'gallery-item';
+    if (idx >= GALLERY_PREVIEW) div.classList.add('gallery-hidden');
 
     const img = document.createElement('img');
     img.src = Storage.getGalleryImageUrl(item.id);
@@ -695,6 +701,26 @@ function renderGallery(gallery) {
 
     grid.appendChild(div);
   });
+
+  const hidden = ordered.length - GALLERY_PREVIEW;
+  const existing = document.getElementById('galleryMoreBtn');
+  if (existing) existing.remove();
+  if (hidden > 0) {
+    const btn = document.createElement('button');
+    btn.id = 'galleryMoreBtn';
+    btn.className = 'gallery-more-btn';
+    btn.textContent = 'Show all ' + ordered.length + ' characters';
+    btn.addEventListener('click', () => {
+      const wasCollapsed = grid.classList.toggle('gallery-open');
+      btn.textContent = wasCollapsed
+        ? 'Show fewer'
+        : 'Show all ' + ordered.length + ' characters';
+      if (!wasCollapsed) {
+        document.getElementById('gallery-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+    grid.parentNode.insertBefore(btn, grid.nextSibling);
+  }
 }
 
 // ===========================
@@ -765,20 +791,11 @@ function openGalleryExpand(item) {
     fields[i].id = 'galleryExpandField' + (i + 1);
   }
 
-  // Video badge
-  let videoBadge = clone.querySelector('.video-badge');
-  if (!videoBadge) {
-    videoBadge = document.createElement('div');
-    videoBadge.className = 'video-badge';
-    videoBadge.innerHTML = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> Watch Video';
-    clone.querySelector('.gallery-expand-info').appendChild(videoBadge);
-  }
-  if (item.hasVideo) {
-    videoBadge.style.display = '';
-    videoBadge.onclick = () => { openVideoOverlay(Storage.getGalleryVideoUrl(item.id)); };
-  } else {
-    videoBadge.style.display = 'none';
-  }
+  // The character videos were placeholders and have been removed along with
+  // their files. A badge that opens nothing is worse than no badge, so any
+  // stale one left in the cloned markup is dropped rather than hidden.
+  const staleBadge = clone.querySelector('.video-badge');
+  if (staleBadge) staleBadge.remove();
 
   modal.classList.add('active');
   modal.scrollTop = 0;

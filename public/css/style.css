@@ -942,3 +942,111 @@ body{
     animation:none!important;transition:none!important;
   }
 }
+
+/* ===========================================================================
+   PASS TWO — MORE NEON, LESS SCROLL
+
+   Two asks, and they pull against each other, so they are tuned together here
+   rather than separately: the colour is pushed until you can feel it rather
+   than infer it, and the vertical rhythm is tightened so the page is shorter
+   without the text getting cramped.
+   =========================================================================== */
+
+/* --- COLOUR ------------------------------------------------------------- */
+
+/* The washes are the ambient light of the city seen through the page. At the
+   previous strength they were a hint; at this strength the ground is visibly
+   cyan at the top, violet through the middle and amber at the foot, and the
+   black only survives in the corners between them. */
+body{
+  background-image:
+    radial-gradient(56rem 40rem at 2% -6%,rgba(63,215,255,.46),transparent 56%),
+    radial-gradient(48rem 34rem at 108% 16%,rgba(255,62,165,.38),transparent 56%),
+    radial-gradient(58rem 42rem at -16% 54%,rgba(155,107,255,.42),transparent 58%),
+    radial-gradient(50rem 36rem at 116% 84%,rgba(255,176,58,.34),transparent 56%),
+    radial-gradient(44rem 30rem at 50% 118%,rgba(63,215,255,.26),transparent 60%);
+}
+
+/* Light spilling in from the edges of the frame, fixed to the viewport. This
+   is what stops the middle of a wide screen reading as a black gutter either
+   side of the content column. */
+body::after{
+  content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    linear-gradient(90deg,rgba(63,215,255,.16) 0%,transparent 18%),
+    linear-gradient(270deg,rgba(255,62,165,.14) 0%,transparent 18%);
+}
+
+/* Each section's own band, pushed to where the hue is unmistakable. */
+.section{
+  background-image:
+    radial-gradient(120% 64% at 50% 0%,color-mix(in srgb,var(--accent) 30%,transparent) 0%,transparent 66%),
+    linear-gradient(180deg,rgba(255,255,255,.06) 0%,rgba(255,255,255,.016) 40%,transparent 80%);
+}
+.section:nth-of-type(even){
+  background-image:
+    radial-gradient(120% 64% at 50% 0%,color-mix(in srgb,var(--accent) 38%,transparent) 0%,transparent 68%),
+    linear-gradient(180deg,rgba(255,255,255,.028) 0%,rgba(255,255,255,.07) 46%,transparent 86%);
+}
+
+/* The seam between sections becomes a real bar of light rather than a hairline. */
+.section::before{height:2px;width:min(100%,900px);filter:blur(.3px);opacity:.9}
+
+/* Accent furniture gets its saturation back: kickers, rules and card tops were
+   all reading as grey-gold at the old strengths. */
+.section-title{color:color-mix(in srgb,var(--accent) 88%,#fff)}
+.section-title::after{height:3px}
+.arc-kicker,.team-kicker,.oq-kicker{color:color-mix(in srgb,var(--accent) 92%,#fff)}
+.chapter-card,.tale-card{border-top-width:3px;border-top-color:var(--accent)}
+.chapters-grid.arc-panel,.tales-grid.arc-panel,.team{
+  background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 16%,transparent) 0%,transparent 52%);
+  border-color:color-mix(in srgb,var(--accent) 26%,var(--line));
+}
+
+/* --- VERTICAL RHYTHM ---------------------------------------------------- */
+
+/* Roughly a fifth off the page height, taken from padding and margins rather
+   than from type size or line height, so nothing gets harder to read. */
+.section{padding:2rem 1.5rem 2.25rem}
+.section-title{margin-bottom:1.6rem}
+.climbers-intro,.reg-intro-desc{margin-bottom:1.5rem}
+.archive-intro-desc{margin-bottom:1.75rem;font-size:1rem}
+.lords-wall{gap:.8rem;margin-bottom:1.5rem}
+.teams{gap:1.1rem}
+.team{padding:1rem}
+.team-head{padding-bottom:.7rem;margin-bottom:.85rem}
+.section-footer-nav{padding:1.25rem 0 .5rem;margin-top:1.25rem}
+.seraph-entry{margin-bottom:1.75rem;gap:1.75rem}
+.seraph-image-wrap{width:38%}
+.reg-situation{margin-top:1.75rem}
+
+/* The Lords' portraits were 2:3, which made a five-across wall taller than the
+   viewport on its own. 4:5 still reads as a portrait and takes a third off. */
+.lord-card-frame{aspect-ratio:4/5}
+.lord-card-plate{padding:.5rem .65rem .6rem}
+.lord-card-aug{display:none}
+.climber-frame{aspect-ratio:4/5}
+
+/* Archive rows: a smaller plate and a two-line summary. The full entry is one
+   click away in the modal, so the spine only has to be scannable. */
+.archive-row-thumb,.archive-row-thumb-placeholder{width:112px;height:75px;margin:8px 0}
+.archive-row-content{padding:10px 14px}
+.archive-row-summary{
+  height:calc(14px * 1.7 * 2);font-size:14px;line-height:1.7;
+  -webkit-line-clamp:2;
+}
+
+/* --- GALLERY: SHOW THE CAST YOU HAVE MET, THEN THE REST ------------------ */
+.gallery-hidden{display:none}
+.gallery-grid.gallery-open .gallery-hidden{display:block}
+.gallery-more-btn{
+  display:block;margin:1.5rem auto 0;padding:.7rem 1.6rem;cursor:pointer;
+  font-family:'Orbitron',sans-serif;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);background:transparent;
+  border:1px solid color-mix(in srgb,var(--accent) 55%,transparent);border-radius:8px;
+  transition:background .25s,box-shadow .25s,border-color .25s;
+}
+.gallery-more-btn:hover{
+  background:color-mix(in srgb,var(--accent) 12%,transparent);
+  border-color:var(--accent);box-shadow:0 0 26px -6px var(--accent);
+}
