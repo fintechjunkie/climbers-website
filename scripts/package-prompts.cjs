@@ -104,6 +104,7 @@ const TITLE = (() => {
   const m = /^title:[ \t]*(.+)$/m.exec(fs.readFileSync(spec, 'utf8'));
   return m ? m[1].trim().replace(/^["']|["']$/g, '') : SLUG;
 })();
+let copied = 0;
 const index = [];
 plates.forEach((p, i) => {
   const n = String(i).padStart(2, '0');
@@ -134,9 +135,13 @@ plates.forEach((p, i) => {
   fs.writeFileSync(path.join(dir, 'PROMPT.txt'), lines.join('\r\n'));
 
 
+  // A finished plate will never be generated again, so its folder does not need
+  // its own copy of every reference. That duplication was most of the weight of
+  // prompt-packages/. The prompt stays, so the record of how it was made stays.
+  if (done) { index.push({ n, p, dir }); return; }
   for (const a of p.attach) {
     const src = path.join(REFS, a.file);
-    if (fs.existsSync(src)) fs.copyFileSync(src, path.join(dir, path.basename(a.file)));
+    if (fs.existsSync(src)) { fs.copyFileSync(src, path.join(dir, path.basename(a.file))); copied++; }
     else console.log('  MISSING ' + src);
   }
   index.push({ n, p, dir });
@@ -177,4 +182,4 @@ plates.forEach((p, i) => {
 fs.writeFileSync(path.join(OUT, 'ALL-PROMPTS.md'), md.join('\n'));
 
 console.log(plates.length + ' packages built in ' + OUT);
-console.log('attachments copied: ' + plates.reduce((a, p) => a + p.attach.length, 0));
+console.log('attachments copied: ' + copied + '  (finished plates keep the prompt only)');
