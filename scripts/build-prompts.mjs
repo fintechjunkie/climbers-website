@@ -105,6 +105,22 @@ function expand(prompt) {
         attach.push({ file: join(charDir(k), c.ref), label: c.name });
         return `${c.kind}: ${c.name}. Use the attached canonical reference "${c.ref}" as the authority for IDENTITY ONLY — face, build, proportion, colour, costume geometry and signature details. Match those exactly; do not reinterpret them. Draw them in the style described above, NOT in the rendering language of the reference file.${c.block ? `\n${c.block}` : ''}`;
       }
+      // No canonical yet, but a crop from a finished plate will do until there is
+      // one. It is a real picture of the real character at the right age, which
+      // beats a description and beats borrowing somebody else's sheet.
+      if (c.provisionalRef && onDisk(charDir(k), c.provisionalRef)) {
+        attach.push({ file: join(charDir(k), c.provisionalRef), label: `${c.name} — provisional, cropped from a finished plate` });
+        return `${c.kind}: ${c.name}. >>> NO REFERENCE SHEET EXISTS FOR THIS FIGURE YET. <<<
+What is attached instead is "${c.provisionalRef}" — a CROP TAKEN OUT OF A FINISHED
+PLATE in which this character already appears. It is not a studio reference sheet:
+the pose, the angle, the lighting and any cropped-off scenery in it belong to that
+plate and carry no authority here.
+TAKE FROM IT: the face, the colouring, the hair, the build, the AGE and the
+clothing. Those are already printed in the book and must not change.
+TAKE NOTHING ELSE from it — not the pose, not the camera angle, not the lighting,
+not the background, and not any part of another person visible at its edges.
+${c.block ? `\n${c.block}` : ''}`;
+      }
       if (c.inline) {
         return `${c.kind}: ${c.name}. Described inline by design — there is no canonical image for this figure and none is planned, so the description below is the whole of the authority. If this figure appears on more than one plate, generate those plates in a single session; continuity between them is otherwise not guaranteed.${c.block ? `
 ${c.block}` : `
