@@ -1,0 +1,112 @@
+CLIMBERS — SITE HERO BANNER
+============================
+
+REPLACES:  public/uploads/banner.jpg
+FORMAT:    3:2 LANDSCAPE (the current banner is 1200x800). Generate at the
+           largest 3:2 you can get; it is displayed up to half the viewport
+           height with rounded corners.
+
+ATTACH:    references/STYLE/style-canonical.png       (style authority)
+           references/LOCATIONS/TOWER_GATE/loc-tower-gate.png   (the gate)
+
+WHY THE CURRENT ONE IS BEING REPLACED
+  It is a photoreal 3D city render with a generic glowing spire. It is not in
+  the book's style, and it is not Haven City — it could be any science-fiction
+  city. Every one of the 64 plates inside the site is screen-printed pulp
+  illustration, so the first thing a reader sees should be too, and it should
+  be a place they will recognise ten pages in.
+
+>>> THIS IS THE ONE IMAGE IN THE ENTIRE PROJECT THAT CARRIES TEXT. <<<
+  Every plate prompt bans lettering outright. This one requires it. The word
+  CLIMBERS is part of the design, not an overlay added afterwards.
+
+-------------------------------------------------------------------------------
+PASTE EVERYTHING BELOW THIS LINE
+-------------------------------------------------------------------------------
+
+STYLE: CLIMBERS Pulp SciFi. The attached style reference is the authority for
+palette, light, surface and finish. Reproduce it; do not reinterpret it.
+
+Bold retro-futurist pulp science-fiction illustration. Vintage pulp sci-fi
+poster energy with graphic-novel readability: screen-printed / lithographic
+texture, visible print grain, bold graphic shadow masses, crisp ink-like edge
+definition, strong silhouettes, selective detail rather than uniform micro-
+detail, restrained and controlled luminous accents, angular futuristic
+architecture, dramatic perspective, cinematic composition.
+
+IT MUST READ AS ILLUSTRATED AND PRINTED. Not photorealistic, not a 3D render,
+not a game screenshot, not glossy, not airbrushed, not hyper-detailed. If it
+looks like a rendered cityscape rather than a printed poster, it has failed.
+
+>>> THE SUBJECT: THE TOWER, SEEN FROM THE BOTTOM OF THE ROAD THAT LEADS TO IT. <<<
+This is a story about people who walk into that building, so the picture is the
+view they have before they decide. Camera at STREET LEVEL, low, looking straight
+down the length of a broad approach road that runs away from us to the Tower.
+Strong one-point perspective: the road, the kerbs, the building lines and the
+reflections all drive toward the same point, and that point is the gate.
+
+THE TOWER fills the upper centre of the frame and its top leaves the picture.
+GOLD and FACETED, stepped back in setbacks like a needle built out of blades,
+with ONE VERTICAL SEAM OF WHITE LIGHT running its full height. At its base, the
+GATE: an arch of receding arches layered back like a cathedral, standing open,
+filled with gold light so bright the inside of it is not readable. It has no
+doors, no leaves, no hinges, nothing that could ever be shut.
+
+THE CITY runs down both sides of the road, close and human-scaled against all
+that height: blocky angular Haven City architecture in deep navy and warm stone,
+balconies, walkways, cable runs, service gantries, stacked frontages, laundry
+lines, and WINDOWS WITH PEOPLE'S LIVES BEHIND THEM — warm, occupied, ordinary.
+Signage and displays throw MAGENTA, CYAN AND VIOLET across the wet road and
+every one of those colours comes back up off it, doubled. Small hot points of
+green and amber on junction boxes and door frames at intervals down both sides.
+This is a lit, working, inhabited city at dusk — never a ruin, never abandoned,
+never a wasteland.
+
+Far off to one side and much lower, a soft BLUE MASS of light where the Valari
+Quarter sits. Deep indigo sky going warm only where the Tower burns.
+
+>>> ONE FIGURE, SMALL, WALKING TOWARD THE GATE. <<<
+A single silhouette on the road at mid-distance, back to us, unhurried, maybe a
+tenth of the frame height — small enough that the city dwarfs them and the Tower
+dwarfs the city. No face, no detail, no gear, nobody identifiable, and NOT any
+character from the story. We are behind them because the reader is meant to take
+that place; this is the one picture in the project where a figure seen from
+behind is correct.
+NOBODY ELSE ON THE ROAD.
+
+>>> THE TITLE: THE WORD "CLIMBERS", AND IT MUST BE SPELLED EXACTLY. <<<
+C-L-I-M-B-E-R-S. One word. No subtitle, no tagline, no author name, no date, no
+publisher mark, no URL, and NO OTHER TEXT ANYWHERE IN THE IMAGE — nothing on the
+signage, nothing on the buildings, nothing on the road. The city's signs carry
+abstract shape and colour only.
+
+  SET IT ACROSS THE UPPER THIRD, in the open sky above the city and clear of the
+  Tower's peak, centred and spanning most of the width.
+
+  MODERN GEOMETRIC SANS-SERIF, ALL CAPITALS, WIDE LETTER-SPACING. Clean, flat,
+  confident, engineered — the lettering of a transit sign or a spacecraft
+  fuselage, not of a fantasy novel. Even stroke weight. No serifs.
+
+  FLAT WARM CREAM-WHITE with a faint gold edge. It sits ON the picture as
+  printed type.
+
+  DO NOT give it: chrome, bevel, emboss, drop shadow, outer glow, neon tube
+  treatment, gradient fill, distressed grunge, cracks, 3D extrusion, perspective
+  distortion, motion blur, lens flare, or a box behind it. No sparkles. Nothing
+  that would look dated in a year.
+
+  It must be PERFECTLY LEGIBLE and correctly spelled, with even spacing and no
+  malformed, doubled, missing or invented letters. If any letter is wrong, the
+  whole image is unusable.
+
+>>> COMPOSITION <<<
+Upper third: sky and the title. Middle: the Tower and the gate burning at the
+end of the road. Lower two thirds: the city crowding in on both sides and the
+wet road carrying the colour back toward us.
+The three value zones must all be present — near-black city masses in the
+foreground, a midtone story field of streets and frontages, and the gate as the
+bright focal region. Keep the lower-right corner free of anything load-bearing.
+
+NO BORDER, NO FRAME, NO VIGNETTE, NO WATERMARK, NO SIGNATURE.
+
+3:2 LANDSCAPE.
