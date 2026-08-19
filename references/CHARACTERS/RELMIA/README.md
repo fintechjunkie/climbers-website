@@ -9,7 +9,7 @@ Use `char-relmia-canonical.png` as the required visual reference whenever this f
 
 ## What this has to hold
 
-Valari, seven years old. Her look is OPEN ASSESSMENT — the way children look at Synthetics before they learn not to. Never afraid in any specced plate.
+Valari, seven years old. Her look is OPEN ASSESSMENT — the way children look at Synthetics before they learn not to. Never afraid in any specced plate. Canonical derived from the shipped t2-s01 plate — see references/CHARACTERS/RELMIA/CANONICAL-PROMPT.txt.
 
 ## How to lock this
 

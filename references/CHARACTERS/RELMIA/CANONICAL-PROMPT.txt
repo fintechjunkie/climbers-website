@@ -1,0 +1,130 @@
+REL'MIA — CANONICAL REFERENCE SHEET
+====================================
+
+WHY THIS EXISTS
+  She appears in THREE plates of Tale Two and she has no canonical, so she has
+  been drifting — two attempts came back as a human child, and even with a
+  species reference attached her hair, clothes and age were free to change from
+  plate to plate. Sev'oran does not need one because she appears once. Rel'mia
+  does.
+
+WHY IT IS BUILT FROM A PLATE RATHER THAN INVENTED
+  Spread 1 has already landed and she is clearly visible in it, standing at the
+  intake desk between her parents. That plate is IN THE BOOK. If the canonical
+  disagreed with it, the canonical would be wrong on arrival and every later
+  plate would contradict a picture the reader has already seen.
+
+  So the sheet is drawn FROM her, not instead of her.
+
+------------------------------------------------------------------------------
+ATTACH
+------------------------------------------------------------------------------
+
+  1.  public/plates/t2-s01.jpg
+      THE PRIMARY AUTHORITY. She is the small Valari girl in the pale dress,
+      standing at the counter with her father's hand on her shoulder, looking up
+      and to the right at the Synthetic. SHE IS THE ONLY PERSON TO TAKE ANYTHING
+      FROM. Not the father, not the mother, not the Synthetic, not the room.
+
+  2.  references/STYLE/style-canonical.png
+      Style authority: palette, light, surface, finish.
+
+SAVE AS:  references/CHARACTERS/RELMIA/char-relmia-canonical.png
+FORMAT:   SQUARE, 1:1.
+
+------------------------------------------------------------------------------
+PASTE EVERYTHING BELOW THIS LINE
+------------------------------------------------------------------------------
+
+STYLE: CLIMBERS Pulp SciFi. The attached style reference is the authority for
+palette, light, surface and finish. Reproduce it; do not reinterpret it.
+
+Bold retro-futurist pulp science-fiction illustration. Vintage pulp sci-fi
+poster energy with graphic-novel readability: screen-printed / lithographic
+texture, visible print grain, bold graphic shadow masses, crisp ink-like edge
+definition, strong silhouettes, selective detail rather than uniform micro-
+detail, restrained luminous accents. It must read as ILLUSTRATED AND PRINTED —
+not photorealistic, not glossy 3D, not airbrushed.
+
+>>> TAKE THE CHARACTER FROM THE ATTACHED SCENE, AND ONLY THE CHILD. <<<
+In the attached picture, four figures stand at a counter. Take EVERYTHING from
+the SMALL VALARI GIRL IN THE PALE DRESS on the left, the one with an adult's
+hand resting on her shoulder. Reproduce her face, her colouring, her hair, her
+build, her age and her clothing exactly.
+IGNORE EVERYONE AND EVERYTHING ELSE IN THAT IMAGE — the two adults, the
+Synthetic, the counter, the pool, the architecture, the warm light. None of it
+appears here.
+
+>>> THIS IS A REFERENCE SHEET, NOT A SCENE. <<<
+ONE FIGURE, FULL BODY, HEAD TO FEET, STANDING, FACING THE VIEWER, arms relaxed
+at her sides, in a plain neutral pose. Flat, even, neutral lighting with no
+drama and no colour cast — NOT the warm gold of the attached scene. PLAIN
+UNIFORM BACKGROUND: a single flat neutral mid-tone. No room, no floor line, no
+horizon, no props, no furniture, no scenery, no second figure.
+NO TEXT, NO LETTERING, NO LABELS, NO SWATCHES, NO BORDER, NO TURNAROUND PANELS,
+NO MULTIPLE VIEWS. One figure, one pose, one picture.
+
+>>> WHAT MUST BE REPRODUCED EXACTLY, BECAUSE IT IS ALREADY IN THE BOOK <<<
+
+  A VALARI GIRL, SEVEN YEARS OLD, AND UNMISTAKABLY A SMALL CHILD. Child
+  proportions — head large for the body, short limbs, soft face, no adult
+  jawline. She stands about chest height to an adult. If she could be read as a
+  teenager, the sheet is wrong.
+
+  SKIN: the medium-saturation cornflower-to-periwinkle blue of the attached
+  figure. Cool and even. Not teal, not turquoise, not grey, not purple.
+
+  EARS: long and pointed, clearly visible, not covered by hair.
+
+  EYES: pale and luminous, large in a child's face.
+
+  HAIR: DARK, VERY LONG, worn in ONE THICK BRAID that falls forward over her
+  LEFT shoulder and down past her waist, with the hairline swept back off her
+  face. This is her single most identifying feature at a distance and it must
+  not change between plates.
+
+  CIRCUIT TRACERY: a FINE, PALE, CLOSE-SET MESH across the TEMPLE AND UPPER
+  CHEEK on each side, and NOWHERE ELSE — nothing on the neck, nothing on the
+  jaw, nothing on the arms or hands. It is FAINT and low-contrast, drifting
+  slowly between a soft blue and a dusty magenta-violet, both low-saturation.
+  Never hot pink, never electric blue, never neon, never bright.
+  An adult Valari's tracery has spread down the neck and jaw over a lifetime.
+  Hers has barely started, and that sparseness is how a reader reads her age.
+
+  CLOTHES: a simple SLEEVELESS SHIFT DRESS in PALE CREAM-SAND, plain, softly
+  gathered, falling to mid-calf. Clean, well-kept, unfashionable, chosen by a
+  parent. Plain simple shoes.
+  NO uniform, NO institutional gown, NO hospital clothing, NO robes, NO armour,
+  NO tech, NO jewellery, NO accessories, NO bag, NO weapon.
+
+>>> HER EXPRESSION IS THE MOST IMPORTANT THING ON THIS SHEET. <<<
+She looks DIRECTLY AT THE VIEWER, level and steady, with OPEN ASSESSMENT — the
+way a child looks at something they have not made their mind up about and have
+not yet learned to hide that they are studying. Calm. Unhurried. Present.
+Faintly curious. Entirely unafraid.
+
+  NOT frightened. NOT sad. NOT tearful. NOT wide-eyed. NOT pleading. NOT
+  cowering. NOT huddled. NOT shy. NOT smiling. NOT cute. NOT winsome.
+
+  DO NOT MAKE HER PITIABLE. This is the failure to guard against above all
+  others, because everything about her situation invites it. She is the most
+  composed person in every scene she is in, and the sheet has to establish that
+  so it survives into the plates. If a viewer's first reaction is to feel sorry
+  for her, the sheet has failed. The right reaction is to feel looked at.
+
+  POSTURE MATCHES: standing straight and settled, weight even on both feet,
+  hands loose at her sides. Not clutching herself, not fidgeting, not hunched,
+  not holding anything.
+
+>>> WHAT SHE MUST NOT LOOK LIKE. <<<
+Three other Valari women appear in this series and she must not drift toward
+any of them:
+  - NYX'ARA is a tall adult whose circuits run the full length of her neck and
+    jaw. Rel'mia's stop at the temples.
+  - SISTER SILENCE has very long loose dark hair and a gold band across her
+    eyes. Rel'mia's hair is braided and her eyes are uncovered.
+  - SEV'ORAN is a tired adult in worn indoor clothes.
+She is a CHILD, and everything about the proportions must say so before the
+colour does.
+
+Square, 1:1. No text, no lettering, no border, no caption, no watermark.
