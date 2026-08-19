@@ -2,7 +2,7 @@
   "slug": "p4",
   "arc": "the-climb",
   "order": 4,
-  "part": "Prologue IV",
+  "part": "Prologue III, Part Two",
   "title": "The Eleventh",
   "byline": "Rainbow",
   "epigraph": "Malachus Archive, public record. Registration Day, 09:14. Every screen in Haven City held forty seconds of white light. What was said during them is reproduced here unedited.",
@@ -21,7 +21,7 @@
       },
       "title": {
         "series": "The Climb",
-        "part": "Prologue IV",
+        "part": "Prologue III, Part Two",
         "title": "The Eleventh",
         "byline": "Rainbow",
         "epigraph": "Malachus Archive, public record. Registration Day, 09:14. Every screen in Haven City held forty seconds of white light. What was said during them is reproduced here unedited."
@@ -33,7 +33,7 @@
       "blocks": [
         {
           "t": "h",
-          "v": "Part One: The Eleventh"
+          "v": "Part Three: The Eleventh"
         },
         {
           "t": "p",
@@ -112,7 +112,7 @@
       "blocks": [
         {
           "t": "h",
-          "v": "Part Two: The Dispersal"
+          "v": "Part Four: The Dispersal"
         },
         {
           "t": "p",
@@ -268,7 +268,7 @@
       "blocks": [
         {
           "t": "h",
-          "v": "Part Three: The Screens Go Dark"
+          "v": "Part Five: The Screens Go Dark"
         },
         {
           "t": "p",
