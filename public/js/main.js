@@ -1045,7 +1045,6 @@ const REGISTRY_RELATIONSHIPS = [
 ];
 
 let regSelectedLord = null;
-let regRelationsVisible = false;
 // ===========================
 // SERAPH & THE TOWER
 // ===========================
@@ -1101,60 +1100,121 @@ function setupRegistry(workerUrl) {
   if (section) section.style.display = '';
   if (navLink) navLink.style.display = '';
 
-  renderRegistryGrid();
-  renderRegistryListPanel();
+  renderLordsWall();
+  renderOathQuestions();
   setupRegistryEvents(workerUrl);
 }
 
-function renderRegistryGrid() {
-  const svg = document.getElementById('regSvg');
-  // Grid lines
-  let gridLines = '';
-  gridLines += '<line x1="33.33" y1="0" x2="33.33" y2="100" stroke="#181d21" stroke-width="0.3"/>';
-  gridLines += '<line x1="66.67" y1="0" x2="66.67" y2="100" stroke="#181d21" stroke-width="0.3"/>';
-  gridLines += '<line x1="0" y1="33.33" x2="100" y2="33.33" stroke="#181d21" stroke-width="0.3"/>';
-  gridLines += '<line x1="0" y1="66.67" x2="100" y2="66.67" stroke="#181d21" stroke-width="0.3"/>';
+/* Roman numerals off the "First Among the Ten" string, so the wall can be
+   ordered and numbered without a second field to keep in agreement. */
+const ORDINALS = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth'];
+const ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'];
 
-  // Relationship lines (hidden by default, toggled via class)
-  let relLines = '';
-  REGISTRY_RELATIONSHIPS.forEach((rel, i) => {
-    const fromLord = OATH_LORDS.find(l => l.id === rel.from);
-    const toLord = OATH_LORDS.find(l => l.id === rel.to);
-    if (!fromLord || !toLord) return;
-    let dashArray = '';
-    if (rel.style === 'dashed') dashArray = 'stroke-dasharray="2 1.5"';
-    if (rel.style === 'dotted') dashArray = 'stroke-dasharray="0.6 0.8"';
-    relLines += `<line class="reg-rel-line" x1="${fromLord.x}" y1="${fromLord.y}" x2="${toLord.x}" y2="${toLord.y}" stroke="${rel.color}" stroke-width="0.4" opacity="0.6" ${dashArray}/>`;
-  });
-
-  // Lord nodes
-  let nodes = '';
-  OATH_LORDS.forEach(lord => {
-    nodes += `<circle class="reg-node" data-lord="${lord.id}" cx="${lord.x}" cy="${lord.y}" r="1.2" fill="${lord.color}" style="cursor:pointer"/>`;
-    nodes += `<text class="reg-node-label" data-lord-label="${lord.id}" x="${lord.x}" y="${lord.y + 4.5}" text-anchor="middle" fill="${lord.color}" font-size="3" font-family="Orbitron,sans-serif" font-weight="600" letter-spacing="0.2" opacity="0">${lord.surname}</text>`;
-  });
-
-  svg.innerHTML = gridLines + relLines + nodes;
+function lordRank(lord) {
+  const word = String(lord.number || '').toLowerCase().split(/\s+/)[0];
+  const i = ORDINALS.indexOf(word);
+  return i === -1 ? 99 : i;
 }
 
-function renderRegistryListPanel() {
-  const body = document.getElementById('regListBody');
-  if (!body) return;
-  body.innerHTML = '';
-  OATH_LORDS.forEach(lord => {
-    const row = document.createElement('div');
-    row.className = 'reg-lord-row';
-    row.dataset.lord = lord.id;
-    row.innerHTML = `
-      <img class="reg-lord-row-icon" src="assets/oath-lords/${lord.id}-faction.webp" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display=''" onload="this.style.display='';this.nextElementSibling.style.display='none'">
-      <span class="reg-lord-dot" style="background:${lord.color}"></span>
-      <div class="reg-lord-row-info">
-        <span class="reg-lord-row-name">${lord.name}</span>
-        <span class="reg-lord-row-meta">${lord.title} · ${lord.alignment}</span>
+function lordsInRank() {
+  return OATH_LORDS.slice().sort((a, b) => lordRank(a) - lordRank(b));
+}
+
+/* Every relationship the registry knows about, from one Lord's side, so the
+   typed links survive the alignment chart they used to be drawn on. */
+function standingsFor(lordId) {
+  return REGISTRY_RELATIONSHIPS
+    .filter(r => r.from === lordId || r.to === lordId)
+    .map(r => {
+      const otherId = r.from === lordId ? r.to : r.from;
+      const other = OATH_LORDS.find(l => l.id === otherId);
+      return other ? { label: r.label, color: r.color, other } : null;
+    })
+    .filter(Boolean);
+}
+
+/* ---------------------------------------------------------------------------
+   THE TEN — portrait wall
+
+   This replaces the row of faction symbols and the sidebar list. The lords
+   are the most illustrated thing on the site and they were represented by
+   icons; now the face is the control you click.
+   --------------------------------------------------------------------------- */
+function renderLordsWall() {
+  const wall = document.getElementById('lordsWall');
+  if (!wall) return;
+  wall.innerHTML = '';
+
+  lordsInRank().forEach(lord => {
+    const rank = lordRank(lord);
+    const card = document.createElement('button');
+    card.type = 'button';
+    card.className = 'lord-card';
+    card.dataset.lord = lord.id;
+    card.style.setProperty('--lord-color', lord.color);
+    card.setAttribute('aria-label', lord.name + ' — ' + lord.title);
+    card.innerHTML = `
+      <span class="lord-card-frame">
+        <img class="lord-card-portrait" src="assets/oath-lords/${lord.id}-portrait.webp" alt="${lord.name}" loading="lazy">
+        <span class="lord-card-wash"></span>
+        <span class="lord-card-numeral">${ROMAN[rank] || ''}</span>
+        <img class="lord-card-sigil" src="assets/oath-lords/${lord.id}-faction.webp" alt="" loading="lazy" onerror="this.style.display='none'">
+        <span class="lord-card-quote">&ldquo;${lord.question}&rdquo;</span>
+      </span>
+      <span class="lord-card-plate">
+        <span class="lord-card-name">${lord.name}</span>
+        <span class="lord-card-title">${lord.title}</span>
+        <span class="lord-card-aug">${lord.aug}</span>
+      </span>
+    `;
+    card.addEventListener('click', () => selectLord(lord.id));
+    wall.appendChild(card);
+  });
+}
+
+/* ---------------------------------------------------------------------------
+   THE TEN QUESTIONS
+
+   What stood here was an alignment chart: ten dots on a 3x3 grid, which told
+   a reader two adjectives they could already read in the list. This tells them
+   the thing the world actually turns on — what each Lord asked the Tower, and
+   what it said back. Click a card to turn it.
+   --------------------------------------------------------------------------- */
+function renderOathQuestions() {
+  const rail = document.getElementById('oqRail');
+  if (!rail) return;
+  rail.innerHTML = '';
+
+  lordsInRank().forEach(lord => {
+    const rank = lordRank(lord);
+    const card = document.createElement('div');
+    card.className = 'oq-card';
+    card.dataset.lord = lord.id;
+    card.style.setProperty('--lord-color', lord.color);
+    card.tabIndex = 0;
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-label', lord.name + ' asked: ' + lord.question + ' Turn the card for the answer.');
+    card.innerHTML = `
+      <div class="oq-inner">
+        <div class="oq-face oq-front">
+          <span class="oq-numeral">${ROMAN[rank] || ''}</span>
+          <p class="oq-question">${lord.question}</p>
+          <span class="oq-asker">asked by ${lord.name}</span>
+          <span class="oq-hint">Answer &rsaquo;</span>
+        </div>
+        <div class="oq-face oq-back">
+          <span class="oq-back-label">The Tower answered</span>
+          <p class="oq-answer">${lord.answer}</p>
+          <span class="oq-hint">&lsaquo; Question</span>
+        </div>
       </div>
     `;
-    row.addEventListener('click', () => selectLord(lord.id));
-    body.appendChild(row);
+    const flip = () => card.classList.toggle('flipped');
+    card.addEventListener('click', flip);
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); }
+    });
+    rail.appendChild(card);
   });
 }
 
@@ -1163,23 +1223,8 @@ function selectLord(lordId) {
   if (!lord) return;
   regSelectedLord = lord;
 
-  // Update grid nodes
-  document.querySelectorAll('.reg-node').forEach(n => {
-    const id = n.dataset.lord;
-    if (id === lordId) {
-      n.setAttribute('r', '1.8');
-      n.setAttribute('stroke', '#ffffff');
-      n.setAttribute('stroke-width', '0.4');
-      n.style.filter = `drop-shadow(0 0 1.5px ${lord.color})`;
-    } else {
-      n.setAttribute('r', '1.2');
-      n.removeAttribute('stroke');
-      n.removeAttribute('stroke-width');
-      n.style.filter = '';
-    }
-  });
-  document.querySelectorAll('.reg-node-label').forEach(t => {
-    t.setAttribute('opacity', t.dataset.lordLabel === lordId ? '1' : '0');
+  document.querySelectorAll('.lord-card').forEach(c => {
+    c.classList.toggle('selected', c.dataset.lord === lordId);
   });
 
   // Update detail panel
@@ -1231,6 +1276,21 @@ function renderLordDetail(lord) {
     html += `<div class="reg-divider"></div>`;
     html += `<div class="reg-field"><div class="reg-field-label" style="color:${lord.color}">INTELLIGENCE FILE</div><div class="reg-field-value reg-intel">${lord.detail}</div></div>`;
     html += `<div class="reg-divider"></div>`;
+
+    // Typed standings. These used to be lines drawn on the alignment chart,
+    // where a reader had to hover a dot to find out who it connected to.
+    const standings = standingsFor(lord.id);
+    if (standings.length) {
+      html += `<div class="reg-field"><div class="reg-field-label" style="color:${lord.color}">STANDING WITH THE TEN</div><div class="reg-standings">`;
+      standings.forEach(s => {
+        html += `<button class="reg-standing" style="--rel-color:${s.color};--other-color:${s.other.color}" data-lord="${s.other.id}">`;
+        html += `<span class="reg-standing-name">${s.other.surname}</span>`;
+        html += `<span class="reg-standing-label">${s.label}</span>`;
+        html += `</button>`;
+      });
+      html += `</div></div>`;
+    }
+
     html += `<div class="reg-field"><div class="reg-field-label" style="color:#5a8060">KNOWN ALLIANCES</div><div class="reg-field-value reg-alliances">${lord.alliances}</div></div>`;
     html += `<div class="reg-field"><div class="reg-field-label" style="color:#804040">KNOWN ENEMIES</div><div class="reg-field-value reg-enemies">${lord.enemies}</div></div>`;
 
@@ -1246,6 +1306,11 @@ function renderLordDetail(lord) {
       inner.style.clipPath = '';
       inner.style.animation = '';
     }
+
+    // A standing chip jumps straight to the other party's file.
+    body.querySelectorAll('.reg-standing').forEach(chip => {
+      chip.addEventListener('click', () => selectLord(chip.dataset.lord));
+    });
 
     // Wire respond button
     const respondBtn = document.getElementById('regRespondBtn');
@@ -1264,7 +1329,7 @@ function renderLordDetail(lord) {
   const preload = new Image();
   preload.onload = () => buildBody(true);
   preload.onerror = () => buildBody(false);
-  preload.src = 'assets/oath-lords/' + lord.id + '-portrait.png';
+  preload.src = 'assets/oath-lords/' + lord.id + '-portrait.webp';
 }
 
 function regField(label, value, color) {
@@ -1273,13 +1338,7 @@ function regField(label, value, color) {
 
 function deselectLord() {
   regSelectedLord = null;
-  document.querySelectorAll('.reg-node').forEach(n => {
-    n.setAttribute('r', '1.2');
-    n.removeAttribute('stroke');
-    n.removeAttribute('stroke-width');
-    n.style.filter = '';
-  });
-  document.querySelectorAll('.reg-node-label').forEach(t => t.setAttribute('opacity', '0'));
+  document.querySelectorAll('.lord-card').forEach(c => c.classList.remove('selected'));
   document.querySelectorAll('.reg-sit-lord-btn').forEach(btn => btn.classList.remove('active'));
 
   // Close modal
@@ -1295,63 +1354,6 @@ function setupRegistryEvents(workerUrl) {
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && document.getElementById('regDetail').classList.contains('open')) deselectLord();
   });
-
-  // Node clicks
-  document.getElementById('regSvg').addEventListener('click', e => {
-    const node = e.target.closest('.reg-node');
-    if (node) selectLord(node.dataset.lord);
-  });
-
-  // Node hover
-  document.getElementById('regSvg').addEventListener('mouseover', e => {
-    const node = e.target.closest('.reg-node');
-    if (node && (!regSelectedLord || regSelectedLord.id !== node.dataset.lord)) {
-      node.setAttribute('r', '1.5');
-      node.setAttribute('stroke', '#ffffff');
-      node.setAttribute('stroke-width', '0.2');
-      const label = document.querySelector(`[data-lord-label="${node.dataset.lord}"]`);
-      if (label) label.setAttribute('opacity', '1');
-    }
-  });
-  document.getElementById('regSvg').addEventListener('mouseout', e => {
-    const node = e.target.closest('.reg-node');
-    if (node && (!regSelectedLord || regSelectedLord.id !== node.dataset.lord)) {
-      node.setAttribute('r', '1.2');
-      node.removeAttribute('stroke');
-      node.removeAttribute('stroke-width');
-      const label = document.querySelector(`[data-lord-label="${node.dataset.lord}"]`);
-      if (label) label.setAttribute('opacity', '0');
-    }
-  });
-
-  // Relations toggle
-  const toggleBtn = document.getElementById('regToggleRelations');
-  const legend = document.getElementById('regLegend');
-  toggleBtn.addEventListener('click', () => {
-    regRelationsVisible = !regRelationsVisible;
-    toggleBtn.textContent = regRelationsVisible ? 'HIDE RELATIONS' : 'SHOW RELATIONS';
-    document.querySelectorAll('.reg-rel-line').forEach(l => {
-      l.style.display = regRelationsVisible ? '' : 'none';
-    });
-    legend.style.display = regRelationsVisible ? '' : 'none';
-  });
-
-  // Build legend
-  const uniqueLabels = [];
-  REGISTRY_RELATIONSHIPS.forEach(r => {
-    if (!uniqueLabels.find(u => u.label === r.label)) {
-      uniqueLabels.push({ label: r.label, color: r.color, style: r.style });
-    }
-  });
-  legend.innerHTML = uniqueLabels.map(u => {
-    let lineStyle = `background:${u.color}`;
-    if (u.style === 'dashed') lineStyle += ';background:repeating-linear-gradient(90deg,' + u.color + ' 0 4px,transparent 4px 6px)';
-    if (u.style === 'dotted') lineStyle += ';background:repeating-linear-gradient(90deg,' + u.color + ' 0 2px,transparent 2px 4px)';
-    return `<span class="reg-legend-item"><span class="reg-legend-swatch" style="${lineStyle}"></span>${u.label}</span>`;
-  }).join('');
-
-  // Hide relation lines initially
-  document.querySelectorAll('.reg-rel-line').forEach(l => l.style.display = 'none');
 
   // Situation generator
   regSituationPool = [...REGISTRY_SITUATIONS];
@@ -1381,7 +1383,7 @@ function setupRegistryEvents(workerUrl) {
       btn.dataset.lord = lord.id;
       const icon = document.createElement('img');
       icon.className = 'reg-sit-lord-icon';
-      icon.src = 'assets/oath-lords/' + lord.id + '-faction.png';
+      icon.src = 'assets/oath-lords/' + lord.id + '-faction.webp';
       icon.alt = '';
       icon.onerror = function() { this.style.display = 'none'; };
       btn.appendChild(icon);

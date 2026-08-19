@@ -118,53 +118,19 @@
     <h2 class="section-title">The Ten Oath Lords</h2>
     <p class="reg-intro-desc">The Oath Lords govern Haven City. Ten individuals, each augmented by the Tower, each bound by a question they asked and an answer they received. Their alliances shift. Their conflicts endure. Study the registry. Choose who speaks.</p>
 
-    <!-- Section banner -->
-    <img class="reg-banner" src="assets/oath-lords/icons-illustration.webp" alt="The Oath Lords" onerror="this.style.display='none'">
+    <!-- The Ten — portrait wall. Click a face to open their file. -->
+    <div class="lords-wall" id="lordsWall"></div>
 
-    <!-- Header bar -->
-    <div class="reg-header">
-      <div class="reg-header-left">
-        <span class="reg-header-sub" style="color:#c9a84c">THE TEN OATH LORDS / ALIGNMENT REGISTRY</span>
+    <!-- THE TEN QUESTIONS — replaces the alignment registry.
+         Every Lord asked the Tower one question and was answered. That is the
+         premise of the whole world and it was previously buried three scrolls
+         deep inside the detail modal. -->
+    <div class="oath-questions" id="oathQuestions">
+      <div class="oq-head">
+        <span class="oq-kicker">The Ten Questions</span>
+        <span class="oq-note">Each Lord asked the Tower one question. Each was answered. Turn a card to read what came back.</span>
       </div>
-      <button class="reg-toggle-btn" id="regToggleRelations">SHOW RELATIONS</button>
-    </div>
-
-    <!-- Main layout: grid + detail -->
-    <div class="reg-layout">
-      <!-- Alignment grid -->
-      <div class="reg-grid-wrap">
-        <div class="reg-grid" id="regGrid">
-          <!-- 3x3 zone backgrounds -->
-          <div class="reg-zone" style="grid-area:1/1;background:#12101e"></div>
-          <div class="reg-zone" style="grid-area:1/2;background:#111818"></div>
-          <div class="reg-zone" style="grid-area:1/3;background:#111510"></div>
-          <div class="reg-zone" style="grid-area:2/1;background:#0e0c14"></div>
-          <div class="reg-zone" style="grid-area:2/2;background:#0e0e0e"></div>
-          <div class="reg-zone" style="grid-area:2/3;background:#100e0c"></div>
-          <div class="reg-zone" style="grid-area:3/1;background:#180a0a"></div>
-          <div class="reg-zone" style="grid-area:3/2;background:#130808"></div>
-          <div class="reg-zone" style="grid-area:3/3;background:#1a0808"></div>
-          <!-- SVG overlay for lines, nodes, labels -->
-          <svg class="reg-svg" id="regSvg" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
-          <!-- Axis labels -->
-          <span class="reg-axis-x" style="left:16.5%">CHAOTIC</span>
-          <span class="reg-axis-x" style="left:50%">NEUTRAL</span>
-          <span class="reg-axis-x" style="left:83.5%">LAWFUL</span>
-          <span class="reg-axis-y" style="top:16.5%">GOOD</span>
-          <span class="reg-axis-y" style="top:50%">NEUTRAL</span>
-          <span class="reg-axis-y" style="top:83.5%">EVIL</span>
-        </div>
-        <!-- Relationship legend -->
-        <div class="reg-legend" id="regLegend" style="display:none"></div>
-      </div>
-
-      <!-- Lord list panel -->
-      <div class="reg-list-panel" id="regListPanel">
-        <div class="reg-list-header">
-          <span class="reg-list-header-text">SELECT AN OATH LORD</span>
-        </div>
-        <div class="reg-list-body" id="regListBody"></div>
-      </div>
+      <div class="oq-rail" id="oqRail"></div>
     </div>
 
     <!-- Detail panel (modal overlay) -->

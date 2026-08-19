@@ -311,35 +311,85 @@ img{max-width:100%;display:block}
 /* ===== OATH LORD REGISTRY ===== */
 .registry-page{max-width:1200px;padding:1.5rem}
 .reg-intro-desc{max-width:700px;margin:0 auto 2.5rem;text-align:center;color:#888;font-size:.95rem;line-height:1.7}
-.reg-banner{width:70%;display:block;margin:0 auto 2rem;border-radius:4px;border:1px solid #1a1d21}
+/* ---------------------------------------------------------------------------
+   THE TEN — portrait wall
 
-/* Header bar */
-.reg-header{display:flex;justify-content:space-between;align-items:center;padding:.75rem 1rem;background:#0b0e10;border:1px solid #181d21;margin-bottom:1rem}
-.reg-header-left{display:flex;flex-direction:column;gap:4px}
-.reg-header-label{font-family:'Orbitron',sans-serif;font-size:.8rem;color:#c9a84c;letter-spacing:.1em;text-transform:uppercase;font-weight:600}
-.reg-header-sub{font-family:'Orbitron',sans-serif;font-size:.65rem;color:#6a7a82;letter-spacing:.08em;text-transform:uppercase}
-.reg-toggle-btn{background:transparent;border:1px solid #6a7a82;color:#6a7a82;font-family:'Orbitron',sans-serif;font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;padding:8px 16px;cursor:pointer;transition:all .2s}
-.reg-toggle-btn:hover{border-color:#c9a84c;color:#c9a84c}
+   Ten tall cards, one per Lord, each carrying its own accent colour taken from
+   its own portrait. This is deliberately the most saturated block on the page:
+   ten different hues side by side is what keeps the section from reading as
+   one dark rectangle, which is exactly what the symbol row and the alignment
+   chart both did.
+   --------------------------------------------------------------------------- */
+.lords-wall{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin-bottom:3.5rem}
+@media(max-width:1100px){.lords-wall{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:860px){.lords-wall{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:620px){.lords-wall{grid-template-columns:repeat(2,1fr);gap:.75rem}}
 
-/* Layout */
-.reg-layout{display:flex;gap:1rem;align-items:flex-start}
+.lord-card{display:flex;flex-direction:column;padding:0;text-align:left;font:inherit;color:inherit;cursor:pointer;background:#14161d;border:1px solid #272b36;border-radius:12px;overflow:hidden;transition:transform .28s cubic-bezier(.2,.7,.3,1),box-shadow .28s,border-color .28s}
+.lord-card:hover,.lord-card:focus-visible{transform:translateY(-6px);border-color:var(--lord-color);box-shadow:0 14px 34px rgba(0,0,0,.6),0 0 26px -6px var(--lord-color);outline:none}
+.lord-card.selected{border-color:var(--lord-color);box-shadow:0 0 0 1px var(--lord-color),0 0 30px -8px var(--lord-color)}
 
-/* Grid wrapper */
-.reg-grid-wrap{flex:1;min-width:0;max-width:50%;margin:0 auto}
-.reg-grid{position:relative;width:100%;aspect-ratio:1/1;background:#0b0e10;border:1px solid #181d21;display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr 1fr 1fr;overflow:hidden}
-.reg-zone{position:relative}
-.reg-svg{position:absolute;inset:0;width:100%;height:100%;z-index:2}
-.reg-node{transition:r .15s,filter .15s}
-.reg-node-label{pointer-events:none;transition:opacity .15s}
+.lord-card-frame{position:relative;display:block;aspect-ratio:2/3;overflow:hidden;background:#0b0d12}
+.lord-card-portrait{width:100%;height:100%;object-fit:cover;filter:brightness(.86) saturate(1.05);transition:filter .35s,transform .5s cubic-bezier(.2,.7,.3,1)}
+.lord-card:hover .lord-card-portrait{filter:brightness(1.12) saturate(1.2);transform:scale(1.05)}
 
-/* Axis labels */
-.reg-axis-x{position:absolute;bottom:10px;transform:translateX(-50%);font-family:'Orbitron',sans-serif;font-size:.95rem;color:#c9a84c;letter-spacing:.12em;text-transform:uppercase;z-index:3;pointer-events:none;font-weight:700;text-shadow:0 0 8px rgba(201,168,76,.3)}
-.reg-axis-y{position:absolute;left:10px;transform:translateY(-50%) rotate(-90deg);transform-origin:left center;font-family:'Orbitron',sans-serif;font-size:.95rem;color:#c9a84c;letter-spacing:.08em;text-transform:uppercase;z-index:3;pointer-events:none;font-weight:700;text-shadow:0 0 8px rgba(201,168,76,.3)}
+/* The wash is what lets the name plate sit on a busy illustration and stay
+   readable, and it carries the lord's colour into the picture rather than
+   greying it out. */
+.lord-card-wash{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.5) 0%,rgba(0,0,0,0) 34%,rgba(0,0,0,0) 46%,rgba(8,9,12,.92) 100%);transition:opacity .35s}
+.lord-card-frame::after{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 80% at 50% 108%,var(--lord-color) 0%,transparent 62%);opacity:.22;mix-blend-mode:screen;transition:opacity .35s}
+.lord-card:hover .lord-card-frame::after{opacity:.45}
 
-/* Legend */
-.reg-legend{display:flex;flex-wrap:wrap;gap:14px;padding:.6rem 0;margin-top:.5rem}
-.reg-legend-item{display:flex;align-items:center;gap:6px;font-family:'Orbitron',sans-serif;font-size:.6rem;color:#7a8a92;letter-spacing:.04em}
-.reg-legend-swatch{display:inline-block;width:18px;height:2px}
+.lord-card-numeral{position:absolute;top:.5rem;left:.65rem;font-family:'Orbitron',sans-serif;font-size:.9rem;font-weight:700;letter-spacing:.12em;color:var(--lord-color);text-shadow:0 0 12px rgba(0,0,0,.9),0 0 18px var(--lord-color);opacity:.9}
+.lord-card-sigil{position:absolute;top:.4rem;right:.5rem;width:30px;height:30px;object-fit:contain;opacity:.55;filter:drop-shadow(0 0 6px rgba(0,0,0,.8));transition:opacity .3s,transform .3s}
+.lord-card:hover .lord-card-sigil{opacity:1;transform:scale(1.12)}
+
+/* Their question, surfaced on hover. The face draws you; the question is the
+   reason to click. */
+.lord-card-quote{position:absolute;left:.7rem;right:.7rem;bottom:.7rem;font-size:.72rem;line-height:1.45;font-style:italic;color:#eef0f6;text-shadow:0 2px 10px rgba(0,0,0,.95);opacity:0;transform:translateY(8px);transition:opacity .3s,transform .3s;pointer-events:none}
+.lord-card:hover .lord-card-quote{opacity:1;transform:translateY(0)}
+
+.lord-card-plate{display:flex;flex-direction:column;gap:2px;padding:.65rem .75rem .75rem;border-top:2px solid var(--lord-color);background:linear-gradient(180deg,color-mix(in srgb,var(--lord-color) 9%,#14161d) 0%,#14161d 70%)}
+.lord-card-name{font-family:'Orbitron',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.04em;color:#eceef4;line-height:1.2}
+.lord-card-title{font-family:'Orbitron',sans-serif;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:var(--lord-color);opacity:.95}
+.lord-card-aug{font-size:.68rem;color:#8b90a0;margin-top:2px}
+
+/* ---------------------------------------------------------------------------
+   THE TEN QUESTIONS — flip cards, in place of the alignment chart
+   --------------------------------------------------------------------------- */
+.oath-questions{margin-bottom:3rem}
+.oq-head{display:flex;flex-direction:column;gap:.35rem;padding-bottom:.9rem;margin-bottom:1.25rem;border-bottom:1px solid #272b36}
+.oq-kicker{font-family:'Orbitron',sans-serif;font-size:.72rem;letter-spacing:.34em;text-transform:uppercase;color:#c9a84c;text-shadow:0 0 18px rgba(201,168,76,.35)}
+.oq-note{font-size:.85rem;color:#8b90a0;line-height:1.6}
+
+.oq-rail{display:grid;grid-template-columns:repeat(5,1fr);gap:.75rem}
+@media(max-width:1100px){.oq-rail{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:700px){.oq-rail{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:460px){.oq-rail{grid-template-columns:1fr}}
+
+.oq-card{perspective:1200px;cursor:pointer;min-height:250px;outline:none}
+.oq-inner{position:relative;width:100%;height:100%;min-height:250px;transition:transform .6s cubic-bezier(.2,.7,.3,1);transform-style:preserve-3d}
+.oq-card.flipped .oq-inner{transform:rotateY(180deg)}
+.oq-card:focus-visible .oq-inner{box-shadow:0 0 0 2px var(--lord-color)}
+
+.oq-face{position:absolute;inset:0;display:flex;flex-direction:column;gap:.5rem;padding:.85rem .9rem;border:1px solid #272b36;border-top:2px solid var(--lord-color);border-radius:10px;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden}
+.oq-front{background:linear-gradient(160deg,color-mix(in srgb,var(--lord-color) 12%,#14161d) 0%,#101219 65%)}
+.oq-back{background:linear-gradient(160deg,#101219 0%,color-mix(in srgb,var(--lord-color) 16%,#14161d) 100%);transform:rotateY(180deg)}
+.oq-card:hover .oq-face{border-color:var(--lord-color);box-shadow:0 0 24px -8px var(--lord-color)}
+
+.oq-numeral{font-family:'Orbitron',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.18em;color:var(--lord-color)}
+.oq-question{font-size:.86rem;line-height:1.55;color:#e2e5ee;font-style:italic;flex:1;margin:0}
+.oq-asker{font-family:'Orbitron',sans-serif;font-size:.54rem;letter-spacing:.14em;text-transform:uppercase;color:#8b90a0}
+.oq-back-label{font-family:'Orbitron',sans-serif;font-size:.54rem;letter-spacing:.18em;text-transform:uppercase;color:var(--lord-color)}
+.oq-answer{font-size:.82rem;line-height:1.6;color:#cfd3de;font-style:italic;flex:1;margin:0}
+.oq-hint{font-family:'Orbitron',sans-serif;font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;color:var(--lord-color);opacity:.75;align-self:flex-end}
+
+/* Standing chips inside a Lord's file */
+.reg-standings{display:flex;flex-wrap:wrap;gap:6px}
+.reg-standing{display:flex;flex-direction:column;gap:1px;align-items:flex-start;padding:6px 10px;cursor:pointer;background:transparent;border:1px solid var(--rel-color);border-left:3px solid var(--other-color);border-radius:4px;transition:background .2s}
+.reg-standing:hover{background:rgba(255,255,255,.05)}
+.reg-standing-name{font-family:'Orbitron',sans-serif;font-size:.62rem;font-weight:600;letter-spacing:.06em;color:var(--other-color)}
+.reg-standing-label{font-size:.62rem;color:#8b90a0}
 
 /* Detail panel — modal overlay */
 .reg-detail{display:none;position:fixed;inset:0;z-index:9000;overflow-y:auto;background:rgba(0,0,0,0);backdrop-filter:blur(0px);padding:2rem;transition:background .4s,backdrop-filter .4s}
@@ -366,21 +416,6 @@ img{max-width:100%;display:block}
 .reg-detail-close{background:none;border:none;color:#6a7a82;font-size:22px;cursor:pointer;padding:0 4px;font-family:'Orbitron',sans-serif;line-height:1}
 .reg-detail-close:hover{color:#c9a84c}
 .reg-detail-body{padding:1rem 1.25rem}
-
-/* Lord list panel (right sidebar) */
-.reg-list-panel{width:280px;flex-shrink:0;background:#0b0e10;border:1px solid #181d21;max-height:none;overflow-y:visible}
-.reg-list-header{padding:.75rem 1rem;border-bottom:1px solid #181d21}
-.reg-list-header-text{font-family:'Orbitron',sans-serif;font-size:.65rem;color:#6a7a82;letter-spacing:.08em;text-transform:uppercase}
-
-/* Lord list rows */
-.reg-lord-row{display:flex;align-items:center;gap:10px;padding:10px 8px;border-left:2px solid transparent;cursor:pointer;transition:all .15s}
-.reg-lord-row:hover{border-left-color:var(--lord-color,#c9a84c);background:rgba(255,255,255,.02)}
-.reg-lord-row-icon{width:28px;height:28px;object-fit:contain;flex-shrink:0;opacity:.7;transition:opacity .2s}
-.reg-lord-row:hover .reg-lord-row-icon{opacity:1}
-.reg-lord-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-.reg-lord-row-info{display:flex;flex-direction:column;gap:2px}
-.reg-lord-row-name{font-family:'Orbitron',sans-serif;font-size:.8rem;color:#d0c8a0;font-weight:600}
-.reg-lord-row-meta{font-family:'Orbitron',sans-serif;font-size:.6rem;color:#7a8a92;letter-spacing:.06em;text-transform:uppercase}
 
 /* Detail view */
 .reg-portrait{width:100%;display:none}
@@ -458,13 +493,10 @@ img{max-width:100%;display:block}
 
 /* Responsive: tablet and mobile */
 @media(max-width:899px){
-  .reg-layout{flex-direction:column}
-  .reg-list-panel{width:100%;max-height:none}
   .reg-detail-inner{max-width:95vw;margin:1rem auto}
 }
 @media(max-width:600px){
   .registry-page{padding:1rem .75rem}
-  .reg-header{flex-direction:column;gap:8px;align-items:flex-start}
   .reg-sit-lords-row{gap:4px}
   .reg-sit-lord-btn{font-size:8px;padding:4px 7px}
 }
@@ -553,11 +585,9 @@ img{max-width:100%;display:block}
 
 /* Mobile oath lords */
 @media(max-width:700px){
-  .reg-grid-wrap{max-width:100%}
-  .reg-body{flex-direction:column}
-  .reg-toggle-btn{display:none}
-  .reg-legend{display:none!important}
-  .reg-rel-line{display:none!important}
+  .lord-card-quote{display:none}
+  .lord-card-numeral{font-size:.75rem}
+  .lord-card-sigil{width:24px;height:24px}
 }
 
 /* Mobile archive */
@@ -613,3 +643,184 @@ img{max-width:100%;display:block}
   .gallery-expand-inner{max-width:95vw}
   .nav-audio-btn{font-size:.6rem;padding:.25rem .5rem}
 }
+
+/* ===========================================================================
+   LIGHTING PASS
+
+   The site read as one flat dark rectangle from top to bottom: every section
+   sat on the same near-black, every card was the same #1a1a1a, and the only
+   accent anywhere was the same gold. Three things fix that, and they are all
+   in this block so the whole scheme can be read — or reverted — in one place.
+
+     1. THE GROUND IS LIT, NOT BLACK. Four large fixed radial washes in the
+        book's own neon hues sit under the whole scroll, so the background
+        drifts cyan -> magenta -> violet -> amber as you move down the page
+        instead of holding one value.
+
+     2. EVERY SECTION OWNS A COLOUR. --accent is set per section and drives the
+        title, its rule, the card tops, the hover glows and the borders. Two
+        consecutive sections can no longer look alike, which was the complaint.
+
+     3. THE STEP BETWEEN GROUND AND PANEL IS BIGGER. The page ground drops to
+        near-true-black and panels come up to a lit slate, so a blocked-out
+        background reads as a surface with light on it rather than as a
+        slightly different shade of the same dark.
+
+   This block is appended last on purpose: it overrides the earlier rules by
+   source order without editing them, so the original layout stays intact.
+   =========================================================================== */
+
+:root{
+  --ink:#07080c;
+  --panel:#14161d;
+  --panel-hi:#1a1d26;
+  --line:#272b36;
+  --line-hot:#343a4a;
+  --text:#dfe2ea;
+  --muted:#9aa0b2;
+  --gold:#c9a84c;
+  --neon-cyan:#3fd7ff;
+  --neon-magenta:#ff3ea5;
+  --neon-violet:#9b6bff;
+  --neon-amber:#ffb03a;
+  --neon-green:#7fe08a;
+  --accent:var(--gold);
+}
+
+/* 1. The lit ground. Fixed attachment so the washes stay put and the content
+      scrolls through them — a moving background reads as parallax noise. */
+body{
+  background-color:var(--ink);
+  background-image:
+    radial-gradient(60rem 42rem at 6% -6%,rgba(63,215,255,.11),transparent 62%),
+    radial-gradient(52rem 38rem at 104% 20%,rgba(255,62,165,.075),transparent 62%),
+    radial-gradient(62rem 46rem at -12% 58%,rgba(155,107,255,.085),transparent 64%),
+    radial-gradient(54rem 40rem at 112% 88%,rgba(255,176,58,.07),transparent 62%);
+  background-attachment:fixed;
+  background-repeat:no-repeat;
+  color:var(--text);
+}
+
+/* 2. One colour per section. */
+#chapters-section{--accent:var(--neon-amber)}
+#tales-section{--accent:var(--neon-magenta)}
+#gallery-section{--accent:var(--neon-cyan)}
+#seraph-section{--accent:var(--neon-violet)}
+#registry-section{--accent:var(--gold)}
+#archive-section{--accent:var(--neon-green)}
+#questron-section{--accent:var(--neon-cyan)}
+
+/* A hairline at the head of each section, lit in that section's colour. It is
+   the cheapest possible way to say "a new thing starts here" on a long scroll. */
+.section{position:relative}
+.section::before{
+  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:min(100%,780px);height:1px;pointer-events:none;
+  background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--accent) 60%,transparent),transparent);
+}
+
+.section-title{
+  position:relative;padding-bottom:.95rem;
+  color:var(--accent);
+  text-shadow:0 0 30px color-mix(in srgb,var(--accent) 42%,transparent);
+}
+.section-title::after{
+  content:'';position:absolute;left:50%;bottom:0;transform:translateX(-50%);
+  width:104px;height:2px;border-radius:2px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);
+  box-shadow:0 0 18px var(--accent);
+}
+
+/* 3. Panels come up off the ground and take a tint of their section's colour
+      along the top edge, where the light would fall. */
+.chapters-grid.arc-panel,.tales-grid.arc-panel{
+  border-color:var(--line);
+  background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 9%,transparent) 0%,transparent 48%);
+}
+.arc-head{border-bottom-color:var(--line)}
+.arc-kicker{color:var(--accent);text-shadow:0 0 16px color-mix(in srgb,var(--accent) 45%,transparent)}
+.arc-count{color:var(--muted)}
+
+.chapter-card,.tale-card{
+  background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 8%,var(--panel)) 0%,var(--panel) 58%);
+  border:1px solid var(--line);
+  border-top:3px solid color-mix(in srgb,var(--accent) 70%,#000);
+}
+.chapter-card:hover,.tale-card:hover{
+  border-color:var(--accent);
+  border-top-color:var(--accent);
+  box-shadow:0 14px 36px rgba(0,0,0,.65),0 0 34px -8px var(--accent);
+}
+.chapter-card img,.tale-card img{filter:brightness(.94) saturate(1.06)}
+.chapter-card:hover img,.tale-card:hover img{filter:brightness(1.12) saturate(1.18)}
+
+.card-kicker{color:var(--accent);opacity:.9}
+.card-label{color:#eceef4}
+.card-blurb{color:#a6abba}
+.card-foot{border-top-color:var(--line)}
+.card-read{color:var(--accent)}
+.card-meta{color:#6d7286}
+.card-planned{border-top-color:var(--line)}
+.card-planned:hover{border-top-color:var(--line)}
+.card-planned .card-label{color:#6d7286}
+
+/* Gallery tiles light up in cyan rather than sitting flat. */
+.gallery-item{border-color:var(--line);background:var(--panel)}
+.gallery-item img{filter:brightness(.93) saturate(1.05);transition:filter .3s}
+.gallery-item:hover{border-color:var(--accent);box-shadow:0 0 28px -4px var(--accent)}
+.gallery-item:hover img{filter:brightness(1.12) saturate(1.18)}
+
+/* Nav: a lit bar, not a black one. */
+.nav{
+  background:rgba(9,10,14,.92);
+  border-bottom:1px solid #232838;
+  box-shadow:0 1px 0 rgba(63,215,255,.14),0 10px 34px rgba(0,0,0,.55);
+}
+.nav a:hover{color:#fff;text-shadow:0 0 16px rgba(63,215,255,.65)}
+.nav a.nav-active{color:#fff;border-bottom-color:var(--neon-cyan);text-shadow:0 0 16px rgba(63,215,255,.5)}
+.section-footer-nav{border-top-color:var(--line)}
+
+/* Seraph plates get a violet rim so the two large images read as lit objects. */
+.seraph-image{border-color:color-mix(in srgb,var(--accent) 40%,var(--line));box-shadow:0 0 40px -10px var(--accent),0 10px 30px rgba(0,0,0,.55)}
+.seraph-text{color:#cdd2de}
+
+/* Body copy across the intros was #888 on near-black — under the contrast
+   floor and the main reason the page read as murky rather than dark. */
+.reg-intro-desc,.questron-desc{color:var(--muted)}
+.archive-intro-desc{color:#b3ac9e}
+.empty-state{color:var(--muted)}
+.footer{border-top:1px solid var(--line)}
+
+/* The Archive keeps its warm amber identity, but off a lit ground. */
+.archive-row{border-bottom-color:#221e16}
+.archive-row-summary{color:#9a9280}
+.archive-row-label{color:#c4bda6}
+
+/* Registry section: the ten cards supply the colour, so the frame stays quiet. */
+.registry-page .reg-detail-inner{background:#0e1118;border-color:var(--line)}
+.reg-detail-header{border-bottom-color:var(--line)}
+.reg-divider{background:var(--line)}
+.reg-field-value{color:#c9cddb}
+.reg-aug-desc,.reg-intel{color:#aab0c0}
+.reg-answer{color:#b9c0cf}
+
+@media(prefers-reduced-motion:reduce){
+  .oq-inner{transition:none}
+  .lord-card,.lord-card-portrait{transition:none}
+}
+
+/* Planned-but-unreleased cards must stay dead. Their greyscale and their
+   no-op hover are declared earlier in the file, so the lighting pass above
+   would otherwise win on source order and light them up like a live volume. */
+.card-planned img{filter:grayscale(1) brightness(.5)}
+.card-planned:hover{transform:none;box-shadow:none;border-color:var(--line)}
+.card-planned:hover img{filter:grayscale(1) brightness(.5)}
+
+/* The hero used to fade to an opaque #0d0d0d, which cut a hard seam against
+   the lit ground below it. Fading to transparent lets the same washes run
+   under the banner, so the top of the page joins the rest of it. */
+.hero{
+  background-color:transparent;
+  background-image:linear-gradient(180deg,rgba(0,0,0,.62) 0%,rgba(7,8,12,0) 100%);
+}
+.footer{color:#7c8194}
