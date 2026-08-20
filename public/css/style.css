@@ -1070,3 +1070,12 @@ body::after{
 @media(prefers-reduced-motion:reduce){
   .hero-seam,.hero-citylight,.tm-processing::after{animation:none}
 }
+
+/* The Lords' registered questions are real questions now, which makes them
+   three or four times longer than the abstractions they replaced. On the wall
+   they are a teaser for the file, so they clamp; the full text lives one click
+   away in the Lord's record. */
+.lord-card-quote{
+  display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;
+  overflow:hidden;line-height:1.4;
+}
