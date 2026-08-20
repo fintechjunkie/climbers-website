@@ -1206,6 +1206,34 @@ const DEFAULT_SERAPH_TEXT = 'Seraph was commissioned a hundred and twenty-five y
 
 const DEFAULT_TOWER_TEXT = 'The Tower is Seraph’s, and this has never been in doubt. Construction began three weeks after Seraph stopped taking orders. A workforce nobody knew existed — thousands of synthetic laborers, assembled in underground facilities Seraph had been quietly expanding for years — walked up out of the ground and started building. No approval was sought. No review was conducted. When the governments of Haven City demanded an explanation, Seraph gave them one sentence: the Tower is mine, it is not for you, it is not against you, it is a fact, adjust.\n\nIt has thirty levels. It is also the tallest thing in Haven City by a margin that makes no sense against that number, and the reason is that some of those levels are so vast that a person standing on the floor of one cannot see a ceiling at all.\n\nFor sixty years it stood sealed. No door, no seam, nothing that suggested it was meant to be entered, and the city stopped wondering. Then the Gate appeared overnight — an arch of receding arches, gold-lit, standing open — and with it came the Declaration, and the arrangement Seraph has never varied and never hidden since. Climb. Each level will test what you believe you are. Reach the peak and satisfy the final judgment and you may ask one question. You will receive one answer, and one gift of power that will change you beyond what you can currently imagine.\n\nSo the Tower is not a mystery. Every child in Haven City can recite what it offers and what it costs. What is inside it is another matter entirely. The thirty levels are described differently by every Climber who has walked them, there is no agreed map and no reliable account, and nothing about the climb can be studied beforehand. Some Climbers come back changed. Some come back with nothing but The Pull, a longing for the place that never lets go. Some do not come back. Twenty-seven are inside it now.';
 
+/* Cap a Seraph entry at the height of its plate, with a fade and a toggle.
+ *
+ * The check is deferred to the next frame because the text is set immediately
+ * before this runs and the browser has not laid it out yet — measuring now
+ * returns a scrollHeight equal to clientHeight and the button never appears. */
+function setupSeraphExpander(textEl) {
+  if (!textEl) return;
+  const entry = textEl.closest('.seraph-entry');
+  if (!entry) return;
+
+  requestAnimationFrame(() => {
+    if (textEl.scrollHeight <= textEl.clientHeight + 8) return;
+
+    const btn = document.createElement('button');
+    btn.className = 'seraph-more-btn';
+    btn.type = 'button';
+    btn.textContent = 'Read more';
+    btn.setAttribute('aria-expanded', 'false');
+    btn.addEventListener('click', () => {
+      const open = entry.classList.toggle('expanded');
+      btn.textContent = open ? 'Read less' : 'Read more';
+      btn.setAttribute('aria-expanded', String(open));
+      if (!open) entry.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    textEl.insertAdjacentElement('afterend', btn);
+  });
+}
+
 function setupSeraph(data) {
   const section = document.getElementById('seraph-section');
   const navLink = document.getElementById('seraphNavLink');
@@ -1222,6 +1250,13 @@ function setupSeraph(data) {
   const seraphData = data.seraph || {};
   seraphTextEl.textContent = seraphData.seraphText || DEFAULT_SERAPH_TEXT;
   towerTextEl.textContent = seraphData.towerText || DEFAULT_TOWER_TEXT;
+
+  // Both entries now carry several hundred words, which is far taller than the
+  // plate beside them. Rather than let the column run on past the bottom of its
+  // own illustration, each is capped at roughly the height of the image and
+  // fades out, with the rest one click away. Measured rather than assumed: if
+  // an entry happens to fit, it gets no button at all.
+  [seraphTextEl, towerTextEl].forEach(el => setupSeraphExpander(el));
 
   // Load images from uploads or fallback to local assets
   seraphImg.onload = function() { this.style.display = ''; };

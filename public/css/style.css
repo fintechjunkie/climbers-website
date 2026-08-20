@@ -1079,3 +1079,53 @@ body::after{
   display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;
   overflow:hidden;line-height:1.4;
 }
+
+/* ===========================================================================
+   SERAPH & THE TOWER — long-form entries
+
+   Both entries carry several hundred words now, which is much taller than the
+   plate beside them. Left alone the text column runs on past the bottom of its
+   own illustration and the section reads as two ragged walls of monospace.
+
+   So each is capped at roughly the height of its plate and fades out, with the
+   rest behind a toggle. The cap is a max-height rather than a line clamp
+   because the text is pre-wrapped prose with blank lines between paragraphs,
+   and a line clamp counts those.
+   =========================================================================== */
+.seraph-text-col{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:.85rem}
+
+.seraph-text{
+  position:relative;width:100%;max-width:64ch;
+  max-height:23rem;overflow:hidden;
+  font-size:.95rem;line-height:1.75;
+  transition:max-height .45s ease;
+}
+/* The fade is a child pseudo rather than a gradient on the text itself, so it
+   sits over the last line instead of tinting every line. */
+.seraph-text::after{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:5.5rem;pointer-events:none;
+  background:linear-gradient(180deg,transparent 0%,color-mix(in srgb,var(--ink) 82%,transparent) 62%,var(--ink) 100%);
+  transition:opacity .35s;
+}
+.seraph-entry.expanded .seraph-text{max-height:none}
+.seraph-entry.expanded .seraph-text::after{opacity:0}
+
+.seraph-more-btn{
+  cursor:pointer;padding:.45rem 1rem;border-radius:6px;flex-shrink:0;
+  font-family:'Orbitron',sans-serif;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;
+  background:transparent;color:var(--accent);
+  border:1px solid color-mix(in srgb,var(--accent) 45%,transparent);
+  transition:background .25s,box-shadow .25s,border-color .25s;
+}
+.seraph-more-btn:hover{
+  background:color-mix(in srgb,var(--accent) 12%,transparent);
+  border-color:var(--accent);box-shadow:0 0 20px -6px var(--accent);
+}
+
+/* On a phone the entries stack, so the plate is above the text and there is no
+   column to match. Give the text a little more room before it folds. */
+@media(max-width:768px){
+  .seraph-text{max-height:19rem}
+  .seraph-text-col{align-items:stretch}
+  .seraph-more-btn{align-self:flex-start}
+}
